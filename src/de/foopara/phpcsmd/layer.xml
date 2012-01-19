@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE filesystem PUBLIC "-//NetBeans//DTD Filesystem 1.2//EN" "http://www.netbeans.org/dtds/filesystem-1_2.dtd">
+<!--
+    Document   : layer.xml
+    Created on : 19. Januar 2012, 23:36
+    Author     : nspecht
+    Description:
+        Purpose of the document follows.
+-->
+
+<filesystem>
+    <folder name="Actions">
+        <folder name="PHP">
+            <file name="de-foopara-phpcsmd-PHPCSMD.instance"/>
+        </folder>
+    </folder>
+    <folder name="Editors">
+        <folder name="text">
+            <folder name="x-php5">
+                <folder name="Popup">
+                    <file name="de-foopara-phpcsmd-PHPCSMD.shadow">
+                        <attr name="originalFile" stringvalue="Actions/PHP/de-foopara-phpcsmd-PHPCSMD.instance"/>
+                        <attr name="position" intvalue="875"/>
+                    </file>
+                </folder>
+            </folder>
+        </folder>
+
+        <folder name="AnnotationTypes">
+            <file name="de-foopara-phpcsmd-annotation-warning.xml" url="nbresloc:/de/foopara/phpcsmd/resources/warning.xml"/>
+            <file name="de-foopara-phpcsmd-annotation-error.xml"   url="nbresloc:/de/foopara/phpcsmd/resources/error.xml"/>
+        </folder>
+    </folder>
+    <folder name="Loaders">
+        <folder name="text">
+            <folder name="x-php5">
+                <folder name="Actions">
+                    <file name="de-foopara-phpcsmd-PHPCSMD.shadow">
+                        <attr name="originalFile" stringvalue="Actions/PHP/de-foopara-phpcsmd-PHPCSMD.instance"/>
+                        <attr name="position" intvalue="1550"/>
+                    </file>
+                </folder>
+            </folder>
+        </folder>
+    </folder>
+    <!-- folder name="OptionsDialog">
+        <folder name="org-netbeans-modules-php-project-ui-options-PHPOptionsCategory">
+            <file name="CodeSniffer.instance">
+                <attr methodvalue="org.netbeans.spi.options.AdvancedOption.createSubCategory" name="instanceCreate"/>
+                <attr name="controller" newvalue="de.whitewashing.php.cs.ui.options.CodeSnifferOptionsPanelController"/>
+                <attr bundlevalue="de.whitewashing.php.cs.Bundle#AdvancedOption_DisplayName_CodeSniffer" name="displayName"/>
+                <attr intvalue="250" name="position"/>
+            </file>
+        </folder>
+    </folder-->
+    <folder name="TaskList">
+        <folder name="Scanners">
+            <file name="ViolationRegistry.instance">
+                <attr name="instanceOf" stringvalue="org.netbeans.spi.tasklist.PushTaskScanner"/>
+                <attr name="instanceClass" stringvalue="de.foopara.phpcsmd.ViolationRegistry"/>
+            </file>
+        </folder>
+    </folder>
+</filesystem>
