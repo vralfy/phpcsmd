@@ -27,8 +27,8 @@
         </folder>
 
         <folder name="AnnotationTypes">
-            <file name="de-foopara-phpcsmd-annotation-warning.xml" url="nbresloc:/de/foopara/phpcsmd/resources/warning.xml"/>
-            <file name="de-foopara-phpcsmd-annotation-error.xml"   url="nbresloc:/de/foopara/phpcsmd/resources/error.xml"/>
+            <file name="de-foopara-phpcsmd-annotation-codesniffer-warning.xml" url="nbresloc:/de/foopara/phpcsmd/resources/codesniffer/warning.xml"/>
+            <file name="de-foopara-phpcsmd-annotation-codesniffer-error.xml"   url="nbresloc:/de/foopara/phpcsmd/resources/codesniffer/error.xml"/>
         </folder>
     </folder>
     <folder name="Loaders">

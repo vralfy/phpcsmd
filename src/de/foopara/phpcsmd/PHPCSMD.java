@@ -4,7 +4,7 @@
  */
 package de.foopara.phpcsmd;
 
-import de.foopara.phpcsmd.codesniffer.Codesniffer;
+import de.foopara.phpcsmd.exec.codesniffer.Codesniffer;
 import javax.swing.JMenuItem;
 import org.openide.cookies.EditorCookie;
 import org.openide.nodes.Node;
@@ -18,9 +18,9 @@ import org.openide.filesystems.FileObject;
  * @author nspecht
  */
 public class PHPCSMD extends CookieAction {
-    
+
     private Codesniffer codesniffer = Codesniffer.getInstance();
-    
+
     @Override
     protected int mode() {
         return CookieAction.MODE_EXACTLY_ONE;
@@ -37,7 +37,7 @@ public class PHPCSMD extends CookieAction {
             return;
         }
         FileObject fo = getFileObject(nodes[0]);
-        
+
     }
 
     @Override
@@ -49,12 +49,12 @@ public class PHPCSMD extends CookieAction {
     public HelpCtx getHelpCtx() {
         return HelpCtx.DEFAULT_HELP;
     }
-    
+
     @Override
     protected boolean asynchronous() {
         return false;
     }
-    
+
     @Override
     protected void initialize() {
         super.initialize();// see org.openide.util.actions.SystemAction.iconResource() Javadoc for more details
@@ -72,17 +72,17 @@ public class PHPCSMD extends CookieAction {
     {
         return this.setEnabledForExistingBinary(super.getMenuPresenter());
     }
-    
+
     protected JMenuItem setEnabledForExistingBinary(JMenuItem item)
     {
         item.setEnabled(this.codesniffer.isEnabled());
         return item;
     }
-    
+
     private FileObject getFileObject(Node node)
     {
         assert node != null;
-        
+
         FileObject fileObj = node.getLookup().lookup(FileObject.class);
         if (fileObj != null && fileObj.isValid()) {
             return fileObj;
