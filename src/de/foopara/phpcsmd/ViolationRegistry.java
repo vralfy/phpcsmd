@@ -20,27 +20,34 @@ public class ViolationRegistry extends PushTaskScanner {
 
     public ViolationRegistry() {
         super(
-                "PHP Checkstyle and MessDetector Violations", 
-                "PHP Checkstyle and MessDetector Violations", 
+                "PHP Checkstyle and MessDetector Violations",
+                "PHP Checkstyle and MessDetector Violations",
                 null
         );
     }
-    
+
     @Override
     public void setScope(TaskScanningScope tss, Callback clbck) {
         if (tss == null || clbck == null) {
             return;
         }
-        
+
         int i = 0;
         for (FileObject file : tss.getLookup().lookupAll(FileObject.class)) {
             if(i >= 1) {
                 return;
             }
 
-            //clbck.setTasks(file, scan(file));
+            clbck.setTasks(file, scan(file));
             i++;
         }
     }
-    
+
+    public List<? extends Task> scan(FileObject fo) {
+         List<Task> violations = new ArrayList<Task>();
+         violations.add(
+                 Task.create(fo, "error", "test", 1)
+         );
+         return violations;
+    }
 }

@@ -7,16 +7,12 @@ package de.foopara.phpcsmd;
 import de.foopara.phpcsmd.exec.codesniffer.Codesniffer;
 import javax.swing.JMenuItem;
 import org.openide.cookies.EditorCookie;
-import org.openide.nodes.Node;
+import org.openide.filesystems.FileObject;
 import org.openide.loaders.DataObject;
+import org.openide.nodes.Node;
 import org.openide.util.HelpCtx;
 import org.openide.util.actions.CookieAction;
-import org.openide.filesystems.FileObject;
 
-/**
- *
- * @author nspecht
- */
 public class PHPCSMD extends CookieAction {
 
     private Codesniffer codesniffer = Codesniffer.getInstance();
@@ -27,7 +23,7 @@ public class PHPCSMD extends CookieAction {
     }
 
     @Override
-    protected Class<?>[] cookieClasses() {
+    protected Class[] cookieClasses() {
         return new Class[]{EditorCookie.class};
     }
 
@@ -37,12 +33,11 @@ public class PHPCSMD extends CookieAction {
             return;
         }
         FileObject fo = getFileObject(nodes[0]);
-
     }
 
     @Override
     public String getName() {
-        return "de.foopara.phpcsmd";
+        return "CTL_PHPCSMD_Action";
     }
 
     @Override

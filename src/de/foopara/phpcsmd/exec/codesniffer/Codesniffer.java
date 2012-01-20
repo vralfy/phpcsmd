@@ -18,7 +18,7 @@ public class Codesniffer {
         return Codesniffer.instance;
     }
 
-    private boolean _enabled = false;
+    private boolean _enabled = true;
 
     public boolean isEnabled() {
         return this._enabled;
