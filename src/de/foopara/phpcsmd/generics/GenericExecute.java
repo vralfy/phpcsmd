@@ -12,17 +12,17 @@ import org.openide.filesystems.FileObject;
  */
 abstract public class GenericExecute {
     public abstract boolean isEnabled();
-    protected abstract void run(FileObject file, boolean annotations);
+    protected abstract GenericResult run(FileObject file, boolean annotations);
     
-    protected void run(FileObject file) {
-        this.run(file, false);
+    protected GenericResult run(FileObject file) {
+        return this.run(file, false);
     }
     
-    public void execute(FileObject file) {
-        this.run(file, false);
+    public GenericResult execute(FileObject file) {
+        return this.run(file, false);
     }
     
-    public void execute(FileObject file, boolean annotations) {
-        this.run(file, annotations);
+    public GenericResult execute(FileObject file, boolean annotations) {
+        return this.run(file, annotations);
     }
 }

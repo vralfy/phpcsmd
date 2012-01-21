@@ -55,9 +55,9 @@
     </folder-->
     <folder name="TaskList">
         <folder name="Scanners">
-            <file name="ViolationRegistry.instance">
+            <file name="ViolationReporter.instance">
                 <attr name="instanceOf" stringvalue="org.netbeans.spi.tasklist.PushTaskScanner"/>
-                <attr name="instanceClass" stringvalue="de.foopara.phpcsmd.ViolationRegistry"/>
+                <attr name="instanceClass" stringvalue="de.foopara.phpcsmd.ViolationReporter"/>
             </file>
         </folder>
     </folder>

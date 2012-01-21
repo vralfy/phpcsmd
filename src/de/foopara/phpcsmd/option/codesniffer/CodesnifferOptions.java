@@ -16,51 +16,62 @@ public class CodesnifferOptions {
 
     public static final String _PREFIX = "phpcsmd.codesniffer.";
 
-    public static final String _STANDARD           = "standard";
-    public static final String _STANDARD_DEFAULT   = "Zend";
+    private static final String _SCRIPT             = "script";
+    private static final String _SCRIPT_DEFAULT     = "";
+    
+    private static final String _STANDARD           = "standard";
+    private static final String _STANDARD_DEFAULT   = "Zend";
 
-    public static final String _IGNORES            = "ignores";
-    public static final String _IGNORES_DEFAULT    = "";
+    private static final String _IGNORES            = "ignores";
+    private static final String _IGNORES_DEFAULT    = "";
 
-    public static final String _EXTENSIONS         = "extensions";
-    public static final String _EXTENSIONS_DEFAULT = "";
+    private static final String _EXTENSIONS         = "extensions";
+    private static final String _EXTENSIONS_DEFAULT = "";
 
-    public static final String _WARNINGS           = "warnings";
-    public static final String _WARNINGS_DEFAULT   = "true";
+    private static final String _WARNINGS           = "warnings";
+    private static final String _WARNINGS_DEFAULT   = "true";
 
-    private Preferences _modul() {
+    private static Preferences _modul() {
         return NbPreferences.forModule(PHPCSMD.class);
     }
 
-    public String getStandard() {
-        return this._modul().get(_PREFIX + _STANDARD, _STANDARD_DEFAULT);
+    public static String getScript() {
+        return CodesnifferOptions._modul().get(_PREFIX + _SCRIPT, _SCRIPT_DEFAULT);
     }
 
-    public void setStandard(String standard) {
-        this._modul().put(_PREFIX + _STANDARD, standard);
+    public static void setScript(String script) {
+        CodesnifferOptions._modul().put(_PREFIX + _SCRIPT, script);
+    }
+    
+    public static String getStandard() {
+        return CodesnifferOptions._modul().get(_PREFIX + _STANDARD, _STANDARD_DEFAULT);
     }
 
-    public String getIgnore() {
-        return this._modul().get(_PREFIX + _IGNORES, _IGNORES_DEFAULT);
+    public static void setStandard(String standard) {
+        CodesnifferOptions._modul().put(_PREFIX + _STANDARD, standard);
     }
 
-    public void setIgnore(String ignore) {
-        this._modul().put(_PREFIX + _IGNORES, ignore);
+    public static String getIgnore() {
+        return CodesnifferOptions._modul().get(_PREFIX + _IGNORES, _IGNORES_DEFAULT);
     }
 
-    public String getExtensions() {
-        return this._modul().get(_PREFIX + _EXTENSIONS, _EXTENSIONS_DEFAULT);
+    public static void setIgnore(String ignore) {
+        CodesnifferOptions._modul().put(_PREFIX + _IGNORES, ignore);
     }
 
-    public void setExtensions(String extensions) {
-        this._modul().put(_PREFIX + _EXTENSIONS, extensions);
+    public static String getExtensions() {
+        return CodesnifferOptions._modul().get(_PREFIX + _EXTENSIONS, _EXTENSIONS_DEFAULT);
     }
 
-    public boolean getWarnings() {
-        return (this._modul().get(_PREFIX + _WARNINGS, _WARNINGS_DEFAULT).compareTo("true") == 0);
+    public static void setExtensions(String extensions) {
+        CodesnifferOptions._modul().put(_PREFIX + _EXTENSIONS, extensions);
     }
 
-    public void setWarnings(boolean showWarnings) {
-        this._modul().put(_PREFIX + _WARNINGS, showWarnings ? "true" : "false");
+    public static boolean getWarnings() {
+        return (CodesnifferOptions._modul().get(_PREFIX + _WARNINGS, _WARNINGS_DEFAULT).compareTo("true") == 0);
+    }
+
+    public static void setWarnings(boolean showWarnings) {
+        CodesnifferOptions._modul().put(_PREFIX + _WARNINGS, showWarnings ? "true" : "false");
     }
 }

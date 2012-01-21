@@ -4,6 +4,9 @@
  */
 package de.foopara.phpcsmd.generics;
 
+import de.foopara.phpcsmd.PhpCsMdError;
+import de.foopara.phpcsmd.PhpCsMdWarning;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -12,27 +15,33 @@ import java.util.List;
  */
 public class GenericResult {
     
-    protected List<GenericViolation> warnings = null;
-    protected List<GenericViolation> errors   = null;
+    protected List<PhpCsMdWarning> warnings = null;
+    protected List<PhpCsMdError> errors   = null;
     
-    public GenericResult(List<GenericViolation> warnings, List<GenericViolation> errors) {
+    public GenericResult(List<PhpCsMdWarning> warnings, List<PhpCsMdError> errors) {
+        if (warnings == null) {
+            warnings = new ArrayList<PhpCsMdWarning>();
+        }
+        if (errors == null) {
+            errors = new ArrayList<PhpCsMdError>();
+        }
         this.warnings = warnings;
         this.errors = errors;
     }
     
-    public void addWarning(GenericViolation warning) {
+    public void addWarning(PhpCsMdWarning warning) {
         this.warnings.add(warning);
     }
     
-    public void addError(GenericViolation error) {
+    public void addError(PhpCsMdError error) {
         this.errors.add(error);
     }
     
-    public List<GenericViolation> getWarnings() {
+    public List<PhpCsMdWarning> getWarnings() {
         return this.warnings;
     }
     
-    public List<GenericViolation> getErrors() {
+    public List<PhpCsMdError> getErrors() {
         return this.errors;
     }
 }
