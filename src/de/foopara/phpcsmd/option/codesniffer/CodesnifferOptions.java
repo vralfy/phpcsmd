@@ -17,7 +17,7 @@ public class CodesnifferOptions {
     public static final String _PREFIX = "phpcsmd.codesniffer.";
 
     private static final String _SCRIPT             = "script";
-    private static final String _SCRIPT_DEFAULT     = "";
+    private static final String _SCRIPT_DEFAULT     = "/usr/bin/phpcs";
     
     private static final String _STANDARD           = "standard";
     private static final String _STANDARD_DEFAULT   = "Zend";

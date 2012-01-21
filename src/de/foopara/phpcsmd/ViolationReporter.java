@@ -6,7 +6,6 @@ package de.foopara.phpcsmd;
 
 import de.foopara.phpcsmd.exec.codesniffer.Codesniffer;
 import java.util.List;
-import java.util.ArrayList;
 import org.netbeans.spi.tasklist.PushTaskScanner;
 import org.netbeans.spi.tasklist.Task;
 import org.netbeans.spi.tasklist.TaskScanningScope;
@@ -21,7 +20,7 @@ public class ViolationReporter extends PushTaskScanner {
 
     public ViolationReporter() {
         super(
-                "PHP Checkstyle and MessDetector Violations",
+                "PHP Violations",
                 "PHP Checkstyle and MessDetector Violations",
                 null
         );
