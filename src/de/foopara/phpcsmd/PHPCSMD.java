@@ -4,7 +4,6 @@
  */
 package de.foopara.phpcsmd;
 
-import de.foopara.phpcsmd.exec.codesniffer.Codesniffer;
 import javax.swing.JMenuItem;
 import org.openide.cookies.EditorCookie;
 import org.openide.filesystems.FileObject;
@@ -14,8 +13,6 @@ import org.openide.util.HelpCtx;
 import org.openide.util.actions.CookieAction;
 
 public class PHPCSMD extends CookieAction {
-
-    private Codesniffer codesniffer = Codesniffer.getInstance();
 
     @Override
     protected int mode() {
@@ -70,7 +67,7 @@ public class PHPCSMD extends CookieAction {
 
     protected JMenuItem setEnabledForExistingBinary(JMenuItem item)
     {
-        item.setEnabled(this.codesniffer.isEnabled());
+        item.setEnabled(true);
         return item;
     }
 

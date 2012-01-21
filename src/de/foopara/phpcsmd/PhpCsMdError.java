@@ -4,6 +4,8 @@
  */
 package de.foopara.phpcsmd;
 
+import de.foopara.phpcsmd.generics.GenericViolation;
+
 /**
  *
  * @author nspecht
