@@ -31,6 +31,11 @@ public class Phpmd extends GenericExecute {
             return new PhpmdResult(null, null);
         }
         
+        File script = new File(PhpmdOptions.getScript());
+        if (!script.exists() || !script.canExecute() || !script.isFile()) {
+            return new PhpmdResult(null, null);
+        }
+        
         File root = FileUtil.toFile(file.getParent());
         
         if(root == null || this.isEnabled() == false) {

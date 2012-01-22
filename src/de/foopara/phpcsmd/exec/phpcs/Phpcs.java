@@ -31,6 +31,11 @@ public class Phpcs extends GenericExecute {
             return new PhpcsResult(null, null);
         }
         
+        File script = new File(PhpcsOptions.getScript());
+        if (!script.exists() || !script.canExecute() || !script.isFile()) {
+            return new PhpcsResult(null, null);
+        }
+        
         File root = FileUtil.toFile(file.getParent());
         
         if(root == null || this.isEnabled() == false) {
