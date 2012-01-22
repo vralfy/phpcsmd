@@ -4,7 +4,7 @@
  */
 package de.foopara.phpcsmd.ui;
 
-import de.foopara.phpcsmd.ui.codesniffer.CodesnifferPanel;
+import de.foopara.phpcsmd.ui.phpcs.PhpcsPanel;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import javax.swing.JComponent;
@@ -23,13 +23,13 @@ public class PanelController extends OptionsPanelController {
     
     @Override
     public void update() {
-        CodesnifferPanel.getInstance().load();
+        PhpcsPanel.getInstance().load();
         this.changed = false;
     }
 
     @Override
     public void applyChanges() {
-        CodesnifferPanel.getInstance().save();
+        PhpcsPanel.getInstance().save();
         this.changed = false;
     }
 
@@ -39,7 +39,7 @@ public class PanelController extends OptionsPanelController {
 
     @Override
     public boolean isValid() {
-        return CodesnifferPanel.getInstance().hasValidValues();
+        return PhpcsPanel.getInstance().hasValidValues();
     }
 
     @Override
@@ -50,7 +50,7 @@ public class PanelController extends OptionsPanelController {
     @Override
     public JComponent getComponent(Lookup lkp) {
         //Momentan noch CodesnifferPanel, später dann großes Frame mit allen Panels
-        return new CodesnifferPanel();
+        return new PhpcsPanel();
     }
 
     @Override

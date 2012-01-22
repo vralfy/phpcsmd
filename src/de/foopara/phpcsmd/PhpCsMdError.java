@@ -18,7 +18,7 @@ public class PhpCsMdError extends GenericViolation {
     
     @Override
     public String getAnnotationType() {
-        return this.typePrefix + "codesniffer-error";
+        return this.typePrefix + "phpcs-error";
     }
 
 }

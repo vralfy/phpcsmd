@@ -26,16 +26,16 @@ public class ViolationRegistry {
         return ViolationRegistry.instance;
     }
     
-    LinkedHashMap<String, GenericResult> codesniffer = new LinkedHashMap<String, GenericResult>();
+    LinkedHashMap<String, GenericResult> phpcs = new LinkedHashMap<String, GenericResult>();
     
-    public void setCodesniffer(FileObject fo, GenericResult res) {
-        this.codesniffer.put(fo.getPath(), res);
+    public void setPhpcs(FileObject fo, GenericResult res) {
+        this.phpcs.put(fo.getPath(), res);
         GenericAnnotationBuilder.run(fo, res);
     }
     
     public ArrayList<Task> getTaskList(FileObject fo) {
         ArrayList<Task> list = new ArrayList<Task>();
-        this.appendTaskList(fo, list, this.codesniffer);
+        this.appendTaskList(fo, list, this.phpcs);
         return list;
     }
     

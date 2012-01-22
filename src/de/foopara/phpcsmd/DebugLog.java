@@ -17,7 +17,7 @@ public class DebugLog {
 
     private static DebugLog instance = null;
     private StringBuilder log = new StringBuilder();
-    
+    private static boolean enabled = false;
     
     public static DebugLog getInstance() {
         if (DebugLog.instance == null) {
@@ -27,10 +27,15 @@ public class DebugLog {
     }
 
     public static void put(String msg) {
-        DebugLog.getInstance().write(msg);
+        if (DebugLog.enabled) {
+            DebugLog.getInstance().write(msg);
+        }
     }
     
     public void write(String msg) {
+        if (!DebugLog.enabled) {
+            return;
+        }
         System.out.println(msg);
         try {
             this.log.append(msg).append("\n");
@@ -42,6 +47,5 @@ public class DebugLog {
         } catch (IOException ex) {
             Exceptions.printStackTrace(ex);
         }
-        
     }
 }

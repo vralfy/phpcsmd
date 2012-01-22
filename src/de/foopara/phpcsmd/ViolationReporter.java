@@ -4,7 +4,7 @@
  */
 package de.foopara.phpcsmd;
 
-import de.foopara.phpcsmd.exec.codesniffer.Codesniffer;
+import de.foopara.phpcsmd.exec.phpcs.Phpcs;
 import java.util.List;
 import org.netbeans.spi.tasklist.PushTaskScanner;
 import org.netbeans.spi.tasklist.Task;
@@ -44,7 +44,7 @@ public class ViolationReporter extends PushTaskScanner {
     }
 
     public List<? extends Task> scan(FileObject fo) {
-         new Codesniffer().execute(fo);
+         new Phpcs().execute(fo);
          return ViolationRegistry.getInstance().getTaskList(fo);
     }
 }

@@ -4,7 +4,7 @@
  */
 package de.foopara.phpcsmd;
 
-import de.foopara.phpcsmd.exec.codesniffer.Codesniffer;
+import de.foopara.phpcsmd.exec.phpcs.Phpcs;
 import javax.swing.JMenuItem;
 import org.openide.cookies.EditorCookie;
 import org.openide.filesystems.FileObject;
@@ -31,7 +31,7 @@ public class PHPCSMD extends CookieAction {
             return;
         }
         FileObject fo = getFileObject(nodes[0]);
-        new Codesniffer().execute(fo);
+        new Phpcs().execute(fo);
     }
 
     @Override

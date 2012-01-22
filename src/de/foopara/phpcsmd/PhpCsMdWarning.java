@@ -18,6 +18,6 @@ public class PhpCsMdWarning extends GenericViolation {
 
     @Override
     public String getAnnotationType() {
-        return this.typePrefix + "codesniffer-warning";
+        return this.typePrefix + "phpcs-warning";
     }
 }

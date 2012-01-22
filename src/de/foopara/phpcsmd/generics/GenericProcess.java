@@ -7,7 +7,6 @@ package de.foopara.phpcsmd.generics;
 import de.foopara.phpcsmd.DebugLog;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.Reader;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 import org.netbeans.api.extexecution.ExecutionDescriptor;

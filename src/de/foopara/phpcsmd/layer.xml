@@ -27,8 +27,8 @@
         </folder>
 
         <folder name="AnnotationTypes">
-            <file name="de-foopara-phpcsmd-annotation-codesniffer-warning.xml" url="nbresloc:/de/foopara/phpcsmd/resources/codesniffer/warning.xml"/>
-            <file name="de-foopara-phpcsmd-annotation-codesniffer-error.xml"   url="nbresloc:/de/foopara/phpcsmd/resources/codesniffer/error.xml"/>
+            <file name="de-foopara-phpcsmd-annotation-phpcs-warning.xml" url="nbresloc:/de/foopara/phpcsmd/resources/phpcs/warning.xml"/>
+            <file name="de-foopara-phpcsmd-annotation-phpcs-error.xml"   url="nbresloc:/de/foopara/phpcsmd/resources/phpcs/error.xml"/>
         </folder>
     </folder>
     <folder name="Loaders">
@@ -48,7 +48,7 @@
             <file name="PHPCSMD.instance">
                 <attr methodvalue="org.netbeans.spi.options.AdvancedOption.createSubCategory" name="instanceCreate"/>
                 <attr name="controller" newvalue="de.foopara.phpcsmd.ui.PanelController"/>
-                <attr bundlevalue="de.foopara.phpcsmd.Bundle#AdvancedOption_DisplayName_CodeSniffer" name="displayName"/>
+                <attr bundlevalue="de.foopara.phpcsmd.Bundle#AdvancedOption_DisplayName_PHPCSMD" name="displayName"/>
                 <attr intvalue="250" name="position"/>
             </file>
         </folder>

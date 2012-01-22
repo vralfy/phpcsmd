@@ -6,7 +6,7 @@ package de.foopara.phpcsmd.generics;
 
 import de.foopara.phpcsmd.PhpCsMdError;
 import de.foopara.phpcsmd.PhpCsMdWarning;
-import de.foopara.phpcsmd.exec.codesniffer.Codesniffer;
+import de.foopara.phpcsmd.exec.phpcs.Phpcs;
 import org.openide.filesystems.FileAttributeEvent;
 import org.openide.filesystems.FileChangeListener;
 import org.openide.filesystems.FileEvent;
@@ -33,7 +33,7 @@ public class GenericFileListener implements FileChangeListener {
             error.detach();
         }
         fe.getFile().removeFileChangeListener(this);
-        new Codesniffer().execute(fe.getFile());
+        new Phpcs().execute(fe.getFile());
     }
     
     @Override
