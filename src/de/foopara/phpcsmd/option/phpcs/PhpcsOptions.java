@@ -16,18 +16,27 @@ public class PhpcsOptions {
 
     public static final String _PREFIX = "phpcsmd.phpcs.";
 
+    private static final String _ACTIVATED          = "activated";
+    private static final String _ACTIVATED_DEFAULT  = "true";
+    
     private static final String _SCRIPT             = "script";
     private static final String _SCRIPT_DEFAULT     = "/usr/bin/phpcs";
     
     private static final String _STANDARD           = "standard";
     private static final String _STANDARD_DEFAULT   = "Zend";
 
+    private static final String _SNIFFS             = "sniffs";
+    private static final String _SNIFFS_DEFAULT     = "";
+    
     private static final String _IGNORES            = "ignores";
     private static final String _IGNORES_DEFAULT    = "";
 
     private static final String _EXTENSIONS         = "extensions";
     private static final String _EXTENSIONS_DEFAULT = "";
 
+    private static final String _TABWIDTH           = "tabwidth";
+    private static final String _TABWIDTH_DEFAULT   = "-1";
+    
     private static final String _WARNINGS           = "warnings";
     private static final String _WARNINGS_DEFAULT   = "true";
 
@@ -35,6 +44,14 @@ public class PhpcsOptions {
         return NbPreferences.forModule(PHPCSMD.class);
     }
 
+    public static boolean getActivated() {
+        return (PhpcsOptions._modul().get(_PREFIX + _ACTIVATED, _ACTIVATED_DEFAULT).compareTo("true") == 0);
+    }
+
+    public static void setActivated(boolean activated) {
+        PhpcsOptions._modul().put(_PREFIX + _ACTIVATED, activated ? "true" : "false");
+    }
+    
     public static String getScript() {
         return PhpcsOptions._modul().get(_PREFIX + _SCRIPT, _SCRIPT_DEFAULT);
     }
@@ -46,9 +63,17 @@ public class PhpcsOptions {
     public static String getStandard() {
         return PhpcsOptions._modul().get(_PREFIX + _STANDARD, _STANDARD_DEFAULT);
     }
-
+    
     public static void setStandard(String standard) {
         PhpcsOptions._modul().put(_PREFIX + _STANDARD, standard);
+    }
+    
+    public static String getSniffs() {
+        return PhpcsOptions._modul().get(_PREFIX + _SNIFFS, _SNIFFS_DEFAULT);
+    }
+
+    public static void setSniffs(String sniffs) {
+        PhpcsOptions._modul().put(_PREFIX + _SNIFFS, sniffs);
     }
 
     public static String getIgnore() {
@@ -67,6 +92,14 @@ public class PhpcsOptions {
         PhpcsOptions._modul().put(_PREFIX + _EXTENSIONS, extensions);
     }
 
+    public static Integer getTabwidth() {
+        return Integer.parseInt(PhpcsOptions._modul().get(_PREFIX + _TABWIDTH, _TABWIDTH_DEFAULT));
+    }
+
+    public static void setTabwidth(Integer tabwidth) {
+        PhpcsOptions._modul().put(_PREFIX + _TABWIDTH, "" + tabwidth);
+    }
+    
     public static boolean getWarnings() {
         return (PhpcsOptions._modul().get(_PREFIX + _WARNINGS, _WARNINGS_DEFAULT).compareTo("true") == 0);
     }

@@ -29,43 +29,52 @@ public class Phpcs extends GenericExecute {
 
     @Override
     protected GenericResult run(FileObject file, boolean annotations) {
+        if (!PhpcsOptions.getActivated()) {
+            return new PhpcsResult(null, null);
+        }
+        
         File root = FileUtil.toFile(file.getParent());
         
         if(root == null || this.isEnabled() == false) {
             return new GenericResult(null, null);
         }
         StringBuilder cmd = new StringBuilder(PhpcsOptions.getScript());
-        cmd.append(" --standard=").append(PhpcsOptions.getStandard());
-        if (PhpcsOptions.getExtensions().trim().length() > 0) {
-            cmd.append(" --extensions=").append(PhpcsOptions.getExtensions());
+        this.appendArgument(cmd, "--standard=", PhpcsOptions.getStandard());
+        this.appendArgument(cmd, "--sniffs=", PhpcsOptions.getSniffs());
+        this.appendArgument(cmd, "--extensions=", PhpcsOptions.getExtensions());
+        this.appendArgument(cmd, "--ignore=", PhpcsOptions.getIgnore());
+        
+        if (PhpcsOptions.getTabwidth() > -1) {
+            cmd.append(" --tab-width=").append(PhpcsOptions.getTabwidth());
         }
-        if (PhpcsOptions.getIgnore().trim().length() > 0) {
-            cmd.append(" --ignore=").append(PhpcsOptions.getIgnore());
+        
+        if (PhpcsOptions.getWarnings()) {
+            cmd.append(" -w");
+        } else {
+            cmd.append(" -n");
         }
+        
         cmd.append(" --report=xml");
         cmd.append(" ").append(file.getPath());
         
         /*
-        ExternalProcessBuilder epb = new ExternalProcessBuilder(CodesnifferOptions.getScript());
-        
+        ExternalProcessBuilder epb = new ExternalProcessBuilder(PhpcsOptions.getScript());
         epb.workingDirectory(root);
-        epb.addArgument("--standard=" + CodesnifferOptions.getStandard());
-        
-        if (CodesnifferOptions.getExtensions().trim().length() > 0) {
-            epb.addArgument(" -extensions=" + CodesnifferOptions.getExtensions());
-        }
-        if (CodesnifferOptions.getIgnore().trim().length() > 0) {
-            epb.addArgument("--ignore=" + CodesnifferOptions.getIgnore());
-        }
-        
+        epb.addArgument("--standard=" + PhpcsOptions.getStandard());
+        //epb.addArgument("...");
         epb.addArgument("--report=xml");
         epb.addArgument(file.getPath());
-         */
-                
+         */    
         PhpcsXMLParser parser = new PhpcsXMLParser();
     
         PhpcsResult res = parser.parse(GenericProcess.run(cmd.toString()));
         ViolationRegistry.getInstance().setPhpcs(file, res);
         return res;
+    }
+    
+    private void appendArgument(StringBuilder b, String key, String value) {
+        if (value.trim().length() > 0) {
+            b.append(" ").append(key).append(value);
+        }
     }
 }
