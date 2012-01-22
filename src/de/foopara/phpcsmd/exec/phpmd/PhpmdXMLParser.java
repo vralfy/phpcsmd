@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package de.foopara.phpcsmd.exec.phpcs;
+package de.foopara.phpcsmd.exec.phpmd;
 
 import de.foopara.phpcsmd.generics.GenericOutputReader;
 import de.foopara.phpcsmd.generics.GenericViolation;
@@ -18,32 +18,25 @@ import javax.xml.parsers.*;
  *
  * @author nspecht
  */
-public class PhpcsXMLParser {
+public class PhpmdXMLParser {
 
-    public PhpcsResult parse(GenericOutputReader reader) {
-        List<GenericViolation> csWarnings = new ArrayList<GenericViolation>();
-        List<GenericViolation> csErrors = new ArrayList<GenericViolation>();
+    public PhpmdResult parse(GenericOutputReader reader) {
+        List<GenericViolation> violations = new ArrayList<GenericViolation>();
         
         try {
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
             DocumentBuilder builder = factory.newDocumentBuilder();
             Document document;
             document = builder.parse(new InputSource(reader.getReader()));
-            NodeList ndList = document.getElementsByTagName("warning");
+            NodeList ndList = document.getElementsByTagName("violation");
             int lineNum = 0;
             for (int i = 0; i < ndList.getLength(); i++) {
                 String message = ndList.item(i).getTextContent().trim();
                 NamedNodeMap nm = ndList.item(i).getAttributes();
-                lineNum = Integer.parseInt(nm.getNamedItem("line").getTextContent()) - 1;
-                csWarnings.add(new GenericViolation(message, lineNum).setAnnotationType("phpcs-warning"));
+                lineNum = Integer.parseInt(nm.getNamedItem("beginline").getTextContent()) - 1;
+                violations.add(new GenericViolation(message, lineNum).setAnnotationType("phpmd-violation"));
             }
-            ndList = document.getElementsByTagName("error");
-            for (int i = 0; i < ndList.getLength(); i++) {
-                String message = ndList.item(i).getTextContent().trim();
-                NamedNodeMap nm = ndList.item(i).getAttributes();
-                lineNum = Integer.parseInt(nm.getNamedItem("line").getTextContent()) - 1;
-                csErrors.add(new GenericViolation(message, lineNum).setAnnotationType("phpcs-error"));
-            }
+            
         } catch (IOException ex) {
         } catch (ParserConfigurationException ex) {
         } catch (SAXParseException ex) {
@@ -51,6 +44,6 @@ public class PhpcsXMLParser {
         }
         /**/
         
-        return new PhpcsResult(csWarnings, csErrors);
+        return new PhpmdResult(null, violations);
     }
 }

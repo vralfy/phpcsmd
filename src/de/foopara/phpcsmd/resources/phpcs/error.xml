@@ -5,6 +5,6 @@
 <type name="de-foopara-phpcsmd-annotation-phpcs-error"
       visible="true"
       glyph="nbresloc:/de/foopara/phpcsmd/resources/phpcs/error.png"
-      highlight="#FFCFCF"
+      highlight="#FFC0C0"
       type="line"
 />

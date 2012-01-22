@@ -23,13 +23,13 @@ public class PanelController extends OptionsPanelController {
     
     @Override
     public void update() {
-        PhpcsPanel.getInstance().load();
+        MainPanel.getInstance().load();
         this.changed = false;
     }
 
     @Override
     public void applyChanges() {
-        PhpcsPanel.getInstance().save();
+        MainPanel.getInstance().save();
         this.changed = false;
     }
 
@@ -39,7 +39,7 @@ public class PanelController extends OptionsPanelController {
 
     @Override
     public boolean isValid() {
-        return PhpcsPanel.getInstance().hasValidValues();
+        return MainPanel.getInstance().hasValidValues();
     }
 
     @Override
@@ -50,7 +50,7 @@ public class PanelController extends OptionsPanelController {
     @Override
     public JComponent getComponent(Lookup lkp) {
         //Momentan noch CodesnifferPanel, später dann großes Frame mit allen Panels
-        return new PhpcsPanel();
+        return new MainPanel();
     }
 
     @Override

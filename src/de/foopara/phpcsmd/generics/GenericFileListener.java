@@ -4,8 +4,6 @@
  */
 package de.foopara.phpcsmd.generics;
 
-import de.foopara.phpcsmd.PhpCsMdError;
-import de.foopara.phpcsmd.PhpCsMdWarning;
 import de.foopara.phpcsmd.exec.phpcs.Phpcs;
 import org.openide.filesystems.FileAttributeEvent;
 import org.openide.filesystems.FileChangeListener;
@@ -26,10 +24,10 @@ public class GenericFileListener implements FileChangeListener {
     
     @Override
     public void fileChanged(FileEvent fe) {
-        for(PhpCsMdWarning warning: this._res.getWarnings()) {
+        for(GenericViolation warning: this._res.getWarnings()) {
             warning.detach();
         }
-        for(PhpCsMdError error: this._res.getErrors()) {
+        for(GenericViolation error: this._res.getErrors()) {
             error.detach();
         }
         fe.getFile().removeFileChangeListener(this);

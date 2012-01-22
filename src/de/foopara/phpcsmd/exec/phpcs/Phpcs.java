@@ -4,14 +4,12 @@
  */
 package de.foopara.phpcsmd.exec.phpcs;
 
-import de.foopara.phpcsmd.DebugLog;
 import de.foopara.phpcsmd.ViolationRegistry;
 import de.foopara.phpcsmd.generics.GenericExecute;
 import de.foopara.phpcsmd.generics.GenericProcess;
 import de.foopara.phpcsmd.generics.GenericResult;
 import de.foopara.phpcsmd.option.phpcs.PhpcsOptions;
 import java.io.File;
-import org.netbeans.api.extexecution.ExternalProcessBuilder;
 import org.openide.filesystems.FileObject;
 import org.openide.filesystems.FileUtil;
 

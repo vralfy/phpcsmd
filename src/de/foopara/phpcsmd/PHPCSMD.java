@@ -5,6 +5,7 @@
 package de.foopara.phpcsmd;
 
 import de.foopara.phpcsmd.exec.phpcs.Phpcs;
+import de.foopara.phpcsmd.exec.phpmd.Phpmd;
 import javax.swing.JMenuItem;
 import org.openide.cookies.EditorCookie;
 import org.openide.filesystems.FileObject;
@@ -32,6 +33,7 @@ public class PHPCSMD extends CookieAction {
         }
         FileObject fo = getFileObject(nodes[0]);
         new Phpcs().execute(fo);
+        new Phpmd().execute(fo);
     }
 
     @Override

@@ -27,8 +27,9 @@
         </folder>
 
         <folder name="AnnotationTypes">
-            <file name="de-foopara-phpcsmd-annotation-phpcs-warning.xml" url="nbresloc:/de/foopara/phpcsmd/resources/phpcs/warning.xml"/>
-            <file name="de-foopara-phpcsmd-annotation-phpcs-error.xml"   url="nbresloc:/de/foopara/phpcsmd/resources/phpcs/error.xml"/>
+            <file name="de-foopara-phpcsmd-annotation-phpcs-warning.xml"   url="nbresloc:/de/foopara/phpcsmd/resources/phpcs/warning.xml"/>
+            <file name="de-foopara-phpcsmd-annotation-phpcs-error.xml"     url="nbresloc:/de/foopara/phpcsmd/resources/phpcs/error.xml"/>
+            <file name="de-foopara-phpcsmd-annotation-phpmd-violation.xml" url="nbresloc:/de/foopara/phpcsmd/resources/phpmd/violation.xml"/>
         </folder>
     </folder>
     <folder name="Loaders">

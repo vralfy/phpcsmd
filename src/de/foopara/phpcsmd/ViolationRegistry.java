@@ -6,6 +6,7 @@ package de.foopara.phpcsmd;
 
 import de.foopara.phpcsmd.generics.GenericAnnotationBuilder;
 import de.foopara.phpcsmd.generics.GenericResult;
+import de.foopara.phpcsmd.generics.GenericViolation;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import org.netbeans.spi.tasklist.Task;
@@ -27,15 +28,22 @@ public class ViolationRegistry {
     }
     
     LinkedHashMap<String, GenericResult> phpcs = new LinkedHashMap<String, GenericResult>();
+    LinkedHashMap<String, GenericResult> phpmd = new LinkedHashMap<String, GenericResult>();
     
     public void setPhpcs(FileObject fo, GenericResult res) {
         this.phpcs.put(fo.getPath(), res);
         GenericAnnotationBuilder.run(fo, res);
     }
     
+    public void setPhpmd(FileObject fo, GenericResult res) {
+        this.phpmd.put(fo.getPath(), res);
+        GenericAnnotationBuilder.run(fo, res);
+    }
+    
     public ArrayList<Task> getTaskList(FileObject fo) {
         ArrayList<Task> list = new ArrayList<Task>();
         this.appendTaskList(fo, list, this.phpcs);
+        this.appendTaskList(fo, list, this.phpmd);
         return list;
     }
     
@@ -45,7 +53,7 @@ public class ViolationRegistry {
             LinkedHashMap<String, GenericResult> registry
     ) {
         if (registry.containsKey(fo.getPath())) {
-            for (PhpCsMdWarning res : registry.get(fo.getPath()).getWarnings()) {
+            for (GenericViolation res : registry.get(fo.getPath()).getWarnings()) {
                 dst.add(
                     Task.create(
                         fo,
@@ -55,7 +63,7 @@ public class ViolationRegistry {
                         ));
             }
                 
-            for (PhpCsMdError res : registry.get(fo.getPath()).getErrors()) {
+            for (GenericViolation res : registry.get(fo.getPath()).getErrors()) {
                 dst.add(
                     Task.create(
                         fo,

@@ -159,7 +159,7 @@ public class PhpcsPanel extends GenericOptionsPanel {
 
         optActive.setText(org.openide.util.NbBundle.getMessage(PhpcsPanel.class, "PhpcsPanel.optActive.text")); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.gridwidth = 3;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.insets = new java.awt.Insets(0, 0, 2, 2);
         add(optActive, gridBagConstraints);
