@@ -30,19 +30,25 @@ public class PhpcsXMLParser {
             Document document;
             document = builder.parse(new InputSource(reader.getReader()));
             NodeList ndList = document.getElementsByTagName("warning");
-            int lineNum = 0;
+
             for (int i = 0; i < ndList.getLength(); i++) {
                 String message = ndList.item(i).getTextContent().trim();
                 NamedNodeMap nm = ndList.item(i).getAttributes();
-                lineNum = Integer.parseInt(nm.getNamedItem("line").getTextContent()) - 1;
-                csWarnings.add(new GenericViolation(message, lineNum).setAnnotationType("phpcs-warning"));
+                int lineNum = Integer.parseInt(nm.getNamedItem("line").getTextContent()) - 1;
+                csWarnings.add(
+                        new GenericViolation(message, lineNum)
+                        .setAnnotationType("phpcs-warning")
+                );
             }
             ndList = document.getElementsByTagName("error");
             for (int i = 0; i < ndList.getLength(); i++) {
                 String message = ndList.item(i).getTextContent().trim();
                 NamedNodeMap nm = ndList.item(i).getAttributes();
-                lineNum = Integer.parseInt(nm.getNamedItem("line").getTextContent()) - 1;
-                csErrors.add(new GenericViolation(message, lineNum).setAnnotationType("phpcs-error"));
+                int lineNum = Integer.parseInt(nm.getNamedItem("line").getTextContent()) - 1;
+                csErrors.add(
+                        new GenericViolation(message, lineNum)
+                        .setAnnotationType("phpcs-error")
+                );
             }
         } catch (IOException ex) {
         } catch (ParserConfigurationException ex) {

@@ -29,12 +29,15 @@ public class PhpmdXMLParser {
             Document document;
             document = builder.parse(new InputSource(reader.getReader()));
             NodeList ndList = document.getElementsByTagName("violation");
-            int lineNum = 0;
+            
             for (int i = 0; i < ndList.getLength(); i++) {
                 String message = ndList.item(i).getTextContent().trim();
                 NamedNodeMap nm = ndList.item(i).getAttributes();
-                lineNum = Integer.parseInt(nm.getNamedItem("beginline").getTextContent()) - 1;
-                violations.add(new GenericViolation(message, lineNum).setAnnotationType("phpmd-violation"));
+                int start = Integer.parseInt(nm.getNamedItem("beginline").getTextContent()) - 1;
+                int end = Integer.parseInt(nm.getNamedItem("endline").getTextContent()) - 1;
+                violations.add(
+                        new GenericViolation(message, start, end)
+                        .setAnnotationType("phpmd-violation"));
             }
             
         } catch (IOException ex) {

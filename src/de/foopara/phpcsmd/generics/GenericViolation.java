@@ -12,23 +12,35 @@ import org.openide.text.Annotation;
  */
 public class GenericViolation extends Annotation {
     protected String _message = "";
-    protected int _line = 0;
+    protected int _beginLine = 0;
+    protected int _endLine = 0;
     protected String _annotationType = "phpcsmd";
     
     protected String typePrefix = "de-foopara-phpcsmd-annotation-";
 
     public GenericViolation(String msg, int line) {
-        this._message = msg;
-        this._line    = line;
+        this._message   = msg;
+        this._beginLine = line;
+        this._endLine   = line;
     }
 
+    public GenericViolation(String msg, int begin, int end) {
+        this._message   = msg;
+        this._beginLine = begin;
+        this._endLine = end;
+    }
+    
     @Override
     public String getShortDescription() {
         return this._message;
     }
 
-    public int getLine() {
-        return this._line;
+    public int getBeginLine() {
+        return this._beginLine;
+    }
+    
+    public int getEndLine() {
+        return this._endLine;
     }
 
     @Override

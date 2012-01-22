@@ -59,7 +59,7 @@ public class ViolationRegistry {
                         fo,
                         res.getAnnotationType(),
                         res.getShortDescription(),
-                        res.getLine() + 1
+                        res.getBeginLine() + 1
                         ));
             }
                 
@@ -69,7 +69,7 @@ public class ViolationRegistry {
                         fo,
                         res.getAnnotationType(),
                         res.getShortDescription(),
-                        res.getLine() + 1
+                        res.getBeginLine() + 1
                         ));
             }
         }
