@@ -5,6 +5,6 @@
 <type name="de-foopara-phpcsmd-annotation-phpmd-violation"
       visible="true"
       glyph="nbresloc:/de/foopara/phpcsmd/resources/phpmd/violation.png"
-      highlight="#F0A0FF"
+      highlight="#FFC0FF"
       type="line"
 />
