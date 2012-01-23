@@ -7,6 +7,7 @@ package de.foopara.phpcsmd.generics;
 import de.foopara.phpcsmd.ViolationRegistry;
 import de.foopara.phpcsmd.exec.phpcs.Phpcs;
 import de.foopara.phpcsmd.exec.phpmd.Phpmd;
+import de.foopara.phpcsmd.option.GeneralOptions;
 import org.openide.filesystems.FileObject;
 
 /**
@@ -30,10 +31,12 @@ abstract public class GenericExecute {
     }
 
     public static void executeQATools(FileObject fo) {
-        new Phpcs().execute(fo);
-        new Phpmd().execute(fo);
-        ViolationRegistry.getInstance().reprintTasks(fo);
-        //new QAThread().start();
+        QAThread qaThread = new QAThread();
+        if (GeneralOptions.getThreaded()) {
+            qaThread.start();
+        } else {
+            qaThread.run();
+        }
     }
 
     private static class QAThread extends Thread {

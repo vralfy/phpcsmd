@@ -4,6 +4,7 @@
  */
 package de.foopara.phpcsmd.generics;
 
+import de.foopara.phpcsmd.option.GeneralOptions;
 import org.openide.filesystems.FileAttributeEvent;
 import org.openide.filesystems.FileChangeListener;
 import org.openide.filesystems.FileEvent;
@@ -30,7 +31,9 @@ public class GenericFileListener implements FileChangeListener {
             error.detach();
         }
         fe.getFile().removeFileChangeListener(this);
-        GenericExecute.executeQATools(fe.getFile());
+        if (GeneralOptions.getUpdateOnSave()) {
+            GenericExecute.executeQATools(fe.getFile());
+        }
     }
 
     @Override
