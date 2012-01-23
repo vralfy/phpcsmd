@@ -33,7 +33,7 @@ public class Phpmd extends GenericExecute {
         FileUtil.toFile(file).exists();
         File script = new File(PhpmdOptions.getScript());
         if (!script.exists() || !script.canExecute() || !script.isFile()
-                || !FileUtil.toFile(file).exists()) {
+                || !FileUtil.toFile(file).exists() || !FileUtil.toFile(file).isFile()) {
             return new PhpmdResult(null, null);
         }
 

@@ -33,7 +33,7 @@ public class Phpcs extends GenericExecute {
 
         File script = new File(PhpcsOptions.getScript());
         if (!script.exists() || !script.canExecute() || !script.isFile()
-                || !FileUtil.toFile(file).exists()) {
+                || !FileUtil.toFile(file).exists() || !FileUtil.toFile(file).isFile()) {
             return new PhpcsResult(null, null);
         }
 
