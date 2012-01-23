@@ -4,7 +4,6 @@
  */
 package de.foopara.phpcsmd.generics;
 
-import de.foopara.phpcsmd.exec.phpcs.Phpcs;
 import org.openide.filesystems.FileAttributeEvent;
 import org.openide.filesystems.FileChangeListener;
 import org.openide.filesystems.FileEvent;
@@ -17,11 +16,11 @@ import org.openide.filesystems.FileRenameEvent;
 public class GenericFileListener implements FileChangeListener {
 
     private GenericResult _res = null;
-    
+
     public void setResult(GenericResult res) {
         this._res = res;
     }
-    
+
     @Override
     public void fileChanged(FileEvent fe) {
         for(GenericViolation warning: this._res.getWarnings()) {
@@ -31,9 +30,9 @@ public class GenericFileListener implements FileChangeListener {
             error.detach();
         }
         fe.getFile().removeFileChangeListener(this);
-        new Phpcs().execute(fe.getFile());
+        GenericExecute.executeQATools(fe.getFile());
     }
-    
+
     @Override
     public void fileFolderCreated(FileEvent fe) {
     }
@@ -53,5 +52,5 @@ public class GenericFileListener implements FileChangeListener {
     @Override
     public void fileAttributeChanged(FileAttributeEvent fae) {
     }
-    
+
 }

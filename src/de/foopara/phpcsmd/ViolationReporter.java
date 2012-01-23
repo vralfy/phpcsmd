@@ -5,6 +5,8 @@
 package de.foopara.phpcsmd;
 
 import de.foopara.phpcsmd.exec.phpcs.Phpcs;
+import de.foopara.phpcsmd.exec.phpmd.Phpmd;
+import de.foopara.phpcsmd.generics.GenericExecute;
 import java.util.List;
 import org.netbeans.spi.tasklist.PushTaskScanner;
 import org.netbeans.spi.tasklist.Task;
@@ -38,13 +40,15 @@ public class ViolationReporter extends PushTaskScanner {
                 return;
             }
 
+            ViolationRegistry.getInstance().setCallback(file, clbck);
+
             clbck.setTasks(file, scan(file));
             i++;
         }
     }
 
     public List<? extends Task> scan(FileObject fo) {
-         new Phpcs().execute(fo);
+         GenericExecute.executeQATools(fo);
          return ViolationRegistry.getInstance().getTaskList(fo);
     }
 }
