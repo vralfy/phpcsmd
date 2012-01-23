@@ -30,14 +30,15 @@ public class Phpmd extends GenericExecute {
         if (!PhpmdOptions.getActivated()) {
             return new PhpmdResult(null, null);
         }
-        
+        FileUtil.toFile(file).exists();
         File script = new File(PhpmdOptions.getScript());
-        if (!script.exists() || !script.canExecute() || !script.isFile()) {
+        if (!script.exists() || !script.canExecute() || !script.isFile()
+                || !FileUtil.toFile(file).exists()) {
             return new PhpmdResult(null, null);
         }
-        
+
         File root = FileUtil.toFile(file.getParent());
-        
+
         if(root == null || this.isEnabled() == false) {
             return new GenericResult(null, null);
         }
@@ -47,14 +48,14 @@ public class Phpmd extends GenericExecute {
         cmd.append(" ").append(PhpmdOptions.getRules());
         this.appendArgument(cmd, "--suffixes", PhpmdOptions.getSuffixes());
         this.appendArgument(cmd, "--exclude", PhpmdOptions.getExcludes());
-        
+
         PhpmdXMLParser parser = new PhpmdXMLParser();
-    
+
         PhpmdResult res = parser.parse(GenericProcess.run(cmd.toString()));
-        ViolationRegistry.getInstance().setPhpcs(file, res);
+        ViolationRegistry.getInstance().setPhpmd(file, res);
         return res;
     }
-    
+
     private void appendArgument(StringBuilder b, String key, String value) {
         if (value.trim().length() > 0) {
             b.append(" ").append(key).append(" ").append(value);

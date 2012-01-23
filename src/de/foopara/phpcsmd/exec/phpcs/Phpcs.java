@@ -30,14 +30,15 @@ public class Phpcs extends GenericExecute {
         if (!PhpcsOptions.getActivated()) {
             return new PhpcsResult(null, null);
         }
-        
+
         File script = new File(PhpcsOptions.getScript());
-        if (!script.exists() || !script.canExecute() || !script.isFile()) {
+        if (!script.exists() || !script.canExecute() || !script.isFile()
+                || !FileUtil.toFile(file).exists()) {
             return new PhpcsResult(null, null);
         }
-        
+
         File root = FileUtil.toFile(file.getParent());
-        
+
         if(root == null || this.isEnabled() == false) {
             return new GenericResult(null, null);
         }
@@ -46,20 +47,20 @@ public class Phpcs extends GenericExecute {
         this.appendArgument(cmd, "--sniffs=", PhpcsOptions.getSniffs());
         this.appendArgument(cmd, "--extensions=", PhpcsOptions.getExtensions());
         this.appendArgument(cmd, "--ignore=", PhpcsOptions.getIgnore());
-        
+
         if (PhpcsOptions.getTabwidth() > -1) {
             cmd.append(" --tab-width=").append(PhpcsOptions.getTabwidth());
         }
-        
+
         if (PhpcsOptions.getWarnings()) {
             cmd.append(" -w");
         } else {
             cmd.append(" -n");
         }
-        
+
         cmd.append(" --report=xml");
         cmd.append(" ").append(file.getPath());
-        
+
         /*
         ExternalProcessBuilder epb = new ExternalProcessBuilder(PhpcsOptions.getScript());
         epb.workingDirectory(root);
@@ -67,14 +68,14 @@ public class Phpcs extends GenericExecute {
         //epb.addArgument("...");
         epb.addArgument("--report=xml");
         epb.addArgument(file.getPath());
-         */    
+         */
         PhpcsXMLParser parser = new PhpcsXMLParser();
-    
+
         PhpcsResult res = parser.parse(GenericProcess.run(cmd.toString()));
         ViolationRegistry.getInstance().setPhpcs(file, res);
         return res;
     }
-    
+
     private void appendArgument(StringBuilder b, String key, String value) {
         if (value.trim().length() > 0) {
             b.append(" ").append(key).append(value);
