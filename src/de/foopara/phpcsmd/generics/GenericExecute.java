@@ -30,7 +30,10 @@ abstract public class GenericExecute {
     }
 
     public static void executeQATools(FileObject fo) {
-        new QAThread().start();
+        new Phpcs().execute(fo);
+        new Phpmd().execute(fo);
+        ViolationRegistry.getInstance().reprintTasks(fo);
+        //new QAThread().start();
     }
 
     private static class QAThread extends Thread {
@@ -44,7 +47,7 @@ abstract public class GenericExecute {
         public void run() {
             new Phpcs().execute(this.fo);
             new Phpmd().execute(this.fo);
-            ViolationRegistry.getInstance().reprintTasks(fo);
+            ViolationRegistry.getInstance().reprintTasks(this.fo);
         }
     }
 }

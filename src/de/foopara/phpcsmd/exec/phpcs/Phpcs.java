@@ -27,21 +27,26 @@ public class Phpcs extends GenericExecute {
 
     @Override
     protected GenericResult run(FileObject file, boolean annotations) {
-        if (!PhpcsOptions.getActivated()) {
-            return new PhpcsResult(null, null);
-        }
+        PhpcsResult def = new PhpcsResult(null, null);
+        if (file == null) return def;
+        if (!PhpcsOptions.getActivated()) return def;
+
 
         File script = new File(PhpcsOptions.getScript());
-        if (!script.exists() || !script.canExecute() || !script.isFile()
-                || !FileUtil.toFile(file).exists() || !FileUtil.toFile(file).isFile()) {
-            return new PhpcsResult(null, null);
+        if (script == null) return def;
+
+        if (!script.exists()
+                || !script.canExecute()
+                || !script.isFile()
+                || !FileUtil.toFile(file).exists()
+                || !FileUtil.toFile(file).isFile()) {
+            return def;
         }
 
         File root = FileUtil.toFile(file.getParent());
 
-        if(root == null || this.isEnabled() == false) {
-            return new GenericResult(null, null);
-        }
+        if(root == null || this.isEnabled() == false) return def;
+
         StringBuilder cmd = new StringBuilder(PhpcsOptions.getScript());
         this.appendArgument(cmd, "--standard=", PhpcsOptions.getStandard());
         this.appendArgument(cmd, "--sniffs=", PhpcsOptions.getSniffs());

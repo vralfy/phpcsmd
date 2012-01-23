@@ -27,21 +27,26 @@ public class Phpmd extends GenericExecute {
 
     @Override
     protected GenericResult run(FileObject file, boolean annotations) {
-        if (!PhpmdOptions.getActivated()) {
-            return new PhpmdResult(null, null);
-        }
-        FileUtil.toFile(file).exists();
+        PhpmdResult def = new PhpmdResult(null, null);
+        if (file == null) return def;
+        if (!PhpmdOptions.getActivated()) return def;
+
+
         File script = new File(PhpmdOptions.getScript());
-        if (!script.exists() || !script.canExecute() || !script.isFile()
-                || !FileUtil.toFile(file).exists() || !FileUtil.toFile(file).isFile()) {
-            return new PhpmdResult(null, null);
+        if (script == null) return def;
+
+        if (!script.exists()
+                || !script.canExecute()
+                || !script.isFile()
+                || !FileUtil.toFile(file).exists()
+                || !FileUtil.toFile(file).isFile()) {
+            return def;
         }
 
         File root = FileUtil.toFile(file.getParent());
 
-        if(root == null || this.isEnabled() == false) {
-            return new GenericResult(null, null);
-        }
+        if(root == null || this.isEnabled() == false) return def;
+
         StringBuilder cmd = new StringBuilder(PhpmdOptions.getScript());
         cmd.append(" ").append(file.getPath());
         cmd.append(" ").append("xml");

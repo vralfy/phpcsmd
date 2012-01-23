@@ -48,6 +48,7 @@ public class ViolationRegistry {
     }
 
     public void reprintTasks(FileObject fo) {
+        if (fo == null) return;
         Callback clbk = this.callbacks.get(fo.getPath());
         if (clbk == null) return;
         clbk.setTasks(fo, this.getTaskList(fo));
@@ -55,6 +56,7 @@ public class ViolationRegistry {
 
     public ArrayList<Task> getTaskList(FileObject fo) {
         ArrayList<Task> list = new ArrayList<Task>();
+        if (fo == null) return list;
         this.appendTaskList(fo, list, this.phpcs);
         this.appendTaskList(fo, list, this.phpmd);
         return list;
