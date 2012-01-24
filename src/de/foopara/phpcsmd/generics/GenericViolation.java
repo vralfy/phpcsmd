@@ -15,7 +15,7 @@ public class GenericViolation extends Annotation {
     protected int _beginLine = 0;
     protected int _endLine = 0;
     protected String _annotationType = "phpcsmd";
-    
+
     protected String typePrefix = "de-foopara-phpcsmd-annotation-";
 
     public GenericViolation(String msg, int line) {
@@ -29,7 +29,7 @@ public class GenericViolation extends Annotation {
         this._beginLine = begin;
         this._endLine = end;
     }
-    
+
     @Override
     public String getShortDescription() {
         return this._message;
@@ -38,7 +38,7 @@ public class GenericViolation extends Annotation {
     public int getBeginLine() {
         return this._beginLine;
     }
-    
+
     public int getEndLine() {
         return this._endLine;
     }
@@ -47,9 +47,13 @@ public class GenericViolation extends Annotation {
     public String getAnnotationType() {
         return this.typePrefix + this._annotationType;
     }
-    
+
     public GenericViolation setAnnotationType(String annotationType) {
         this._annotationType = annotationType;
         return this;
+    }
+
+    public GenericViolation getViolationForLine(int line) {
+        return new GenericViolation(this._message, line).setAnnotationType(this._annotationType);
     }
 }

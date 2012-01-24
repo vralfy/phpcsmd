@@ -6,6 +6,7 @@ package de.foopara.phpcsmd.exec.phpcs;
 
 import de.foopara.phpcsmd.ViolationRegistry;
 import de.foopara.phpcsmd.generics.GenericExecute;
+import de.foopara.phpcsmd.generics.GenericOutputReader;
 import de.foopara.phpcsmd.generics.GenericProcess;
 import de.foopara.phpcsmd.generics.GenericResult;
 import de.foopara.phpcsmd.option.phpcs.PhpcsOptions;
@@ -31,7 +32,6 @@ public class Phpcs extends GenericExecute {
         if (file == null) return def;
         if (!PhpcsOptions.getActivated()) return def;
 
-
         File script = new File(PhpcsOptions.getScript());
         if (script == null) return def;
 
@@ -46,6 +46,8 @@ public class Phpcs extends GenericExecute {
         File root = FileUtil.toFile(file.getParent());
 
         if(root == null || this.isEnabled() == false) return def;
+
+        if (!iAmAlive()) return def;
 
         StringBuilder cmd = new StringBuilder(PhpcsOptions.getScript());
         this.appendArgument(cmd, "--standard=", PhpcsOptions.getStandard());
@@ -75,8 +77,11 @@ public class Phpcs extends GenericExecute {
         epb.addArgument(file.getPath());
          */
         PhpcsXMLParser parser = new PhpcsXMLParser();
-
-        PhpcsResult res = parser.parse(GenericProcess.run(cmd.toString()));
+        if (!iAmAlive()) return def;
+        GenericOutputReader reader = GenericProcess.run(cmd.toString());
+        if (!iAmAlive()) return def;
+        PhpcsResult res = parser.parse(reader);
+        if (!iAmAlive()) return def;
         ViolationRegistry.getInstance().setPhpcs(file, res);
         return res;
     }

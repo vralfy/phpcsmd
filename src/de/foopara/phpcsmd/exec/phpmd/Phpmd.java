@@ -6,6 +6,7 @@ package de.foopara.phpcsmd.exec.phpmd;
 
 import de.foopara.phpcsmd.ViolationRegistry;
 import de.foopara.phpcsmd.generics.GenericExecute;
+import de.foopara.phpcsmd.generics.GenericOutputReader;
 import de.foopara.phpcsmd.generics.GenericProcess;
 import de.foopara.phpcsmd.generics.GenericResult;
 import de.foopara.phpcsmd.option.phpmd.PhpmdOptions;
@@ -47,6 +48,8 @@ public class Phpmd extends GenericExecute {
 
         if(root == null || this.isEnabled() == false) return def;
 
+        if (!iAmAlive()) return def;
+
         StringBuilder cmd = new StringBuilder(PhpmdOptions.getScript());
         cmd.append(" ").append(file.getPath());
         cmd.append(" ").append("xml");
@@ -55,9 +58,12 @@ public class Phpmd extends GenericExecute {
         this.appendArgument(cmd, "--exclude", PhpmdOptions.getExcludes());
 
         PhpmdXMLParser parser = new PhpmdXMLParser();
-
-        PhpmdResult res = parser.parse(GenericProcess.run(cmd.toString()));
-        ViolationRegistry.getInstance().setPhpmd(file, res);
+        if (!iAmAlive()) return def;
+        GenericOutputReader reader = GenericProcess.run(cmd.toString());
+        if (!iAmAlive()) return def;
+        PhpmdResult res = parser.parse(reader);
+        if (!iAmAlive()) return def;
+        ViolationRegistry.getInstance().setPhpcs(file, res);
         return res;
     }
 

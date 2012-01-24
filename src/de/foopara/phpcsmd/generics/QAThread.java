@@ -34,7 +34,9 @@ public class QAThread extends Thread {
         }
 
         public void qarun() {
-            if (QAThread.instances.containsKey(this.fo.getPath())) {
+            if (QAThread.instances.containsKey(this.fo.getPath())
+                && QAThread.instances.get(this.fo.getPath()) != null)
+            {
                 QAThread.instances.get(this.fo.getPath()).interupt();
             }
             QAThread.instances.put(this.fo.getPath(), this);
@@ -42,12 +44,15 @@ public class QAThread extends Thread {
             if (!this.interupted) new Phpcs().execute(this.fo);
             if (!this.interupted) new Phpmd().execute(this.fo);
             if (!this.interupted) ViolationRegistry.getInstance().reprintTasks(this.fo);
-
-
+            this.interupt();
         }
 
         public void interupt() {
             this.interupted = true;
             QAThread.instances.remove(this.fo.getPath());
+        }
+
+        public boolean isInterupted() {
+            return this.interupted;
         }
 }

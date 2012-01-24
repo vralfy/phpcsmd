@@ -7,6 +7,7 @@ package de.foopara.phpcsmd.generics;
 import java.util.List;
 import org.openide.cookies.LineCookie;
 import org.openide.filesystems.FileObject;
+import org.openide.filesystems.FileUtil;
 import org.openide.loaders.DataObject;
 import org.openide.loaders.DataObjectNotFoundException;
 import org.openide.text.Line;
@@ -19,6 +20,8 @@ import org.openide.util.Exceptions;
 public class GenericAnnotationBuilder {
 
     public static void run(FileObject fo, GenericResult res) {
+        if (!FileUtil.toFile(fo).exists() || !FileUtil.toFile(fo).isFile()) return;
+
         GenericFileListener listener = new GenericFileListener();
         listener.setResult(res);
         fo.addFileChangeListener(listener);
@@ -28,11 +31,11 @@ public class GenericAnnotationBuilder {
             LineCookie cookie = oData.getCookie(LineCookie.class);
 
             GenericAnnotationBuilder.annotateList(
-                    res.getWarnings(), 
+                    res.getWarnings(),
                     cookie
             );
             GenericAnnotationBuilder.annotateList(
-                    res.getErrors(), 
+                    res.getErrors(),
                     cookie
             );
         } catch (DataObjectNotFoundException ex) {
@@ -52,7 +55,7 @@ public class GenericAnnotationBuilder {
         for (int i = v.getBeginLine(); i <= v.getEndLine(); i++) {
             Line.Set lineSet = cookie.getLineSet();
             Line line = lineSet.getOriginal(i);
-            v.attach(line);
+            v.getViolationForLine(i).attach(line);
         }
     }
 }

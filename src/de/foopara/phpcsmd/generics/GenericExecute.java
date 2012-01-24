@@ -4,9 +4,6 @@
  */
 package de.foopara.phpcsmd.generics;
 
-import de.foopara.phpcsmd.ViolationRegistry;
-import de.foopara.phpcsmd.exec.phpcs.Phpcs;
-import de.foopara.phpcsmd.exec.phpmd.Phpmd;
 import de.foopara.phpcsmd.option.GeneralOptions;
 import org.openide.filesystems.FileObject;
 
@@ -15,6 +12,8 @@ import org.openide.filesystems.FileObject;
  * @author nspecht
  */
 abstract public class GenericExecute {
+
+    protected QAThread qaThread = null;
     public abstract boolean isEnabled();
     protected abstract GenericResult run(FileObject file, boolean annotations);
 
@@ -28,6 +27,15 @@ abstract public class GenericExecute {
 
     public GenericResult execute(FileObject file, boolean annotations) {
         return this.run(file, annotations);
+    }
+
+    public void setThread(QAThread thread) {
+        this.qaThread = thread;
+    }
+
+    protected boolean iAmAlive() {
+        if (this.qaThread == null) return true;
+        return !this.qaThread.isInterupted();
     }
 
     public static void executeQATools(FileObject fo) {
