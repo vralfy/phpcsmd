@@ -36,22 +36,7 @@ abstract public class GenericExecute {
         if (GeneralOptions.getThreaded()) {
             qaThread.start();
         } else {
-            qaThread.run();
-        }
-    }
-
-    private static class QAThread extends Thread {
-        private FileObject fo =null;
-
-        public void setFileObject(FileObject fo) {
-            this.fo = fo;
-        }
-
-        @Override
-        public void run() {
-            new Phpcs().execute(this.fo);
-            new Phpmd().execute(this.fo);
-            ViolationRegistry.getInstance().reprintTasks(this.fo);
+            qaThread.qarun();
         }
     }
 }
