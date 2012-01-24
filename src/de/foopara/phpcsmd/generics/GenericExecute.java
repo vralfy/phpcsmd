@@ -32,6 +32,7 @@ abstract public class GenericExecute {
 
     public static void executeQATools(FileObject fo) {
         QAThread qaThread = new QAThread();
+        qaThread.setFileObject(fo);
         if (GeneralOptions.getThreaded()) {
             qaThread.start();
         } else {
@@ -40,9 +41,9 @@ abstract public class GenericExecute {
     }
 
     private static class QAThread extends Thread {
-        FileObject fo =null;
+        private FileObject fo =null;
 
-        public void QAThread(FileObject fo) {
+        public void setFileObject(FileObject fo) {
             this.fo = fo;
         }
 
