@@ -26,11 +26,14 @@ public class GenericFileListener implements FileChangeListener {
     public void fileChanged(FileEvent fe) {
         for(GenericViolation warning: this._res.getWarnings()) {
             warning.detach();
+            warning.detachChildren();
         }
         for(GenericViolation error: this._res.getErrors()) {
             error.detach();
+            error.detachChildren();
         }
         fe.getFile().removeFileChangeListener(this);
+        
         if (GeneralOptions.getUpdateOnSave()) {
             GenericExecute.executeQATools(fe.getFile());
         }

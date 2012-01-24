@@ -5,14 +5,10 @@
 package de.foopara.phpcsmd.exec.phpmd;
 
 import de.foopara.phpcsmd.ViolationRegistry;
-import de.foopara.phpcsmd.generics.GenericExecute;
-import de.foopara.phpcsmd.generics.GenericOutputReader;
-import de.foopara.phpcsmd.generics.GenericProcess;
-import de.foopara.phpcsmd.generics.GenericResult;
+import de.foopara.phpcsmd.generics.*;
 import de.foopara.phpcsmd.option.phpmd.PhpmdOptions;
 import java.io.File;
 import org.openide.filesystems.FileObject;
-import org.openide.filesystems.FileUtil;
 
 /**
  *
@@ -29,24 +25,15 @@ public class Phpmd extends GenericExecute {
     @Override
     protected GenericResult run(FileObject file, boolean annotations) {
         PhpmdResult def = new PhpmdResult(null, null);
-        if (file == null) return def;
+
         if (!PhpmdOptions.getActivated()) return def;
 
-
-        File script = new File(PhpmdOptions.getScript());
-        if (script == null) return def;
-
-        if (!script.exists()
-                || !script.canExecute()
-                || !script.isFile()
-                || !FileUtil.toFile(file).exists()
-                || !FileUtil.toFile(file).isFile()) {
+        if (!GenericHelper.isDesirableFile(new File(PhpmdOptions.getScript()))
+                || !GenericHelper.isDesirableFile(file)) {
             return def;
         }
 
-        File root = FileUtil.toFile(file.getParent());
-
-        if(root == null || this.isEnabled() == false) return def;
+        if(this.isEnabled() == false) return def;
 
         if (!iAmAlive()) return def;
 
@@ -63,7 +50,7 @@ public class Phpmd extends GenericExecute {
         if (!iAmAlive()) return def;
         PhpmdResult res = parser.parse(reader);
         if (!iAmAlive()) return def;
-        ViolationRegistry.getInstance().setPhpcs(file, res);
+        ViolationRegistry.getInstance().setPhpmd(file, res);
         return res;
     }
 

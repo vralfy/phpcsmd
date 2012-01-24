@@ -5,10 +5,7 @@
 package de.foopara.phpcsmd.exec.phpcs;
 
 import de.foopara.phpcsmd.ViolationRegistry;
-import de.foopara.phpcsmd.generics.GenericExecute;
-import de.foopara.phpcsmd.generics.GenericOutputReader;
-import de.foopara.phpcsmd.generics.GenericProcess;
-import de.foopara.phpcsmd.generics.GenericResult;
+import de.foopara.phpcsmd.generics.*;
 import de.foopara.phpcsmd.option.phpcs.PhpcsOptions;
 import java.io.File;
 import org.openide.filesystems.FileObject;
@@ -29,23 +26,15 @@ public class Phpcs extends GenericExecute {
     @Override
     protected GenericResult run(FileObject file, boolean annotations) {
         PhpcsResult def = new PhpcsResult(null, null);
-        if (file == null) return def;
+
         if (!PhpcsOptions.getActivated()) return def;
 
-        File script = new File(PhpcsOptions.getScript());
-        if (script == null) return def;
-
-        if (!script.exists()
-                || !script.canExecute()
-                || !script.isFile()
-                || !FileUtil.toFile(file).exists()
-                || !FileUtil.toFile(file).isFile()) {
+        if (!GenericHelper.isDesirableFile(new File(PhpcsOptions.getScript()))
+                || !GenericHelper.isDesirableFile(file)) {
             return def;
         }
 
-        File root = FileUtil.toFile(file.getParent());
-
-        if(root == null || this.isEnabled() == false) return def;
+        if(this.isEnabled() == false) return def;
 
         if (!iAmAlive()) return def;
 

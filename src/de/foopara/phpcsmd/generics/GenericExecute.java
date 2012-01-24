@@ -29,8 +29,9 @@ abstract public class GenericExecute {
         return this.run(file, annotations);
     }
 
-    public void setThread(QAThread thread) {
+    public GenericExecute setThread(QAThread thread) {
         this.qaThread = thread;
+        return this;
     }
 
     protected boolean iAmAlive() {

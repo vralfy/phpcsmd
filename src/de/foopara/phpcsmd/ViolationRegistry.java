@@ -34,12 +34,12 @@ public class ViolationRegistry {
     LinkedHashMap<String, Callback> callbacks = new LinkedHashMap<String, Callback>();
 
     public void setPhpcs(FileObject fo, GenericResult res) {
-        this.phpcs.put(fo.getPath(), res);
+        this.put(fo, res, this.phpcs);
         GenericAnnotationBuilder.run(fo, res);
     }
 
     public void setPhpmd(FileObject fo, GenericResult res) {
-        this.phpmd.put(fo.getPath(), res);
+        this.put(fo, res, this.phpmd);
         GenericAnnotationBuilder.run(fo, res);
     }
 
@@ -47,10 +47,28 @@ public class ViolationRegistry {
         this.callbacks.put(fo.getPath(), clbk);
     }
 
+    private void put(FileObject fo, GenericResult res, LinkedHashMap<String, GenericResult> list) {
+        if (list.containsKey(fo.getPath())) {
+            GenericResult oldres = list.get(fo.getPath());
+            for (int i=0;i<oldres.getWarnings().size(); i++) {
+                GenericViolation v = oldres.getWarnings().get(i);
+                v.detach();
+                v.detachChildren();
+            }
+            for (int i=0;i<oldres.getErrors().size(); i++) {
+                GenericViolation v = oldres.getErrors().get(i);
+                v.detach();
+                v.detachChildren();
+            }
+        }
+        list.put(fo.getPath(), res);
+    }
+
     public void reprintTasks(FileObject fo) {
         if (fo == null) return;
         Callback clbk = this.callbacks.get(fo.getPath());
         if (clbk == null) return;
+        clbk.clearAllTasks();
         clbk.setTasks(fo, this.getTaskList(fo));
     }
 

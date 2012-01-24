@@ -4,6 +4,7 @@
  */
 package de.foopara.phpcsmd.generics;
 
+import java.util.ArrayList;
 import org.openide.text.Annotation;
 
 /**
@@ -17,6 +18,8 @@ public class GenericViolation extends Annotation {
     protected String _annotationType = "phpcsmd";
 
     protected String typePrefix = "de-foopara-phpcsmd-annotation-";
+
+    ArrayList<GenericViolation> children = new ArrayList<GenericViolation>();
 
     public GenericViolation(String msg, int line) {
         this._message   = msg;
@@ -54,6 +57,17 @@ public class GenericViolation extends Annotation {
     }
 
     public GenericViolation getViolationForLine(int line) {
-        return new GenericViolation(this._message, line).setAnnotationType(this._annotationType);
+        if (line == this._beginLine) return this;
+        GenericViolation child = new GenericViolation(this._message, line).setAnnotationType(this._annotationType);
+        this.children.add(child);
+        return child;
+    }
+
+    public void detachChildren() {
+        for (int i=0; i<this.children.size();i++) {
+            this.children.get(i).detach();
+            this.children.get(i).detachChildren();
+        }
+        this.children.clear();
     }
 }

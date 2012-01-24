@@ -7,7 +7,6 @@ package de.foopara.phpcsmd.generics;
 import java.util.List;
 import org.openide.cookies.LineCookie;
 import org.openide.filesystems.FileObject;
-import org.openide.filesystems.FileUtil;
 import org.openide.loaders.DataObject;
 import org.openide.loaders.DataObjectNotFoundException;
 import org.openide.text.Line;
@@ -20,7 +19,7 @@ import org.openide.util.Exceptions;
 public class GenericAnnotationBuilder {
 
     public static void run(FileObject fo, GenericResult res) {
-        if (!FileUtil.toFile(fo).exists() || !FileUtil.toFile(fo).isFile()) return;
+        if (!GenericHelper.isDesirableFile(fo)) return;
 
         GenericFileListener listener = new GenericFileListener();
         listener.setResult(res);
