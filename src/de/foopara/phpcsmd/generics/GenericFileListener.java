@@ -5,35 +5,17 @@
 package de.foopara.phpcsmd.generics;
 
 import de.foopara.phpcsmd.option.GeneralOptions;
-import org.openide.filesystems.FileAttributeEvent;
-import org.openide.filesystems.FileChangeListener;
-import org.openide.filesystems.FileEvent;
-import org.openide.filesystems.FileRenameEvent;
+import org.openide.filesystems.*;
 
 /**
  *
  * @author nspecht
  */
 public class GenericFileListener implements FileChangeListener {
-
-    private GenericResult _res = null;
-
-    public void setResult(GenericResult res) {
-        this._res = res;
-    }
-
     @Override
     public void fileChanged(FileEvent fe) {
-        for(GenericViolation warning: this._res.getWarnings()) {
-            warning.detach();
-            warning.detachChildren();
-        }
-        for(GenericViolation error: this._res.getErrors()) {
-            error.detach();
-            error.detachChildren();
-        }
-        fe.getFile().removeFileChangeListener(this);
-        
+        System.out.println("Änderung!!!!!!");
+
         if (GeneralOptions.getUpdateOnSave()) {
             GenericExecute.executeQATools(fe.getFile());
         }
@@ -58,5 +40,4 @@ public class GenericFileListener implements FileChangeListener {
     @Override
     public void fileAttributeChanged(FileAttributeEvent fae) {
     }
-
 }

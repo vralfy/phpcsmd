@@ -27,10 +27,8 @@ public class ViolationRegistry {
         }
         return ViolationRegistry.instance;
     }
-
     LinkedHashMap<String, GenericResult> phpcs = new LinkedHashMap<String, GenericResult>();
     LinkedHashMap<String, GenericResult> phpmd = new LinkedHashMap<String, GenericResult>();
-
     LinkedHashMap<String, Callback> callbacks = new LinkedHashMap<String, Callback>();
 
     public void setPhpcs(FileObject fo, GenericResult res) {
@@ -48,33 +46,44 @@ public class ViolationRegistry {
     }
 
     private void put(FileObject fo, GenericResult res, LinkedHashMap<String, GenericResult> list) {
+        //Detach old result
         if (list.containsKey(fo.getPath())) {
             GenericResult oldres = list.get(fo.getPath());
-            for (int i=0;i<oldres.getWarnings().size(); i++) {
+            for (int i = 0; i < oldres.getWarnings().size(); i++) {
                 GenericViolation v = oldres.getWarnings().get(i);
                 v.detach();
                 v.detachChildren();
             }
-            for (int i=0;i<oldres.getErrors().size(); i++) {
+            for (int i = 0; i < oldres.getErrors().size(); i++) {
                 GenericViolation v = oldres.getErrors().get(i);
                 v.detach();
                 v.detachChildren();
             }
+
+            oldres.getWarnings().clear();
+            oldres.getErrors().clear();
         }
+        //Add new result (will be attached later
         list.put(fo.getPath(), res);
     }
 
     public void reprintTasks(FileObject fo) {
-        if (fo == null) return;
+        if (fo == null) {
+            return;
+        }
         Callback clbk = this.callbacks.get(fo.getPath());
-        if (clbk == null) return;
+        if (clbk == null) {
+            return;
+        }
         clbk.clearAllTasks();
         clbk.setTasks(fo, this.getTaskList(fo));
     }
 
     public ArrayList<Task> getTaskList(FileObject fo) {
         ArrayList<Task> list = new ArrayList<Task>();
-        if (fo == null) return list;
+        if (fo == null) {
+            return list;
+        }
         this.appendTaskList(fo, list, this.phpcs);
         this.appendTaskList(fo, list, this.phpmd);
         return list;
@@ -83,27 +92,24 @@ public class ViolationRegistry {
     private void appendTaskList(
             FileObject fo,
             ArrayList<Task> dst,
-            LinkedHashMap<String, GenericResult> registry
-    ) {
+            LinkedHashMap<String, GenericResult> registry) {
         if (registry.containsKey(fo.getPath())) {
             for (GenericViolation res : registry.get(fo.getPath()).getWarnings()) {
                 dst.add(
-                    Task.create(
+                        Task.create(
                         fo,
                         res.getAnnotationType(),
                         res.getShortDescription(),
-                        res.getBeginLine() + 1
-                        ));
+                        res.getBeginLine() + 1));
             }
 
             for (GenericViolation res : registry.get(fo.getPath()).getErrors()) {
                 dst.add(
-                    Task.create(
+                        Task.create(
                         fo,
                         res.getAnnotationType(),
                         res.getShortDescription(),
-                        res.getBeginLine() + 1
-                        ));
+                        res.getBeginLine() + 1));
             }
         }
     }

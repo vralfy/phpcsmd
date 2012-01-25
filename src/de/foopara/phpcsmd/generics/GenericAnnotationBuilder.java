@@ -4,6 +4,7 @@
  */
 package de.foopara.phpcsmd.generics;
 
+import de.foopara.phpcsmd.FileListenerRegistry;
 import java.util.List;
 import org.openide.cookies.LineCookie;
 import org.openide.filesystems.FileObject;
@@ -21,9 +22,7 @@ public class GenericAnnotationBuilder {
     public static void run(FileObject fo, GenericResult res) {
         if (!GenericHelper.isDesirableFile(fo)) return;
 
-        GenericFileListener listener = new GenericFileListener();
-        listener.setResult(res);
-        fo.addFileChangeListener(listener);
+        FileListenerRegistry.getListener(fo);
 
         try {
             DataObject oData = DataObject.find(fo);
