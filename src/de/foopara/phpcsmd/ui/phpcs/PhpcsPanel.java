@@ -29,7 +29,7 @@ public class PhpcsPanel extends GenericOptionsPanel {
     public static PhpcsPanel getInstance() {
         return PhpcsPanel.instance;
     }
-    
+
     private void _clearInstalledStandards() {
         this.jComboBox1.removeAllItems();
         ((DefaultComboBoxModel)this.jComboBox1.getModel())
@@ -230,7 +230,7 @@ public class PhpcsPanel extends GenericOptionsPanel {
     }//GEN-LAST:event_optStandardActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        
+
         try {
             File script = new File(optScript.getText());
             if (!script.exists() || !script.canExecute() || !script.isFile()) {
@@ -281,7 +281,7 @@ public class PhpcsPanel extends GenericOptionsPanel {
     @Override
     public void load() {
         this.optActive.setSelected(PhpcsOptions.getActivated());
-        
+
         this.optScript.setText(PhpcsOptions.getScript());
         this.optStandard.setText(PhpcsOptions.getStandard());
         this.optSniffs.setText(PhpcsOptions.getSniffs());
@@ -294,7 +294,7 @@ public class PhpcsPanel extends GenericOptionsPanel {
     @Override
     public void save() {
         PhpcsOptions.setActivated(this.optActive.isSelected());
-        
+
         PhpcsOptions.setScript(this.optScript.getText());
         PhpcsOptions.setStandard(this.optStandard.getText());
         PhpcsOptions.setSniffs(this.optSniffs.getText());
