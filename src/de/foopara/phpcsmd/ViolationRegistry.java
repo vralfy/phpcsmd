@@ -4,6 +4,7 @@
  */
 package de.foopara.phpcsmd;
 
+import de.foopara.phpcsmd.exec.phpcpd.PhpcpdResult;
 import de.foopara.phpcsmd.generics.GenericAnnotationBuilder;
 import de.foopara.phpcsmd.generics.GenericResult;
 import de.foopara.phpcsmd.generics.GenericViolation;
@@ -29,6 +30,7 @@ public class ViolationRegistry {
     }
     LinkedHashMap<String, GenericResult> phpcs = new LinkedHashMap<String, GenericResult>();
     LinkedHashMap<String, GenericResult> phpmd = new LinkedHashMap<String, GenericResult>();
+    LinkedHashMap<String, GenericResult> phpcpd = new LinkedHashMap<String, GenericResult>();
     LinkedHashMap<String, Callback> callbacks = new LinkedHashMap<String, Callback>();
 
     public void setPhpcs(FileObject fo, GenericResult res) {
@@ -38,6 +40,11 @@ public class ViolationRegistry {
 
     public void setPhpmd(FileObject fo, GenericResult res) {
         this.put(fo, res, this.phpmd);
+        GenericAnnotationBuilder.run(fo, res);
+    }
+
+    public void setPhpcpd(FileObject fo, PhpcpdResult res) {
+        this.put(fo, res, this.phpcpd);
         GenericAnnotationBuilder.run(fo, res);
     }
 

@@ -5,6 +5,7 @@
 package de.foopara.phpcsmd.generics;
 
 import de.foopara.phpcsmd.ViolationRegistry;
+import de.foopara.phpcsmd.exec.phpcpd.Phpcpd;
 import de.foopara.phpcsmd.exec.phpcs.Phpcs;
 import de.foopara.phpcsmd.exec.phpmd.Phpmd;
 import java.util.ArrayList;
@@ -47,6 +48,7 @@ public class QAThread extends Thread {
             QAThread.instances.add(this);
             if (!this.interupted) new Phpcs().execute(this.fo);
             if (!this.interupted) new Phpmd().execute(this.fo);
+            if (!this.interupted) new Phpcpd().execute(this.fo);
             if (!this.interupted) ViolationRegistry.getInstance().reprintTasks(this.fo);
 
             QAThread.instances.remove(this);

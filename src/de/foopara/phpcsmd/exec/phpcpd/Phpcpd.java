@@ -38,12 +38,12 @@ public class Phpcpd extends GenericExecute {
         if (!iAmAlive()) return def;
 
         StringBuilder cmd = new StringBuilder(PhpcpdOptions.getScript());
-        this.appendArgument(cmd, "--min-lines", "" + PhpcpdOptions.getMinLines());
-        this.appendArgument(cmd, "--min-lines", "" + PhpcpdOptions.getMinTokens());
-        this.appendArgument(cmd, "--suffixes", PhpcpdOptions.getSuffixes());
-        this.appendArgument(cmd, "--exclude", PhpcpdOptions.getExcludes());
+        this.appendArgument(cmd, "--min-lines ", "" + PhpcpdOptions.getMinLines());
+        this.appendArgument(cmd, "--min-tokens ", "" + PhpcpdOptions.getMinTokens());
+        this.appendArgument(cmd, "--suffixes ", PhpcpdOptions.getSuffixes());
+        this.appendArgument(cmd, "--exclude ", PhpcpdOptions.getExcludes());
         cmd.append(" ").append(file.getPath());
-
+        System.out.println(cmd.toString());
         /*
         ExternalProcessBuilder epb = new ExternalProcessBuilder(PhpcsOptions.getScript());
         epb.workingDirectory(root);
@@ -58,7 +58,7 @@ public class Phpcpd extends GenericExecute {
         if (!iAmAlive()) return def;
         PhpcpdResult res = parser.parse(reader);
         if (!iAmAlive()) return def;
-        ViolationRegistry.getInstance().setPhpcs(file, res);
+        ViolationRegistry.getInstance().setPhpcpd(file, res);
         return res;
     }
 
