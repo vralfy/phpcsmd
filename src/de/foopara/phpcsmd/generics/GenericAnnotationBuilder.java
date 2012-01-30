@@ -36,6 +36,10 @@ public class GenericAnnotationBuilder {
                     res.getErrors(),
                     cookie
             );
+            GenericAnnotationBuilder.annotateList(
+                    res.getNoTask(),
+                    cookie
+            );
         } catch (DataObjectNotFoundException ex) {
             Exceptions.printStackTrace(ex);
         }

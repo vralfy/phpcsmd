@@ -14,8 +14,6 @@ import org.openide.filesystems.*;
 public class GenericFileListener implements FileChangeListener {
     @Override
     public void fileChanged(FileEvent fe) {
-        System.out.println("Änderung!!!!!!");
-
         if (GeneralOptions.getUpdateOnSave()) {
             GenericExecute.executeQATools(fe.getFile());
         }

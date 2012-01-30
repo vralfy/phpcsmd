@@ -14,8 +14,8 @@ import java.util.List;
  */
 public class PhpcpdResult extends GenericResult {
 
-    public PhpcpdResult(List<GenericViolation> warnings, List<GenericViolation> errors) {
-        super(warnings,errors);
+    public PhpcpdResult(List<GenericViolation> warnings, List<GenericViolation> errors, List<GenericViolation> noTask) {
+        super(warnings,errors,noTask);
     }
 
 

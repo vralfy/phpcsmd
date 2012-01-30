@@ -13,10 +13,10 @@ import java.util.List;
  * @author nspecht
  */
 public class PhpcsResult extends GenericResult {
-            
-    public PhpcsResult(List<GenericViolation> warnings, List<GenericViolation> errors) {
-        super(warnings,errors);
+
+    public PhpcsResult(List<GenericViolation> warnings, List<GenericViolation> errors, List<GenericViolation> noTask) {
+        super(warnings,errors, noTask);
     }
-    
-    
+
+
 }

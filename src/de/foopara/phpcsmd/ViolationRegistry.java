@@ -66,9 +66,14 @@ public class ViolationRegistry {
                 v.detach();
                 v.detachChildren();
             }
-
+            for (int i = 0; i < oldres.getNoTask().size(); i++) {
+                GenericViolation v = oldres.getNoTask().get(i);
+                v.detach();
+                v.detachChildren();
+            }
             oldres.getWarnings().clear();
             oldres.getErrors().clear();
+            oldres.getNoTask().clear();
         }
         //Add new result (will be attached later
         list.put(fo.getPath(), res);

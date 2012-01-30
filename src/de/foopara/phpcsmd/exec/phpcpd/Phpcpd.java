@@ -24,7 +24,7 @@ public class Phpcpd extends GenericExecute {
 
     @Override
     protected GenericResult run(FileObject file, boolean annotations) {
-        PhpcpdResult def = new PhpcpdResult(null, null);
+        PhpcpdResult def = new PhpcpdResult(null, null, null);
 
         if (!PhpcpdOptions.getActivated()) return def;
 

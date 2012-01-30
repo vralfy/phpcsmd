@@ -22,14 +22,14 @@ public class PhpmdXMLParser {
 
     public PhpmdResult parse(GenericOutputReader reader) {
         List<GenericViolation> violations = new ArrayList<GenericViolation>();
-        
+
         try {
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
             DocumentBuilder builder = factory.newDocumentBuilder();
             Document document;
             document = builder.parse(new InputSource(reader.getReader()));
             NodeList ndList = document.getElementsByTagName("violation");
-            
+
             for (int i = 0; i < ndList.getLength(); i++) {
                 String message = ndList.item(i).getTextContent().trim();
                 NamedNodeMap nm = ndList.item(i).getAttributes();
@@ -39,14 +39,14 @@ public class PhpmdXMLParser {
                         new GenericViolation(message, start, end)
                         .setAnnotationType("phpmd-violation"));
             }
-            
+
         } catch (IOException ex) {
         } catch (ParserConfigurationException ex) {
         } catch (SAXParseException ex) {
         } catch (SAXException ex) {
         }
         /**/
-        
-        return new PhpmdResult(null, violations);
+
+        return new PhpmdResult(null, violations, null);
     }
 }

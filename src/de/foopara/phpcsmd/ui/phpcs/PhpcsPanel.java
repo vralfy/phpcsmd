@@ -70,6 +70,9 @@ public class PhpcsPanel extends GenericOptionsPanel {
         optSniffs = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
         optTabwidth = new javax.swing.JSpinner();
+        optXtra = new javax.swing.JCheckBox();
+        jSeparator1 = new javax.swing.JSeparator();
+        optXUnreachable = new javax.swing.JCheckBox();
 
         setLayout(new java.awt.GridBagLayout());
 
@@ -223,6 +226,26 @@ public class PhpcsPanel extends GenericOptionsPanel {
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.insets = new java.awt.Insets(0, 0, 2, 2);
         add(optTabwidth, gridBagConstraints);
+
+        optXtra.setText(org.openide.util.NbBundle.getMessage(PhpcsPanel.class, "PhpcsPanel.optXtra.text")); // NOI18N
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridy = 300;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        add(optXtra, gridBagConstraints);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 300;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        add(jSeparator1, gridBagConstraints);
+
+        optXUnreachable.setText(org.openide.util.NbBundle.getMessage(PhpcsPanel.class, "PhpcsPanel.optXUnreachable.text")); // NOI18N
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 301;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        add(optXUnreachable, gridBagConstraints);
     }// </editor-fold>//GEN-END:initComponents
 
     private void optStandardActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_optStandardActionPerformed
@@ -268,6 +291,7 @@ public class PhpcsPanel extends GenericOptionsPanel {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JSeparator jSeparator1;
     private javax.swing.JCheckBox optActive;
     private javax.swing.JTextField optExt;
     private javax.swing.JTextField optIgnore;
@@ -276,6 +300,8 @@ public class PhpcsPanel extends GenericOptionsPanel {
     private javax.swing.JTextField optStandard;
     private javax.swing.JSpinner optTabwidth;
     private javax.swing.JCheckBox optWarning;
+    private javax.swing.JCheckBox optXUnreachable;
+    private javax.swing.JCheckBox optXtra;
     // End of variables declaration//GEN-END:variables
 
     @Override
@@ -289,6 +315,8 @@ public class PhpcsPanel extends GenericOptionsPanel {
         this.optIgnore.setText(PhpcsOptions.getIgnore());
         this.optTabwidth.setValue(PhpcsOptions.getTabwidth());
         this.optWarning.setSelected(PhpcsOptions.getWarnings());
+        this.optXtra.setSelected(PhpcsOptions.getExtras());
+        this.optXUnreachable.setSelected(PhpcsOptions.getXUnreachable());
     }
 
     @Override
@@ -303,6 +331,8 @@ public class PhpcsPanel extends GenericOptionsPanel {
         PhpcsOptions.setTabwidth((Integer)this.optTabwidth.getValue());
 
         PhpcsOptions.setWarnings(this.optWarning.isSelected());
+        PhpcsOptions.setExtras(this.optXtra.isSelected());
+        PhpcsOptions.setXUnreachable(this.optXUnreachable.isSelected());
     }
 
     @Override

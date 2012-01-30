@@ -25,7 +25,7 @@ public class Phpcs extends GenericExecute {
 
     @Override
     protected GenericResult run(FileObject file, boolean annotations) {
-        PhpcsResult def = new PhpcsResult(null, null);
+        PhpcsResult def = new PhpcsResult(null, null, null);
 
         if (!PhpcsOptions.getActivated()) return def;
 
@@ -37,9 +37,14 @@ public class Phpcs extends GenericExecute {
         if(this.isEnabled() == false) return def;
 
         if (!iAmAlive()) return def;
-
+        CustomStandard cstandard = null;
         StringBuilder cmd = new StringBuilder(PhpcsOptions.getScript());
-        this.appendArgument(cmd, "--standard=", PhpcsOptions.getStandard());
+        if (PhpcsOptions.getExtras()) {
+            cstandard = new CustomStandard();
+            this.appendArgument(cmd, "--standard=", cstandard.toString());
+        } else {
+            this.appendArgument(cmd, "--standard=", PhpcsOptions.getStandard());
+        }
         this.appendArgument(cmd, "--sniffs=", PhpcsOptions.getSniffs());
         this.appendArgument(cmd, "--extensions=", PhpcsOptions.getExtensions());
         this.appendArgument(cmd, "--ignore=", PhpcsOptions.getIgnore());
@@ -72,6 +77,11 @@ public class Phpcs extends GenericExecute {
         PhpcsResult res = parser.parse(reader);
         if (!iAmAlive()) return def;
         ViolationRegistry.getInstance().setPhpcs(file, res);
+
+        if (PhpcsOptions.getExtras() && cstandard != null) {
+            cstandard.delete();
+        }
+
         return res;
     }
 

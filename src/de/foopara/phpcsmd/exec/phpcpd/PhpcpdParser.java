@@ -32,6 +32,6 @@ public class PhpcpdParser {
         } catch (IOException ex) {
             Exceptions.printStackTrace(ex);
         }
-        return new PhpcpdResult(csWarnings, csErrors);
+        return new PhpcpdResult(csWarnings, csErrors, null);
     }
 }

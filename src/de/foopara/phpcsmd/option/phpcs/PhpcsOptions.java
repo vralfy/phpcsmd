@@ -16,29 +16,35 @@ public class PhpcsOptions {
 
     public static final String _PREFIX = "phpcsmd.phpcs.";
 
-    private static final String _ACTIVATED          = "activated";
-    private static final String _ACTIVATED_DEFAULT  = "true";
+    private static final String _ACTIVATED            = "activated";
+    private static final String _ACTIVATED_DEFAULT    = "true";
     
-    private static final String _SCRIPT             = "script";
-    private static final String _SCRIPT_DEFAULT     = "/usr/bin/phpcs";
+    private static final String _SCRIPT               = "script";
+    private static final String _SCRIPT_DEFAULT       = "/usr/bin/phpcs";
     
-    private static final String _STANDARD           = "standard";
-    private static final String _STANDARD_DEFAULT   = "Zend";
+    private static final String _STANDARD             = "standard";
+    private static final String _STANDARD_DEFAULT     = "Zend";
 
-    private static final String _SNIFFS             = "sniffs";
-    private static final String _SNIFFS_DEFAULT     = "";
+    private static final String _SNIFFS               = "sniffs";
+    private static final String _SNIFFS_DEFAULT       = "";
     
-    private static final String _IGNORES            = "ignores";
-    private static final String _IGNORES_DEFAULT    = "";
+    private static final String _IGNORES              = "ignores";
+    private static final String _IGNORES_DEFAULT      = "";
 
-    private static final String _EXTENSIONS         = "extensions";
-    private static final String _EXTENSIONS_DEFAULT = "";
+    private static final String _EXTENSIONS           = "extensions";
+    private static final String _EXTENSIONS_DEFAULT   = "";
 
-    private static final String _TABWIDTH           = "tabwidth";
-    private static final String _TABWIDTH_DEFAULT   = "-1";
+    private static final String _TABWIDTH             = "tabwidth";
+    private static final String _TABWIDTH_DEFAULT     = "-1";
     
-    private static final String _WARNINGS           = "warnings";
-    private static final String _WARNINGS_DEFAULT   = "true";
+    private static final String _WARNINGS             = "warnings";
+    private static final String _WARNINGS_DEFAULT     = "true";
+
+    private static final String _EXTRAS               = "extras";
+    private static final String _EXTRAS_DEFAULT       = "false";
+
+    private static final String _XUNREACHABLE         = "xunreachable";
+    private static final String _XUNREACHABLE_DEFAULT = "false";
 
     private static Preferences _modul() {
         return NbPreferences.forModule(PHPCSMD.class);
@@ -106,5 +112,21 @@ public class PhpcsOptions {
 
     public static void setWarnings(boolean showWarnings) {
         PhpcsOptions._modul().put(_PREFIX + _WARNINGS, showWarnings ? "true" : "false");
+    }
+
+    public static boolean getExtras() {
+        return (PhpcsOptions._modul().get(_PREFIX + _EXTRAS, _EXTRAS_DEFAULT).compareTo("true") == 0);
+    }
+
+    public static void setExtras(boolean extras) {
+        PhpcsOptions._modul().put(_PREFIX + _EXTRAS, extras ? "true" : "false");
+    }
+
+    public static boolean getXUnreachable() {
+        return (PhpcsOptions._modul().get(_PREFIX + _XUNREACHABLE, _XUNREACHABLE_DEFAULT).compareTo("true") == 0);
+    }
+
+    public static void setXUnreachable(boolean unreachable) {
+        PhpcsOptions._modul().put(_PREFIX + _XUNREACHABLE, unreachable ? "true" : "false");
     }
 }

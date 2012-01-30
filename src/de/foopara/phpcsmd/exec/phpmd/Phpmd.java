@@ -24,7 +24,7 @@ public class Phpmd extends GenericExecute {
 
     @Override
     protected GenericResult run(FileObject file, boolean annotations) {
-        PhpmdResult def = new PhpmdResult(null, null);
+        PhpmdResult def = new PhpmdResult(null, null, null);
 
         if (!PhpmdOptions.getActivated()) return def;
 
