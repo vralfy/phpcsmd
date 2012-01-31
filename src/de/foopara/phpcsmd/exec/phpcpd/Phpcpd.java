@@ -43,15 +43,7 @@ public class Phpcpd extends GenericExecute {
         this.appendArgument(cmd, "--suffixes ", PhpcpdOptions.getSuffixes());
         this.appendArgument(cmd, "--exclude ", PhpcpdOptions.getExcludes());
         cmd.append(" ").append(file.getPath());
-        System.out.println(cmd.toString());
-        /*
-        ExternalProcessBuilder epb = new ExternalProcessBuilder(PhpcsOptions.getScript());
-        epb.workingDirectory(root);
-        epb.addArgument("--standard=" + PhpcsOptions.getStandard());
-        //epb.addArgument("...");
-        epb.addArgument("--report=xml");
-        epb.addArgument(file.getPath());
-         */
+        
         PhpcpdParser parser = new PhpcpdParser();
         if (!iAmAlive()) return def;
         GenericOutputReader reader = GenericProcess.run(cmd.toString());

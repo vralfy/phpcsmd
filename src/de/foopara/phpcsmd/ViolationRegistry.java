@@ -98,6 +98,7 @@ public class ViolationRegistry {
         }
         this.appendTaskList(fo, list, this.phpcs);
         this.appendTaskList(fo, list, this.phpmd);
+        this.appendTaskList(fo, list, this.phpcpd);
         return list;
     }
 
