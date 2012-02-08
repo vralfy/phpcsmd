@@ -7,6 +7,7 @@ package de.foopara.phpcsmd.generics;
 import de.foopara.phpcsmd.PHPCSMD;
 import de.foopara.phpcsmd.ViolationRegistry;
 import de.foopara.phpcsmd.option.GeneralOptions;
+import java.net.URL;
 import javax.swing.ImageIcon;
 import org.openide.awt.Notification;
 import org.openide.awt.NotificationDisplayer;
@@ -51,7 +52,14 @@ public class GenericNotification {
             GenericNotification.appendDetail(text, "phpmd", phpmdError, phpmdWarn);
             GenericNotification.appendDetail(text, "phpcpd", phpcpdError, phpcpdWarn);
             text.append("</table></body></html>");
-            ImageIcon icon = new ImageIcon(PHPCSMD.class.getResource("resources/phpcs/violation.jpg"));
+
+            URL iconRes = PHPCSMD.class.getResource("resources/phpcs/violation.jpg");
+            ImageIcon icon;
+            if (iconRes != null) {
+                icon = new ImageIcon(iconRes);
+            } else {
+                icon = new ImageIcon();
+            }
 
             GenericNotification.notify = NotificationDisplayer.getDefault().notify(sum + " violations", icon, text.toString(), null);
         }

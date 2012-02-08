@@ -5,7 +5,10 @@
 package de.foopara.phpcsmd.generics;
 
 import de.foopara.phpcsmd.option.GeneralOptions;
-import org.openide.filesystems.*;
+import org.openide.filesystems.FileAttributeEvent;
+import org.openide.filesystems.FileChangeListener;
+import org.openide.filesystems.FileEvent;
+import org.openide.filesystems.FileRenameEvent;
 
 /**
  *
