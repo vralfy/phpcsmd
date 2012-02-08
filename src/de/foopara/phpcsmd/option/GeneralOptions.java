@@ -22,6 +22,9 @@ public class GeneralOptions {
     private static final String _UPDATE_ON_SAVE          = "updateonsave";
     private static final String _UPDATE_ON_SAVE_DEFAULT  = "false";
 
+    private static final String _NOTIFICATION            = "notification";
+    private static final String _NOTIFICATION_DEFAULT    = "false";
+
      private static Preferences _modul() {
         return NbPreferences.forModule(PHPCSMD.class);
     }
@@ -38,7 +41,15 @@ public class GeneralOptions {
         return (GeneralOptions._modul().get(_PREFIX + _UPDATE_ON_SAVE, _UPDATE_ON_SAVE_DEFAULT).compareTo("true") == 0);
     }
 
-    public static void setupdateOnSave(boolean updateOnSave) {
+    public static void setUpdateOnSave(boolean updateOnSave) {
         GeneralOptions._modul().put(_PREFIX + _UPDATE_ON_SAVE, updateOnSave ? "true" : "false");
+    }
+
+    public static boolean getNotification() {
+        return (GeneralOptions._modul().get(_PREFIX + _NOTIFICATION, _NOTIFICATION_DEFAULT).compareTo("true") == 0);
+    }
+
+    public static void setNotification(boolean notification) {
+        GeneralOptions._modul().put(_PREFIX + _NOTIFICATION, notification ? "true" : "false");
     }
 }

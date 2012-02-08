@@ -49,6 +49,10 @@ public class QAThread extends Thread {
             if (!this.interupted) new Phpcs().execute(this.fo);
             if (!this.interupted) new Phpmd().execute(this.fo);
             if (!this.interupted) new Phpcpd().execute(this.fo);
+
+
+            if (!this.interupted) GenericAnnotationBuilder.updateAnnotations(this.fo);
+            if (!this.interupted) GenericNotification.displayNotification(this.fo);
             if (!this.interupted) ViolationRegistry.getInstance().reprintTasks(this.fo);
 
             QAThread.instances.remove(this);

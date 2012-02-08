@@ -5,7 +5,6 @@
 package de.foopara.phpcsmd;
 
 import de.foopara.phpcsmd.exec.phpcpd.PhpcpdResult;
-import de.foopara.phpcsmd.generics.GenericAnnotationBuilder;
 import de.foopara.phpcsmd.generics.GenericResult;
 import de.foopara.phpcsmd.generics.GenericViolation;
 import java.util.ArrayList;
@@ -28,6 +27,7 @@ public class ViolationRegistry {
         }
         return ViolationRegistry.instance;
     }
+    
     LinkedHashMap<String, GenericResult> phpcs = new LinkedHashMap<String, GenericResult>();
     LinkedHashMap<String, GenericResult> phpmd = new LinkedHashMap<String, GenericResult>();
     LinkedHashMap<String, GenericResult> phpcpd = new LinkedHashMap<String, GenericResult>();
@@ -35,17 +35,26 @@ public class ViolationRegistry {
 
     public void setPhpcs(FileObject fo, GenericResult res) {
         this.put(fo, res, this.phpcs);
-        GenericAnnotationBuilder.run(fo, res);
+    }
+
+    public GenericResult getPhpcs(FileObject fo) {
+        return this.get(fo, this.phpcs);
     }
 
     public void setPhpmd(FileObject fo, GenericResult res) {
         this.put(fo, res, this.phpmd);
-        GenericAnnotationBuilder.run(fo, res);
+    }
+
+    public GenericResult getPhpmd(FileObject fo) {
+        return this.get(fo, this.phpmd);
     }
 
     public void setPhpcpd(FileObject fo, PhpcpdResult res) {
         this.put(fo, res, this.phpcpd);
-        GenericAnnotationBuilder.run(fo, res);
+    }
+
+    public GenericResult getPhpcpd(FileObject fo) {
+        return this.get(fo, this.phpcpd);
     }
 
     public void setCallback(FileObject fo, Callback clbk) {
@@ -77,6 +86,13 @@ public class ViolationRegistry {
         }
         //Add new result (will be attached later
         list.put(fo.getPath(), res);
+    }
+
+    private GenericResult get(FileObject fo, LinkedHashMap<String, GenericResult> list) {
+        if (list.containsKey(fo.getPath())) {
+            return list.get(fo.getPath());
+        }
+        return new GenericResult(null, null, null);
     }
 
     public void reprintTasks(FileObject fo) {

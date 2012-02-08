@@ -33,6 +33,7 @@ public class GeneralOptionsPanel extends GenericOptionsPanel {
         jSeparator1 = new javax.swing.JSeparator();
         optThread = new javax.swing.JCheckBox();
         optUpdateOnSave = new javax.swing.JCheckBox();
+        optNotify = new javax.swing.JCheckBox();
 
         setLayout(new java.awt.GridBagLayout());
 
@@ -59,10 +60,18 @@ public class GeneralOptionsPanel extends GenericOptionsPanel {
         gridBagConstraints.gridy = 3;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         add(optUpdateOnSave, gridBagConstraints);
+
+        optNotify.setText(org.openide.util.NbBundle.getMessage(GeneralOptionsPanel.class, "GeneralOptionsPanel.optNotify.text")); // NOI18N
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 4;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        add(optNotify, gridBagConstraints);
     }// </editor-fold>//GEN-END:initComponents
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
     private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JCheckBox optNotify;
     private javax.swing.JCheckBox optThread;
     private javax.swing.JCheckBox optUpdateOnSave;
     // End of variables declaration//GEN-END:variables
@@ -71,12 +80,14 @@ public class GeneralOptionsPanel extends GenericOptionsPanel {
     public void load() {
         this.optThread.setSelected(GeneralOptions.getThreaded());
         this.optUpdateOnSave.setSelected(GeneralOptions.getUpdateOnSave());
+        this.optNotify.setSelected(GeneralOptions.getNotification());
     }
 
     @Override
     public void save() {
         GeneralOptions.setThreaded(this.optThread.isSelected());
-        GeneralOptions.setupdateOnSave(this.optUpdateOnSave.isSelected());
+        GeneralOptions.setUpdateOnSave(this.optUpdateOnSave.isSelected());
+        GeneralOptions.setNotification(this.optNotify.isSelected());
     }
 
     @Override

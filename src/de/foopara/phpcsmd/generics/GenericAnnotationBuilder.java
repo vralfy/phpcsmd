@@ -5,6 +5,7 @@
 package de.foopara.phpcsmd.generics;
 
 import de.foopara.phpcsmd.FileListenerRegistry;
+import de.foopara.phpcsmd.ViolationRegistry;
 import java.util.List;
 import org.openide.cookies.LineCookie;
 import org.openide.filesystems.FileObject;
@@ -18,6 +19,12 @@ import org.openide.util.Exceptions;
  * @author nspecht
  */
 public class GenericAnnotationBuilder {
+
+    public static void updateAnnotations(FileObject fo) {
+        GenericAnnotationBuilder.run(fo, ViolationRegistry.getInstance().getPhpcs(fo));
+        GenericAnnotationBuilder.run(fo, ViolationRegistry.getInstance().getPhpmd(fo));
+        GenericAnnotationBuilder.run(fo, ViolationRegistry.getInstance().getPhpcpd(fo));
+    }
 
     public static void run(FileObject fo, GenericResult res) {
         if (!GenericHelper.isDesirableFile(fo)) return;
@@ -54,7 +61,9 @@ public class GenericAnnotationBuilder {
     }
 
     private static void annotateLine(GenericViolation v, LineCookie cookie) {
+        System.out.println("Annotate Line");
         for (int i = v.getBeginLine(); i <= v.getEndLine(); i++) {
+            System.out.println(v.getShortDescription());
             Line.Set lineSet = cookie.getLineSet();
             Line line = lineSet.getOriginal(i);
             v.getViolationForLine(i).attach(line);
