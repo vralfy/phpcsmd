@@ -4,6 +4,7 @@
  */
 package de.foopara.phpcsmd.generics;
 
+import de.foopara.phpcsmd.threads.QAThread;
 import de.foopara.phpcsmd.option.GeneralOptions;
 import org.openide.filesystems.FileObject;
 

@@ -2,12 +2,14 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package de.foopara.phpcsmd.generics;
+package de.foopara.phpcsmd.threads;
 
 import de.foopara.phpcsmd.ViolationRegistry;
 import de.foopara.phpcsmd.exec.phpcpd.Phpcpd;
 import de.foopara.phpcsmd.exec.phpcs.Phpcs;
 import de.foopara.phpcsmd.exec.phpmd.Phpmd;
+import de.foopara.phpcsmd.generics.GenericAnnotationBuilder;
+import de.foopara.phpcsmd.generics.GenericNotification;
 import java.util.ArrayList;
 import org.openide.filesystems.FileObject;
 

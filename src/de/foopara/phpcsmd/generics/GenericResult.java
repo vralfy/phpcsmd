@@ -55,4 +55,8 @@ public class GenericResult {
     public List<GenericViolation> getNoTask() {
         return this.noTask;
     }
+
+    public int getSum() {
+        return this.errors.size() + this.warnings.size();
+    }
 }

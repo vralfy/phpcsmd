@@ -19,7 +19,7 @@ import org.openide.util.NbBundle;
 import org.openide.util.actions.CookieAction;
 
 @ActionID(id = "de.foopara.phpcsmd.PHPCSMD", category = "PHP")
-@ActionRegistration(displayName = "#CTL_PHPCSMD", iconBase = "de/foopara/phpcsmd/resources/phpcs/warning.png")
+@ActionRegistration(displayName = "#CTL_PHPCSMD", iconBase = "de/foopara/phpcsmd/resources/icon.png")
 @ActionReferences({
     @ActionReference(path = "Editors/text/x-php5/Popup", position = 875),
     @ActionReference(path = "Loaders/text/x-php5/Actions", position = 875)

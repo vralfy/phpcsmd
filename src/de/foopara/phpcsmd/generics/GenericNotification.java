@@ -31,6 +31,8 @@ public class GenericNotification {
         GenericResult phpmd = ViolationRegistry.getInstance().getPhpmd(fo);
         GenericResult phpcpd = ViolationRegistry.getInstance().getPhpcpd(fo);
 
+        int sum = phpcs.getSum() + phpmd.getSum() + phpcpd.getSum();
+        
         int phpcsError = phpcs.getErrors().size();
         int phpcsWarn = phpcs.getWarnings().size();
 
@@ -40,11 +42,8 @@ public class GenericNotification {
         int phpcpdError = phpcpd.getErrors().size();
         int phpcpdWarn = phpcpd.getWarnings().size();
 
-        int sum = 0
-                + phpcsError + phpcsWarn
-                + phpmdError + phpmdWarn
-                + phpcpdError + phpcpdWarn
-                ;
+
+
         if (sum > 0) {
             StringBuilder text = new StringBuilder();
             text.append("<html><body style=\"font-size:8px;\"><table style=\"width:100%;\">");
@@ -53,7 +52,7 @@ public class GenericNotification {
             GenericNotification.appendDetail(text, "phpcpd", phpcpdError, phpcpdWarn);
             text.append("</table></body></html>");
 
-            URL iconRes = PHPCSMD.class.getResource("resources/phpcs/violation.jpg");
+            URL iconRes = PHPCSMD.class.getResource("resources/icon.png");
             ImageIcon icon;
             if (iconRes != null) {
                 icon = new ImageIcon(iconRes);
