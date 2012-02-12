@@ -6,13 +6,12 @@ package de.foopara.phpcsmd.ui.reports;
 
 import de.foopara.phpcsmd.threads.FileCountThread;
 import de.foopara.phpcsmd.threads.RescanThread;
-import java.util.Set;
 import org.netbeans.api.settings.ConvertAsProperties;
 import org.openide.awt.ActionID;
 import org.openide.awt.ActionReference;
 import org.openide.filesystems.FileObject;
-import org.openide.windows.TopComponent;
 import org.openide.util.NbBundle.Messages;
+import org.openide.windows.TopComponent;
 
 /**
  * Top component which displays something.
