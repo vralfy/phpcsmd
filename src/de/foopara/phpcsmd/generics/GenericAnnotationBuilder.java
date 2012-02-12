@@ -61,9 +61,7 @@ public class GenericAnnotationBuilder {
     }
 
     private static void annotateLine(GenericViolation v, LineCookie cookie) {
-        System.out.println("Annotate Line");
         for (int i = v.getBeginLine(); i <= v.getEndLine(); i++) {
-            System.out.println(v.getShortDescription());
             Line.Set lineSet = cookie.getLineSet();
             Line line = lineSet.getOriginal(i);
             v.getViolationForLine(i).attach(line);

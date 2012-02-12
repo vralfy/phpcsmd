@@ -7,45 +7,20 @@
     Description:
         Purpose of the document follows.
 -->
-
 <filesystem>
-    <folder name="Actions">
-        <folder name="PHP">
-            <file name="de-foopara-phpcsmd-PHPCSMD.instance"/>
-        </folder>
-    </folder>
-    <folder name="Editors">
-        <folder name="text">
-            <folder name="x-php5">
-                <folder name="Popup">
-                    <file name="de-foopara-phpcsmd-PHPCSMD.shadow">
-                        <attr name="originalFile" stringvalue="Actions/PHP/de-foopara-phpcsmd-PHPCSMD.instance"/>
-                        <attr name="position" intvalue="875"/>
-                    </file>
-                </folder>
-            </folder>
-        </folder>
 
+    <folder name="Editors">
         <folder name="AnnotationTypes">
-            <file name="de-foopara-phpcsmd-annotation-phpcs-warning.xml"   url="nbresloc:/de/foopara/phpcsmd/resources/phpcs/warning.xml"/>
-            <file name="de-foopara-phpcsmd-annotation-phpcs-error.xml"     url="nbresloc:/de/foopara/phpcsmd/resources/phpcs/error.xml"/>
-            <file name="de-foopara-phpcsmd-annotation-phpcs-xunreachable.xml"     url="nbresloc:/de/foopara/phpcsmd/resources/phpcs/xunreachable.xml"/>
+            <file name="de-foopara-phpcsmd-annotation-phpcs-warning.xml" url="nbresloc:/de/foopara/phpcsmd/resources/phpcs/warning.xml"/>
+            <file name="de-foopara-phpcsmd-annotation-phpcs-error.xml" url="nbresloc:/de/foopara/phpcsmd/resources/phpcs/error.xml"/>
+            <file name="de-foopara-phpcsmd-annotation-phpcs-xunreachable.xml" url="nbresloc:/de/foopara/phpcsmd/resources/phpcs/xunreachable.xml"/>
             <file name="de-foopara-phpcsmd-annotation-phpmd-violation.xml" url="nbresloc:/de/foopara/phpcsmd/resources/phpmd/violation.xml"/>
             <file name="de-foopara-phpcsmd-annotation-phpcpd-violation.xml" url="nbresloc:/de/foopara/phpcsmd/resources/phpcpd/violation.xml"/>
         </folder>
     </folder>
-    <folder name="Loaders">
-        <folder name="text">
-            <folder name="x-php5">
-                <folder name="Actions">
-                    <file name="de-foopara-phpcsmd-PHPCSMD.shadow">
-                        <attr name="originalFile" stringvalue="Actions/PHP/de-foopara-phpcsmd-PHPCSMD.instance"/>
-                        <attr name="position" intvalue="1550"/>
-                    </file>
-                </folder>
-            </folder>
-        </folder>
-    </folder>
+
+
+
     <folder name="OptionsDialog">
         <folder name="org-netbeans-modules-php-project-ui-options-PHPOptionsCategory">
             <file name="PHPCSMD.instance">
@@ -56,6 +31,7 @@
             </file>
         </folder>
     </folder>
+
     <folder name="TaskList">
         <folder name="Scanners">
             <file name="ViolationReporter.instance">

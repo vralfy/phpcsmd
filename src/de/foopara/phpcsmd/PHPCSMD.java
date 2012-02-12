@@ -6,13 +6,25 @@ package de.foopara.phpcsmd;
 
 import de.foopara.phpcsmd.generics.GenericExecute;
 import javax.swing.JMenuItem;
+import org.openide.awt.ActionID;
+import org.openide.awt.ActionReference;
+import org.openide.awt.ActionReferences;
+import org.openide.awt.ActionRegistration;
 import org.openide.cookies.EditorCookie;
 import org.openide.filesystems.FileObject;
 import org.openide.loaders.DataObject;
 import org.openide.nodes.Node;
 import org.openide.util.HelpCtx;
+import org.openide.util.NbBundle;
 import org.openide.util.actions.CookieAction;
 
+@ActionID(id = "de.foopara.phpcsmd.PHPCSMD", category = "PHP")
+@ActionRegistration(displayName = "#CTL_PHPCSMD", iconBase = "de/foopara/phpcsmd/resources/phpcs/warning.png")
+@ActionReferences({
+    @ActionReference(path = "Editors/text/x-php5/Popup", position = 875),
+    @ActionReference(path = "Loaders/text/x-php5/Actions", position = 875)
+})
+@NbBundle.Messages("CTL_PHPCSMD=Check for violations in file")
 public class PHPCSMD extends CookieAction {
 
     @Override
