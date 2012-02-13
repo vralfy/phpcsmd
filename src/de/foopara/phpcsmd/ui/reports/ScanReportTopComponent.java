@@ -4,6 +4,7 @@
  */
 package de.foopara.phpcsmd.ui.reports;
 
+import de.foopara.phpcsmd.generics.GenericPokeRegistry;
 import de.foopara.phpcsmd.threads.FileCountThread;
 import de.foopara.phpcsmd.threads.RescanThread;
 import org.netbeans.api.settings.ConvertAsProperties;
@@ -59,6 +60,7 @@ public final class ScanReportTopComponent extends TopComponent {
         jScrollPane1 = new javax.swing.JScrollPane();
         scanReportTable1 = new de.foopara.phpcsmd.ui.reports.ScanReportTable();
         optFullRescan = new javax.swing.JCheckBox();
+        jLabel3 = new javax.swing.JLabel();
 
         setLayout(new java.awt.GridBagLayout());
 
@@ -86,7 +88,7 @@ public final class ScanReportTopComponent extends TopComponent {
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 2;
+        gridBagConstraints.gridy = 3;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.insets = new java.awt.Insets(1, 1, 1, 1);
         add(jButton1, gridBagConstraints);
@@ -96,7 +98,7 @@ public final class ScanReportTopComponent extends TopComponent {
         jProgressBar1.setStringPainted(true);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
-        gridBagConstraints.gridy = 2;
+        gridBagConstraints.gridy = 3;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.insets = new java.awt.Insets(1, 1, 1, 1);
         add(jProgressBar1, gridBagConstraints);
@@ -116,8 +118,18 @@ public final class ScanReportTopComponent extends TopComponent {
         org.openide.awt.Mnemonics.setLocalizedText(optFullRescan, org.openide.util.NbBundle.getMessage(ScanReportTopComponent.class, "ScanReportTopComponent.optFullRescan.text")); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 2;
+        gridBagConstraints.gridy = 3;
         add(optFullRescan, gridBagConstraints);
+
+        jLabel3.setFont(new java.awt.Font("DejaVu Sans", 0, 10)); // NOI18N
+        org.openide.awt.Mnemonics.setLocalizedText(jLabel3, org.openide.util.NbBundle.getMessage(ScanReportTopComponent.class, "ScanReportTopComponent.jLabel3.text")); // NOI18N
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.gridwidth = 3;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
+        gridBagConstraints.insets = new java.awt.Insets(2, 2, 2, 10);
+        add(jLabel3, gridBagConstraints);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -145,6 +157,7 @@ public final class ScanReportTopComponent extends TopComponent {
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JProgressBar jProgressBar1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JCheckBox optFullRescan;
@@ -153,6 +166,7 @@ public final class ScanReportTopComponent extends TopComponent {
 
     @Override
     public void componentOpened() {
+        GenericPokeRegistry.getInstance().register(this);
         this.toFront();
         this.setRescanDone();
         // TODO add custom code on component opening
@@ -160,6 +174,7 @@ public final class ScanReportTopComponent extends TopComponent {
 
     @Override
     public void componentClosed() {
+        GenericPokeRegistry.getInstance().unregister(this);
         // TODO add custom code on component closing
     }
 
@@ -179,6 +194,21 @@ public final class ScanReportTopComponent extends TopComponent {
         this.jButton1.setEnabled(true);
         this.optFullRescan.setEnabled(true);
         this.jProgressBar1.setVisible(false);
+        this.jLabel3.setVisible(false);
+        if (this.scanReportTable1.getViolationCount() > 0) {
+            this.jLabel3.setVisible(true);
+            StringBuilder buf = new StringBuilder("<html><body style=\"font-size:8px\">");
+            if (this.scanReportTable1.getPhpcsErrorsCount() > 0) buf.append(" <b>phpcs-errors:</b> ").
+                    append(this.scanReportTable1.getPhpcsErrorsCount());
+            if (this.scanReportTable1.getPhpcsWarningsCount() > 0) buf.append(" <b>phpcs-warnings:</b> ").
+                    append(this.scanReportTable1.getPhpcsWarningsCount());
+            if (this.scanReportTable1.getPhpmdErrorsCount() > 0) buf.append(" <b>phpmd:</b> ").
+                    append(this.scanReportTable1.getPhpmdErrorsCount());
+            if (this.scanReportTable1.getPhpcpdErrorsCount() > 0) buf.append(" <b>phpcpd:</b> ").
+                    append(this.scanReportTable1.getPhpcpdErrorsCount());
+            buf.append("</body></html>");
+            this.jLabel3.setText(buf.toString());
+        }
     }
 
     public void setFileObject(FileObject fo) {
@@ -200,5 +230,9 @@ public final class ScanReportTopComponent extends TopComponent {
 
     public void addElementToTable(FileObject fo) {
         this.scanReportTable1.addElement(fo);
+    }
+
+    public void poke(FileObject fo) {
+        System.out.println("\n\n\n\n\nIch wurde gepoked");
     }
 }

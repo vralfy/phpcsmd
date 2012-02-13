@@ -27,7 +27,7 @@ public class ViolationRegistry {
         }
         return ViolationRegistry.instance;
     }
-    
+
     LinkedHashMap<String, GenericResult> phpcs = new LinkedHashMap<String, GenericResult>();
     LinkedHashMap<String, GenericResult> phpmd = new LinkedHashMap<String, GenericResult>();
     LinkedHashMap<String, GenericResult> phpcpd = new LinkedHashMap<String, GenericResult>();
@@ -49,7 +49,7 @@ public class ViolationRegistry {
         return this.get(fo, this.phpmd);
     }
 
-    public void setPhpcpd(FileObject fo, PhpcpdResult res) {
+    public void setPhpcpd(FileObject fo, GenericResult res) {
         this.put(fo, res, this.phpcpd);
     }
 

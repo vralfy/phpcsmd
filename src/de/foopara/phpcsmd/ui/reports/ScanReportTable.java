@@ -17,6 +17,11 @@ public class ScanReportTable extends GenericTable {
 
     private FileObject rootDir = null;
 
+    private Integer phpcs_errors = 0;
+    private Integer phpcs_warnings = 0;
+    private Integer phpmd_errors = 0;
+    private Integer phpcpd_errors = 0;
+
     public ScanReportTable() {
         super();
         this.model.addColumn("File");
@@ -32,6 +37,13 @@ public class ScanReportTable extends GenericTable {
         for (int i = 3; i <= 4; i++) {
             this.getColumnModel().getColumn(i).setMaxWidth(80);
             this.getColumnModel().getColumn(i).setMinWidth(80);
+        }
+
+        this.finishTableSettings();
+
+        this.sorter.setComparator(0, new GenericTable.StringComparator());
+        for (int i = 1; i <=4; i++) {
+            this.sorter.setComparator(i, new GenericTable.IntegerComparator());
         }
     }
 
@@ -59,5 +71,33 @@ public class ScanReportTable extends GenericTable {
                     phpmd.getErrors().size() + phpmd.getWarnings().size(),
                     phpcpd.getErrors().size() + phpcpd.getWarnings().size()
                 });
+
+        this.phpcs_errors += phpcs.getErrors().size();
+        this.phpcs_warnings += phpcs.getWarnings().size();
+        this.phpmd_errors += phpmd.getErrors().size();
+        this.phpcpd_errors += phpcpd.getErrors().size();
+    }
+
+    public Integer getPhpcsErrorsCount() {
+        return this.phpcs_errors;
+    }
+
+    public Integer getPhpcsWarningsCount() {
+        return this.phpcs_warnings;
+    }
+
+    public Integer getPhpmdErrorsCount() {
+        return this.phpmd_errors;
+    }
+
+    public Integer getPhpcpdErrorsCount() {
+        return this.phpcpd_errors;
+    }
+
+    public Integer getViolationCount() {
+        return this.getPhpcsErrorsCount() + this.getPhpcsWarningsCount() +
+                this.getPhpmdErrorsCount() +
+                this.getPhpcpdErrorsCount()
+                ;
     }
 }

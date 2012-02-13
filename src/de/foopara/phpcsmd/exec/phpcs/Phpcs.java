@@ -9,7 +9,6 @@ import de.foopara.phpcsmd.generics.*;
 import de.foopara.phpcsmd.option.phpcs.PhpcsOptions;
 import java.io.File;
 import org.openide.filesystems.FileObject;
-import org.openide.filesystems.FileUtil;
 
 /**
  *
@@ -25,18 +24,17 @@ public class Phpcs extends GenericExecute {
 
     @Override
     protected GenericResult run(FileObject file, boolean annotations) {
-        PhpcsResult def = new PhpcsResult(null, null, null);
-
-        if (!PhpcsOptions.getActivated()) return def;
+        if (!PhpcsOptions.getActivated()) return this.setAndReturnDefault(file);
 
         if (!GenericHelper.isDesirableFile(new File(PhpcsOptions.getScript()))
                 || !GenericHelper.isDesirableFile(file)) {
-            return def;
+            return this.setAndReturnDefault(file);
         }
 
-        if(this.isEnabled() == false) return def;
+        if(this.isEnabled() == false) return this.setAndReturnDefault(file);
 
-        if (!iAmAlive()) return def;
+        if (!iAmAlive()) return this.setAndReturnDefault(file);
+
         CustomStandard cstandard = null;
         StringBuilder cmd = new StringBuilder(PhpcsOptions.getScript());
         if (PhpcsOptions.getExtras()) {
@@ -71,11 +69,11 @@ public class Phpcs extends GenericExecute {
         epb.addArgument(file.getPath());
          */
         PhpcsXMLParser parser = new PhpcsXMLParser();
-        if (!iAmAlive()) return def;
+        if (!iAmAlive()) return this.setAndReturnDefault(file);
         GenericOutputReader reader = GenericProcess.run(cmd.toString());
-        if (!iAmAlive()) return def;
+        if (!iAmAlive()) return this.setAndReturnDefault(file);
         PhpcsResult res = parser.parse(reader);
-        if (!iAmAlive()) return def;
+        if (!iAmAlive()) return this.setAndReturnDefault(file);
         ViolationRegistry.getInstance().setPhpcs(file, res);
 
         if (PhpcsOptions.getExtras() && cstandard != null) {
@@ -89,5 +87,11 @@ public class Phpcs extends GenericExecute {
         if (value.trim().length() > 0) {
             b.append(" ").append(key).append(value);
         }
+    }
+
+    private GenericResult setAndReturnDefault(FileObject file) {
+        GenericResult ret = new GenericResult(null, null, null);
+        ViolationRegistry.getInstance().setPhpcs(file, ret);
+        return ret;
     }
 }

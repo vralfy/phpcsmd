@@ -44,7 +44,10 @@ public class AdvancedCellRenderer extends DefaultTableCellRenderer {
 
     private void renderInteger(Integer value) {
         String font = value.toString();
-        if (value > 0) font = "<b style=\"color:#FF0000:\">"+font+"</b>";
+        
+        if (value > 0) {
+            font = "<b style=\"color:#FF0000:\">"+font+"</b>";
+        }
         setText("<html><body>"+font+"</body></html>");
         setIcon(null);
     }

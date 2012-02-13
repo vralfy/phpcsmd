@@ -50,6 +50,7 @@ public class RescanThread extends Thread {
                 if (!this.retrieveValuesFromRegistry) {
                     QAThread qa = new QAThread();
                     qa.setFileObject(f2);
+                    qa.setPoking(false);
                     qa.run();
                 }
                 this.component.setScannedFilecount(fc);

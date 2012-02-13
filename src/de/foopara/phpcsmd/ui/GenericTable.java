@@ -4,6 +4,7 @@
  */
 package de.foopara.phpcsmd.ui;
 
+import java.util.Comparator;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
@@ -17,12 +18,25 @@ public class GenericTable extends JTable {
     protected TableRowSorter<DefaultTableModel> sorter = null;
     protected DefaultTableModel model = null;
 
+    public static class IntegerComparator implements Comparator<Integer> {
+        @Override
+        public int compare(Integer o1, Integer o2) {
+            if (o1 < o2) return -1;
+            if (o1 > o2) return 1;
+            return 0;
+        }
+    }
+
+    public static class StringComparator implements Comparator<String> {
+        @Override
+        public int compare(String o1, String o2) {
+            return o1.compareTo(o2);
+        }
+    }
+
     public GenericTable() {
         super();
-        sorter = new TableRowSorter<DefaultTableModel>();
         this.acr = AdvancedCellRenderer.setCellRenderer(this);
-        this.setRowSorter(sorter);
-        this.setAutoCreateRowSorter(true);
 
         this.model = new DefaultTableModel() {
             @Override
@@ -30,8 +44,15 @@ public class GenericTable extends JTable {
                 return false;
             }
         };
-
         this.setModel(this.model);
+    }
+
+    protected void finishTableSettings() {
+        this.sorter = new TableRowSorter<DefaultTableModel>(this.model);
+        this.sorter.setModel(this.model);
+
+        this.setRowSorter(this.sorter);
+        this.setAutoCreateRowSorter(false);
     }
 
     public void flushElements() {

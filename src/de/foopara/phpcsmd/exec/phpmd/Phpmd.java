@@ -24,18 +24,16 @@ public class Phpmd extends GenericExecute {
 
     @Override
     protected GenericResult run(FileObject file, boolean annotations) {
-        PhpmdResult def = new PhpmdResult(null, null, null);
-
-        if (!PhpmdOptions.getActivated()) return def;
+        if (!PhpmdOptions.getActivated()) return this.setAndReturnDefault(file);
 
         if (!GenericHelper.isDesirableFile(new File(PhpmdOptions.getScript()))
                 || !GenericHelper.isDesirableFile(file)) {
-            return def;
+            return this.setAndReturnDefault(file);
         }
 
-        if(this.isEnabled() == false) return def;
+        if(this.isEnabled() == false) return this.setAndReturnDefault(file);
 
-        if (!iAmAlive()) return def;
+        if (!iAmAlive()) return this.setAndReturnDefault(file);
 
         StringBuilder cmd = new StringBuilder(PhpmdOptions.getScript());
         cmd.append(" ").append(file.getPath());
@@ -45,11 +43,11 @@ public class Phpmd extends GenericExecute {
         this.appendArgument(cmd, "--exclude", PhpmdOptions.getExcludes());
 
         PhpmdXMLParser parser = new PhpmdXMLParser();
-        if (!iAmAlive()) return def;
+        if (!iAmAlive()) return this.setAndReturnDefault(file);
         GenericOutputReader reader = GenericProcess.run(cmd.toString());
-        if (!iAmAlive()) return def;
+        if (!iAmAlive()) return this.setAndReturnDefault(file);
         PhpmdResult res = parser.parse(reader);
-        if (!iAmAlive()) return def;
+        if (!iAmAlive()) return this.setAndReturnDefault(file);
         ViolationRegistry.getInstance().setPhpmd(file, res);
         return res;
     }
@@ -58,5 +56,11 @@ public class Phpmd extends GenericExecute {
         if (value.trim().length() > 0) {
             b.append(" ").append(key).append(" ").append(value);
         }
+    }
+
+    private GenericResult setAndReturnDefault(FileObject file) {
+        GenericResult ret = new GenericResult(null, null, null);
+        ViolationRegistry.getInstance().setPhpmd(file, ret);
+        return ret;
     }
 }

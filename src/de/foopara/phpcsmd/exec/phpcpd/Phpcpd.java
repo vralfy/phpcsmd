@@ -24,18 +24,16 @@ public class Phpcpd extends GenericExecute {
 
     @Override
     protected GenericResult run(FileObject file, boolean annotations) {
-        PhpcpdResult def = new PhpcpdResult(null, null, null);
-
-        if (!PhpcpdOptions.getActivated()) return def;
+        if (!PhpcpdOptions.getActivated()) return this.setAndReturnDefault(file);
 
         if (!GenericHelper.isDesirableFile(new File(PhpcpdOptions.getScript()))
                 || !GenericHelper.isDesirableFile(file)) {
-            return def;
+            return this.setAndReturnDefault(file);
         }
 
-        if(this.isEnabled() == false) return def;
+        if(this.isEnabled() == false) return this.setAndReturnDefault(file);
 
-        if (!iAmAlive()) return def;
+        if (!iAmAlive()) return this.setAndReturnDefault(file);
 
         StringBuilder cmd = new StringBuilder(PhpcpdOptions.getScript());
         this.appendArgument(cmd, "--min-lines ", "" + PhpcpdOptions.getMinLines());
@@ -43,13 +41,13 @@ public class Phpcpd extends GenericExecute {
         this.appendArgument(cmd, "--suffixes ", PhpcpdOptions.getSuffixes());
         this.appendArgument(cmd, "--exclude ", PhpcpdOptions.getExcludes());
         cmd.append(" ").append(file.getPath());
-        
+
         PhpcpdParser parser = new PhpcpdParser();
-        if (!iAmAlive()) return def;
+        if (!iAmAlive()) return this.setAndReturnDefault(file);
         GenericOutputReader reader = GenericProcess.run(cmd.toString());
-        if (!iAmAlive()) return def;
+        if (!iAmAlive()) return this.setAndReturnDefault(file);
         PhpcpdResult res = parser.parse(reader);
-        if (!iAmAlive()) return def;
+        if (!iAmAlive()) return this.setAndReturnDefault(file);
         ViolationRegistry.getInstance().setPhpcpd(file, res);
         return res;
     }
@@ -58,5 +56,11 @@ public class Phpcpd extends GenericExecute {
         if (value.trim().length() > 0) {
             b.append(" ").append(key).append(value);
         }
+    }
+
+    private GenericResult setAndReturnDefault(FileObject file) {
+        GenericResult ret = new GenericResult(null, null, null);
+        ViolationRegistry.getInstance().setPhpcpd(file, ret);
+        return ret;
     }
 }

@@ -11,6 +11,7 @@ import de.foopara.phpcsmd.exec.phpmd.Phpmd;
 import de.foopara.phpcsmd.generics.GenericAnnotationBuilder;
 import de.foopara.phpcsmd.generics.GenericHelper;
 import de.foopara.phpcsmd.generics.GenericNotification;
+import de.foopara.phpcsmd.generics.GenericPokeRegistry;
 import java.util.ArrayList;
 import org.openide.filesystems.FileObject;
 
@@ -19,55 +20,80 @@ import org.openide.filesystems.FileObject;
  * @author n.specht
  */
 public class QAThread extends Thread {
-        private static ArrayList<QAThread> instances = new ArrayList<QAThread>();
 
-        private FileObject fo =null;
+    private static ArrayList<QAThread> instances = new ArrayList<QAThread>();
+    private FileObject fo = null;
+    private boolean interupted = false;
+    private boolean poke = true;
 
-        private boolean interupted = false;
+    public void setFileObject(FileObject fo) {
+        this.fo = fo;
+    }
 
-        public void setFileObject(FileObject fo) {
-            this.fo = fo;
+    public void setPoking(boolean poke) {
+        this.poke = poke;
+    }
+
+    public boolean isThreadFor(FileObject fo) {
+        return fo.getPath().compareTo(fo.getPath()) == 0;
+    }
+
+
+    /*
+     * Nur damit Netbeans die Klappe hällt
+     */
+    @Override
+    public void run() {
+        this.qarun();
+    }
+
+    public void qarun() {
+        if (!GenericHelper.isDesirableFile(this.fo)) {
+            return;
         }
 
-        public boolean isThreadFor(FileObject fo) {
-            return fo.getPath().compareTo(fo.getPath()) == 0;
-        }
-
-        /*
-         * Nur damit Netbeans die Klappe hällt
-         */
-        @Override
-        public void run() {
-            this.qarun();
-        }
-
-        public void qarun() {
-            if (!GenericHelper.isDesirableFile(this.fo)) return;
-            
-            for (QAThread t : QAThread.instances) {
-                if (t.isThreadFor(this.fo)) t.interupt();
-                while(QAThread.instances.lastIndexOf(this) > 0) {
-                }
+        for (QAThread t : QAThread.instances) {
+            if (t.isThreadFor(this.fo)) {
+                t.interupt();
             }
-
-            QAThread.instances.add(this);
-            if (!this.interupted) new Phpcs().execute(this.fo);
-            if (!this.interupted) new Phpmd().execute(this.fo);
-            if (!this.interupted) new Phpcpd().execute(this.fo);
-
-
-            if (!this.interupted) GenericAnnotationBuilder.updateAnnotations(this.fo);
-            if (!this.interupted) GenericNotification.displayNotification(this.fo);
-            if (!this.interupted) ViolationRegistry.getInstance().reprintTasks(this.fo);
-
-            QAThread.instances.remove(this);
+            while (QAThread.instances.lastIndexOf(this) > 0) {
+            }
         }
 
-        public void interupt() {
-            this.interupted = true;
+        QAThread.instances.add(this);
+        if (!this.interupted) {
+            new Phpcs().execute(this.fo);
+        }
+        if (!this.interupted) {
+            new Phpmd().execute(this.fo);
+        }
+        if (!this.interupted) {
+            new Phpcpd().execute(this.fo);
         }
 
-        public boolean isInterupted() {
-            return this.interupted;
+
+        if (!this.interupted) {
+            GenericAnnotationBuilder.updateAnnotations(this.fo);
         }
+        if (!this.interupted) {
+            GenericNotification.displayNotification(this.fo);
+        }
+        if (!this.interupted) {
+            ViolationRegistry.getInstance().reprintTasks(this.fo);
+        }
+
+        if (!this.interupted && this.poke) {
+            GenericPokeRegistry.getInstance().poke(this.fo);
+        }
+
+        QAThread.instances.remove(this);
+    }
+
+    public void interupt() {
+        this.interupted = true;
+    }
+
+    public boolean isInterupted() {
+        return this.interupted;
+    }
 }
