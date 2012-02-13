@@ -25,6 +25,9 @@ public class GeneralOptions {
     private static final String _NOTIFICATION            = "notification";
     private static final String _NOTIFICATION_DEFAULT    = "false";
 
+    private static final String _IGNORE_PATTERN          = "ignorepattern";
+    private static final String _IGNORE_PATTERN_DEFAULT  = "\\.svn|\\.git";
+
      private static Preferences _modul() {
         return NbPreferences.forModule(PHPCSMD.class);
     }
@@ -51,5 +54,13 @@ public class GeneralOptions {
 
     public static void setNotification(boolean notification) {
         GeneralOptions._modul().put(_PREFIX + _NOTIFICATION, notification ? "true" : "false");
+    }
+
+    public static String getIgnorePattern() {
+        return GeneralOptions._modul().get(_PREFIX + _IGNORE_PATTERN, _IGNORE_PATTERN_DEFAULT);
+    }
+
+    public static void setIgnorePattern(String ignorePattern) {
+        GeneralOptions._modul().put(_PREFIX + _IGNORE_PATTERN, ignorePattern);
     }
 }

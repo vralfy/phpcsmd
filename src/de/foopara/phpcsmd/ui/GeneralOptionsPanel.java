@@ -34,17 +34,22 @@ public class GeneralOptionsPanel extends GenericOptionsPanel {
         optThread = new javax.swing.JCheckBox();
         optUpdateOnSave = new javax.swing.JCheckBox();
         optNotify = new javax.swing.JCheckBox();
+        optIgnorePattern = new javax.swing.JTextField();
+        jLabel2 = new javax.swing.JLabel();
 
         setLayout(new java.awt.GridBagLayout());
 
         jLabel1.setText(org.openide.util.NbBundle.getMessage(GeneralOptionsPanel.class, "GeneralOptionsPanel.jLabel1.text")); // NOI18N
-        add(jLabel1, new java.awt.GridBagConstraints());
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.insets = new java.awt.Insets(0, 0, 2, 2);
+        add(jLabel1, gridBagConstraints);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 1;
         gridBagConstraints.gridwidth = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(0, 0, 2, 2);
         add(jSeparator1, gridBagConstraints);
 
         optThread.setText(org.openide.util.NbBundle.getMessage(GeneralOptionsPanel.class, "GeneralOptionsPanel.optThread.text")); // NOI18N
@@ -52,6 +57,7 @@ public class GeneralOptionsPanel extends GenericOptionsPanel {
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.insets = new java.awt.Insets(0, 0, 2, 2);
         add(optThread, gridBagConstraints);
 
         optUpdateOnSave.setText(org.openide.util.NbBundle.getMessage(GeneralOptionsPanel.class, "GeneralOptionsPanel.optUpdateOnSave.text")); // NOI18N
@@ -59,6 +65,7 @@ public class GeneralOptionsPanel extends GenericOptionsPanel {
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 3;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.insets = new java.awt.Insets(0, 0, 2, 2);
         add(optUpdateOnSave, gridBagConstraints);
 
         optNotify.setText(org.openide.util.NbBundle.getMessage(GeneralOptionsPanel.class, "GeneralOptionsPanel.optNotify.text")); // NOI18N
@@ -66,11 +73,30 @@ public class GeneralOptionsPanel extends GenericOptionsPanel {
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 4;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.insets = new java.awt.Insets(0, 0, 2, 2);
         add(optNotify, gridBagConstraints);
+
+        optIgnorePattern.setText(org.openide.util.NbBundle.getMessage(GeneralOptionsPanel.class, "GeneralOptionsPanel.optIgnorePattern.text")); // NOI18N
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 5;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.insets = new java.awt.Insets(0, 0, 2, 2);
+        add(optIgnorePattern, gridBagConstraints);
+
+        jLabel2.setText(org.openide.util.NbBundle.getMessage(GeneralOptionsPanel.class, "GeneralOptionsPanel.jLabel2.text")); // NOI18N
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 5;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
+        gridBagConstraints.insets = new java.awt.Insets(0, 0, 2, 2);
+        add(jLabel2, gridBagConstraints);
     }// </editor-fold>//GEN-END:initComponents
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JTextField optIgnorePattern;
     private javax.swing.JCheckBox optNotify;
     private javax.swing.JCheckBox optThread;
     private javax.swing.JCheckBox optUpdateOnSave;
@@ -81,6 +107,7 @@ public class GeneralOptionsPanel extends GenericOptionsPanel {
         this.optThread.setSelected(GeneralOptions.getThreaded());
         this.optUpdateOnSave.setSelected(GeneralOptions.getUpdateOnSave());
         this.optNotify.setSelected(GeneralOptions.getNotification());
+        this.optIgnorePattern.setText(GeneralOptions.getIgnorePattern());
     }
 
     @Override
@@ -88,6 +115,7 @@ public class GeneralOptionsPanel extends GenericOptionsPanel {
         GeneralOptions.setThreaded(this.optThread.isSelected());
         GeneralOptions.setUpdateOnSave(this.optUpdateOnSave.isSelected());
         GeneralOptions.setNotification(this.optNotify.isSelected());
+        GeneralOptions.setIgnorePattern(this.optIgnorePattern.getText());
     }
 
     @Override

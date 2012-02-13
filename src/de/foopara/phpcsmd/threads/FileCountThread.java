@@ -4,6 +4,7 @@
  */
 package de.foopara.phpcsmd.threads;
 
+import de.foopara.phpcsmd.generics.GenericHelper;
 import de.foopara.phpcsmd.ui.reports.ScanReportTopComponent;
 import java.io.File;
 import org.openide.filesystems.FileObject;
@@ -43,7 +44,7 @@ public class FileCountThread extends Thread {
 
     private int count(File f, int fc) {
         for (File f2 : f.listFiles()) {
-            if (f2.isFile()) {
+            if (GenericHelper.isDesirableFile(f2)) {
                 fc += 1;
                 this.component.setMaximumFilecount(fc);
             } else if (f2.isDirectory()) {

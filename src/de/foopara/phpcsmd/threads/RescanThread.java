@@ -4,6 +4,7 @@
  */
 package de.foopara.phpcsmd.threads;
 
+import de.foopara.phpcsmd.generics.GenericHelper;
 import de.foopara.phpcsmd.ui.reports.ScanReportTopComponent;
 import org.openide.filesystems.FileObject;
 
@@ -44,7 +45,7 @@ public class RescanThread extends Thread {
 
     private int count(FileObject f, int fc) {
         for (FileObject f2 : f.getChildren()) {
-            if (f2.isData()) {
+            if (GenericHelper.isDesirableFile(f2)) {
                 fc += 1;
                 if (!this.retrieveValuesFromRegistry) {
                     QAThread qa = new QAThread();

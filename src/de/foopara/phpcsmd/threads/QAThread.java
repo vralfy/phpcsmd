@@ -9,6 +9,7 @@ import de.foopara.phpcsmd.exec.phpcpd.Phpcpd;
 import de.foopara.phpcsmd.exec.phpcs.Phpcs;
 import de.foopara.phpcsmd.exec.phpmd.Phpmd;
 import de.foopara.phpcsmd.generics.GenericAnnotationBuilder;
+import de.foopara.phpcsmd.generics.GenericHelper;
 import de.foopara.phpcsmd.generics.GenericNotification;
 import java.util.ArrayList;
 import org.openide.filesystems.FileObject;
@@ -41,6 +42,8 @@ public class QAThread extends Thread {
         }
 
         public void qarun() {
+            if (!GenericHelper.isDesirableFile(this.fo)) return;
+            
             for (QAThread t : QAThread.instances) {
                 if (t.isThreadFor(this.fo)) t.interupt();
                 while(QAThread.instances.lastIndexOf(this) > 0) {
