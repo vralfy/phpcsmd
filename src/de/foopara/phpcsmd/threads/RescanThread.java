@@ -5,9 +5,7 @@
 package de.foopara.phpcsmd.threads;
 
 import de.foopara.phpcsmd.ui.reports.ScanReportTopComponent;
-import java.io.File;
 import org.openide.filesystems.FileObject;
-import org.openide.filesystems.FileUtil;
 
 /**
  *
@@ -17,6 +15,7 @@ public class RescanThread extends Thread {
 
     private FileObject fo = null;
     private ScanReportTopComponent component = null;
+    private boolean retrieveValuesFromRegistry = false;
 
     public void setFileObject(FileObject fo) {
         this.fo = fo;
@@ -26,10 +25,14 @@ public class RescanThread extends Thread {
         this.component = c;
     }
 
-        /*
-         * Nur damit Netbeans die Klappe hällt
-         */
-        @Override
+    public void setRetrieveValuesFromRegistry(boolean b) {
+        this.retrieveValuesFromRegistry = b;
+    }
+
+    /*
+     * Nur damit Netbeans die Klappe hällt
+     */
+    @Override
     public void run() {
         this.qarun();
     }
@@ -43,10 +46,13 @@ public class RescanThread extends Thread {
         for (FileObject f2 : f.getChildren()) {
             if (f2.isData()) {
                 fc += 1;
-                QAThread qa = new QAThread();
-                qa.setFileObject(f2);
-                qa.run();
+                if (!this.retrieveValuesFromRegistry) {
+                    QAThread qa = new QAThread();
+                    qa.setFileObject(f2);
+                    qa.run();
+                }
                 this.component.setScannedFilecount(fc);
+                this.component.addElementToTable(f2);
             } else if (f2.isFolder()) {
                 fc = this.count(f2, fc);
             }

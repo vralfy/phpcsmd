@@ -19,7 +19,7 @@ import org.openide.windows.TopComponent;
 @ConvertAsProperties(dtd = "-//de.foopara.phpcsmd.ui.reports//ScanReport//EN",
 autostore = false)
 @TopComponent.Description(preferredID = "ScanReportTopComponent",
-//iconBase="SET/PATH/TO/ICON/HERE",
+iconBase = "de/foopara/phpcsmd/resources/icon.png",
 persistenceType = TopComponent.PERSISTENCE_ALWAYS)
 @TopComponent.Registration(mode = "editor", openAtStartup = false)
 @ActionID(category = "Window", id = "de.foopara.phpcsmd.ui.reports.ScanReportTopComponent")
@@ -30,7 +30,7 @@ persistenceType = TopComponent.PERSISTENCE_ALWAYS)
 preferredID = "ScanReportTopComponent")
 @Messages({
     "CTL_ScanReportAction=ScanReport",
-    "CTL_ScanReportTopComponent=ScanReport Window",
+    "CTL_ScanReportTopComponent=ScanReport",
     "HINT_ScanReportTopComponent=This is a ScanReport window"
 })
 public final class ScanReportTopComponent extends TopComponent {
@@ -54,10 +54,11 @@ public final class ScanReportTopComponent extends TopComponent {
 
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
         jButton1 = new javax.swing.JButton();
         jProgressBar1 = new javax.swing.JProgressBar();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        scanReportTable1 = new de.foopara.phpcsmd.ui.reports.ScanReportTable();
+        optFullRescan = new javax.swing.JCheckBox();
 
         setLayout(new java.awt.GridBagLayout());
 
@@ -65,39 +66,17 @@ public final class ScanReportTopComponent extends TopComponent {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
-        gridBagConstraints.insets = new java.awt.Insets(3, 3, 3, 3);
+        gridBagConstraints.insets = new java.awt.Insets(1, 1, 1, 1);
         add(jLabel1, gridBagConstraints);
 
         org.openide.awt.Mnemonics.setLocalizedText(jLabel2, org.openide.util.NbBundle.getMessage(ScanReportTopComponent.class, "ScanReportTopComponent.jLabel2.text")); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 0;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.insets = new java.awt.Insets(3, 3, 3, 3);
-        add(jLabel2, gridBagConstraints);
-
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
-        jScrollPane1.setViewportView(jTable1);
-
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 1;
         gridBagConstraints.gridwidth = 2;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.weightx = 1.0;
-        gridBagConstraints.weighty = 1.0;
-        gridBagConstraints.insets = new java.awt.Insets(3, 3, 3, 3);
-        add(jScrollPane1, gridBagConstraints);
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.insets = new java.awt.Insets(1, 1, 1, 1);
+        add(jLabel2, gridBagConstraints);
 
         org.openide.awt.Mnemonics.setLocalizedText(jButton1, org.openide.util.NbBundle.getMessage(ScanReportTopComponent.class, "ScanReportTopComponent.jButton1.text")); // NOI18N
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -109,24 +88,42 @@ public final class ScanReportTopComponent extends TopComponent {
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.insets = new java.awt.Insets(3, 3, 3, 3);
+        gridBagConstraints.insets = new java.awt.Insets(1, 1, 1, 1);
         add(jButton1, gridBagConstraints);
 
         jProgressBar1.setMaximum(1);
         jProgressBar1.setFocusable(false);
         jProgressBar1.setStringPainted(true);
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.insets = new java.awt.Insets(3, 3, 3, 3);
+        gridBagConstraints.insets = new java.awt.Insets(1, 1, 1, 1);
         add(jProgressBar1, gridBagConstraints);
+
+        jScrollPane1.setViewportView(scanReportTable1);
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridwidth = 3;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.weighty = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(1, 1, 1, 1);
+        add(jScrollPane1, gridBagConstraints);
+
+        org.openide.awt.Mnemonics.setLocalizedText(optFullRescan, org.openide.util.NbBundle.getMessage(ScanReportTopComponent.class, "ScanReportTopComponent.optFullRescan.text")); // NOI18N
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 2;
+        add(optFullRescan, gridBagConstraints);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         this.jProgressBar1.setValue(0);
         this.jProgressBar1.setMaximum(1);
-        this.jProgressBar1.setVisible(true);
+
         FileCountThread t1 = new FileCountThread();
         t1.setFileObject(this.fileObject);
         t1.setTopComponent(this);
@@ -134,21 +131,26 @@ public final class ScanReportTopComponent extends TopComponent {
         RescanThread t2 = new RescanThread();
         t2.setFileObject(this.fileObject);
         t2.setTopComponent(this);
+        t2.setRetrieveValuesFromRegistry(!this.optFullRescan.isSelected());
 
         this.jButton1.setEnabled(false);
+        this.optFullRescan.setEnabled(false);
+        this.jProgressBar1.setVisible(true);
+        this.scanReportTable1.flushElements();
 
         t1.start();
         t2.start();
     }//GEN-LAST:event_jButton1ActionPerformed
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JProgressBar jProgressBar1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JCheckBox optFullRescan;
+    private de.foopara.phpcsmd.ui.reports.ScanReportTable scanReportTable1;
     // End of variables declaration//GEN-END:variables
+
     @Override
     public void componentOpened() {
         this.toFront();
@@ -173,9 +175,16 @@ public final class ScanReportTopComponent extends TopComponent {
         // TODO read your settings according to their version
     }
 
+    public void setRescanDone() {
+        this.jButton1.setEnabled(true);
+        this.optFullRescan.setEnabled(true);
+        this.jProgressBar1.setVisible(false);
+    }
+
     public void setFileObject(FileObject fo) {
         this.fileObject = fo;
         this.jLabel2.setText(this.fileObject.getPath());
+        this.scanReportTable1.setRootDirectory(fo);
     }
 
     public void setMaximumFilecount(int fc) {
@@ -184,12 +193,12 @@ public final class ScanReportTopComponent extends TopComponent {
     }
 
     public void setScannedFilecount(int fc) {
+        fc = Math.min(fc, this.jProgressBar1.getMaximum());
         this.jProgressBar1.setValue(fc);
         this.jProgressBar1.setString(this.jProgressBar1.getValue() + "/" + this.jProgressBar1.getMaximum());
     }
 
-    public void setRescanDone() {
-        this.jButton1.setEnabled(true);
-        this.jProgressBar1.setVisible(false);
+    public void addElementToTable(FileObject fo) {
+        this.scanReportTable1.addElement(fo);
     }
 }
