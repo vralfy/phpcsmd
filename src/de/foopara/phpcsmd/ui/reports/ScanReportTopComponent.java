@@ -4,13 +4,22 @@
  */
 package de.foopara.phpcsmd.ui.reports;
 
+import de.foopara.phpcsmd.generics.GenericHelper;
 import de.foopara.phpcsmd.generics.GenericPokeRegistry;
 import de.foopara.phpcsmd.threads.FileCountThread;
 import de.foopara.phpcsmd.threads.RescanThread;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.io.File;
+import org.netbeans.api.actions.Openable;
 import org.netbeans.api.settings.ConvertAsProperties;
 import org.openide.awt.ActionID;
 import org.openide.awt.ActionReference;
 import org.openide.filesystems.FileObject;
+import org.openide.filesystems.FileUtil;
+import org.openide.loaders.DataObject;
+import org.openide.loaders.DataObjectNotFoundException;
+import org.openide.util.Exceptions;
 import org.openide.util.NbBundle.Messages;
 import org.openide.windows.TopComponent;
 
@@ -42,7 +51,14 @@ public final class ScanReportTopComponent extends TopComponent {
         initComponents();
         setName(Bundle.CTL_ScanReportTopComponent());
         setToolTipText(Bundle.HINT_ScanReportTopComponent());
-
+        this.scanReportTable1.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (e.getClickCount() > 1) {
+                    openSelectedFile();
+                }
+            }
+        });
     }
 
     /**
@@ -123,11 +139,13 @@ public final class ScanReportTopComponent extends TopComponent {
 
         jLabel3.setFont(new java.awt.Font("DejaVu Sans", 0, 10)); // NOI18N
         org.openide.awt.Mnemonics.setLocalizedText(jLabel3, org.openide.util.NbBundle.getMessage(ScanReportTopComponent.class, "ScanReportTopComponent.jLabel3.text")); // NOI18N
+        jLabel3.setMaximumSize(new java.awt.Dimension(600, 13));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 2;
         gridBagConstraints.gridwidth = 3;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
+        gridBagConstraints.weightx = 0.5;
         gridBagConstraints.insets = new java.awt.Insets(2, 2, 2, 10);
         add(jLabel3, gridBagConstraints);
     }// </editor-fold>//GEN-END:initComponents
@@ -195,20 +213,7 @@ public final class ScanReportTopComponent extends TopComponent {
         this.optFullRescan.setEnabled(true);
         this.jProgressBar1.setVisible(false);
         this.jLabel3.setVisible(false);
-        if (this.scanReportTable1.getViolationCount() > 0) {
-            this.jLabel3.setVisible(true);
-            StringBuilder buf = new StringBuilder("<html><body style=\"font-size:8px\">");
-            if (this.scanReportTable1.getPhpcsErrorsCount() > 0) buf.append(" <b>phpcs-errors:</b> ").
-                    append(this.scanReportTable1.getPhpcsErrorsCount());
-            if (this.scanReportTable1.getPhpcsWarningsCount() > 0) buf.append(" <b>phpcs-warnings:</b> ").
-                    append(this.scanReportTable1.getPhpcsWarningsCount());
-            if (this.scanReportTable1.getPhpmdErrorsCount() > 0) buf.append(" <b>phpmd:</b> ").
-                    append(this.scanReportTable1.getPhpmdErrorsCount());
-            if (this.scanReportTable1.getPhpcpdErrorsCount() > 0) buf.append(" <b>phpcpd:</b> ").
-                    append(this.scanReportTable1.getPhpcpdErrorsCount());
-            buf.append("</body></html>");
-            this.jLabel3.setText(buf.toString());
-        }
+        this.printSummary();
     }
 
     public void setFileObject(FileObject fo) {
@@ -233,6 +238,52 @@ public final class ScanReportTopComponent extends TopComponent {
     }
 
     public void poke(FileObject fo) {
-        System.out.println("\n\n\n\n\nIch wurde gepoked");
+        this.scanReportTable1.poke(fo);
+        this.printSummary();
+    }
+
+    public void openSelectedFile() {
+        try {
+            String path = (String)this.scanReportTable1.getModel().getValueAt(this.scanReportTable1.getSelectedRow(), 0);
+            path = this.fileObject.getPath() + path;
+            System.out.println("try to open " + path);
+            FileObject fo = FileUtil.toFileObject(new File(path));
+            if (!GenericHelper.isDesirableFile(fo)) return;
+
+            DataObject dob = DataObject.find(fo);
+            Openable oc = dob.getLookup().lookup(Openable.class);
+            if (oc != null) {
+                oc.open();
+            }
+        } catch (DataObjectNotFoundException ex) {
+            Exceptions.printStackTrace(ex);
+        }
+
+    }
+
+    private void printSummary() {
+        if (this.scanReportTable1.getViolationCount() > 0) {
+            this.jLabel3.setVisible(true);
+            StringBuilder buf = new StringBuilder("<html><body style=\"font-size:8px\">");
+            buf.append("<b>files:</b> ").append(this.scanReportTable1.getFilesCount());
+            this.appendSummaryText(buf, "phpcs", this.scanReportTable1.getPhpcsErrorsCount(), this.scanReportTable1.getPhpcsWarningsCount());
+            this.appendSummaryText(buf, "phpmd", this.scanReportTable1.getPhpmdErrorsCount(), this.scanReportTable1.getPhpmdWarningsCount());
+            this.appendSummaryText(buf, "phpcpd", this.scanReportTable1.getPhpcpdErrorsCount(), this.scanReportTable1.getPhpcpdWarningsCount());
+            buf.append("</body></html>");
+            this.jLabel3.setText(buf.toString());
+        }
+    }
+
+    private void appendSummaryText(StringBuilder buf, String caption, Integer errors, Integer warnings) {
+        if (errors  +warnings > 0) {
+            buf.append(" <b>").append(caption).append(":</b> ");
+            if (errors > 0) {
+                buf.append("<font style=\"color:#ff0000\">").append(errors).append("</font>");
+                if (warnings > 0) buf.append(" / ");
+            }
+            if (warnings > 0) {
+                buf.append("<font style=\"color:#cccc00\">").append(warnings).append("</font>");
+            }
+        }
     }
 }

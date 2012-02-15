@@ -61,6 +61,13 @@ public class ViolationRegistry {
         this.callbacks.put(fo.getPath(), clbk);
     }
 
+    public Integer getViolationsCount(FileObject fo) {
+        return this.get(fo, this.phpcs).getSum() +
+                this.get(fo, this.phpmd).getSum() +
+                this.get(fo, this.phpcpd).getSum()
+                ;
+    }
+
     private void put(FileObject fo, GenericResult res, LinkedHashMap<String, GenericResult> list) {
         //Detach old result
         if (list.containsKey(fo.getPath())) {

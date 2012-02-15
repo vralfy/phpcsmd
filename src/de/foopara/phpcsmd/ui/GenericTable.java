@@ -22,7 +22,7 @@ public class GenericTable extends JTable {
         @Override
         public int compare(Integer o1, Integer o2) {
             if (o1 < o2) return -1;
-            if (o1 > o2) return 1;
+            else if (o1 > o2) return 1;
             return 0;
         }
     }
@@ -30,6 +30,27 @@ public class GenericTable extends JTable {
     public static class StringComparator implements Comparator<String> {
         @Override
         public int compare(String o1, String o2) {
+            return o1.compareTo(o2);
+        }
+    }
+
+    public static class FilepathComparator implements Comparator<String> {
+        @Override
+        public int compare(String o1, String o2) {
+            String[] s1 = o1.split("/|\\/");
+            String[] s2 = o2.split("/|\\/");
+
+            int mindepth = Math.min(s1.length, s2.length) - 1;
+            if (mindepth > 0) {
+                for (int i=0;i<mindepth;i++) {
+                    int comp = s1[i].compareTo(s2[i]);
+                    if (comp != 0) return comp;
+                }
+            }
+            
+            if (s1.length < s2.length) return -1;
+            else if (s1.length > s2.length) return 1;
+
             return o1.compareTo(o2);
         }
     }
