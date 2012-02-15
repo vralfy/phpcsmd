@@ -138,14 +138,15 @@ public final class ScanReportTopComponent extends TopComponent {
         add(optFullRescan, gridBagConstraints);
 
         jLabel3.setFont(new java.awt.Font("DejaVu Sans", 0, 10)); // NOI18N
+        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         org.openide.awt.Mnemonics.setLocalizedText(jLabel3, org.openide.util.NbBundle.getMessage(ScanReportTopComponent.class, "ScanReportTopComponent.jLabel3.text")); // NOI18N
         jLabel3.setMaximumSize(new java.awt.Dimension(600, 13));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 2;
         gridBagConstraints.gridwidth = 3;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
-        gridBagConstraints.weightx = 0.5;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.weightx = 1.0;
         gridBagConstraints.insets = new java.awt.Insets(2, 2, 2, 10);
         add(jLabel3, gridBagConstraints);
     }// </editor-fold>//GEN-END:initComponents
