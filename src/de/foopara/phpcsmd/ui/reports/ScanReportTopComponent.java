@@ -211,6 +211,7 @@ public final class ScanReportTopComponent extends TopComponent {
 
     public void setRescanDone() {
         this.jButton1.setEnabled(true);
+        this.optFullRescan.setSelected(false);
         this.optFullRescan.setEnabled(true);
         this.jProgressBar1.setVisible(false);
         this.jLabel3.setVisible(false);
@@ -245,7 +246,7 @@ public final class ScanReportTopComponent extends TopComponent {
 
     public void openSelectedFile() {
         try {
-            String path = (String)this.scanReportTable1.getModel().getValueAt(this.scanReportTable1.getSelectedRow(), 0);
+            String path = (String)this.scanReportTable1.getValueAt(this.scanReportTable1.getSelectedRow(), 0);
             path = this.fileObject.getPath() + path;
             System.out.println("try to open " + path);
             FileObject fo = FileUtil.toFileObject(new File(path));
