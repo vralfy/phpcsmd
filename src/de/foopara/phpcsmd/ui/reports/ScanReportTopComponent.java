@@ -222,6 +222,7 @@ public final class ScanReportTopComponent extends TopComponent {
         this.fileObject = fo;
         this.jLabel2.setText(this.fileObject.getPath());
         this.scanReportTable1.setRootDirectory(fo);
+        this.setDisplayName("ScanReport: " + fo.getPath());
     }
 
     public void setMaximumFilecount(int fc) {

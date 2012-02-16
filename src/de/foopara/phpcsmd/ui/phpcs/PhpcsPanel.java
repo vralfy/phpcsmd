@@ -11,7 +11,7 @@
 package de.foopara.phpcsmd.ui.phpcs;
 
 import de.foopara.phpcsmd.generics.GenericOptionsPanel;
-import de.foopara.phpcsmd.option.phpcs.PhpcsOptions;
+import de.foopara.phpcsmd.option.PhpcsOptions;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;

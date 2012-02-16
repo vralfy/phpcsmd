@@ -5,7 +5,7 @@
 package de.foopara.phpcsmd.ui.phpcpd;
 
 import de.foopara.phpcsmd.generics.GenericOptionsPanel;
-import de.foopara.phpcsmd.option.phpcpd.PhpcpdOptions;
+import de.foopara.phpcsmd.option.PhpcpdOptions;
 
 /**
  *

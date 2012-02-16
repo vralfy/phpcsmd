@@ -6,7 +6,7 @@ package de.foopara.phpcsmd.exec.phpcs;
 
 import de.foopara.phpcsmd.generics.GenericOutputReader;
 import de.foopara.phpcsmd.generics.GenericViolation;
-import de.foopara.phpcsmd.option.phpcs.PhpcsOptions;
+import de.foopara.phpcsmd.option.PhpcsOptions;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;

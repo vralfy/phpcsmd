@@ -6,7 +6,7 @@ package de.foopara.phpcsmd.exec.phpcs;
 
 import de.foopara.phpcsmd.ViolationRegistry;
 import de.foopara.phpcsmd.generics.*;
-import de.foopara.phpcsmd.option.phpcs.PhpcsOptions;
+import de.foopara.phpcsmd.option.PhpcsOptions;
 import java.io.File;
 import org.openide.filesystems.FileObject;
 

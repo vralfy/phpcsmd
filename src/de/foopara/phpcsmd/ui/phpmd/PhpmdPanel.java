@@ -11,20 +11,20 @@
 package de.foopara.phpcsmd.ui.phpmd;
 
 import de.foopara.phpcsmd.generics.GenericOptionsPanel;
-import de.foopara.phpcsmd.option.phpmd.PhpmdOptions;
+import de.foopara.phpcsmd.option.PhpmdOptions;
 
 /**
  *
  * @author nspecht
  */
 public class PhpmdPanel extends GenericOptionsPanel {
-    
+
     private static PhpmdPanel instance = null;
 
     public static PhpmdPanel getInstance() {
         return PhpmdPanel.instance;
     }
-    
+
     /** Creates new form PhpmdPanel */
     public PhpmdPanel() {
         initComponents();
@@ -138,7 +138,7 @@ public class PhpmdPanel extends GenericOptionsPanel {
     @Override
     public void load() {
         this.optActive.setSelected(PhpmdOptions.getActivated());
-        
+
         this.optScript.setText(PhpmdOptions.getScript());
         this.optRules.setText(PhpmdOptions.getRules());
         this.optSuffixes.setText(PhpmdOptions.getSuffixes());
@@ -148,7 +148,7 @@ public class PhpmdPanel extends GenericOptionsPanel {
     @Override
     public void save() {
         PhpmdOptions.setActivated(this.optActive.isSelected());
-        
+
         PhpmdOptions.setScript(this.optScript.getText());
         PhpmdOptions.setRules(this.optRules.getText());
         PhpmdOptions.setSuffixes(this.optSuffixes.getText());
