@@ -17,13 +17,16 @@ public class PdependOptions {
     public static final String _PREFIX = "phpcsmd.pdepend.";
 
     private static final String _SCRIPT             = "script";
-    private static final String _SCRIPT_DEFAULT     = "/usr/bin/phpcpd";
+    private static final String _SCRIPT_DEFAULT     = "/usr/bin/pdepend";
 
     private static final String _EXCLUDE            = "exclude";
     private static final String _EXCLUDE_DEFAULT    = "";
 
     private static final String _SUFFIXES           = "suffix";
     private static final String _SUFFIXES_DEFAULT   = "";
+
+    private static final String _IGNORES            = "ignore";
+    private static final String _IGNORES_DEFAULT    = "";
 
     private static Preferences _modul() {
         return NbPreferences.forModule(PHPCSMD.class);
@@ -51,5 +54,13 @@ public class PdependOptions {
 
     public static void setSuffixes(String suffixes) {
         PdependOptions._modul().put(_PREFIX + _SUFFIXES, suffixes);
+    }
+
+    public static String getIgnores() {
+        return PdependOptions._modul().get(_PREFIX + _IGNORES, _IGNORES_DEFAULT);
+    }
+
+    public static void setIgnores(String ignores) {
+        PdependOptions._modul().put(_PREFIX + _IGNORES, ignores);
     }
 }

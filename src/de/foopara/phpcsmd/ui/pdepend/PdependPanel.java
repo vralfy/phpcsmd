@@ -4,11 +4,14 @@
  */
 package de.foopara.phpcsmd.ui.pdepend;
 
+import de.foopara.phpcsmd.generics.GenericOptionsPanel;
+import de.foopara.phpcsmd.option.PdependOptions;
+
 /**
  *
  * @author n.specht
  */
-public class PdependPanel extends javax.swing.JPanel {
+public class PdependPanel extends GenericOptionsPanel {
 
     /**
      * Creates new form PdependPanel
@@ -31,9 +34,9 @@ public class PdependPanel extends javax.swing.JPanel {
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
-        jTextField3 = new javax.swing.JTextField();
+        optSuffix = new javax.swing.JTextField();
+        optExclude = new javax.swing.JTextField();
+        optIgnore = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
 
         setLayout(new java.awt.GridBagLayout());
@@ -80,29 +83,29 @@ public class PdependPanel extends javax.swing.JPanel {
         gridBagConstraints.insets = new java.awt.Insets(0, 0, 2, 2);
         add(jLabel4, gridBagConstraints);
 
-        jTextField1.setText(org.openide.util.NbBundle.getMessage(PdependPanel.class, "PdependPanel.jTextField1.text")); // NOI18N
+        optSuffix.setText(org.openide.util.NbBundle.getMessage(PdependPanel.class, "PdependPanel.optSuffix.text")); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridwidth = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.insets = new java.awt.Insets(0, 0, 2, 2);
-        add(jTextField1, gridBagConstraints);
+        add(optSuffix, gridBagConstraints);
 
-        jTextField2.setText(org.openide.util.NbBundle.getMessage(PdependPanel.class, "PdependPanel.jTextField2.text")); // NOI18N
+        optExclude.setText(org.openide.util.NbBundle.getMessage(PdependPanel.class, "PdependPanel.optExclude.text")); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridwidth = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.insets = new java.awt.Insets(0, 0, 2, 2);
-        add(jTextField2, gridBagConstraints);
+        add(optExclude, gridBagConstraints);
 
-        jTextField3.setText(org.openide.util.NbBundle.getMessage(PdependPanel.class, "PdependPanel.jTextField3.text")); // NOI18N
+        optIgnore.setText(org.openide.util.NbBundle.getMessage(PdependPanel.class, "PdependPanel.optIgnore.text")); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridwidth = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.insets = new java.awt.Insets(0, 0, 2, 2);
-        add(jTextField3, gridBagConstraints);
+        add(optIgnore, gridBagConstraints);
 
         jLabel6.setText(org.openide.util.NbBundle.getMessage(PdependPanel.class, "PdependPanel.jLabel6.text")); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -118,9 +121,30 @@ public class PdependPanel extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
+    private javax.swing.JTextField optExclude;
+    private javax.swing.JTextField optIgnore;
     private javax.swing.JTextField optScript;
+    private javax.swing.JTextField optSuffix;
     // End of variables declaration//GEN-END:variables
+
+    @Override
+    public void load() {
+        this.optScript.setText(PdependOptions.getScript());
+        this.optSuffix.setText(PdependOptions.getSuffixes());
+        this.optExclude.setText(PdependOptions.getExcludes());
+        this.optIgnore.setText(PdependOptions.getIgnores());
+    }
+
+    @Override
+    public void save() {
+        PdependOptions.setScript(this.optScript.getText());
+        PdependOptions.setSuffixes(this.optSuffix.getText());
+        PdependOptions.setExcludes(this.optExclude.getText());
+        PdependOptions.setIgnores(this.optIgnore.getText());
+    }
+
+    @Override
+    public boolean hasValidValues() {
+        return true;
+    }
 }

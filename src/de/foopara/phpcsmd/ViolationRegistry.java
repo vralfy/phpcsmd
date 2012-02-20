@@ -4,7 +4,6 @@
  */
 package de.foopara.phpcsmd;
 
-import de.foopara.phpcsmd.exec.phpcpd.PhpcpdResult;
 import de.foopara.phpcsmd.generics.GenericResult;
 import de.foopara.phpcsmd.generics.GenericViolation;
 import java.util.ArrayList;

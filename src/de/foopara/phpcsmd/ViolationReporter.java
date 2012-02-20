@@ -4,8 +4,6 @@
  */
 package de.foopara.phpcsmd;
 
-import de.foopara.phpcsmd.exec.phpcs.Phpcs;
-import de.foopara.phpcsmd.exec.phpmd.Phpmd;
 import de.foopara.phpcsmd.generics.GenericExecute;
 import java.util.List;
 import org.netbeans.spi.tasklist.PushTaskScanner;

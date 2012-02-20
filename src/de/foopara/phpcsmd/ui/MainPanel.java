@@ -49,6 +49,8 @@ public class MainPanel extends GenericOptionsPanel {
         phpmdPanel1 = new de.foopara.phpcsmd.ui.phpmd.PhpmdPanel();
         jSeparator3 = new javax.swing.JSeparator();
         phpcpdPanel1 = new de.foopara.phpcsmd.ui.phpcpd.PhpcpdPanel();
+        jSeparator4 = new javax.swing.JSeparator();
+        pdependPanel1 = new de.foopara.phpcsmd.ui.pdepend.PdependPanel();
 
         setLayout(new javax.swing.BoxLayout(this, javax.swing.BoxLayout.LINE_AXIS));
 
@@ -89,6 +91,16 @@ public class MainPanel extends GenericOptionsPanel {
         gridBagConstraints.gridy = 6;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         jPanel1.add(phpcpdPanel1, gridBagConstraints);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 7;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        jPanel1.add(jSeparator4, gridBagConstraints);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 8;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        jPanel1.add(pdependPanel1, gridBagConstraints);
 
         jScrollPane1.setViewportView(jPanel1);
 
@@ -101,6 +113,8 @@ public class MainPanel extends GenericOptionsPanel {
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
+    private javax.swing.JSeparator jSeparator4;
+    private de.foopara.phpcsmd.ui.pdepend.PdependPanel pdependPanel1;
     private de.foopara.phpcsmd.ui.phpcpd.PhpcpdPanel phpcpdPanel1;
     private de.foopara.phpcsmd.ui.phpcs.PhpcsPanel phpcsPanel1;
     private de.foopara.phpcsmd.ui.phpmd.PhpmdPanel phpmdPanel1;
@@ -112,6 +126,7 @@ public class MainPanel extends GenericOptionsPanel {
         this.phpcsPanel1.load();
         this.phpmdPanel1.load();
         this.phpcpdPanel1.load();
+        this.pdependPanel1.load();
     }
 
     @Override
@@ -120,6 +135,7 @@ public class MainPanel extends GenericOptionsPanel {
         this.phpcsPanel1.save();
         this.phpmdPanel1.save();
         this.phpcpdPanel1.save();
+        this.pdependPanel1.load();
     }
 
     @Override
