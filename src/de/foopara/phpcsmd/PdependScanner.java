@@ -17,13 +17,13 @@ import org.openide.nodes.Node;
 import org.openide.util.NbBundle.Messages;
 
 @ActionID(id = "de.foopara.phpcsmd.PdependScanner", category = "PHP")
-@ActionRegistration(displayName = "PdependScanner",
+@ActionRegistration(displayName = "#CTL_PHPdependScanner",
         iconBase = "de/foopara/phpcsmd/resources/icon.png")
 @ActionReferences({
-    @ActionReference(path = "Editors/application/x-directory/Popup", position = 875),
-    @ActionReference(path = "Loaders/application/x-directory/Actions", position = 875)
+    @ActionReference(path = "Loaders/folder/any/Actions", position = 875),
+    @ActionReference(path = "Loaders/text/x-php5/Actions", position = 875)
 })
-@Messages("CTL_PHPdependScanner=Pdepend Scan")
+@Messages("CTL_PHPdependScanner=Scan with Pdepend")
 public final class PdependScanner implements ActionListener {
 
     private final DataObject context;

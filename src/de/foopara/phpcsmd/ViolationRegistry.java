@@ -132,19 +132,19 @@ public class ViolationRegistry {
             for (GenericViolation res : registry.get(fo.getPath()).getWarnings()) {
                 dst.add(
                         Task.create(
-                        fo,
-                        res.getAnnotationType(),
-                        res.getShortDescription(),
-                        res.getBeginLine() + 1));
+                            fo,
+                            res.getTaskGroup(),
+                            res.getShortDescription(),
+                            res.getBeginLine() + 1));
             }
 
             for (GenericViolation res : registry.get(fo.getPath()).getErrors()) {
                 dst.add(
                         Task.create(
-                        fo,
-                        res.getAnnotationType(),
-                        res.getShortDescription(),
-                        res.getBeginLine() + 1));
+                            fo,
+                            res.getTaskGroup(),
+                            res.getShortDescription(),
+                            res.getBeginLine() + 1));
             }
         }
     }
