@@ -45,6 +45,17 @@ public class PdependParser {
 
                 res.setMetrics(metrics);
             }
+
+            ndList = document.getElementsByTagName("files");
+            for (int i = 0; i < ndList.getLength(); i++) {
+                NodeList sub = ndList.item(i).getChildNodes();
+                for (int j = 0; j < sub.getLength(); j++) {
+                    PdependTypes.PdependFile file = PdependTypes.PdependFile.class.newInstance();
+                    NamedNodeMap nm = sub.item(j).getAttributes();
+
+                    res.addFile(file);
+                }
+            }
         } catch (InstantiationException ex) {
             Exceptions.printStackTrace(ex);
         } catch (IllegalAccessException ex) {

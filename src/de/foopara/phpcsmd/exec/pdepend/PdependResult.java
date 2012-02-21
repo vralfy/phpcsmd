@@ -14,6 +14,7 @@ import org.openide.util.Exceptions;
 public class PdependResult {
     private PdependTypes.PdependMetrics _metrics = null;
     private HashSet<PdependTypes.PdependFile> _files = new HashSet<PdependTypes.PdependFile>();
+    private HashSet<PdependTypes.PdependPackage> _packages = new HashSet<PdependTypes.PdependPackage>();
 
     public PdependResult() {
         try {
@@ -39,5 +40,13 @@ public class PdependResult {
 
     public HashSet<PdependTypes.PdependFile> getFiles() {
         return this._files;
+    }
+
+    public void addPackage(PdependTypes.PdependPackage pack) {
+        this._packages.add(pack);
+    }
+
+    public HashSet<PdependTypes.PdependPackage> getPackages() {
+        return this._packages;
     }
 }
