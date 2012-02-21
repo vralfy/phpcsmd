@@ -5,7 +5,6 @@
 package de.foopara.phpcsmd.exec.pdepend;
 
 import de.foopara.phpcsmd.generics.GenericOutputReader;
-import de.foopara.phpcsmd.option.PhpcsOptions;
 import java.io.IOException;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -35,7 +34,7 @@ public class PdependParser {
 
             NodeList ndList = document.getElementsByTagName("metrics");
             for (int i = 0; i < ndList.getLength(); i++) {
-                PdependResult.PdependMetrics metrics = PdependResult.PdependMetrics.class.newInstance();
+                PdependTypes.PdependMetrics metrics = PdependTypes.PdependMetrics.class.newInstance();
 
                 NamedNodeMap nm = ndList.item(i).getAttributes();
                 metrics.andc = Integer.parseInt(nm.getNamedItem("andc").getTextContent());
@@ -43,15 +42,8 @@ public class PdependParser {
                 metrics.ccn = Integer.parseInt(nm.getNamedItem("ccn").getTextContent());
                 metrics.ccn2 = Integer.parseInt(nm.getNamedItem("ccn2").getTextContent());
                 metrics.cloc = Integer.parseInt(nm.getNamedItem("cloc").getTextContent());
-                
-            }
 
-            ndList = document.getElementsByTagName("error");
-            for (int i = 0; i < ndList.getLength(); i++) {
-                String message = ndList.item(i).getTextContent().trim();
-                NamedNodeMap nm = ndList.item(i).getAttributes();
-                int lineNum = Integer.parseInt(nm.getNamedItem("line").getTextContent()) - 1;
-//                csErrors.add(new GenericViolation(message, lineNum).setAnnotationType("phpcs-error"));
+                res.setMetrics(metrics);
             }
         } catch (InstantiationException ex) {
             Exceptions.printStackTrace(ex);

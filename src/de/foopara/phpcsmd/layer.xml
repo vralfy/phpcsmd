@@ -19,8 +19,6 @@
         </folder>
     </folder>
 
-
-
     <folder name="OptionsDialog">
         <folder name="org-netbeans-modules-php-project-ui-options-PHPOptionsCategory">
             <file name="PHPCSMD.instance">
@@ -40,4 +38,5 @@
             </file>
         </folder>
     </folder>
+    
 </filesystem>

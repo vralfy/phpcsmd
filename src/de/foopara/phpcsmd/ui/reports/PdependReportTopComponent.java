@@ -28,7 +28,7 @@ persistenceType = TopComponent.PERSISTENCE_ALWAYS)
 preferredID = "PdependReportTopComponent")
 @Messages({
     "CTL_PdependReportAction=PdependReport",
-    "CTL_PdependReportTopComponent=PdependReport Window",
+    "CTL_PdependReportTopComponent=Pdepend",
     "HINT_PdependReportTopComponent=This is a PdependReport window"
 })
 public final class PdependReportTopComponent extends TopComponent {
@@ -53,6 +53,8 @@ public final class PdependReportTopComponent extends TopComponent {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jSplitPane1 = new javax.swing.JSplitPane();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        pdependTree1 = new de.foopara.phpcsmd.ui.reports.PdependTree();
         jButton1 = new javax.swing.JButton();
 
         setLayout(new java.awt.GridBagLayout());
@@ -70,6 +72,11 @@ public final class PdependReportTopComponent extends TopComponent {
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.weightx = 1.0;
         add(jLabel2, gridBagConstraints);
+
+        jScrollPane1.setViewportView(pdependTree1);
+
+        jSplitPane1.setLeftComponent(jScrollPane1);
+
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 1;
@@ -91,7 +98,9 @@ public final class PdependReportTopComponent extends TopComponent {
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSplitPane jSplitPane1;
+    private de.foopara.phpcsmd.ui.reports.PdependTree pdependTree1;
     // End of variables declaration//GEN-END:variables
     @Override
     public void componentOpened() {
@@ -117,5 +126,7 @@ public final class PdependReportTopComponent extends TopComponent {
 
     public void setFileObject(FileObject fo) {
         this.fileObject = fo;
+
+        this.setDisplayName("Pdepend: " + fo.getPath());
     }
 }

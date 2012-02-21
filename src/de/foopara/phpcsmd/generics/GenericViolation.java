@@ -15,7 +15,7 @@ public class GenericViolation extends Annotation {
     protected String _message = "";
     protected int _beginLine = 0;
     protected int _endLine = 0;
-    protected String _annotationType = "phpcsmd";
+    protected String _annotationType = "generic";
 
     protected String typePrefix = "de-foopara-phpcsmd-annotation-";
 
@@ -49,6 +49,10 @@ public class GenericViolation extends Annotation {
     @Override
     public String getAnnotationType() {
         return this.typePrefix + this._annotationType;
+    }
+
+    public String getTaskGroup() {
+        return "Error";
     }
 
     public GenericViolation setAnnotationType(String annotationType) {

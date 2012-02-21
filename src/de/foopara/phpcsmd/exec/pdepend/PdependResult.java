@@ -4,107 +4,40 @@
  */
 package de.foopara.phpcsmd.exec.pdepend;
 
+import java.util.HashSet;
+import org.openide.util.Exceptions;
+
 /**
  *
  * @author n.specht
  */
 public class PdependResult {
-    public class PdependMetrics {
-        public float andc;
-        public int calls;
-        public int ccn;
-        public int ccn2;
-        public int cloc;
-
-        public int clsa;
-        public int clsc;
-        public int eloc;
-        public int fanout;
-        public int leafs;
-
-        public int lloc;
-        public int loc;
-        public int maxDIT;
-        public int ncloc;
-        public int noc;
-
-        public int nof;
-        public int noi;
-        public int nom;
-        public int nop;
-        public int roots;
-    }
-
-    public class PdependFile {
-        public String name;
-        public int cloc;
-        public int eloc;
-        public int lloc;
-        public int loc;
-        public int ncloc;
-    }
-
-    public class PdependPackage {
-        public String name;
-        public float cr;
-        public int noc;
-        public int nof;
-        public int noi;
-        public int nom;
-        public float rcr;
-        //contains PdependClasses;
-    }
-
-    public class PdependClass {
-        public String name;
-        public int ca;
-        public int cbo;
-        public int ce;
-        public int cis;
-
-        public int cloc;
-        public float cr;
-        public int csz;
-        public int dit;
-        public int eloc;
-
-        public int impl;
-        public int lloc;
-        public int loc;
-        public int ncloc;
-        public int noam;
-
-        public int nocc;
-        public int nom;
-        public int noom;
-        public int npm;
-        public float rcr;
-
-        public int vars;
-        public int varsi;
-        public int varsnp;
-        public int wmc;
-        public int wmci;
-
-        public int wmcnp;
-        //contains PdependMethods
-    }
-
-    public class PdependMethod {
-        public String name;
-        public int ccn;
-        public int ccn2;
-        public int cloc;
-        public int eloc;
-        public int lloc;
-        public int loc;
-        public int ncloc;
-        public int npath;
-    }
-
-
+    private PdependTypes.PdependMetrics _metrics = null;
+    private HashSet<PdependTypes.PdependFile> _files = new HashSet<PdependTypes.PdependFile>();
 
     public PdependResult() {
+        try {
+            this._metrics = PdependTypes.PdependMetrics.class.newInstance();
+        } catch (InstantiationException ex) {
+            Exceptions.printStackTrace(ex);
+        } catch (IllegalAccessException ex) {
+            Exceptions.printStackTrace(ex);
+        }
+    }
 
+    public void setMetrics(PdependTypes.PdependMetrics metric) {
+        this._metrics = metric;
+    }
+
+    public PdependTypes.PdependMetrics getMetrics() {
+        return this._metrics;
+    }
+
+    public void addFile(PdependTypes.PdependFile file) {
+        this._files.add(file);
+    }
+
+    public HashSet<PdependTypes.PdependFile> getFiles() {
+        return this._files;
     }
 }
