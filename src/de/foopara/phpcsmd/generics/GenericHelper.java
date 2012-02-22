@@ -23,26 +23,51 @@ public class GenericHelper {
     }
 
     public static boolean isDesirableFile(File file) {
-
         if (file == null) return false;
 
         if (!file.exists())  return false;
         if (!file.canRead()) return false;
         if (!file.isFile())  return false;
 
+        if (GenericHelper.shouldBeIgnored(file)) return false;
+
         File parent = new File(file.getParent());
-        if (!parent.exists())      return false;
-        if (!parent.canRead())     return false;
-        if (!parent.isDirectory()) return false;
+        if (!GenericHelper.isDesirableFolder(parent)) return false;
+
+        return true;
+    }
+
+    public static boolean isDesirableFolder(FileObject fileObject) {
+        if (fileObject == null) return false;
+        return GenericHelper.isDesirableFolder(FileUtil.toFile(fileObject));
+    }
+
+    public static boolean isDesirableFolder(File file) {
+        if (file == null) return false;
+
+        if (!file.exists())      return false;
+        if (!file.canRead())     return false;
+        if (!file.isDirectory()) return false;
+
+        if (GenericHelper.shouldBeIgnored(file)) return false;
+
+        return true;
+    }
+
+    private static boolean shouldBeIgnored(FileObject fileObject) {
+        if (fileObject == null) return true;
+        return GenericHelper.shouldBeIgnored(FileUtil.toFile(fileObject));
+    }
+
+    private static boolean shouldBeIgnored(File file) {
+        if (file == null) return true;
 
         String pattern = GeneralOptions.getIgnorePattern();
         if (pattern.trim().length() > 0) {
             if (Pattern.matches(".*(" + pattern + ").*", file.getAbsolutePath())) {
-                return false;
+                return true;
             }
         }
-        
-        return true;
+        return false;
     }
-
 }

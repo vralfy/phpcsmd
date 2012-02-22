@@ -5,7 +5,6 @@
 package de.foopara.phpcsmd.exec.pdepend;
 
 import java.util.HashSet;
-import org.openide.util.Exceptions;
 
 /**
  *
@@ -17,13 +16,7 @@ public class PdependResult {
     private HashSet<PdependTypes.PdependPackage> _packages = new HashSet<PdependTypes.PdependPackage>();
 
     public PdependResult() {
-        try {
-            this._metrics = PdependTypes.PdependMetrics.class.newInstance();
-        } catch (InstantiationException ex) {
-            Exceptions.printStackTrace(ex);
-        } catch (IllegalAccessException ex) {
-            Exceptions.printStackTrace(ex);
-        }
+        this._metrics = new PdependTypes.PdependMetrics();
     }
 
     public void setMetrics(PdependTypes.PdependMetrics metric) {

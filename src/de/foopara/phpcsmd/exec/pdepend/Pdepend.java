@@ -24,29 +24,34 @@ public class Pdepend {
 
     public PdependResult run(FileObject file) {
         if (!GenericHelper.isDesirableFile(new File(PdependOptions.getScript()))
-                || !GenericHelper.isDesirableFile(file)) {
-            return this.setAndReturnDefault(file);
+            || (!GenericHelper.isDesirableFile(file) && !GenericHelper.isDesirableFolder(file))
+        ) {
+            return this.setAndReturnDefault();
         }
 
-        if(this.isEnabled() == false) return this.setAndReturnDefault(file);
+        if(this.isEnabled() == false) {
+            System.out.println("exit 2");
+            return this.setAndReturnDefault();
+        }
 
-        String tmpFile = System.getProperty("java.io.tmpdir") + "pdepend_" + file.hashCode() + ".xml";
+        File tmpFile = new File(System.getProperty("java.io.tmpdir"), "pdepend_" + file.hashCode() + ".xml");
 
         StringBuilder cmd = new StringBuilder(PdependOptions.getScript());
         this.appendArgument(cmd, "--suffixes=", "" + PdependOptions.getSuffixes());
         this.appendArgument(cmd, "--exclude=", "" + PdependOptions.getExcludes());
         this.appendArgument(cmd, "--ignore=", "" + PdependOptions.getIgnores());
 
-        this.appendArgument(cmd, "--summary-xml", tmpFile);
+        this.appendArgument(cmd, "--summary-xml=", tmpFile.getAbsolutePath());
 
         cmd.append(" ").append(file.getPath());
 
         PdependParser parser = new PdependParser();
-        GenericOutputReader reader = GenericProcess.run(cmd.toString());
+        GenericOutputReader reader = GenericProcess.run(cmd.toString(), tmpFile);
         return parser.parse(reader);
     }
 
-    private PdependResult setAndReturnDefault(FileObject file) {
+    private PdependResult setAndReturnDefault() {
+
         return new PdependResult();
     }
 

@@ -135,7 +135,7 @@ public class MainPanel extends GenericOptionsPanel {
         this.phpcsPanel1.save();
         this.phpmdPanel1.save();
         this.phpcpdPanel1.save();
-        this.pdependPanel1.load();
+        this.pdependPanel1.save();
     }
 
     @Override

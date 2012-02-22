@@ -11,14 +11,14 @@ import java.util.HashSet;
  * @author n.specht
  */
 public class PdependTypes {
-    public class PdependType {
+    static public class PdependType {
         @Override
         public String toString() {
             return this.getClass().getName();
         }
     }
 
-    public class PdependMetrics extends PdependType {
+    static public class PdependMetrics extends PdependTypes.PdependType {
         public float andc;
         public int calls;
         public int ccn;
@@ -44,7 +44,7 @@ public class PdependTypes {
         public int roots;
     }
 
-    public class PdependFile extends PdependType {
+    static public class PdependFile extends PdependTypes.PdependType {
         public String name;
         public int cloc;
         public int eloc;
@@ -53,7 +53,7 @@ public class PdependTypes {
         public int ncloc;
     }
 
-    public class PdependPackage extends PdependType {
+    static public class PdependPackage extends PdependTypes.PdependType {
         public String name;
         public float cr;
         public int noc;
@@ -68,7 +68,7 @@ public class PdependTypes {
         }
     }
 
-    public class PdependClass extends PdependType {
+    static public class PdependClass extends PdependTypes.PdependType {
         public String name;
         public int ca;
         public int cbo;
@@ -108,7 +108,7 @@ public class PdependTypes {
         }
     }
 
-    public class PdependMethod extends PdependType {
+    static public class PdependMethod extends PdependTypes.PdependType {
         public String name;
         public int ccn;
         public int ccn2;

@@ -6,12 +6,14 @@ package de.foopara.phpcsmd.exec.pdepend;
 
 import de.foopara.phpcsmd.generics.GenericOutputReader;
 import java.io.IOException;
+import java.lang.reflect.Field;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import org.openide.util.Exceptions;
 import org.w3c.dom.Document;
 import org.w3c.dom.NamedNodeMap;
+import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
@@ -34,15 +36,8 @@ public class PdependParser {
 
             NodeList ndList = document.getElementsByTagName("metrics");
             for (int i = 0; i < ndList.getLength(); i++) {
-                PdependTypes.PdependMetrics metrics = PdependTypes.PdependMetrics.class.newInstance();
-
-                NamedNodeMap nm = ndList.item(i).getAttributes();
-                metrics.andc = Integer.parseInt(nm.getNamedItem("andc").getTextContent());
-                metrics.calls = Integer.parseInt(nm.getNamedItem("calls").getTextContent());
-                metrics.ccn = Integer.parseInt(nm.getNamedItem("ccn").getTextContent());
-                metrics.ccn2 = Integer.parseInt(nm.getNamedItem("ccn2").getTextContent());
-                metrics.cloc = Integer.parseInt(nm.getNamedItem("cloc").getTextContent());
-
+                PdependTypes.PdependMetrics metrics = new PdependTypes.PdependMetrics();
+                this.fillValues(ndList.item(i), metrics);
                 res.setMetrics(metrics);
             }
 
@@ -50,16 +45,14 @@ public class PdependParser {
             for (int i = 0; i < ndList.getLength(); i++) {
                 NodeList sub = ndList.item(i).getChildNodes();
                 for (int j = 0; j < sub.getLength(); j++) {
-                    PdependTypes.PdependFile file = PdependTypes.PdependFile.class.newInstance();
+                    PdependTypes.PdependFile file = new PdependTypes.PdependFile();
                     NamedNodeMap nm = sub.item(j).getAttributes();
-
+                    this.fillValues(sub.item(j), file);
                     res.addFile(file);
                 }
             }
-        } catch (InstantiationException ex) {
-            Exceptions.printStackTrace(ex);
-        } catch (IllegalAccessException ex) {
-            Exceptions.printStackTrace(ex);
+
+
         } catch (IOException ex) {
         } catch (ParserConfigurationException ex) {
         } catch (SAXParseException ex) {
@@ -67,5 +60,34 @@ public class PdependParser {
         }
 
         return res;
+    }
+
+    private void fillValues(Node node, Object o) {
+        if (node == null) return;
+        if (node.getAttributes() == null) return;
+        for (int i=0; i < node.getAttributes().getLength(); i++) {
+            Node attr = node.getAttributes().item(i);
+            try {
+                Field f = o.getClass().getField(attr.getNodeName());
+                String type = f.getType().getCanonicalName();
+
+                if (type.compareTo("java.lang.Integer") == 0 || type.compareTo("int") == 0) {
+                    f.setInt(o, Integer.parseInt(attr.getNodeValue()));
+                } else if (type.compareTo("java.lang.Float") == 0 || type.compareTo("float") == 0) {
+                    f.setFloat(o, Float.parseFloat(attr.getNodeValue()));
+                } else if (type.compareTo("java.lang.String") == 0) {
+                    f.set(o, attr.getNodeValue() + "");
+
+                }
+
+                else {
+                    throw new Exception("Unknown type '" + type + "' for field '" + f.getName() + "'");
+                }
+            } catch (NoSuchFieldException ex) {
+                Exceptions.printStackTrace(ex);
+            } catch (Exception ex) {
+                Exceptions.printStackTrace(ex);
+            }
+        }
     }
 }

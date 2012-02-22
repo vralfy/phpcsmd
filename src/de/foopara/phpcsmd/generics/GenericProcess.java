@@ -5,6 +5,8 @@
 package de.foopara.phpcsmd.generics;
 
 import de.foopara.phpcsmd.DebugLog;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.concurrent.ExecutionException;
@@ -30,7 +32,7 @@ public class GenericProcess {
         ExecutionService service = ExecutionService
                 .newService(builder, descriptor, "PHP Violations");
         Future<Integer> task = service.run();
-        
+
         try {
             task.get();
         } catch (InterruptedException ex) {
@@ -38,20 +40,34 @@ public class GenericProcess {
         } catch (ExecutionException ex) {
             Exceptions.printStackTrace(ex);
         }
-        DebugLog.put("Checking done");
+
         return output;
     }
-    
-    public static GenericOutputReader run(String cmd) {
+
+    public static GenericOutputReader run(String cmd, File outputFile) {
         try {
             Process child = Runtime.getRuntime().exec(cmd);
-            InputStream in = child.getInputStream();
             StringBuilder tmp = new StringBuilder();
+            InputStream in = child.getInputStream();
             int c;
-            while((c = in.read()) != -1) {
-                tmp.append((char)c);
+
+            if (outputFile == null) {
+                while((c = in.read()) != -1) {
+                    tmp.append((char)c);
+                }
+            } else {
+                if (!GenericHelper.isDesirableFile(outputFile)) return new GenericOutputReader();
+                while((c = in.read()) != -1) {}
+                child.waitFor();
+
+                FileInputStream fis = new FileInputStream(outputFile);
+                while((c = fis.read()) != -1) {
+                    tmp.append((char)c);
+                }
             }
             return new GenericOutputReader(tmp);
+        } catch (InterruptedException ex) {
+            Exceptions.printStackTrace(ex);
         } catch (IOException ex) {
             Exceptions.printStackTrace(ex);
         }

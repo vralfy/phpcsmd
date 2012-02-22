@@ -4,12 +4,14 @@
  */
 package de.foopara.phpcsmd.ui.reports;
 
+import de.foopara.phpcsmd.exec.pdepend.PdependResult;
+import de.foopara.phpcsmd.threads.PdependThread;
 import org.netbeans.api.settings.ConvertAsProperties;
 import org.openide.awt.ActionID;
 import org.openide.awt.ActionReference;
 import org.openide.filesystems.FileObject;
-import org.openide.windows.TopComponent;
 import org.openide.util.NbBundle.Messages;
+import org.openide.windows.TopComponent;
 
 /**
  * Top component which displays something.
@@ -87,12 +89,26 @@ public final class PdependReportTopComponent extends TopComponent {
         add(jSplitPane1, gridBagConstraints);
 
         org.openide.awt.Mnemonics.setLocalizedText(jButton1, org.openide.util.NbBundle.getMessage(PdependReportTopComponent.class, "PdependReportTopComponent.jButton1.text")); // NOI18N
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         add(jButton1, gridBagConstraints);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        this.jButton1.setEnabled(false);
+
+        PdependThread t = new PdependThread();
+        t.setFileObject(this.fileObject);
+        t.setTopComponent(this);
+        t.start();
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
@@ -128,5 +144,9 @@ public final class PdependReportTopComponent extends TopComponent {
         this.fileObject = fo;
 
         this.setDisplayName("Pdepend: " + fo.getPath());
+    }
+
+    public void setPdependResult(PdependResult res) {
+        this.jButton1.setEnabled(true);
     }
 }
