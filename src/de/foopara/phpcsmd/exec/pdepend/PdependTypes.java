@@ -19,48 +19,51 @@ public class PdependTypes {
     }
 
     static public class PdependMetrics extends PdependTypes.PdependType {
-        public float andc;
-        public int calls;
-        public int ccn;
-        public int ccn2;
-        public int cloc;
+        public String generated;//Creation time
+        public String pdepend;  //Pdepend version
+        public float ahh;       //Average Hierarchy Height
+        public float andc;      //Average Number of Derived Classes
+        public int calls;       //Number of Method or Function Calls
+        public int ccn;         //Cyclomatic Complexity Number
+        public int ccn2;        //Extended Cyclomatic Complexity Number
+        public int cloc;        //Comment Lines fo Code
 
-        public int clsa;
-        public int clsc;
-        public int eloc;
-        public int fanout;
-        public int leafs;
+        public int clsa;        //Number of Abstract Classes
+        public int clsc;        //Number of Concrete Classes
+        public int eloc;        //Executable Lines of Code
+        public int fanout;      //Number of Fanouts
+        public int leafs;       //Number of Leaf (final) Classes
 
-        public int lloc;
-        public int loc;
-        public int maxDIT;
-        public int ncloc;
-        public int noc;
+        public int lloc;        //Logical Lines Of Code
+        public int loc;         //Lines Of Code
+        public int maxDIT;      //Max Depth of Inheritance Tree
+        public int ncloc;       //Non Comment Lines Of Code
+        public int noc;         //Number Of Classes
 
-        public int nof;
-        public int noi;
-        public int nom;
-        public int nop;
-        public int roots;
+        public int nof;         //Number Of Functions
+        public int noi;         //Number Of Interfaces
+        public int nom;         //Number Of Methods
+        public int nop;         //Number of Packages
+        public int roots;       //Number of Root Classes
     }
 
     static public class PdependFile extends PdependTypes.PdependType {
-        public String name;
-        public int cloc;
-        public int eloc;
-        public int lloc;
-        public int loc;
-        public int ncloc;
+        public String name;     //Filepath
+        public int cloc;        //Comment Lines fo Code
+        public int eloc;        //Executable Lines of Code
+        public int lloc;        //Logical Lines Of Code
+        public int loc;         //Lines Of Code
+        public int ncloc;       //Non Comment Lines Of Code
     }
 
     static public class PdependPackage extends PdependTypes.PdependType {
-        public String name;
-        public float cr;
-        public int noc;
-        public int nof;
-        public int noi;
-        public int nom;
-        public float rcr;
+        public String name;     //Packagename
+        public float cr;        //Code Rank
+        public int noc;         //Number Of Classes
+        public int nof;         //Number Of Functions
+        public int noi;         //Number Of Interfaces
+        public int nom;         //Number Of Methods
+        public float rcr;       //Reverse Code Rank
         HashSet<PdependClass> classes = new HashSet<PdependClass>();
 
         public void addClass(PdependClass c) {
@@ -69,37 +72,37 @@ public class PdependTypes {
     }
 
     static public class PdependClass extends PdependTypes.PdependType {
-        public String name;
-        public int ca;
-        public int cbo;
-        public int ce;
-        public int cis;
+        public String name;     //Classname
+        public int ca;          //Afferent Coupling
+        public int cbo;         //Coupling Between Objects
+        public int ce;          //Efferent Coupling
+        public int cis;         //Class Interface Size
 
-        public int cloc;
-        public float cr;
-        public int csz;
-        public int dit;
-        public int eloc;
+        public int cloc;        //Comment Lines fo Code
+        public float cr;        //Code Rank
+        public int csz;         //Class Size
+        public int dit;         //Depth of Inheritance Tree
+        public int eloc;        //Executable Lines of Code
 
-        public int impl;
-        public int lloc;
-        public int loc;
-        public int ncloc;
-        public int noam;
+        public int impl;        //-------------------------------------------------------
+        public int lloc;        //Logical Lines Of Code
+        public int loc;         //Lines Of Code
+        public int ncloc;       //Non Comment Lines Of Code
+        public int noam;        //Number Of Added Methods
 
-        public int nocc;
-        public int nom;
-        public int noom;
-        public int npm;
-        public float rcr;
+        public int nocc;        //Number Of Child Classes
+        public int nom;         //Number Of Methods
+        public int noom;        //Number Of Overwritten Methods
+        public int npm;         //Number of Public Methods
+        public float rcr;       //Reverse Code Rank
 
-        public int vars;
-        public int varsi;
-        public int varsnp;
-        public int wmc;
-        public int wmci;
+        public int vars;        //Properties
+        public int varsi;       //Inherited Properties
+        public int varsnp;      //Non Private Properties
+        public int wmc;         //Weighted Method Count
+        public int wmci;        //Inherited Weighted Method Count
 
-        public int wmcnp;
+        public int wmcnp;       //Non Private Weighted Method Count
 
         HashSet<PdependMethod> methods = new HashSet<PdependMethod>();
 
@@ -109,14 +112,14 @@ public class PdependTypes {
     }
 
     static public class PdependMethod extends PdependTypes.PdependType {
-        public String name;
-        public int ccn;
-        public int ccn2;
-        public int cloc;
-        public int eloc;
-        public int lloc;
-        public int loc;
-        public int ncloc;
-        public int npath;
+        public String name;     //Methodname
+        public int ccn;         //Cyclomatic Complexity Number
+        public int ccn2;        //Extended Cyclomatic Complexity Number
+        public int cloc;        //Comment Lines fo Code
+        public int eloc;        //Executable Lines of Code
+        public int lloc;        //Logical Lines Of Code
+        public int loc;         //Lines Of Code
+        public int ncloc;       //Non Comment Lines Of Code
+        public int npath;       //NPath Complexity
     }
 }

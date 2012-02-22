@@ -4,7 +4,6 @@
  */
 package de.foopara.phpcsmd.generics;
 
-import de.foopara.phpcsmd.DebugLog;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -50,14 +49,15 @@ public class GenericProcess {
             StringBuilder tmp = new StringBuilder();
             InputStream in = child.getInputStream();
             int c;
-
             if (outputFile == null) {
                 while((c = in.read()) != -1) {
                     tmp.append((char)c);
                 }
             } else {
                 if (!GenericHelper.isDesirableFile(outputFile)) return new GenericOutputReader();
-                while((c = in.read()) != -1) {}
+                InputStream err = child.getErrorStream();
+                while((c = err.read()) != -1) {} //Ich muss das auslesen, damit der Prozess wartet
+                while((c = in.read()) != -1) {}  //Ich muss das auslesen, damit der Prozess wartet
                 child.waitFor();
 
                 FileInputStream fis = new FileInputStream(outputFile);

@@ -57,6 +57,9 @@ public final class PdependReportTopComponent extends TopComponent {
         jSplitPane1 = new javax.swing.JSplitPane();
         jScrollPane1 = new javax.swing.JScrollPane();
         pdependTree1 = new de.foopara.phpcsmd.ui.reports.PdependTree();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jPanel1 = new javax.swing.JPanel();
+        pdependMetricsPanel1 = new de.foopara.phpcsmd.ui.reports.PdependMetricsPanel();
         jButton1 = new javax.swing.JButton();
 
         setLayout(new java.awt.GridBagLayout());
@@ -78,6 +81,18 @@ public final class PdependReportTopComponent extends TopComponent {
         jScrollPane1.setViewportView(pdependTree1);
 
         jSplitPane1.setLeftComponent(jScrollPane1);
+
+        jPanel1.setLayout(new java.awt.GridBagLayout());
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.weightx = 1.0;
+        jPanel1.add(pdependMetricsPanel1, gridBagConstraints);
+
+        jScrollPane2.setViewportView(jPanel1);
+
+        jSplitPane1.setRightComponent(jScrollPane2);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -114,8 +129,11 @@ public final class PdependReportTopComponent extends TopComponent {
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JSplitPane jSplitPane1;
+    private de.foopara.phpcsmd.ui.reports.PdependMetricsPanel pdependMetricsPanel1;
     private de.foopara.phpcsmd.ui.reports.PdependTree pdependTree1;
     // End of variables declaration//GEN-END:variables
     @Override
@@ -148,5 +166,6 @@ public final class PdependReportTopComponent extends TopComponent {
 
     public void setPdependResult(PdependResult res) {
         this.jButton1.setEnabled(true);
+        this.pdependMetricsPanel1.setMetrics(res.getMetrics());
     }
 }

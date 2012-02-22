@@ -17,7 +17,7 @@ public class PhpmdOptions {
     public static final String _PREFIX = "phpcsmd.phpmd.";
 
     private static final String _ACTIVATED          = "activated";
-    private static final String _ACTIVATED_DEFAULT  = "true";
+    private static final String _ACTIVATED_DEFAULT  = "false";
 
     private static final String _SCRIPT             = "script";
     private static final String _SCRIPT_DEFAULT     = "/usr/bin/phpmd";
