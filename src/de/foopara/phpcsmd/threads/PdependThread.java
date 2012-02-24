@@ -32,6 +32,7 @@ public class PdependThread extends Thread {
     @Override
     public void run() {
         Pdepend pdepend = new Pdepend();
+        pdepend.setTopComponent(this.component);
         PdependResult res = pdepend.run(fo);
         this.component.setPdependResult(res);
     }

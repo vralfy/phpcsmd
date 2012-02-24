@@ -70,7 +70,7 @@ public class Phpcs extends GenericExecute {
          */
         PhpcsXMLParser parser = new PhpcsXMLParser();
         if (!iAmAlive()) return this.setAndReturnDefault(file);
-        GenericOutputReader reader = GenericProcess.run(cmd.toString(), null);
+        GenericOutputReader reader = GenericProcess.run(cmd.toString(), null, null);
         if (!iAmAlive()) return this.setAndReturnDefault(file);
         PhpcsResult res = parser.parse(reader);
         if (!iAmAlive()) return this.setAndReturnDefault(file);

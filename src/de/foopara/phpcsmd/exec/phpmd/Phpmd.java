@@ -44,7 +44,7 @@ public class Phpmd extends GenericExecute {
 
         PhpmdXMLParser parser = new PhpmdXMLParser();
         if (!iAmAlive()) return this.setAndReturnDefault(file);
-        GenericOutputReader reader = GenericProcess.run(cmd.toString(), null);
+        GenericOutputReader reader = GenericProcess.run(cmd.toString(), null, null);
         if (!iAmAlive()) return this.setAndReturnDefault(file);
         PhpmdResult res = parser.parse(reader);
         if (!iAmAlive()) return this.setAndReturnDefault(file);

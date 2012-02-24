@@ -8,6 +8,7 @@ import de.foopara.phpcsmd.generics.GenericHelper;
 import de.foopara.phpcsmd.generics.GenericOutputReader;
 import de.foopara.phpcsmd.generics.GenericProcess;
 import de.foopara.phpcsmd.option.PdependOptions;
+import de.foopara.phpcsmd.ui.reports.PdependReportTopComponent;
 import java.io.File;
 import org.openide.filesystems.FileObject;
 
@@ -16,7 +17,10 @@ import org.openide.filesystems.FileObject;
  * @author n.specht
  */
 public class Pdepend {
+    
     private boolean _enabled = true;
+    
+    private PdependReportTopComponent component = null;
 
     public boolean isEnabled() {
         return this._enabled;
@@ -30,14 +34,13 @@ public class Pdepend {
         }
 
         if(this.isEnabled() == false) {
-            System.out.println("exit 2");
             return this.setAndReturnDefault();
         }
 
         File tmpFile = new File(System.getProperty("java.io.tmpdir"), "pdepend_" + file.hashCode() + ".xml");
 
         StringBuilder cmd = new StringBuilder(PdependOptions.getScript());
-        this.appendArgument(cmd, "--suffixes=", "" + PdependOptions.getSuffixes());
+        this.appendArgument(cmd, "--suffix=", "" + PdependOptions.getSuffixes());
         this.appendArgument(cmd, "--exclude=", "" + PdependOptions.getExcludes());
         this.appendArgument(cmd, "--ignore=", "" + PdependOptions.getIgnores());
 
@@ -46,10 +49,14 @@ public class Pdepend {
         cmd.append(" ").append(file.getPath());
 
         PdependParser parser = new PdependParser();
-        GenericOutputReader reader = GenericProcess.run(cmd.toString(), tmpFile);
+        GenericOutputReader reader = GenericProcess.run(cmd.toString(), tmpFile, this.component);
         return parser.parse(reader);
     }
 
+    public void setTopComponent(PdependReportTopComponent c) {
+        this.component = c;
+    }
+    
     private PdependResult setAndReturnDefault() {
 
         return new PdependResult();

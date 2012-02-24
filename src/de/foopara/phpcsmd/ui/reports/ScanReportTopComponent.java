@@ -6,6 +6,7 @@ package de.foopara.phpcsmd.ui.reports;
 
 import de.foopara.phpcsmd.generics.GenericHelper;
 import de.foopara.phpcsmd.generics.GenericPokeRegistry;
+import de.foopara.phpcsmd.generics.GenericTopComponent;
 import de.foopara.phpcsmd.threads.FileCountThread;
 import de.foopara.phpcsmd.threads.RescanThread;
 import java.awt.event.MouseAdapter;
@@ -43,7 +44,7 @@ preferredID = "ScanReportTopComponent")
     "CTL_ScanReportTopComponent=ScanReport",
     "HINT_ScanReportTopComponent=This is a ScanReport window"
 })
-public final class ScanReportTopComponent extends TopComponent {
+public final class ScanReportTopComponent extends GenericTopComponent {
 
     private FileObject fileObject;
 
@@ -288,5 +289,9 @@ public final class ScanReportTopComponent extends TopComponent {
                 buf.append("<font style=\"color:#cccc00\">").append(warnings).append("</font>");
             }
         }
+    }
+
+    @Override
+    public void setCommandOutput(String output) {
     }
 }

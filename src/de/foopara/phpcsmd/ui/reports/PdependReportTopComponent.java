@@ -5,6 +5,7 @@
 package de.foopara.phpcsmd.ui.reports;
 
 import de.foopara.phpcsmd.exec.pdepend.PdependResult;
+import de.foopara.phpcsmd.generics.GenericTopComponent;
 import de.foopara.phpcsmd.threads.PdependThread;
 import org.netbeans.api.settings.ConvertAsProperties;
 import org.openide.awt.ActionID;
@@ -33,7 +34,7 @@ preferredID = "PdependReportTopComponent")
     "CTL_PdependReportTopComponent=Pdepend",
     "HINT_PdependReportTopComponent=This is a PdependReport window"
 })
-public final class PdependReportTopComponent extends TopComponent {
+public final class PdependReportTopComponent extends GenericTopComponent {
 
     private FileObject fileObject;
 
@@ -61,6 +62,8 @@ public final class PdependReportTopComponent extends TopComponent {
         jPanel1 = new javax.swing.JPanel();
         pdependMetricsPanel1 = new de.foopara.phpcsmd.ui.reports.PdependMetricsPanel();
         jButton1 = new javax.swing.JButton();
+        lPdependStep = new javax.swing.JLabel();
+        lPdependProgress = new javax.swing.JLabel();
 
         setLayout(new java.awt.GridBagLayout());
 
@@ -74,6 +77,7 @@ public final class PdependReportTopComponent extends TopComponent {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridwidth = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.weightx = 1.0;
         add(jLabel2, gridBagConstraints);
@@ -97,7 +101,7 @@ public final class PdependReportTopComponent extends TopComponent {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 1;
-        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.gridwidth = 3;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.weighty = 1.0;
@@ -114,6 +118,18 @@ public final class PdependReportTopComponent extends TopComponent {
         gridBagConstraints.gridy = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         add(jButton1, gridBagConstraints);
+
+        org.openide.awt.Mnemonics.setLocalizedText(lPdependStep, org.openide.util.NbBundle.getMessage(PdependReportTopComponent.class, "PdependReportTopComponent.lPdependStep.text")); // NOI18N
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 2;
+        add(lPdependStep, gridBagConstraints);
+
+        org.openide.awt.Mnemonics.setLocalizedText(lPdependProgress, org.openide.util.NbBundle.getMessage(PdependReportTopComponent.class, "PdependReportTopComponent.lPdependProgress.text")); // NOI18N
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 2;
+        add(lPdependProgress, gridBagConstraints);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -133,11 +149,16 @@ public final class PdependReportTopComponent extends TopComponent {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JSplitPane jSplitPane1;
+    private javax.swing.JLabel lPdependProgress;
+    private javax.swing.JLabel lPdependStep;
     private de.foopara.phpcsmd.ui.reports.PdependMetricsPanel pdependMetricsPanel1;
     private de.foopara.phpcsmd.ui.reports.PdependTree pdependTree1;
     // End of variables declaration//GEN-END:variables
     @Override
     public void componentOpened() {
+        this.jButton1.setEnabled(true);
+        this.lPdependProgress.setVisible(false);
+        this.lPdependStep.setVisible(false);
         // TODO add custom code on component opening
     }
 
@@ -166,6 +187,23 @@ public final class PdependReportTopComponent extends TopComponent {
 
     public void setPdependResult(PdependResult res) {
         this.jButton1.setEnabled(true);
+        this.lPdependProgress.setVisible(false);
+        this.lPdependStep.setVisible(false);
         this.pdependMetricsPanel1.setMetrics(res.getMetrics());
+    }
+    
+    @Override
+    public void setCommandOutput(String output) {
+        this.lPdependProgress.setVisible(true);
+        this.lPdependStep.setVisible(true);
+        
+        String[] split = output.split("\n");
+        for(String line : split) {
+            if (line.contains(".")) {
+                this.lPdependProgress.setText(line);
+            } else {
+                this.lPdependStep.setText(line);
+            }
+        }
     }
 }
