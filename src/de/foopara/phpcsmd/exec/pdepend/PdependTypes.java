@@ -45,6 +45,11 @@ public class PdependTypes {
         public int nom;         //Number Of Methods
         public int nop;         //Number of Packages
         public int roots;       //Number of Root Classes
+
+        @Override
+        public String toString() {
+            return "Pdepend Metrics";
+        }
     }
 
     static public class PdependFile extends PdependTypes.PdependType {
@@ -54,6 +59,23 @@ public class PdependTypes {
         public int lloc;        //Logical Lines Of Code
         public int loc;         //Lines Of Code
         public int ncloc;       //Non Comment Lines Of Code
+
+        private String _filter = null;
+
+        @Override
+        public String toString() {
+            if (this._filter != null && this.name != null) {
+                if (this.name.startsWith(this._filter)) {
+                    return this.name.substring(this._filter.length());
+                }
+            }
+            return this.name;
+
+        }
+
+        public void setFilter(String f) {
+            this._filter = f;
+        }
     }
 
     static public class PdependPackage extends PdependTypes.PdependType {
@@ -68,6 +90,15 @@ public class PdependTypes {
 
         public void addClass(PdependClass c) {
             this.classes.add(c);
+        }
+
+        public HashSet<PdependClass> getClasses() {
+            return this.classes;
+        }
+
+        @Override
+        public String toString() {
+            return this.name;
         }
     }
 
@@ -106,8 +137,17 @@ public class PdependTypes {
 
         HashSet<PdependMethod> methods = new HashSet<PdependMethod>();
 
-        public void addClass(PdependMethod m) {
+        public void addMethod(PdependMethod m) {
             this.methods.add(m);
+        }
+
+        public HashSet<PdependMethod> getMethods() {
+            return this.methods;
+        }
+
+        @Override
+        public String toString() {
+            return this.name;
         }
     }
 
@@ -121,5 +161,10 @@ public class PdependTypes {
         public int loc;         //Lines Of Code
         public int ncloc;       //Non Comment Lines Of Code
         public int npath;       //NPath Complexity
+
+        @Override
+        public String toString() {
+            return this.name;
+        }
     }
 }

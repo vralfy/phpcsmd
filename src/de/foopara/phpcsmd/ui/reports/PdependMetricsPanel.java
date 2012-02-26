@@ -5,54 +5,59 @@
 package de.foopara.phpcsmd.ui.reports;
 
 import de.foopara.phpcsmd.exec.pdepend.PdependTypes;
-import javax.swing.JLabel;
+import javax.swing.JProgressBar;
 
 /**
  *
  * @author n.specht
  */
-public class PdependMetricsPanel extends javax.swing.JPanel {
-
-    private JLabel displayAHH;
-    private JLabel displayANDC;
+public class PdependMetricsPanel extends PdependGenericResultPanel {
 
     /**
      * Creates new form PdependMetricsPanel
      */
     public PdependMetricsPanel() {
         initComponents();
-        int row = 0;
-        this.displayAHH  = this.addLabel("Average Hierarchy Height"         , row); row++;
-        this.displayANDC = this.addLabel("Average Number of Derived Classes", row); row++;
+        this.addLabel("pdepend", "Pdepend Version");
+        this.addLabel("generated", "Generated");
 
-    }
+        this.addSeparator(null, "Classes");
+        this.addLabel("noc", "Number of Classes");
+        this.addLabel("roots", "Number of Root Classes");
+        this.addLabel("leafs", "Number of Leaf (final) Classes");
 
-    private JLabel addLabel(String caption, int row) {
-        java.awt.GridBagConstraints gridBagConstraints;
+        this.addLabel("clsc", "Number of Concrete Classes");
+        this.addLabel("clsa", "Number of Abstract Classes");
 
-        JLabel cap = new JLabel(caption + ": ");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.insets = new java.awt.Insets(0, 0, 2, 2);
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = row;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
-        this.add(cap, gridBagConstraints);
+        this.addLabel("ahh", "Average Hierarchy Height");
+        this.addLabel("andc", "Average Number of Derived Classes");
 
-        JLabel ret = new JLabel("");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.weightx = 1.0;
-        gridBagConstraints.insets = new java.awt.Insets(0, 0, 2, 2);
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = row;
-        this.add(ret, gridBagConstraints);
+        this.addSeparator(null, "Complexity");
+        this.addLabel("ccn", "Cyclomatic Complexity");
+        this.addLabel("ccn2", "Cyclomatic Complexity Number");
 
-        return ret;
+        this.addSeparator(null, "Codelines");
+        this.addLabel("loc", "Lines of Code");
+        this.addProgressbar("ncloc", "Non Comment Lines of Code");
+        this.addProgressbar("cloc", "Comment Lines of Code");
+        this.addProgressbar("eloc", "Executable Lines of Code");
+        this.addProgressbar("lloc", "Logical Lines Of Code");
+
+        this.addSeparator(null, null);
+        this.addLabel("calls", "Number of Method or Function Calls");
+        this.addLabel("fanout", "Number of Fanouts");
+
+
+
     }
 
     public void setMetrics(PdependTypes.PdependMetrics metrics) {
-        this.displayAHH.setText("" + metrics.ahh);
-        this.displayANDC.setText("" + metrics.andc);
+        ((JProgressBar)this.elements.get("ncloc")).setMaximum(metrics.loc);
+        ((JProgressBar)this.elements.get("cloc")).setMaximum(metrics.loc);
+        ((JProgressBar)this.elements.get("eloc")).setMaximum(metrics.loc);
+        ((JProgressBar)this.elements.get("lloc")).setMaximum(metrics.loc);
+
+        this.setFields(metrics);
     }
 
     /**

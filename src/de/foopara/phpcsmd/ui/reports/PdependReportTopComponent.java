@@ -5,6 +5,7 @@
 package de.foopara.phpcsmd.ui.reports;
 
 import de.foopara.phpcsmd.exec.pdepend.PdependResult;
+import de.foopara.phpcsmd.exec.pdepend.PdependTypes;
 import de.foopara.phpcsmd.generics.GenericTopComponent;
 import de.foopara.phpcsmd.threads.PdependThread;
 import org.netbeans.api.settings.ConvertAsProperties;
@@ -42,7 +43,6 @@ public final class PdependReportTopComponent extends GenericTopComponent {
         initComponents();
         setName(Bundle.CTL_PdependReportTopComponent());
         setToolTipText(Bundle.HINT_PdependReportTopComponent());
-
     }
 
     /**
@@ -60,7 +60,11 @@ public final class PdependReportTopComponent extends GenericTopComponent {
         pdependTree1 = new de.foopara.phpcsmd.ui.reports.PdependTree();
         jScrollPane2 = new javax.swing.JScrollPane();
         jPanel1 = new javax.swing.JPanel();
-        pdependMetricsPanel1 = new de.foopara.phpcsmd.ui.reports.PdependMetricsPanel();
+        metricsPanel = new de.foopara.phpcsmd.ui.reports.PdependMetricsPanel();
+        filePanel = new de.foopara.phpcsmd.ui.reports.PdependFilePanel();
+        packagePanel = new de.foopara.phpcsmd.ui.reports.PdependPackagePanel();
+        classPanel = new de.foopara.phpcsmd.ui.reports.PdependClassPanel();
+        methodPanel = new de.foopara.phpcsmd.ui.reports.PdependMethodPanel();
         jButton1 = new javax.swing.JButton();
         lPdependStep = new javax.swing.JLabel();
         lPdependProgress = new javax.swing.JLabel();
@@ -82,6 +86,13 @@ public final class PdependReportTopComponent extends GenericTopComponent {
         gridBagConstraints.weightx = 1.0;
         add(jLabel2, gridBagConstraints);
 
+        jSplitPane1.setDividerLocation(200);
+
+        pdependTree1.addTreeSelectionListener(new javax.swing.event.TreeSelectionListener() {
+            public void valueChanged(javax.swing.event.TreeSelectionEvent evt) {
+                pdependTree1ValueChanged(evt);
+            }
+        });
         jScrollPane1.setViewportView(pdependTree1);
 
         jSplitPane1.setLeftComponent(jScrollPane1);
@@ -90,9 +101,38 @@ public final class PdependReportTopComponent extends GenericTopComponent {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.weightx = 1.0;
-        jPanel1.add(pdependMetricsPanel1, gridBagConstraints);
+        gridBagConstraints.weighty = 1.0;
+        jPanel1.add(metricsPanel, gridBagConstraints);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.weighty = 1.0;
+        jPanel1.add(filePanel, gridBagConstraints);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.weighty = 1.0;
+        jPanel1.add(packagePanel, gridBagConstraints);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.weighty = 1.0;
+        jPanel1.add(classPanel, gridBagConstraints);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 4;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.weighty = 1.0;
+        jPanel1.add(methodPanel, gridBagConstraints);
 
         jScrollPane2.setViewportView(jPanel1);
 
@@ -141,7 +181,35 @@ public final class PdependReportTopComponent extends GenericTopComponent {
         t.start();
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    private void pdependTree1ValueChanged(javax.swing.event.TreeSelectionEvent evt) {//GEN-FIRST:event_pdependTree1ValueChanged
+        Object o = this.pdependTree1.getSelectedItem();
+        if (o == null) return;
+        if (o.getClass().getCanonicalName().endsWith("PdependTypes.PdependMetrics")) {
+            this.metricsPanel.setMetrics((PdependTypes.PdependMetrics)o);
+            this.hideAllPdependPanels();
+            this.metricsPanel.setVisible(true);
+        } else if (o.getClass().getCanonicalName().endsWith("PdependTypes.PdependFile")) {
+            this.filePanel.setFile((PdependTypes.PdependFile)o);
+            this.hideAllPdependPanels();
+            this.filePanel.setVisible(true);
+        } else if (o.getClass().getCanonicalName().endsWith("PdependTypes.PdependPackage")) {
+            this.packagePanel.setPackage((PdependTypes.PdependPackage)o);
+            this.hideAllPdependPanels();
+            this.packagePanel.setVisible(true);
+        } else if (o.getClass().getCanonicalName().endsWith("PdependTypes.PdependClass")) {
+            this.classPanel.setClass((PdependTypes.PdependClass)o);
+            this.hideAllPdependPanels();
+            this.classPanel.setVisible(true);
+        } else if (o.getClass().getCanonicalName().endsWith("PdependTypes.PdependMethod")) {
+            this.methodPanel.setMethod((PdependTypes.PdependMethod)o);
+            this.hideAllPdependPanels();
+            this.methodPanel.setVisible(true);
+        }
+    }//GEN-LAST:event_pdependTree1ValueChanged
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private de.foopara.phpcsmd.ui.reports.PdependClassPanel classPanel;
+    private de.foopara.phpcsmd.ui.reports.PdependFilePanel filePanel;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -151,7 +219,9 @@ public final class PdependReportTopComponent extends GenericTopComponent {
     private javax.swing.JSplitPane jSplitPane1;
     private javax.swing.JLabel lPdependProgress;
     private javax.swing.JLabel lPdependStep;
-    private de.foopara.phpcsmd.ui.reports.PdependMetricsPanel pdependMetricsPanel1;
+    private de.foopara.phpcsmd.ui.reports.PdependMethodPanel methodPanel;
+    private de.foopara.phpcsmd.ui.reports.PdependMetricsPanel metricsPanel;
+    private de.foopara.phpcsmd.ui.reports.PdependPackagePanel packagePanel;
     private de.foopara.phpcsmd.ui.reports.PdependTree pdependTree1;
     // End of variables declaration//GEN-END:variables
     @Override
@@ -159,6 +229,7 @@ public final class PdependReportTopComponent extends GenericTopComponent {
         this.jButton1.setEnabled(true);
         this.lPdependProgress.setVisible(false);
         this.lPdependStep.setVisible(false);
+        this.hideAllPdependPanels();
         // TODO add custom code on component opening
     }
 
@@ -181,22 +252,26 @@ public final class PdependReportTopComponent extends GenericTopComponent {
 
     public void setFileObject(FileObject fo) {
         this.fileObject = fo;
-
         this.setDisplayName("Pdepend: " + fo.getPath());
+        this.pdependTree1.setFilter(fo.getPath());
     }
 
     public void setPdependResult(PdependResult res) {
         this.jButton1.setEnabled(true);
         this.lPdependProgress.setVisible(false);
         this.lPdependStep.setVisible(false);
-        this.pdependMetricsPanel1.setMetrics(res.getMetrics());
+        this.pdependTree1.setResult(res);
+
+        this.metricsPanel.setMetrics(res.getMetrics());
+        this.hideAllPdependPanels();
+        this.metricsPanel.setVisible(true);
     }
-    
+
     @Override
     public void setCommandOutput(String output) {
         this.lPdependProgress.setVisible(true);
         this.lPdependStep.setVisible(true);
-        
+
         String[] split = output.split("\n");
         for(String line : split) {
             if (line.contains(".")) {
@@ -205,5 +280,13 @@ public final class PdependReportTopComponent extends GenericTopComponent {
                 this.lPdependStep.setText(line);
             }
         }
+    }
+
+    private void hideAllPdependPanels() {
+        this.metricsPanel.setVisible(false);
+        this.filePanel.setVisible(false);
+        this.packagePanel.setVisible(false);
+        this.classPanel.setVisible(false);
+        this.methodPanel.setVisible(false);
     }
 }
