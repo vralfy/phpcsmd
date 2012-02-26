@@ -17,6 +17,16 @@ public class PdependPackagePanel extends PdependGenericResultPanel {
      */
     public PdependPackagePanel() {
         initComponents();
+        this.addLabel("name", "Name");
+        this.addSeparator(null, "Counts");
+        this.addLabel("noc", "Number of Classes");
+        this.addLabel("noi", "Number of Interfaces");
+        this.addLabel("nom", "Number of Methods");
+        this.addLabel("nof", "Number of Functions");
+
+        this.addSeparator(null, "Code Rank");
+        this.addLabel("cr", "Code Rank");
+        this.addLabel("rcr", "Reverse Code Rank");
     }
 
     public void setPackage(PdependTypes.PdependPackage pack) {

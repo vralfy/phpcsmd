@@ -186,6 +186,10 @@ public final class ScanReportTopComponent extends GenericTopComponent {
 
     @Override
     public void componentOpened() {
+        if (this.fileObject == null) {
+            this.close();
+            return;
+        }
         GenericPokeRegistry.getInstance().register(this);
         this.toFront();
         this.setRescanDone();

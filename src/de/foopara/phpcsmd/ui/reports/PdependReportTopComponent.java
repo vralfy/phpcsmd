@@ -65,6 +65,7 @@ public final class PdependReportTopComponent extends GenericTopComponent {
         packagePanel = new de.foopara.phpcsmd.ui.reports.PdependPackagePanel();
         classPanel = new de.foopara.phpcsmd.ui.reports.PdependClassPanel();
         methodPanel = new de.foopara.phpcsmd.ui.reports.PdependMethodPanel();
+        functionPanel = new de.foopara.phpcsmd.ui.reports.PdependFunctionPanel();
         jButton1 = new javax.swing.JButton();
         lPdependStep = new javax.swing.JLabel();
         lPdependProgress = new javax.swing.JLabel();
@@ -133,6 +134,7 @@ public final class PdependReportTopComponent extends GenericTopComponent {
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.weighty = 1.0;
         jPanel1.add(methodPanel, gridBagConstraints);
+        jPanel1.add(functionPanel, new java.awt.GridBagConstraints());
 
         jScrollPane2.setViewportView(jPanel1);
 
@@ -204,12 +206,17 @@ public final class PdependReportTopComponent extends GenericTopComponent {
             this.methodPanel.setMethod((PdependTypes.PdependMethod)o);
             this.hideAllPdependPanels();
             this.methodPanel.setVisible(true);
+        } else if (o.getClass().getCanonicalName().endsWith("PdependTypes.PdependFunction")) {
+            this.functionPanel.setFunction((PdependTypes.PdependFunction)o);
+            this.hideAllPdependPanels();
+            this.functionPanel.setVisible(true);
         }
     }//GEN-LAST:event_pdependTree1ValueChanged
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private de.foopara.phpcsmd.ui.reports.PdependClassPanel classPanel;
     private de.foopara.phpcsmd.ui.reports.PdependFilePanel filePanel;
+    private de.foopara.phpcsmd.ui.reports.PdependFunctionPanel functionPanel;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -226,6 +233,10 @@ public final class PdependReportTopComponent extends GenericTopComponent {
     // End of variables declaration//GEN-END:variables
     @Override
     public void componentOpened() {
+        if (this.fileObject == null) {
+            this.close();
+            return;
+        }
         this.jButton1.setEnabled(true);
         this.lPdependProgress.setVisible(false);
         this.lPdependStep.setVisible(false);
@@ -253,6 +264,7 @@ public final class PdependReportTopComponent extends GenericTopComponent {
     public void setFileObject(FileObject fo) {
         this.fileObject = fo;
         this.setDisplayName("Pdepend: " + fo.getPath());
+        this.jLabel2.setText(fo.getPath());
         this.pdependTree1.setFilter(fo.getPath());
     }
 
@@ -288,5 +300,6 @@ public final class PdependReportTopComponent extends GenericTopComponent {
         this.packagePanel.setVisible(false);
         this.classPanel.setVisible(false);
         this.methodPanel.setVisible(false);
+        this.functionPanel.setVisible(false);
     }
 }

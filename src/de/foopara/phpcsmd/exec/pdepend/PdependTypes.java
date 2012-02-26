@@ -167,4 +167,21 @@ public class PdependTypes {
             return this.name;
         }
     }
+
+    static public class PdependFunction extends PdependTypes.PdependType {
+        public String name;     //Functionname
+        public int ccn;         //Cyclomatic Complexity Number
+        public int ccn2;        //Extended Cyclomatic Complexity Number
+        public int cloc;        //Comment Lines fo Code
+        public int eloc;        //Executable Lines of Code
+        public int lloc;        //Logical Lines Of Code
+        public int loc;         //Lines Of Code
+        public int ncloc;       //Non Comment Lines Of Code
+        public int npath;       //NPath Complexity
+
+        @Override
+        public String toString() {
+            return this.name;
+        }
+    }
 }

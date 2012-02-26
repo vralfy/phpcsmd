@@ -58,15 +58,18 @@ public class PdependGenericResultPanel extends JPanel {
             name = "" + Math.random();
         }
         java.awt.GridBagConstraints gridBagConstraints;
-        int compwith = 2;
+        int compwith = 3;
+        int x = 0;
         if (caption != null) {
             compwith = 2;
+            x=1;
             JLabel cap = new JLabel("<html><body><b>" + caption + "</b></body></html>");
             gridBagConstraints = new java.awt.GridBagConstraints();
             gridBagConstraints.insets = new java.awt.Insets(0, 0, 2, 2);
             gridBagConstraints.gridx = 0;
             gridBagConstraints.gridy = row;
-            gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
+            gridBagConstraints.gridwidth = 1;
+            gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
             this.add(cap, gridBagConstraints);
         }
         JSeparator ret = new JSeparator();
@@ -74,7 +77,7 @@ public class PdependGenericResultPanel extends JPanel {
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.insets = new java.awt.Insets(0, 0, 2, 2);
-        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridx = x;
         gridBagConstraints.gridy = row;
         gridBagConstraints.gridwidth = compwith;
         this.add(ret, gridBagConstraints);
@@ -86,21 +89,23 @@ public class PdependGenericResultPanel extends JPanel {
         int row = this.elements.size() + 20;
 
         java.awt.GridBagConstraints gridBagConstraints;
-
-        JLabel cap = new JLabel(caption + " (" + name + ")" + ": ");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.insets = new java.awt.Insets(0, 0, 2, 2);
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = row;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
-        this.add(cap, gridBagConstraints);
+        if (caption != null) {
+            JLabel cap = new JLabel(caption + " (" + name + ")" + ": ");
+            gridBagConstraints = new java.awt.GridBagConstraints();
+            gridBagConstraints.insets = new java.awt.Insets(0, 30, 2, 2);
+            gridBagConstraints.gridx = 0;
+            gridBagConstraints.gridy = row;
+            gridBagConstraints.gridwidth = 2;
+            gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
+            this.add(cap, gridBagConstraints);
+        }
 
         JLabel ret = new JLabel("");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.insets = new java.awt.Insets(0, 0, 2, 2);
-        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = row;
         this.add(ret, gridBagConstraints);
 
@@ -111,21 +116,23 @@ public class PdependGenericResultPanel extends JPanel {
         int row = this.elements.size() + 20;
 
         java.awt.GridBagConstraints gridBagConstraints;
-
-        JLabel cap = new JLabel(caption + " (" + name + ")" + ": ");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.insets = new java.awt.Insets(0, 0, 2, 2);
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = row;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
-        this.add(cap, gridBagConstraints);
+        if (caption != null) {
+            JLabel cap = new JLabel(caption + " (" + name + ")" + ": ");
+            gridBagConstraints = new java.awt.GridBagConstraints();
+            gridBagConstraints.insets = new java.awt.Insets(0, 30, 2, 2);
+            gridBagConstraints.gridx = 0;
+            gridBagConstraints.gridy = row;
+            gridBagConstraints.gridwidth = 2;
+            gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
+            this.add(cap, gridBagConstraints);
+        }
 
         JProgressBar ret = new JProgressBar();
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.insets = new java.awt.Insets(0, 0, 2, 2);
-        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = row;
         this.add(ret, gridBagConstraints);
 

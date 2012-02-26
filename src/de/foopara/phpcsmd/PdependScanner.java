@@ -20,7 +20,10 @@ import org.openide.util.NbBundle.Messages;
         iconBase = "de/foopara/phpcsmd/resources/icon.png")
 @ActionReferences({
     @ActionReference(path = "Loaders/folder/any/Actions", position = 877),
-    @ActionReference(path = "Loaders/text/x-php5/Actions", position = 877)
+    @ActionReference(path = "Loaders/text/x-php5/Actions", position = 877),
+//    @ActionReference(path = "Projects/Actions", position = 877),
+    @ActionReference(path = "UI/ToolActions/PHP", position = 877)
+
 })
 @Messages("CTL_PHPdependScanner=Scan with Pdepend")
 public final class PdependScanner implements ActionListener {

@@ -20,6 +20,7 @@ public class PdependTree extends JTree {
     private DefaultMutableTreeNode nodeRoot;
     private DefaultMutableTreeNode nodeFiles;
     private DefaultMutableTreeNode nodePackages;
+    private DefaultMutableTreeNode nodeFunctions;
     private String _filter;
 
     public PdependTree() {
@@ -30,25 +31,27 @@ public class PdependTree extends JTree {
         this.nodeRoot = new DefaultMutableTreeNode("metrics");
         this.nodeFiles = new DefaultMutableTreeNode("files");
         this.nodePackages = new DefaultMutableTreeNode("packages");
-        this.nodeRoot.add(this.nodeFiles);
-        this.nodeRoot.add(this.nodePackages);
+        this.nodeFunctions = new DefaultMutableTreeNode("functions");
 
         this.model = new DefaultTreeModel(this.nodeRoot);
         this.setModel(this.model);
 
         if (res != null) {
             this.nodeRoot.setUserObject(res.getMetrics());
+
             for (Object o : res.getFiles().toArray()) {
                 PdependTypes.PdependFile _file = (PdependTypes.PdependFile) o;
                 _file.setFilter(this._filter);
                 DefaultMutableTreeNode n = new DefaultMutableTreeNode(_file);
                 this.nodeFiles.add(n);
+                if (this.nodeFiles.getParent() == null) this.nodeRoot.add(this.nodeFiles);
             }
 
             for (Object o : res.getPackages().toArray()) {
                 PdependTypes.PdependPackage _package = (PdependTypes.PdependPackage) o;
                 DefaultMutableTreeNode _packageNode = new DefaultMutableTreeNode(_package);
                 this.nodePackages.add(_packageNode);
+                if (this.nodePackages.getParent() == null) this.nodeRoot.add(this.nodePackages);
 
                 for (PdependTypes.PdependClass _class : _package.getClasses()) {
                     DefaultMutableTreeNode _classNode = new DefaultMutableTreeNode(_class);
@@ -58,6 +61,13 @@ public class PdependTree extends JTree {
                         _classNode.add(_methodNode);
                     }
                 }
+            }
+
+            for (Object o : res.getFunctions().toArray()) {
+                PdependTypes.PdependFunction _function = (PdependTypes.PdependFunction) o;
+                DefaultMutableTreeNode n = new DefaultMutableTreeNode(_function);
+                this.nodeFunctions.add(n);
+                if (this.nodeFunctions.getParent() == null) this.nodeRoot.add(this.nodeFunctions);
             }
         }
     }

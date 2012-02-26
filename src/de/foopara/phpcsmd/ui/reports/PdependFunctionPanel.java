@@ -11,12 +11,12 @@ import javax.swing.JProgressBar;
  *
  * @author nspecht
  */
-public class PdependMethodPanel extends PdependGenericResultPanel {
+public class PdependFunctionPanel extends PdependGenericResultPanel {
 
     /**
      * Creates new form PdependMethodPanel
      */
-    public PdependMethodPanel() {
+    public PdependFunctionPanel() {
         initComponents();
         this.addLabel("name", "Name");
         this.addSeparator(null, "Complexity");
@@ -32,12 +32,12 @@ public class PdependMethodPanel extends PdependGenericResultPanel {
         this.addProgressbar("lloc", "Logical Lines Of Code");
     }
 
-    public void setMethod(PdependTypes.PdependMethod method) {
-        ((JProgressBar)this.elements.get("ncloc")).setMaximum(method.loc);
-        ((JProgressBar)this.elements.get("cloc")).setMaximum(method.loc);
-        ((JProgressBar)this.elements.get("eloc")).setMaximum(method.loc);
-        ((JProgressBar)this.elements.get("lloc")).setMaximum(method.loc);
-        this.setFields(method);
+    public void setFunction(PdependTypes.PdependFunction func) {
+        ((JProgressBar)this.elements.get("ncloc")).setMaximum(func.loc);
+        ((JProgressBar)this.elements.get("cloc")).setMaximum(func.loc);
+        ((JProgressBar)this.elements.get("eloc")).setMaximum(func.loc);
+        ((JProgressBar)this.elements.get("lloc")).setMaximum(func.loc);
+        this.setFields(func);
     }
 
     /**

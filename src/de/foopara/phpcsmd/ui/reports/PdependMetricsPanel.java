@@ -21,8 +21,14 @@ public class PdependMetricsPanel extends PdependGenericResultPanel {
         this.addLabel("pdepend", "Pdepend Version");
         this.addLabel("generated", "Generated");
 
-        this.addSeparator(null, "Classes");
+        this.addSeparator(null, "Counts");
+        this.addLabel("nop", "Number of Packages");
         this.addLabel("noc", "Number of Classes");
+        this.addLabel("noi", "Number of Interfaces");
+        this.addLabel("nom", "Number of Methods");
+        this.addLabel("nof", "Number of Functions");
+
+        this.addSeparator(null, "Classes");
         this.addLabel("roots", "Number of Root Classes");
         this.addLabel("leafs", "Number of Leaf (final) Classes");
 
@@ -35,6 +41,8 @@ public class PdependMetricsPanel extends PdependGenericResultPanel {
         this.addSeparator(null, "Complexity");
         this.addLabel("ccn", "Cyclomatic Complexity");
         this.addLabel("ccn2", "Cyclomatic Complexity Number");
+
+
 
         this.addSeparator(null, "Codelines");
         this.addLabel("loc", "Lines of Code");

@@ -14,6 +14,7 @@ public class PdependResult {
     private PdependTypes.PdependMetrics _metrics = null;
     private HashSet<PdependTypes.PdependFile> _files = new HashSet<PdependTypes.PdependFile>();
     private HashSet<PdependTypes.PdependPackage> _packages = new HashSet<PdependTypes.PdependPackage>();
+    private HashSet<PdependTypes.PdependFunction> _functions = new HashSet<PdependTypes.PdependFunction>();
 
     public PdependResult() {
         this._metrics = new PdependTypes.PdependMetrics();
@@ -41,5 +42,13 @@ public class PdependResult {
 
     public HashSet<PdependTypes.PdependPackage> getPackages() {
         return this._packages;
+    }
+
+    public void addFunction(PdependTypes.PdependFunction function) {
+        this._functions.add(function);
+    }
+
+    public HashSet<PdependTypes.PdependFunction> getFunctions() {
+        return this._functions;
     }
 }

@@ -19,7 +19,9 @@ import org.openide.util.NbBundle.Messages;
 @ActionID(id = "de.foopara.phpcsmd.PHPCSMDScanner", category = "PHP")
 @ActionRegistration(displayName = "#CTL_PHPCSMDScanner", iconBase = "de/foopara/phpcsmd/resources/icon.png")
 @ActionReferences({
-    @ActionReference(path = "Loaders/folder/any/Actions", position = 876)
+    @ActionReference(path = "Loaders/folder/any/Actions", position = 876),
+    //    @ActionReference(path = "Projects/Actions", position = 876),
+    @ActionReference(path = "UI/ToolActions/PHP", position = 876)
 })
 @Messages("CTL_PHPCSMDScanner=Scan for violations")
 public final class PHPCSMDScanner implements ActionListener {

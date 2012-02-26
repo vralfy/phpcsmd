@@ -5,6 +5,7 @@
 package de.foopara.phpcsmd.ui.reports;
 
 import de.foopara.phpcsmd.exec.pdepend.PdependTypes;
+import javax.swing.JProgressBar;
 
 /**
  *
@@ -17,10 +18,53 @@ public class PdependClassPanel extends PdependGenericResultPanel {
      */
     public PdependClassPanel() {
         initComponents();
+        this.addLabel("name", "Name");
+        this.addLabel("nocc", "Number of Child Classes");
+        this.addLabel("csz", "Class Size");
+        this.addLabel("cis", "Class Interface Size");
+        this.addLabel("dit",  "Depth of Inheritance Tree");
+
+        this.addSeparator(null, "Codelines");
+        this.addLabel("loc", "Lines of Code");
+        this.addProgressbar("ncloc", "Non Comment Lines of Code");
+        this.addProgressbar("cloc", "Comment Lines of Code");
+        this.addProgressbar("eloc", "Executable Lines of Code");
+        this.addProgressbar("lloc", "Logical Lines Of Code");
+
+        this.addSeparator(null, "Methods");
+        this.addLabel("nom", "Number of Methods");
+        this.addLabel("noam", "Number of Added Methods");
+        this.addLabel("noom", "Number of Overwritten Methods");
+        this.addLabel("npm", "Number of Public Methods");
+
+        this.addSeparator(null, "Properties");
+        this.addLabel("vars", "Number of Properties");
+        this.addLabel("varsi", "Number of Inherited Properties");
+        this.addLabel("varsnp", "Number of Non Private Properties");
+
+        this.addSeparator(null, "Coupling");
+        this.addLabel("ca", "Afferent Coupling");
+        this.addLabel("cbo", "Coupling Between Objects");
+        this.addLabel("ce", "Efferent Coupling");
+
+
+
+        this.addSeparator(null, "Code Rank");
+        this.addLabel("cr", "Code Rank");
+        this.addLabel("rcr", "Reverse Code Rank");
+
+        this.addSeparator(null, "Weighted Method Count");
+        this.addLabel("wmc", "Weighted Method Count");
+        this.addLabel("wmci", "Inherited Weighted Method Count");
+        this.addLabel("wmcnp", "Non Private Weighted Method Count");
     }
 
-    public void setClass(PdependTypes.PdependClass c) {
-        this.setFields(c);
+    public void setClass(PdependTypes.PdependClass clss) {
+        ((JProgressBar)this.elements.get("ncloc")).setMaximum(clss.loc);
+        ((JProgressBar)this.elements.get("cloc")).setMaximum(clss.loc);
+        ((JProgressBar)this.elements.get("eloc")).setMaximum(clss.loc);
+        ((JProgressBar)this.elements.get("lloc")).setMaximum(clss.loc);
+        this.setFields(clss);
     }
 
     /**

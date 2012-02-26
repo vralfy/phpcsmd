@@ -4,7 +4,6 @@
  */
 package de.foopara.phpcsmd.exec.pdepend;
 
-import de.foopara.phpcsmd.exec.pdepend.PdependTypes.PdependMethod;
 import de.foopara.phpcsmd.generics.GenericOutputReader;
 import java.io.IOException;
 import java.lang.reflect.Field;
@@ -13,7 +12,6 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import org.openide.util.Exceptions;
 import org.w3c.dom.Document;
-import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
@@ -44,6 +42,8 @@ public class PdependParser {
             ndList = document.getElementsByTagName("package");
             this.fillPackages(ndList, res);
 
+            ndList = document.getElementsByTagName("function");
+            this.fillFunctions(ndList, res);
         } catch (IOException ex) {
         } catch (ParserConfigurationException ex) {
         } catch (SAXParseException ex) {
@@ -126,9 +126,19 @@ public class PdependParser {
     private void fillMethods(NodeList ndList, PdependTypes.PdependClass res) {
         for (int i = 0; i < ndList.getLength(); i++) {
             if (ndList.item(i).getNodeName().compareTo("method") == 0) {
-                PdependMethod _method = new PdependTypes.PdependMethod();
+                PdependTypes.PdependMethod _method = new PdependTypes.PdependMethod();
                 this.fillValues(ndList.item(i), _method);
                 res.addMethod(_method);
+            }
+        }
+    }
+
+    private void fillFunctions(NodeList ndList, PdependResult res) {
+        for (int i = 0; i < ndList.getLength(); i++) {
+            if (ndList.item(i).getNodeName().compareTo("function") == 0) {
+                PdependTypes.PdependFunction _function = new PdependTypes.PdependFunction();
+                this.fillValues(ndList.item(i), _function);
+                res.addFunction(_function);
             }
         }
     }
