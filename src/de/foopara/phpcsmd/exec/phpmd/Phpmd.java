@@ -39,9 +39,15 @@ public class Phpmd extends GenericExecute {
         cmd.append(" ").append(file.getPath());
         cmd.append(" ").append("xml");
         cmd.append(" ").append(PhpmdOptions.getRules());
+
         this.appendArgument(cmd, "--suffixes", PhpmdOptions.getSuffixes());
         this.appendArgument(cmd, "--exclude", PhpmdOptions.getExcludes());
-
+        this.appendArgument(cmd, "--minimumpriority", PhpmdOptions.getMinPriority());
+        if (PhpmdOptions.getStrict()) {
+            cmd.append(" --strict");
+        }
+        
+        System.out.println(cmd.toString());
         PhpmdXMLParser parser = new PhpmdXMLParser();
         if (!iAmAlive()) return this.setAndReturnDefault(file);
         GenericOutputReader reader = GenericProcess.run(cmd.toString(), null, null);

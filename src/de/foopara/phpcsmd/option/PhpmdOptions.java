@@ -31,6 +31,12 @@ public class PhpmdOptions {
     private static final String _SUFFIXES           = "suffix";
     private static final String _SUFFIXES_DEFAULT   = "";
 
+    private static final String _MINPRIORITY         = "minpriority";
+    private static final String _MINPRIORITY_DEFAULT = "";
+
+    private static final String _STRICT              = "strict";
+    private static final String _STRICT_DEFAULT      = "false";
+
     private static Preferences _modul() {
         return NbPreferences.forModule(PHPCSMD.class);
     }
@@ -73,5 +79,21 @@ public class PhpmdOptions {
 
     public static void setSuffixes(String suffixes) {
         PhpmdOptions._modul().put(_PREFIX + _SUFFIXES, suffixes);
+    }
+
+    public static String getMinPriority() {
+        return PhpmdOptions._modul().get(_PREFIX + _MINPRIORITY, _MINPRIORITY_DEFAULT);
+    }
+
+    public static void setMinPriority(String minPriority) {
+        PhpmdOptions._modul().put(_PREFIX + _MINPRIORITY, minPriority);
+    }
+
+    public static boolean getStrict() {
+        return (PhpmdOptions._modul().get(_PREFIX + _STRICT, _STRICT_DEFAULT).compareTo("true") == 0);
+    }
+
+    public static void setStrict(boolean strict) {
+        PhpmdOptions._modul().put(_PREFIX + _STRICT, strict ? "true" : "false");
     }
 }

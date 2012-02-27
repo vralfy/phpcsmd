@@ -37,6 +37,9 @@ public class PhpcsOptions {
     private static final String _TABWIDTH             = "tabwidth";
     private static final String _TABWIDTH_DEFAULT     = "-1";
 
+    private static final String _INIOVERWRITE         = "inioverwrite";
+    private static final String _INIOVERWRITE_DEFAULT = "";
+
     private static final String _WARNINGS             = "warnings";
     private static final String _WARNINGS_DEFAULT     = "true";
 
@@ -104,6 +107,14 @@ public class PhpcsOptions {
 
     public static void setTabwidth(Integer tabwidth) {
         PhpcsOptions._modul().put(_PREFIX + _TABWIDTH, "" + tabwidth);
+    }
+
+    public static String getIniOverwrite() {
+        return PhpcsOptions._modul().get(_PREFIX + _INIOVERWRITE, _INIOVERWRITE_DEFAULT);
+    }
+
+    public static void setIniOverwrite(String overwrite) {
+        PhpcsOptions._modul().put(_PREFIX + _INIOVERWRITE, overwrite);
     }
 
     public static boolean getWarnings() {

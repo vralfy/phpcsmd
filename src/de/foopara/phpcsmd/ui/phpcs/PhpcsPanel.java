@@ -73,6 +73,8 @@ public class PhpcsPanel extends GenericOptionsPanel {
         optXtra = new javax.swing.JCheckBox();
         jSeparator1 = new javax.swing.JSeparator();
         optXUnreachable = new javax.swing.JCheckBox();
+        jLabel7 = new javax.swing.JLabel();
+        optIniOverwrite = new javax.swing.JTextField();
 
         setLayout(new java.awt.GridBagLayout());
 
@@ -246,6 +248,24 @@ public class PhpcsPanel extends GenericOptionsPanel {
         gridBagConstraints.gridwidth = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         add(optXUnreachable, gridBagConstraints);
+
+        jLabel7.setText(org.openide.util.NbBundle.getMessage(PhpcsPanel.class, "PhpcsPanel.jLabel7.text")); // NOI18N
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 106;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
+        gridBagConstraints.insets = new java.awt.Insets(0, 0, 2, 2);
+        add(jLabel7, gridBagConstraints);
+
+        optIniOverwrite.setText(org.openide.util.NbBundle.getMessage(PhpcsPanel.class, "PhpcsPanel.optIniOverwrite.text")); // NOI18N
+        optIniOverwrite.setToolTipText(org.openide.util.NbBundle.getMessage(PhpcsPanel.class, "PhpcsPanel.optIniOverwrite.toolTipText")); // NOI18N
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 106;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.insets = new java.awt.Insets(0, 0, 2, 2);
+        add(optIniOverwrite, gridBagConstraints);
     }// </editor-fold>//GEN-END:initComponents
 
     private void optStandardActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_optStandardActionPerformed
@@ -291,10 +311,12 @@ public class PhpcsPanel extends GenericOptionsPanel {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JCheckBox optActive;
     private javax.swing.JTextField optExt;
     private javax.swing.JTextField optIgnore;
+    private javax.swing.JTextField optIniOverwrite;
     private javax.swing.JTextField optScript;
     private javax.swing.JTextField optSniffs;
     private javax.swing.JTextField optStandard;
@@ -314,6 +336,8 @@ public class PhpcsPanel extends GenericOptionsPanel {
         this.optExt.setText(PhpcsOptions.getExtensions());
         this.optIgnore.setText(PhpcsOptions.getIgnore());
         this.optTabwidth.setValue(PhpcsOptions.getTabwidth());
+        this.optIniOverwrite.setText(PhpcsOptions.getIniOverwrite());
+
         this.optWarning.setSelected(PhpcsOptions.getWarnings());
         this.optXtra.setSelected(PhpcsOptions.getExtras());
         this.optXUnreachable.setSelected(PhpcsOptions.getXUnreachable());
@@ -329,6 +353,7 @@ public class PhpcsPanel extends GenericOptionsPanel {
         PhpcsOptions.setExtensions(this.optExt.getText());
         PhpcsOptions.setIgnore(this.optIgnore.getText());
         PhpcsOptions.setTabwidth((Integer)this.optTabwidth.getValue());
+        PhpcsOptions.setIniOverwrite(this.optIniOverwrite.getText());
 
         PhpcsOptions.setWarnings(this.optWarning.isSelected());
         PhpcsOptions.setExtras(this.optXtra.isSelected());

@@ -46,6 +46,7 @@ public class Phpcs extends GenericExecute {
         this.appendArgument(cmd, "--sniffs=", PhpcsOptions.getSniffs());
         this.appendArgument(cmd, "--extensions=", PhpcsOptions.getExtensions());
         this.appendArgument(cmd, "--ignore=", PhpcsOptions.getIgnore());
+        this.appendArgument(cmd, "-d ", GenericHelper.implode(" -d ", PhpcsOptions.getIniOverwrite().split(";")));
 
         if (PhpcsOptions.getTabwidth() > -1) {
             cmd.append(" --tab-width=").append(PhpcsOptions.getTabwidth());

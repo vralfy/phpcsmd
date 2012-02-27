@@ -54,6 +54,19 @@ public class GenericHelper {
         return true;
     }
 
+    public static String implode(String glue, String[] arr) {
+        StringBuilder tmp = new StringBuilder();
+        int pos = 0;
+        for(int i=0; i < arr.length; i++) {
+            if (pos > 0) tmp.append(glue);
+            if (arr[i].trim().length() > 0) {
+                tmp.append(arr[i]);
+                pos++;
+            }
+        }
+        return tmp.toString();
+    }
+
     private static boolean shouldBeIgnored(FileObject fileObject) {
         if (fileObject == null) return true;
         return GenericHelper.shouldBeIgnored(FileUtil.toFile(fileObject));
@@ -70,4 +83,6 @@ public class GenericHelper {
         }
         return false;
     }
+
+
 }
