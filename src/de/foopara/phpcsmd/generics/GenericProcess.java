@@ -43,7 +43,7 @@ public class GenericProcess {
         return output;
     }
 
-    public static GenericOutputReader run(String cmd, File outputFile, GenericTopComponent topComponent) {
+    public static GenericOutputReader run(String cmd, String outputFile, GenericTopComponent topComponent) {
         try {
             Process child = Runtime.getRuntime().exec(cmd);
             StringBuilder tmp = new StringBuilder();
@@ -54,21 +54,23 @@ public class GenericProcess {
                     tmp.append((char)c);
                 }
             } else {
-                if (!GenericHelper.isDesirableFile(outputFile)) return new GenericOutputReader();
+
                 InputStream err = child.getErrorStream();
-                
+
                 while((c = in.read()) != -1) {
                     if (topComponent != null) {
                         tmp.append((char)c);
                         topComponent.setCommandOutput(tmp.toString());
                     }
-                }  
+                }
                 while((c = err.read()) != -1) {} //Ich muss das auslesen, damit der Prozess wartet
-                
+
                 child.waitFor();
+                child.exitValue();
                 
+                if (!GenericHelper.isDesirableFile(new File(outputFile))) return new GenericOutputReader();
                 tmp = new StringBuilder();
-                FileInputStream fis = new FileInputStream(outputFile);
+                FileInputStream fis = new FileInputStream(new File(outputFile));
                 while((c = fis.read()) != -1) {
                     tmp.append((char)c);
                 }

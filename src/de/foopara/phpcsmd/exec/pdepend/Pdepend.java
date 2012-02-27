@@ -17,9 +17,9 @@ import org.openide.filesystems.FileObject;
  * @author n.specht
  */
 public class Pdepend {
-    
+
     private boolean _enabled = true;
-    
+
     private PdependReportTopComponent component = null;
 
     public boolean isEnabled() {
@@ -49,14 +49,14 @@ public class Pdepend {
         cmd.append(" ").append(file.getPath());
 
         PdependParser parser = new PdependParser();
-        GenericOutputReader reader = GenericProcess.run(cmd.toString(), tmpFile, this.component);
+        GenericOutputReader reader = GenericProcess.run(cmd.toString(), tmpFile.getAbsolutePath(), this.component);
         return parser.parse(reader);
     }
 
     public void setTopComponent(PdependReportTopComponent c) {
         this.component = c;
     }
-    
+
     private PdependResult setAndReturnDefault() {
 
         return new PdependResult();
