@@ -263,7 +263,7 @@ public final class PdependReportTopComponent extends GenericTopComponent {
 
     public void setFileObject(FileObject fo) {
         this.fileObject = fo;
-        this.setDisplayName("Pdepend: " + fo.getPath());
+        this.setDisplayName("Pdepend: " + fo.getName());
         this.jLabel2.setText(fo.getPath());
         this.pdependTree1.setFilter(fo.getPath());
     }

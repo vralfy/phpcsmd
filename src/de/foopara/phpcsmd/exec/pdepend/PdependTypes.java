@@ -160,7 +160,7 @@ public class PdependTypes {
         public int lloc;        //Logical Lines Of Code
         public int loc;         //Lines Of Code
         public int ncloc;       //Non Comment Lines Of Code
-        public int npath;       //NPath Complexity
+        public float npath;     //NPath Complexity
 
         @Override
         public String toString() {
@@ -177,7 +177,7 @@ public class PdependTypes {
         public int lloc;        //Logical Lines Of Code
         public int loc;         //Lines Of Code
         public int ncloc;       //Non Comment Lines Of Code
-        public int npath;       //NPath Complexity
+        public float npath;     //NPath Complexity
 
         @Override
         public String toString() {

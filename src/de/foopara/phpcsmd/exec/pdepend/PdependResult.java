@@ -29,7 +29,7 @@ public class PdependResult {
     }
 
     public void addFile(PdependTypes.PdependFile file) {
-        this._files.add(file);
+        if (file.name != null && file.name.length() > 2) this._files.add(file);
     }
 
     public HashSet<PdependTypes.PdependFile> getFiles() {
