@@ -129,6 +129,8 @@ public class PdependParser {
                 PdependTypes.PdependMethod _method = new PdependTypes.PdependMethod();
                 this.fillValues(ndList.item(i), _method);
                 res.addMethod(_method);
+            } else if (ndList.item(i).getNodeName().compareTo("file") == 0) {
+                res.setFilename(ndList.item(i).getAttributes().getNamedItem("name").getNodeValue());
             }
         }
     }
@@ -139,6 +141,13 @@ public class PdependParser {
                 PdependTypes.PdependFunction _function = new PdependTypes.PdependFunction();
                 this.fillValues(ndList.item(i), _function);
                 res.addFunction(_function);
+
+                NodeList sub = ndList.item(i).getChildNodes();
+                for (int j = 0; j < sub.getLength(); j++) {
+                    if (sub.item(j).getNodeName().compareTo("file") == 0) {
+                        _function.setFilename(sub.item(j).getAttributes().getNamedItem("name").getNodeValue());
+                    }
+                }
             }
         }
     }

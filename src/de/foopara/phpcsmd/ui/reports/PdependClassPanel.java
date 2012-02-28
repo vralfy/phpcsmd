@@ -65,6 +65,7 @@ public class PdependClassPanel extends PdependGenericResultPanel {
         ((JProgressBar)this.elements.get("eloc")).setMaximum(clss.loc);
         ((JProgressBar)this.elements.get("lloc")).setMaximum(clss.loc);
         this.setFields(clss);
+        this.setEditorButton(clss.getFilename());
     }
 
     /**

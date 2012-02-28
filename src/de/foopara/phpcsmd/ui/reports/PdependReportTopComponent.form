@@ -66,6 +66,7 @@
           <SubComponents>
             <Component class="de.foopara.phpcsmd.ui.reports.PdependTree" name="pdependTree1">
               <Events>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="pdependTree1MouseClicked"/>
                 <EventHandler event="valueChanged" listener="javax.swing.event.TreeSelectionListener" parameters="javax.swing.event.TreeSelectionEvent" handler="pdependTree1ValueChanged"/>
               </Events>
             </Component>

@@ -36,6 +36,7 @@ public class PdependFilePanel extends PdependGenericResultPanel {
         ((JProgressBar)this.elements.get("lloc")).setMaximum(file.loc);
 
         this.setFields(file);
+        this.setEditorButton(file.name);
     }
 
     /**

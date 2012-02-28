@@ -254,7 +254,6 @@ public final class ScanReportTopComponent extends GenericTopComponent {
         try {
             String path = (String)this.scanReportTable1.getValueAt(this.scanReportTable1.getSelectedRow(), 0);
             path = this.fileObject.getPath() + path;
-            System.out.println("try to open " + path);
             FileObject fo = FileUtil.toFileObject(new File(path));
             if (!GenericHelper.isDesirableFile(fo)) return;
 

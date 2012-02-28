@@ -6,12 +6,19 @@ package de.foopara.phpcsmd.ui.reports;
 
 import de.foopara.phpcsmd.exec.pdepend.PdependResult;
 import de.foopara.phpcsmd.exec.pdepend.PdependTypes;
+import de.foopara.phpcsmd.generics.GenericHelper;
 import de.foopara.phpcsmd.generics.GenericTopComponent;
 import de.foopara.phpcsmd.threads.PdependThread;
+import java.io.File;
+import org.netbeans.api.actions.Openable;
 import org.netbeans.api.settings.ConvertAsProperties;
 import org.openide.awt.ActionID;
 import org.openide.awt.ActionReference;
 import org.openide.filesystems.FileObject;
+import org.openide.filesystems.FileUtil;
+import org.openide.loaders.DataObject;
+import org.openide.loaders.DataObjectNotFoundException;
+import org.openide.util.Exceptions;
 import org.openide.util.NbBundle.Messages;
 import org.openide.windows.TopComponent;
 
@@ -89,6 +96,11 @@ public final class PdependReportTopComponent extends GenericTopComponent {
 
         jSplitPane1.setDividerLocation(200);
 
+        pdependTree1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                pdependTree1MouseClicked(evt);
+            }
+        });
         pdependTree1.addTreeSelectionListener(new javax.swing.event.TreeSelectionListener() {
             public void valueChanged(javax.swing.event.TreeSelectionEvent evt) {
                 pdependTree1ValueChanged(evt);
@@ -185,34 +197,53 @@ public final class PdependReportTopComponent extends GenericTopComponent {
 
     private void pdependTree1ValueChanged(javax.swing.event.TreeSelectionEvent evt) {//GEN-FIRST:event_pdependTree1ValueChanged
         Object o = this.pdependTree1.getSelectedItem();
-        if (o == null) return;
+        if (o == null) {
+            return;
+        }
         if (o.getClass().getCanonicalName().endsWith("PdependTypes.PdependMetrics")) {
-            this.metricsPanel.setMetrics((PdependTypes.PdependMetrics)o);
+            this.metricsPanel.setMetrics((PdependTypes.PdependMetrics) o);
             this.hideAllPdependPanels();
             this.metricsPanel.setVisible(true);
         } else if (o.getClass().getCanonicalName().endsWith("PdependTypes.PdependFile")) {
-            this.filePanel.setFile((PdependTypes.PdependFile)o);
+            this.filePanel.setFile((PdependTypes.PdependFile) o);
             this.hideAllPdependPanels();
             this.filePanel.setVisible(true);
         } else if (o.getClass().getCanonicalName().endsWith("PdependTypes.PdependPackage")) {
-            this.packagePanel.setPackage((PdependTypes.PdependPackage)o);
+            this.packagePanel.setPackage((PdependTypes.PdependPackage) o);
             this.hideAllPdependPanels();
             this.packagePanel.setVisible(true);
         } else if (o.getClass().getCanonicalName().endsWith("PdependTypes.PdependClass")) {
-            this.classPanel.setClass((PdependTypes.PdependClass)o);
+            this.classPanel.setClass((PdependTypes.PdependClass) o);
             this.hideAllPdependPanels();
             this.classPanel.setVisible(true);
         } else if (o.getClass().getCanonicalName().endsWith("PdependTypes.PdependMethod")) {
-            this.methodPanel.setMethod((PdependTypes.PdependMethod)o);
+            this.methodPanel.setMethod((PdependTypes.PdependMethod) o);
             this.hideAllPdependPanels();
             this.methodPanel.setVisible(true);
         } else if (o.getClass().getCanonicalName().endsWith("PdependTypes.PdependFunction")) {
-            this.functionPanel.setFunction((PdependTypes.PdependFunction)o);
+            this.functionPanel.setFunction((PdependTypes.PdependFunction) o);
             this.hideAllPdependPanels();
             this.functionPanel.setVisible(true);
         }
     }//GEN-LAST:event_pdependTree1ValueChanged
 
+    private void pdependTree1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pdependTree1MouseClicked
+        if (evt.getClickCount() > 1) {
+            Object o = this.pdependTree1.getSelectedItem();
+            if (o == null) {
+                return;
+            }
+            if (o.getClass().getCanonicalName().endsWith("PdependTypes.PdependFile")) {
+                this.openFile(((PdependTypes.PdependFile)o).name);
+            } else if (o.getClass().getCanonicalName().endsWith("PdependTypes.PdependClass")) {
+                this.openFile(((PdependTypes.PdependClass)o).getFilename());
+            } else if (o.getClass().getCanonicalName().endsWith("PdependTypes.PdependMethod")) {
+                this.openFile(((PdependTypes.PdependMethod)o).getFilename());
+            } else if (o.getClass().getCanonicalName().endsWith("PdependTypes.PdependFunction")) {
+                this.openFile(((PdependTypes.PdependFunction)o).getFilename());
+            }
+        }
+    }//GEN-LAST:event_pdependTree1MouseClicked
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private de.foopara.phpcsmd.ui.reports.PdependClassPanel classPanel;
     private de.foopara.phpcsmd.ui.reports.PdependFilePanel filePanel;
@@ -231,6 +262,7 @@ public final class PdependReportTopComponent extends GenericTopComponent {
     private de.foopara.phpcsmd.ui.reports.PdependPackagePanel packagePanel;
     private de.foopara.phpcsmd.ui.reports.PdependTree pdependTree1;
     // End of variables declaration//GEN-END:variables
+
     @Override
     public void componentOpened() {
         if (this.fileObject == null) {
@@ -285,7 +317,7 @@ public final class PdependReportTopComponent extends GenericTopComponent {
         this.lPdependStep.setVisible(true);
 
         String[] split = output.split("\n");
-        for(String line : split) {
+        for (String line : split) {
             if (line.contains(".")) {
                 this.lPdependProgress.setText(line);
             } else {
@@ -301,5 +333,22 @@ public final class PdependReportTopComponent extends GenericTopComponent {
         this.classPanel.setVisible(false);
         this.methodPanel.setVisible(false);
         this.functionPanel.setVisible(false);
+    }
+
+    private void openFile(String filename) {
+        if (filename == null) return;
+        try {
+            FileObject fo = FileUtil.toFileObject(new File(filename));
+            if (!GenericHelper.isDesirableFile(fo)) {
+                return;
+            }
+            DataObject dob = DataObject.find(fo);
+            Openable oc = dob.getLookup().lookup(Openable.class);
+            if (oc != null) {
+                oc.open();
+            }
+        } catch (DataObjectNotFoundException ex) {
+            Exceptions.printStackTrace(ex);
+        }
     }
 }

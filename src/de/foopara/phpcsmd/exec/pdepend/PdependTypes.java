@@ -135,14 +135,27 @@ public class PdependTypes {
 
         public int wmcnp;       //Non Private Weighted Method Count
 
-        HashSet<PdependMethod> methods = new HashSet<PdependMethod>();
+        private HashSet<PdependMethod> methods = new HashSet<PdependMethod>();
+        private String _fileName = null;
 
         public void addMethod(PdependMethod m) {
             this.methods.add(m);
+            m.setFilename(this._fileName);
         }
 
         public HashSet<PdependMethod> getMethods() {
             return this.methods;
+        }
+
+        public void setFilename(String name) {
+            this._fileName = name;
+            for(PdependMethod m : this.methods) {
+                m.setFilename(this._fileName);
+            }
+        }
+
+        public String getFilename() {
+            return this._fileName;
         }
 
         @Override
@@ -162,6 +175,16 @@ public class PdependTypes {
         public int ncloc;       //Non Comment Lines Of Code
         public float npath;     //NPath Complexity
 
+        private String _fileName = null;
+
+        public void setFilename(String name) {
+            this._fileName = name;
+        }
+
+        public String getFilename() {
+            return this._fileName;
+        }
+
         @Override
         public String toString() {
             return this.name;
@@ -179,6 +202,16 @@ public class PdependTypes {
         public int ncloc;       //Non Comment Lines Of Code
         public float npath;     //NPath Complexity
 
+        private String _fileName = null;
+
+        public void setFilename(String name) {
+            this._fileName = name;
+        }
+
+        public String getFilename() {
+            return this._fileName;
+        }
+        
         @Override
         public String toString() {
             return this.name;

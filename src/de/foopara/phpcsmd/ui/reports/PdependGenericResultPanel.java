@@ -16,6 +16,8 @@ import org.openide.util.Exceptions;
 public class PdependGenericResultPanel extends JPanel {
 
     HashMap<String, JComponent> elements = new HashMap<String, JComponent>();
+    protected EditFileButton editorButton = null;
+
 
     protected void setFields(Object o) {
         for (Field f : o.getClass().getFields()) {
@@ -50,6 +52,28 @@ public class PdependGenericResultPanel extends JPanel {
             comp.setText("" + value);
         }
         return false;
+    }
+
+    public void setEditorButton(String filename) {
+        if (this.editorButton == null) {
+            java.awt.GridBagConstraints gridBagConstraints;
+            this.editorButton = new EditFileButton();
+            gridBagConstraints = new java.awt.GridBagConstraints();
+//            gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+//            gridBagConstraints.weightx = 1.0;
+            gridBagConstraints.insets = new java.awt.Insets(0, 0, 2, 2);
+            gridBagConstraints.gridx = 2;
+            gridBagConstraints.gridy = 0;
+            gridBagConstraints.gridwidth = 1;
+            gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
+            this.add(this.editorButton, gridBagConstraints);
+        }
+        if (filename == null) {
+            this.editorButton.setVisible(false);
+            return;
+        }
+        this.editorButton.setFilename(filename);
+        this.editorButton.setVisible(true);
     }
 
     protected void addSeparator(String name, String caption) {
