@@ -50,6 +50,9 @@ public class Pdepend {
 
         PdependParser parser = new PdependParser();
         GenericOutputReader reader = GenericProcess.run(cmd.toString(), tmpFile.getAbsolutePath(), this.component);
+        if (tmpFile.exists()) {
+            tmpFile.delete();
+        }
         return parser.parse(reader);
     }
 
