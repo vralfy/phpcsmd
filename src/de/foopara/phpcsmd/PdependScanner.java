@@ -41,7 +41,7 @@ public final class PdependScanner implements ActionListener {
     }
 
     private void performOnFileObject(FileObject fo) {
-        if (fo.isFolder()) {
+        if (fo.isFolder() || fo.isData()) {
             PdependReportTopComponent form = new PdependReportTopComponent();
             form.setFileObject(fo);
             form.open();
