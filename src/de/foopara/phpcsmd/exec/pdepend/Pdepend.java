@@ -43,7 +43,8 @@ public class Pdepend {
         this.appendArgument(cmd, "--suffix=", "" + PdependOptions.getSuffixes());
         this.appendArgument(cmd, "--exclude=", "" + PdependOptions.getExcludes());
         this.appendArgument(cmd, "--ignore=", "" + PdependOptions.getIgnores());
-
+        this.appendArgument(cmd, "-d ", GenericHelper.implode(" -d ", PdependOptions.getIniOverwrite().split(";")));
+        
         this.appendArgument(cmd, "--summary-xml=", tmpFile.getAbsolutePath());
 
         cmd.append(" ").append(file.getPath());

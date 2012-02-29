@@ -28,6 +28,9 @@ public class PdependOptions {
     private static final String _IGNORES            = "ignore";
     private static final String _IGNORES_DEFAULT    = "";
 
+    private static final String _INIOVERWRITE         = "inioverwrite";
+    private static final String _INIOVERWRITE_DEFAULT = "";
+
     private static Preferences _modul() {
         return NbPreferences.forModule(PHPCSMD.class);
     }
@@ -62,5 +65,13 @@ public class PdependOptions {
 
     public static void setIgnores(String ignores) {
         PdependOptions._modul().put(_PREFIX + _IGNORES, ignores);
+    }
+
+    public static String getIniOverwrite() {
+        return PdependOptions._modul().get(_PREFIX + _INIOVERWRITE, _INIOVERWRITE_DEFAULT);
+    }
+
+    public static void setIniOverwrite(String overwrite) {
+        PdependOptions._modul().put(_PREFIX + _INIOVERWRITE, overwrite);
     }
 }

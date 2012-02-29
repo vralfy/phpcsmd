@@ -38,6 +38,8 @@ public class PdependPanel extends GenericOptionsPanel {
         optExclude = new javax.swing.JTextField();
         optIgnore = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        optIniOverwrite = new javax.swing.JTextField();
 
         setLayout(new java.awt.GridBagLayout());
 
@@ -86,6 +88,7 @@ public class PdependPanel extends GenericOptionsPanel {
         optSuffix.setText(org.openide.util.NbBundle.getMessage(PdependPanel.class, "PdependPanel.optSuffix.text")); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 2;
         gridBagConstraints.gridwidth = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.insets = new java.awt.Insets(0, 0, 2, 2);
@@ -94,6 +97,7 @@ public class PdependPanel extends GenericOptionsPanel {
         optExclude.setText(org.openide.util.NbBundle.getMessage(PdependPanel.class, "PdependPanel.optExclude.text")); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 3;
         gridBagConstraints.gridwidth = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.insets = new java.awt.Insets(0, 0, 2, 2);
@@ -102,6 +106,7 @@ public class PdependPanel extends GenericOptionsPanel {
         optIgnore.setText(org.openide.util.NbBundle.getMessage(PdependPanel.class, "PdependPanel.optIgnore.text")); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 4;
         gridBagConstraints.gridwidth = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.insets = new java.awt.Insets(0, 0, 2, 2);
@@ -114,15 +119,34 @@ public class PdependPanel extends GenericOptionsPanel {
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.insets = new java.awt.Insets(0, 0, 2, 2);
         add(jLabel6, gridBagConstraints);
+
+        jLabel5.setText(org.openide.util.NbBundle.getMessage(PdependPanel.class, "PdependPanel.jLabel5.text")); // NOI18N
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridy = 5;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
+        gridBagConstraints.insets = new java.awt.Insets(0, 0, 2, 2);
+        add(jLabel5, gridBagConstraints);
+
+        optIniOverwrite.setText(org.openide.util.NbBundle.getMessage(PdependPanel.class, "PdependPanel.optIniOverwrite.text")); // NOI18N
+        optIniOverwrite.setToolTipText(org.openide.util.NbBundle.getMessage(PdependPanel.class, "PdependPanel.optIniOverwrite.toolTipText")); // NOI18N
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 5;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.insets = new java.awt.Insets(0, 0, 2, 2);
+        add(optIniOverwrite, gridBagConstraints);
     }// </editor-fold>//GEN-END:initComponents
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JTextField optExclude;
     private javax.swing.JTextField optIgnore;
+    private javax.swing.JTextField optIniOverwrite;
     private javax.swing.JTextField optScript;
     private javax.swing.JTextField optSuffix;
     // End of variables declaration//GEN-END:variables
@@ -133,6 +157,7 @@ public class PdependPanel extends GenericOptionsPanel {
         this.optSuffix.setText(PdependOptions.getSuffixes());
         this.optExclude.setText(PdependOptions.getExcludes());
         this.optIgnore.setText(PdependOptions.getIgnores());
+        this.optIniOverwrite.setText(PdependOptions.getIniOverwrite());
     }
 
     @Override
@@ -141,6 +166,7 @@ public class PdependPanel extends GenericOptionsPanel {
         PdependOptions.setSuffixes(this.optSuffix.getText());
         PdependOptions.setExcludes(this.optExclude.getText());
         PdependOptions.setIgnores(this.optIgnore.getText());
+        PdependOptions.setIniOverwrite(this.optIniOverwrite.getText());
     }
 
     @Override
