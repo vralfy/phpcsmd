@@ -31,6 +31,9 @@ public class PdependOptions {
     private static final String _INIOVERWRITE         = "inioverwrite";
     private static final String _INIOVERWRITE_DEFAULT = "";
 
+    private static final String _USETABS              = "inioverwrite";
+    private static final String _USETABS_DEFAULT      = "false";
+
     private static Preferences _modul() {
         return NbPreferences.forModule(PHPCSMD.class);
     }
@@ -73,5 +76,13 @@ public class PdependOptions {
 
     public static void setIniOverwrite(String overwrite) {
         PdependOptions._modul().put(_PREFIX + _INIOVERWRITE, overwrite);
+    }
+
+    public static boolean getUseTabs() {
+        return (PdependOptions._modul().get(_PREFIX + _USETABS, _USETABS_DEFAULT).compareTo("true") == 0);
+    }
+
+    public static void setUseTabs(boolean useTabs) {
+        PdependOptions._modul().put(_PREFIX + _USETABS, useTabs ? "true" : "false");
     }
 }

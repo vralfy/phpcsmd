@@ -65,7 +65,6 @@ public final class PdependReportTopComponent extends GenericTopComponent {
         jSplitPane1 = new javax.swing.JSplitPane();
         jScrollPane1 = new javax.swing.JScrollPane();
         pdependTree1 = new de.foopara.phpcsmd.ui.reports.PdependTree();
-        jScrollPane2 = new javax.swing.JScrollPane();
         jPanel1 = new javax.swing.JPanel();
         metricsPanel = new de.foopara.phpcsmd.ui.reports.PdependMetricsPanel();
         filePanel = new de.foopara.phpcsmd.ui.reports.PdependFilePanel();
@@ -146,11 +145,15 @@ public final class PdependReportTopComponent extends GenericTopComponent {
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.weighty = 1.0;
         jPanel1.add(methodPanel, gridBagConstraints);
-        jPanel1.add(functionPanel, new java.awt.GridBagConstraints());
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 5;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.weighty = 1.0;
+        jPanel1.add(functionPanel, gridBagConstraints);
 
-        jScrollPane2.setViewportView(jPanel1);
-
-        jSplitPane1.setRightComponent(jScrollPane2);
+        jSplitPane1.setRightComponent(jPanel1);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -253,7 +256,6 @@ public final class PdependReportTopComponent extends GenericTopComponent {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JSplitPane jSplitPane1;
     private javax.swing.JLabel lPdependProgress;
     private javax.swing.JLabel lPdependStep;

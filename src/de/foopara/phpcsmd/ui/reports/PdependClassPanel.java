@@ -5,6 +5,7 @@
 package de.foopara.phpcsmd.ui.reports;
 
 import de.foopara.phpcsmd.exec.pdepend.PdependTypes;
+import de.foopara.phpcsmd.option.PdependOptions;
 import javax.swing.JProgressBar;
 
 /**
@@ -17,46 +18,52 @@ public class PdependClassPanel extends PdependGenericResultPanel {
      * Creates new form PdependClassPanel
      */
     public PdependClassPanel() {
+        super();
         initComponents();
-        this.addLabel("name", "Name");
-        this.addLabel("nocc", "Number of Child Classes");
-        this.addLabel("csz", "Class Size");
-        this.addLabel("cis", "Class Interface Size");
-        this.addLabel("dit",  "Depth of Inheritance Tree");
+        this.addLabel("name", "Name", "Class");
+        this.addLabel("nocc", "Number of Child Classes", "Class");
+        this.addLabel("csz", "Class Size", "Class");
+        this.addLabel("cis", "Class Interface Size", "Class");
+        this.addLabel("dit",  "Depth of Inheritance Tree", "Class");
 
-        this.addSeparator(null, "Codelines");
-        this.addLabel("loc", "Lines of Code");
-        this.addProgressbar("ncloc", "Non Comment Lines of Code");
-        this.addProgressbar("cloc", "Comment Lines of Code");
-        this.addProgressbar("eloc", "Executable Lines of Code");
-        this.addProgressbar("lloc", "Logical Lines Of Code");
+        if (!PdependOptions.getUseTabs()) {
+            this.addSeparator(null, "Codelines", "Codelines");
+        }
+        this.addLabel("loc", "Lines of Code", "Codelines");
+        this.addProgressbar("ncloc", "Non Comment Lines of Code", "Codelines");
+        this.addProgressbar("cloc", "Comment Lines of Code", "Codelines");
+        this.addProgressbar("eloc", "Executable Lines of Code", "Codelines");
+        this.addProgressbar("lloc", "Logical Lines Of Code", "Codelines");
 
-        this.addSeparator(null, "Methods");
-        this.addLabel("nom", "Number of Methods");
-        this.addLabel("noam", "Number of Added Methods");
-        this.addLabel("noom", "Number of Overwritten Methods");
-        this.addLabel("npm", "Number of Public Methods");
+        if (!PdependOptions.getUseTabs()) {
+            this.addSeparator(null, "Methods", "Methods");
+        }
+        this.addLabel("nom", "Number of Methods", "Methods");
+        this.addLabel("noam", "Number of Added Methods", "Methods");
+        this.addLabel("noom", "Number of Overwritten Methods", "Methods");
+        this.addLabel("npm", "Number of Public Methods", "Methods");
 
-        this.addSeparator(null, "Properties");
-        this.addLabel("vars", "Number of Properties");
-        this.addLabel("varsi", "Number of Inherited Properties");
-        this.addLabel("varsnp", "Number of Non Private Properties");
+        if (!PdependOptions.getUseTabs()) {
+            this.addSeparator(null, "Properties", "Properties");
+        }
+        this.addLabel("vars", "Number of Properties", "Properties");
+        this.addLabel("varsi", "Number of Inherited Properties", "Properties");
+        this.addLabel("varsnp", "Number of Non Private Properties", "Properties");
 
-        this.addSeparator(null, "Coupling");
-        this.addLabel("ca", "Afferent Coupling");
-        this.addLabel("cbo", "Coupling Between Objects");
-        this.addLabel("ce", "Efferent Coupling");
+        this.addSeparator(null, "Coupling", "Different Metrics");
+        this.addLabel("ca", "Afferent Coupling", "Different Metrics");
+        this.addLabel("cbo", "Coupling Between Objects", "Different Metrics");
+        this.addLabel("ce", "Efferent Coupling", "Different Metrics");
 
 
+        this.addSeparator(null, "Code Rank", "Different Metrics");
+        this.addLabel("cr", "Code Rank", "Different Metrics");
+        this.addLabel("rcr", "Reverse Code Rank", "Different Metrics");
 
-        this.addSeparator(null, "Code Rank");
-        this.addLabel("cr", "Code Rank");
-        this.addLabel("rcr", "Reverse Code Rank");
-
-        this.addSeparator(null, "Weighted Method Count");
-        this.addLabel("wmc", "Weighted Method Count");
-        this.addLabel("wmci", "Inherited Weighted Method Count");
-        this.addLabel("wmcnp", "Non Private Weighted Method Count");
+        this.addSeparator(null, "Weighted Method Count", "Different Metrics");
+        this.addLabel("wmc", "Weighted Method Count", "Different Metrics");
+        this.addLabel("wmci", "Inherited Weighted Method Count", "Different Metrics");
+        this.addLabel("wmcnp", "Non Private Weighted Method Count", "Different Metrics");
     }
 
     public void setClass(PdependTypes.PdependClass clss) {

@@ -5,6 +5,7 @@
 package de.foopara.phpcsmd.ui.reports;
 
 import de.foopara.phpcsmd.exec.pdepend.PdependTypes;
+import de.foopara.phpcsmd.option.PdependOptions;
 import javax.swing.JProgressBar;
 
 /**
@@ -17,43 +18,46 @@ public class PdependMetricsPanel extends PdependGenericResultPanel {
      * Creates new form PdependMetricsPanel
      */
     public PdependMetricsPanel() {
+        super();
         initComponents();
-        this.addLabel("pdepend", "Pdepend Version");
-        this.addLabel("generated", "Generated");
+        this.addLabel("pdepend", "Pdepend Version", "Metrics");
+        this.addLabel("generated", "Generated", "Metrics");
 
-        this.addSeparator(null, "Counts");
-        this.addLabel("nop", "Number of Packages");
-        this.addLabel("noc", "Number of Classes");
-        this.addLabel("noi", "Number of Interfaces");
-        this.addLabel("nom", "Number of Methods");
-        this.addLabel("nof", "Number of Functions");
+        this.addSeparator(null, "Codelines", "Metrics");
+        this.addLabel("loc", "Lines of Code", "Metrics");
+        this.addProgressbar("ncloc", "Non Comment Lines of Code", "Metrics");
+        this.addProgressbar("cloc", "Comment Lines of Code", "Metrics");
+        this.addProgressbar("eloc", "Executable Lines of Code", "Metrics");
+        this.addProgressbar("lloc", "Logical Lines Of Code", "Metrics");
 
-        this.addSeparator(null, "Classes");
-        this.addLabel("roots", "Number of Root Classes");
-        this.addLabel("leafs", "Number of Leaf (final) Classes");
+        if (!PdependOptions.getUseTabs()) {
+            this.addSeparator(null, "Counts", "Counts");
+        }
+        this.addLabel("nop", "Number of Packages", "Counts");
+        this.addLabel("noc", "Number of Classes", "Counts");
+        this.addLabel("noi", "Number of Interfaces", "Counts");
+        this.addLabel("nom", "Number of Methods", "Counts");
+        this.addLabel("nof", "Number of Functions", "Counts");
 
-        this.addLabel("clsc", "Number of Concrete Classes");
-        this.addLabel("clsa", "Number of Abstract Classes");
+        if (!PdependOptions.getUseTabs()) {
+            this.addSeparator(null, "Classes", "Classes");
+        }
+        this.addLabel("roots", "Number of Root Classes", "Classes");
+        this.addLabel("leafs", "Number of Leaf (final) Classes", "Classes");
 
-        this.addLabel("ahh", "Average Hierarchy Height");
-        this.addLabel("andc", "Average Number of Derived Classes");
+        this.addLabel("clsc", "Number of Concrete Classes", "Classes");
+        this.addLabel("clsa", "Number of Abstract Classes", "Classes");
 
-        this.addSeparator(null, "Complexity");
-        this.addLabel("ccn", "Cyclomatic Complexity");
-        this.addLabel("ccn2", "Cyclomatic Complexity Number");
+        this.addLabel("ahh", "Average Hierarchy Height", "Classes");
+        this.addLabel("andc", "Average Number of Derived Classes", "Classes");
 
+        this.addSeparator(null, "Complexity", "Different Metrics");
+        this.addLabel("ccn", "Cyclomatic Complexity", "Different Metrics");
+        this.addLabel("ccn2", "Cyclomatic Complexity Number", "Different Metrics");
 
-
-        this.addSeparator(null, "Codelines");
-        this.addLabel("loc", "Lines of Code");
-        this.addProgressbar("ncloc", "Non Comment Lines of Code");
-        this.addProgressbar("cloc", "Comment Lines of Code");
-        this.addProgressbar("eloc", "Executable Lines of Code");
-        this.addProgressbar("lloc", "Logical Lines Of Code");
-
-        this.addSeparator(null, null);
-        this.addLabel("calls", "Number of Method or Function Calls");
-        this.addLabel("fanout", "Number of Fanouts");
+        this.addSeparator(null, null, "Different Metrics");
+        this.addLabel("calls", "Number of Method or Function Calls", "Different Metrics");
+        this.addLabel("fanout", "Number of Fanouts", "Different Metrics");
 
 
 

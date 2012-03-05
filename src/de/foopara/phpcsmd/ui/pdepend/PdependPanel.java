@@ -40,6 +40,7 @@ public class PdependPanel extends GenericOptionsPanel {
         jLabel6 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         optIniOverwrite = new javax.swing.JTextField();
+        optUseTabs = new javax.swing.JCheckBox();
 
         setLayout(new java.awt.GridBagLayout());
 
@@ -136,6 +137,12 @@ public class PdependPanel extends GenericOptionsPanel {
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.insets = new java.awt.Insets(0, 0, 2, 2);
         add(optIniOverwrite, gridBagConstraints);
+
+        optUseTabs.setText(org.openide.util.NbBundle.getMessage(PdependPanel.class, "PdependPanel.optUseTabs.text")); // NOI18N
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 6;
+        add(optUseTabs, gridBagConstraints);
     }// </editor-fold>//GEN-END:initComponents
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
@@ -149,6 +156,7 @@ public class PdependPanel extends GenericOptionsPanel {
     private javax.swing.JTextField optIniOverwrite;
     private javax.swing.JTextField optScript;
     private javax.swing.JTextField optSuffix;
+    private javax.swing.JCheckBox optUseTabs;
     // End of variables declaration//GEN-END:variables
 
     @Override
@@ -158,6 +166,7 @@ public class PdependPanel extends GenericOptionsPanel {
         this.optExclude.setText(PdependOptions.getExcludes());
         this.optIgnore.setText(PdependOptions.getIgnores());
         this.optIniOverwrite.setText(PdependOptions.getIniOverwrite());
+        this.optUseTabs.setSelected(PdependOptions.getUseTabs());
     }
 
     @Override
@@ -167,6 +176,7 @@ public class PdependPanel extends GenericOptionsPanel {
         PdependOptions.setExcludes(this.optExclude.getText());
         PdependOptions.setIgnores(this.optIgnore.getText());
         PdependOptions.setIniOverwrite(this.optIniOverwrite.getText());
+        PdependOptions.setUseTabs(this.optUseTabs.isSelected());
     }
 
     @Override

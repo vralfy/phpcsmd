@@ -4,9 +4,12 @@
  */
 package de.foopara.phpcsmd.ui.reports;
 
+import de.foopara.phpcsmd.option.PdependOptions;
+import java.awt.*;
 import java.lang.reflect.Field;
 import java.util.HashMap;
 import javax.swing.*;
+import javax.swing.plaf.basic.BasicTabbedPaneUI;
 import org.openide.util.Exceptions;
 
 /**
@@ -15,9 +18,47 @@ import org.openide.util.Exceptions;
  */
 public class PdependGenericResultPanel extends JPanel {
 
+    JTabbedPane tabContainer;
+    HashMap<String, JPanel> tabs = new HashMap<String, JPanel>();
     HashMap<String, JComponent> elements = new HashMap<String, JComponent>();
     protected EditFileButton editorButton = null;
 
+
+    public PdependGenericResultPanel() {
+        super();
+
+        this.tabContainer = new JTabbedPane();
+        this.tabContainer.setUI(new BasicTabbedPaneUI() {
+            private int useTabs = -1;
+            @Override
+            protected int calculateTabAreaHeight(int tabPlacement, int horizRunCount, int maxTabHeight) {
+                if (this.useTabs == -1) {
+                    this.useTabs = PdependOptions.getUseTabs() ? 1 : 0;
+                }
+
+                if (this.useTabs > 0) {
+                    return super.calculateTabAreaHeight(tabPlacement, horizRunCount, maxTabHeight);
+                }
+                return 0;
+            }
+        });
+
+        java.awt.GridBagConstraints gridBagConstraints = new java.awt.GridBagConstraints();
+        super.setLayout(new GridBagLayout());
+
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.weighty = 1.0;
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridwidth = 1;
+        this.add(this.tabContainer, gridBagConstraints);
+    }
+
+    @Override
+    public void setLayout(LayoutManager lm) {
+        //overwrite set Layout-Method
+    }
 
     protected void setFields(Object o) {
         for (Field f : o.getClass().getFields()) {
@@ -45,9 +86,9 @@ public class PdependGenericResultPanel extends JPanel {
 
         } else {
             if (!this.elements.containsKey("OTHERSEP")) {
-                this.addSeparator("OTHERSEP", "Other");
+                this.addSeparator("OTHERSEP", "Other", "Other");
             }
-            this.addLabel(name, "");
+            this.addLabel(name, "", "Other");
             JLabel comp = (JLabel) this.elements.get(name);
             comp.setText("" + value);
         }
@@ -62,8 +103,8 @@ public class PdependGenericResultPanel extends JPanel {
 //            gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
 //            gridBagConstraints.weightx = 1.0;
             gridBagConstraints.insets = new java.awt.Insets(0, 0, 2, 2);
-            gridBagConstraints.gridx = 2;
-            gridBagConstraints.gridy = 0;
+            gridBagConstraints.gridx = 0;
+            gridBagConstraints.gridy = 1;
             gridBagConstraints.gridwidth = 1;
             gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
             this.add(this.editorButton, gridBagConstraints);
@@ -76,7 +117,23 @@ public class PdependGenericResultPanel extends JPanel {
         this.editorButton.setVisible(true);
     }
 
-    protected void addSeparator(String name, String caption) {
+    private void addToTab(JComponent comp, GridBagConstraints constraints, String name) {
+        if (!this.tabs.containsKey(name)) {
+            JPanel tab = new JPanel();
+            tab.setLayout(new GridBagLayout());
+            JScrollPane scroll = new JScrollPane(tab);
+
+            this.tabs.put(name, tab);
+            this.tabContainer.add(name, scroll);
+        }
+        JPanel tab = this.tabs.get(name);
+        tab.add(comp, constraints);
+    }
+
+    protected void addSeparator(String name, String caption, String tab) {
+        if (!PdependOptions.getUseTabs()) {
+            tab = "---";
+        }
         int row = this.elements.size() + 20;
         if (name == null) {
             name = "" + Math.random();
@@ -94,7 +151,7 @@ public class PdependGenericResultPanel extends JPanel {
             gridBagConstraints.gridy = row;
             gridBagConstraints.gridwidth = 1;
             gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-            this.add(cap, gridBagConstraints);
+            this.addToTab(cap, gridBagConstraints, tab);
         }
         JSeparator ret = new JSeparator();
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -104,12 +161,15 @@ public class PdependGenericResultPanel extends JPanel {
         gridBagConstraints.gridx = x;
         gridBagConstraints.gridy = row;
         gridBagConstraints.gridwidth = compwith;
-        this.add(ret, gridBagConstraints);
+        this.addToTab(ret, gridBagConstraints, tab);
 
         this.elements.put(name, ret);
     }
 
-    protected void addLabel(String name, String caption) {
+    protected void addLabel(String name, String caption, String tab) {
+        if (!PdependOptions.getUseTabs()) {
+            tab = "---";
+        }
         int row = this.elements.size() + 20;
 
         java.awt.GridBagConstraints gridBagConstraints;
@@ -121,7 +181,7 @@ public class PdependGenericResultPanel extends JPanel {
             gridBagConstraints.gridy = row;
             gridBagConstraints.gridwidth = 2;
             gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
-            this.add(cap, gridBagConstraints);
+            this.addToTab(cap, gridBagConstraints, tab);
         }
 
         JLabel ret = new JLabel("");
@@ -131,12 +191,15 @@ public class PdependGenericResultPanel extends JPanel {
         gridBagConstraints.insets = new java.awt.Insets(0, 0, 2, 2);
         gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = row;
-        this.add(ret, gridBagConstraints);
+        this.addToTab(ret, gridBagConstraints, tab);
 
         this.elements.put(name, ret);
     }
 
-    protected void addProgressbar(String name, String caption) {
+    protected void addProgressbar(String name, String caption, String tab) {
+        if (!PdependOptions.getUseTabs()) {
+            tab = "---";
+        }
         int row = this.elements.size() + 20;
 
         java.awt.GridBagConstraints gridBagConstraints;
@@ -148,7 +211,7 @@ public class PdependGenericResultPanel extends JPanel {
             gridBagConstraints.gridy = row;
             gridBagConstraints.gridwidth = 2;
             gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
-            this.add(cap, gridBagConstraints);
+            this.addToTab(cap, gridBagConstraints, tab);
         }
 
         JProgressBar ret = new JProgressBar();
@@ -158,7 +221,7 @@ public class PdependGenericResultPanel extends JPanel {
         gridBagConstraints.insets = new java.awt.Insets(0, 0, 2, 2);
         gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = row;
-        this.add(ret, gridBagConstraints);
+        this.addToTab(ret, gridBagConstraints, tab);
 
         this.elements.put(name, ret);
     }

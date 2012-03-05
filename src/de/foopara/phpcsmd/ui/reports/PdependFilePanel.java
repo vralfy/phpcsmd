@@ -18,15 +18,16 @@ public class PdependFilePanel extends PdependGenericResultPanel {
      * Creates new form PdependFilePanel
      */
     public PdependFilePanel() {
+        super();
         initComponents();
-        this.addLabel("name", null);
+        this.addLabel("name", null, "File");
         ((JLabel)this.elements.get("name")).setVisible(false);
-        this.addSeparator(null, "Codelines");
-        this.addLabel("loc", "Lines of Code");
-        this.addProgressbar("ncloc", "Non Comment Lines of Code");
-        this.addProgressbar("cloc", "Comment Lines of Code");
-        this.addProgressbar("eloc", "Executable Lines of Code");
-        this.addProgressbar("lloc", "Logical Lines Of Code");
+        this.addSeparator(null, "Codelines", "File");
+        this.addLabel("loc", "Lines of Code", "File");
+        this.addProgressbar("ncloc", "Non Comment Lines of Code", "File");
+        this.addProgressbar("cloc", "Comment Lines of Code", "File");
+        this.addProgressbar("eloc", "Executable Lines of Code", "File");
+        this.addProgressbar("lloc", "Logical Lines Of Code", "File");
     }
 
     public void setFile(PdependTypes.PdependFile file) {

@@ -17,19 +17,22 @@ public class PdependMethodPanel extends PdependGenericResultPanel {
      * Creates new form PdependMethodPanel
      */
     public PdependMethodPanel() {
+        super();
         initComponents();
-        this.addLabel("name", "Name");
-        this.addSeparator(null, "Complexity");
-        this.addLabel("ccn", "Cyclomatic Complexity");
-        this.addLabel("ccn2", "Cyclomatic Complexity Number");
-        this.addLabel("npath", "NPath Complexity");
+        this.addLabel("name", "Name", "Method");
 
-        this.addSeparator(null, "Codelines");
-        this.addLabel("loc", "Lines of Code");
-        this.addProgressbar("ncloc", "Non Comment Lines of Code");
-        this.addProgressbar("cloc", "Comment Lines of Code");
-        this.addProgressbar("eloc", "Executable Lines of Code");
-        this.addProgressbar("lloc", "Logical Lines Of Code");
+        this.addSeparator(null, "Codelines", "Method");
+        this.addLabel("loc", "Lines of Code", "Method");
+        this.addProgressbar("ncloc", "Non Comment Lines of Code", "Method");
+        this.addProgressbar("cloc", "Comment Lines of Code", "Method");
+        this.addProgressbar("eloc", "Executable Lines of Code", "Method");
+        this.addProgressbar("lloc", "Logical Lines Of Code", "Method");
+
+
+        this.addSeparator(null, "Complexity", "Different Metrics");
+        this.addLabel("ccn", "Cyclomatic Complexity", "Different Metrics");
+        this.addLabel("ccn2", "Cyclomatic Complexity Number", "Different Metrics");
+        this.addLabel("npath", "NPath Complexity", "Different Metrics");
     }
 
     public void setMethod(PdependTypes.PdependMethod method) {

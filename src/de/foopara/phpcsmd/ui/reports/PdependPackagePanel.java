@@ -16,17 +16,18 @@ public class PdependPackagePanel extends PdependGenericResultPanel {
      * Creates new form PdependPackagePanel
      */
     public PdependPackagePanel() {
+        super();
         initComponents();
-        this.addLabel("name", "Name");
-        this.addSeparator(null, "Counts");
-        this.addLabel("noc", "Number of Classes");
-        this.addLabel("noi", "Number of Interfaces");
-        this.addLabel("nom", "Number of Methods");
-        this.addLabel("nof", "Number of Functions");
+        this.addLabel("name", "Name", "Package");
+        this.addSeparator(null, "Counts", "Package");
+        this.addLabel("noc", "Number of Classes", "Package");
+        this.addLabel("noi", "Number of Interfaces", "Package");
+        this.addLabel("nom", "Number of Methods", "Package");
+        this.addLabel("nof", "Number of Functions", "Package");
 
-        this.addSeparator(null, "Code Rank");
-        this.addLabel("cr", "Code Rank");
-        this.addLabel("rcr", "Reverse Code Rank");
+        this.addSeparator(null, "Code Rank", "Different Metrics");
+        this.addLabel("cr", "Code Rank", "Different Metrics");
+        this.addLabel("rcr", "Reverse Code Rank", "Different Metrics");
     }
 
     public void setPackage(PdependTypes.PdependPackage pack) {
