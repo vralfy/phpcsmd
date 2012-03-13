@@ -42,11 +42,10 @@ public class PdependMetricsPanel extends PdependGenericResultPanel {
         if (!PdependOptions.getUseTabs()) {
             this.addSeparator(null, "Classes", "Classes");
         }
-        this.addLabel("roots", "Number of Root Classes", "Classes");
-        this.addLabel("leafs", "Number of Leaf (final) Classes", "Classes");
-
-        this.addLabel("clsc", "Number of Concrete Classes", "Classes");
-        this.addLabel("clsa", "Number of Abstract Classes", "Classes");
+        this.addProgressbar("roots", "Number of Root Classes", "Classes");
+        this.addProgressbar("leafs", "Number of Leaf (final) Classes", "Classes");
+        this.addProgressbar("clsc", "Number of Concrete Classes", "Classes");
+        this.addProgressbar("clsa", "Number of Abstract Classes", "Classes");
 
         this.addLabel("ahh", "Average Hierarchy Height", "Classes");
         this.addLabel("andc", "Average Number of Derived Classes", "Classes");
@@ -68,6 +67,11 @@ public class PdependMetricsPanel extends PdependGenericResultPanel {
         ((JProgressBar)this.elements.get("cloc")).setMaximum(metrics.loc);
         ((JProgressBar)this.elements.get("eloc")).setMaximum(metrics.loc);
         ((JProgressBar)this.elements.get("lloc")).setMaximum(metrics.loc);
+
+        ((JProgressBar)this.elements.get("roots")).setMaximum(metrics.noc);
+        ((JProgressBar)this.elements.get("leafs")).setMaximum(metrics.noc);
+        ((JProgressBar)this.elements.get("clsc")).setMaximum(metrics.noc);
+        ((JProgressBar)this.elements.get("clsa")).setMaximum(metrics.noc);
 
         this.setFields(metrics);
     }

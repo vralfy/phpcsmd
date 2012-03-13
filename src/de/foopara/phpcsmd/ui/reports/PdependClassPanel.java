@@ -39,16 +39,16 @@ public class PdependClassPanel extends PdependGenericResultPanel {
             this.addSeparator(null, "Methods", "Methods");
         }
         this.addLabel("nom", "Number of Methods", "Methods");
-        this.addLabel("noam", "Number of Added Methods", "Methods");
-        this.addLabel("noom", "Number of Overwritten Methods", "Methods");
-        this.addLabel("npm", "Number of Public Methods", "Methods");
+        this.addProgressbar("noam", "Number of Added Methods", "Methods");
+        this.addProgressbar("noom", "Number of Overwritten Methods", "Methods");
+        this.addProgressbar("npm", "Number of Public Methods", "Methods");
 
         if (!PdependOptions.getUseTabs()) {
             this.addSeparator(null, "Properties", "Properties");
         }
         this.addLabel("vars", "Number of Properties", "Properties");
-        this.addLabel("varsi", "Number of Inherited Properties", "Properties");
-        this.addLabel("varsnp", "Number of Non Private Properties", "Properties");
+        this.addProgressbar("varsi", "Number of Inherited Properties", "Properties");
+        this.addProgressbar("varsnp", "Number of Non Private Properties", "Properties");
 
         this.addSeparator(null, "Coupling", "Different Metrics");
         this.addLabel("ca", "Afferent Coupling", "Different Metrics");
@@ -71,6 +71,13 @@ public class PdependClassPanel extends PdependGenericResultPanel {
         ((JProgressBar)this.elements.get("cloc")).setMaximum(clss.loc);
         ((JProgressBar)this.elements.get("eloc")).setMaximum(clss.loc);
         ((JProgressBar)this.elements.get("lloc")).setMaximum(clss.loc);
+
+        ((JProgressBar)this.elements.get("noam")).setMaximum(clss.nom);
+        ((JProgressBar)this.elements.get("noom")).setMaximum(clss.nom);
+        ((JProgressBar)this.elements.get("npm")).setMaximum(clss.nom);
+
+        ((JProgressBar)this.elements.get("varsi")).setMaximum(clss.vars);
+        ((JProgressBar)this.elements.get("varsnp")).setMaximum(clss.vars);
         this.setFields(clss);
         this.setEditorButton(clss.getFilename());
     }
