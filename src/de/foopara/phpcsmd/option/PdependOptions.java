@@ -31,7 +31,7 @@ public class PdependOptions {
     private static final String _INIOVERWRITE         = "inioverwrite";
     private static final String _INIOVERWRITE_DEFAULT = "";
 
-    private static final String _USETABS              = "inioverwrite";
+    private static final String _USETABS              = "usetabs";
     private static final String _USETABS_DEFAULT      = "false";
 
     private static Preferences _modul() {
