@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE filesystem PUBLIC "-//NetBeans//DTD Filesystem 1.2//EN" "http://www.netbeans.org/dtds/filesystem-1_2.dtd">
+<!--
+    Document   : layer.xml
+    Created on : 19. Januar 2012, 23:36
+    Author     : nspecht
+    Description:
+        Purpose of the document follows.
+-->
+<filesystem>
+
+    <folder name="Editors">
+        <folder name="AnnotationTypes">
+            <file name="de-foopara-phpcsmd-annotation-phpcs-warning.xml" url="nbresloc:/de/foopara/phpcsmd/resources/phpcs/warning.xml"/>
+            <file name="de-foopara-phpcsmd-annotation-phpcs-error.xml" url="nbresloc:/de/foopara/phpcsmd/resources/phpcs/error.xml"/>
+            <file name="de-foopara-phpcsmd-annotation-phpcs-xunreachable.xml" url="nbresloc:/de/foopara/phpcsmd/resources/phpcs/xunreachable.xml"/>
+            <file name="de-foopara-phpcsmd-annotation-phpmd-violation.xml" url="nbresloc:/de/foopara/phpcsmd/resources/phpmd/violation.xml"/>
+            <file name="de-foopara-phpcsmd-annotation-phpcpd-violation.xml" url="nbresloc:/de/foopara/phpcsmd/resources/phpcpd/violation.xml"/>
+        </folder>
+    </folder>
+
+    <folder name="OptionsDialog">
+        <folder name="org-netbeans-modules-php-project-ui-options-PHPOptionsCategory">
+            <file name="PHPCSMD.instance">
+                <attr methodvalue="org.netbeans.spi.options.AdvancedOption.createSubCategory" name="instanceCreate"/>
+                <attr name="controller" newvalue="de.foopara.phpcsmd.ui.PanelController"/>
+                <attr bundlevalue="de.foopara.phpcsmd.Bundle#AdvancedOption_DisplayName_PHPCSMD" name="displayName"/>
+                <attr intvalue="250" name="position"/>
+            </file>
+        </folder>
+    </folder>
+
+    <folder name="TaskList">
+        <folder name="Scanners">
+            <file name="ViolationReporter.instance">
+                <attr name="instanceOf" stringvalue="org.netbeans.spi.tasklist.PushTaskScanner"/>
+                <attr name="instanceClass" stringvalue="de.foopara.phpcsmd.ViolationReporter"/>
+            </file>
+        </folder>
+    </folder>
+    
+</filesystem>
