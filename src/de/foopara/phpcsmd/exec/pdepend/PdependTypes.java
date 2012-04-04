@@ -79,6 +79,7 @@ public class PdependTypes {
     }
 
     static public class PdependPackage extends PdependTypes.PdependType {
+        //summary
         public String name;     //Packagename
         public float cr;        //Code Rank
         public int noc;         //Number Of Classes
@@ -86,7 +87,20 @@ public class PdependTypes {
         public int noi;         //Number Of Interfaces
         public int nom;         //Number Of Methods
         public float rcr;       //Reverse Code Rank
-        HashSet<PdependClass> classes = new HashSet<PdependClass>();
+        private HashSet<PdependClass> classes = new HashSet<PdependClass>();
+
+        //jdepend
+        public int TotalClasses;
+        public int ConcreteClasses;
+        public int AbstractClasses;
+
+        public int Ca;  //Afferent Couplings
+        public int Ce;  //Efferent Couplings
+        public float A; //Abstractnes
+        public float I; //Instability
+        public float D; //Distance
+        private HashSet<PdependPackage> dependsUpon = new HashSet<PdependPackage>();
+        private HashSet<PdependPackage> usedBy = new HashSet<PdependPackage>();
 
         public void addClass(PdependClass c) {
             this.classes.add(c);
@@ -94,6 +108,22 @@ public class PdependTypes {
 
         public HashSet<PdependClass> getClasses() {
             return this.classes;
+        }
+
+        public void dependsUpon(PdependPackage p) {
+            this.dependsUpon.add(p);
+        }
+
+        public HashSet<PdependPackage> getDepends() {
+            return this.dependsUpon;
+        }
+
+        public void usedBy(PdependPackage p) {
+            this.usedBy.add(p);
+        }
+
+        public HashSet<PdependPackage> getUsedBy() {
+            return this.usedBy;
         }
 
         @Override
@@ -211,7 +241,7 @@ public class PdependTypes {
         public String getFilename() {
             return this._fileName;
         }
-        
+
         @Override
         public String toString() {
             return this.name;

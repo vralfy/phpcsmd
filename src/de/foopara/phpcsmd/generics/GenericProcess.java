@@ -8,6 +8,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.HashSet;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 import org.netbeans.api.extexecution.ExecutionDescriptor;
@@ -43,18 +44,30 @@ public class GenericProcess {
         return output;
     }
 
-    public static GenericOutputReader run(String cmd, String outputFile, GenericTopComponent topComponent) {
+    public static GenericOutputReader[] run(String cmd, String outputFile, GenericTopComponent topComponent) {
+        if (outputFile == "" || outputFile == null) {
+            return GenericProcess.run(cmd, new File[] {}, topComponent);
+        }
+        return GenericProcess.run(cmd, new File[] {new File(outputFile)}, topComponent);
+
+    }
+
+    public static GenericOutputReader[] run(String cmd, File[] outputFiles, GenericTopComponent topComponent) {
+        if (outputFiles.length == 0) {
+            outputFiles = null;
+        }
+
         try {
             Process child = Runtime.getRuntime().exec(cmd);
             StringBuilder tmp = new StringBuilder();
             InputStream in = child.getInputStream();
             int c;
-            if (outputFile == null) {
+            if (outputFiles == null) {
                 while((c = in.read()) != -1) {
                     tmp.append((char)c);
                 }
+                return new GenericOutputReader[]{new GenericOutputReader(tmp)};
             } else {
-
                 InputStream err = child.getErrorStream();
 
                 while((c = in.read()) != -1) {
@@ -67,20 +80,32 @@ public class GenericProcess {
 
                 child.waitFor();
                 child.exitValue();
-                
-                if (!GenericHelper.isDesirableFile(new File(outputFile))) return new GenericOutputReader();
-                tmp = new StringBuilder();
-                FileInputStream fis = new FileInputStream(new File(outputFile));
-                while((c = fis.read()) != -1) {
-                    tmp.append((char)c);
+
+                HashSet<GenericOutputReader> reader = new HashSet<GenericOutputReader>();
+                for (File outputFile : outputFiles) {
+                    if (GenericHelper.isDesirableFile(outputFile)) {
+                        tmp = new StringBuilder();
+                        FileInputStream fis = new FileInputStream(outputFile);
+                        while((c = fis.read()) != -1) {
+                            tmp.append((char)c);
+                        }
+                        reader.add(new GenericOutputReader(tmp));
+                    }
                 }
+
+                Object[] tmpReader = reader.toArray();
+                GenericOutputReader[] res = new GenericOutputReader[tmpReader.length];
+                for (int i=0;i<tmpReader.length;i++) {
+                    res[i] = (GenericOutputReader)tmpReader[i];
+                }
+
+                return res;
             }
-            return new GenericOutputReader(tmp);
         } catch (InterruptedException ex) {
             Exceptions.printStackTrace(ex);
         } catch (IOException ex) {
             Exceptions.printStackTrace(ex);
         }
-        return new GenericOutputReader();
+        return new GenericOutputReader[]{};
     }
 }

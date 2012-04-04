@@ -308,6 +308,7 @@ public final class PdependReportTopComponent extends GenericTopComponent {
         this.lPdependStep.setVisible(false);
         this.pdependTree1.setResult(res);
 
+        this.metricsPanel.setPdependResult(res);
         this.metricsPanel.setMetrics(res.getMetrics());
         this.hideAllPdependPanels();
         this.metricsPanel.setVisible(true);

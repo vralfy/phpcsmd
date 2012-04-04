@@ -5,6 +5,7 @@
 package de.foopara.phpcsmd.exec.pdepend;
 
 import java.util.HashSet;
+import org.openide.util.Exceptions;
 
 /**
  *
@@ -34,6 +35,24 @@ public class PdependResult {
 
     public HashSet<PdependTypes.PdependFile> getFiles() {
         return this._files;
+    }
+
+    public PdependTypes.PdependPackage getPackageInstanceByName(String name) {
+        if (name == null) try {
+            throw new Exception();
+        } catch (Exception ex) {
+            Exceptions.printStackTrace(ex);
+        }
+        for(PdependTypes.PdependPackage p: this._packages) {
+            if (p.name.compareTo(name) == 0) {
+                return p;
+            }
+        }
+
+        PdependTypes.PdependPackage res = new PdependTypes.PdependPackage();
+        res.name = name;
+        this.addPackage(res);
+        return res;
     }
 
     public void addPackage(PdependTypes.PdependPackage pack) {

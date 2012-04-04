@@ -71,9 +71,9 @@ public class Phpcs extends GenericExecute {
          */
         PhpcsXMLParser parser = new PhpcsXMLParser();
         if (!iAmAlive()) return this.setAndReturnDefault(file);
-        GenericOutputReader reader = GenericProcess.run(cmd.toString(), null, null);
+        GenericOutputReader[] reader = GenericProcess.run(cmd.toString(), "", null);
         if (!iAmAlive()) return this.setAndReturnDefault(file);
-        PhpcsResult res = parser.parse(reader);
+        PhpcsResult res = parser.parse(reader[0]);
         if (!iAmAlive()) return this.setAndReturnDefault(file);
         ViolationRegistry.getInstance().setPhpcs(file, res);
 

@@ -41,6 +41,7 @@ public class PdependPanel extends GenericOptionsPanel {
         jLabel5 = new javax.swing.JLabel();
         optIniOverwrite = new javax.swing.JTextField();
         optUseTabs = new javax.swing.JCheckBox();
+        optJdepend = new javax.swing.JCheckBox();
 
         setLayout(new java.awt.GridBagLayout());
 
@@ -142,7 +143,17 @@ public class PdependPanel extends GenericOptionsPanel {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 6;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.insets = new java.awt.Insets(0, 0, 2, 2);
         add(optUseTabs, gridBagConstraints);
+
+        optJdepend.setText(org.openide.util.NbBundle.getMessage(PdependPanel.class, "PdependPanel.optJdepend.text")); // NOI18N
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 7;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.insets = new java.awt.Insets(0, 0, 2, 2);
+        add(optJdepend, gridBagConstraints);
     }// </editor-fold>//GEN-END:initComponents
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
@@ -154,6 +165,7 @@ public class PdependPanel extends GenericOptionsPanel {
     private javax.swing.JTextField optExclude;
     private javax.swing.JTextField optIgnore;
     private javax.swing.JTextField optIniOverwrite;
+    private javax.swing.JCheckBox optJdepend;
     private javax.swing.JTextField optScript;
     private javax.swing.JTextField optSuffix;
     private javax.swing.JCheckBox optUseTabs;
@@ -167,6 +179,7 @@ public class PdependPanel extends GenericOptionsPanel {
         this.optIgnore.setText(PdependOptions.getIgnores());
         this.optIniOverwrite.setText(PdependOptions.getIniOverwrite());
         this.optUseTabs.setSelected(PdependOptions.getUseTabs());
+        this.optJdepend.setSelected(PdependOptions.getJDepend());
     }
 
     @Override
@@ -177,6 +190,7 @@ public class PdependPanel extends GenericOptionsPanel {
         PdependOptions.setIgnores(this.optIgnore.getText());
         PdependOptions.setIniOverwrite(this.optIniOverwrite.getText());
         PdependOptions.setUseTabs(this.optUseTabs.isSelected());
+        PdependOptions.setJDepend(this.optJdepend.isSelected());
     }
 
     @Override

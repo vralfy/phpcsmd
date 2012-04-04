@@ -15,41 +15,56 @@ import org.openide.filesystems.FileUtil;
  * @author n.specht
  */
 public class GenericHelper {
+
     public static boolean isDesirableFile(FileObject fileObject) {
+        return GenericHelper.isDesirableFile(fileObject, true);
+    }
+
+    public static boolean isDesirableFile(FileObject fileObject, boolean filter) {
         if (fileObject == null) return false;
-
-        return GenericHelper.isDesirableFile(FileUtil.toFile(fileObject));
-
+        return GenericHelper.isDesirableFile(FileUtil.toFile(fileObject), filter);
     }
 
     public static boolean isDesirableFile(File file) {
+        return GenericHelper.isDesirableFile(file, true);
+    }
+
+    public static boolean isDesirableFile(File file, boolean filter) {
         if (file == null) return false;
 
         if (!file.exists())  return false;
         if (!file.canRead()) return false;
         if (!file.isFile())  return false;
 
-        if (GenericHelper.shouldBeIgnored(file)) return false;
+        if (filter && GenericHelper.shouldBeIgnored(file)) return false;
 
         File parent = new File(file.getParent());
-        if (!GenericHelper.isDesirableFolder(parent)) return false;
+        if (!GenericHelper.isDesirableFolder(parent, filter)) return false;
 
         return true;
     }
 
     public static boolean isDesirableFolder(FileObject fileObject) {
+        return GenericHelper.isDesirableFolder(fileObject, true);
+    }
+
+    public static boolean isDesirableFolder(FileObject fileObject, boolean filter) {
         if (fileObject == null) return false;
-        return GenericHelper.isDesirableFolder(FileUtil.toFile(fileObject));
+        return GenericHelper.isDesirableFolder(FileUtil.toFile(fileObject), filter);
     }
 
     public static boolean isDesirableFolder(File file) {
+        return GenericHelper.isDesirableFolder(file, true);
+    }
+
+    public static boolean isDesirableFolder(File file, boolean filter) {
         if (file == null) return false;
 
         if (!file.exists())      return false;
         if (!file.canRead())     return false;
         if (!file.isDirectory()) return false;
 
-        if (GenericHelper.shouldBeIgnored(file)) return false;
+        if (filter && GenericHelper.shouldBeIgnored(file)) return false;
 
         return true;
     }

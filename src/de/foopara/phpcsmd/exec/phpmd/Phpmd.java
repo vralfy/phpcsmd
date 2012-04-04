@@ -46,13 +46,13 @@ public class Phpmd extends GenericExecute {
         if (PhpmdOptions.getStrict()) {
             cmd.append(" --strict");
         }
-        
+
         System.out.println(cmd.toString());
         PhpmdXMLParser parser = new PhpmdXMLParser();
         if (!iAmAlive()) return this.setAndReturnDefault(file);
-        GenericOutputReader reader = GenericProcess.run(cmd.toString(), null, null);
+        GenericOutputReader[] reader = GenericProcess.run(cmd.toString(), "", null);
         if (!iAmAlive()) return this.setAndReturnDefault(file);
-        PhpmdResult res = parser.parse(reader);
+        PhpmdResult res = parser.parse(reader[0]);
         if (!iAmAlive()) return this.setAndReturnDefault(file);
         ViolationRegistry.getInstance().setPhpmd(file, res);
         return res;

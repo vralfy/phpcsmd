@@ -14,6 +14,8 @@ import javax.swing.JProgressBar;
  */
 public class PdependMetricsPanel extends PdependGenericResultPanel {
 
+    private boolean jDependActive = false;
+
     /**
      * Creates new form PdependMetricsPanel
      */
@@ -58,8 +60,11 @@ public class PdependMetricsPanel extends PdependGenericResultPanel {
         this.addLabel("calls", "Number of Method or Function Calls", "Different Metrics");
         this.addLabel("fanout", "Number of Fanouts", "Different Metrics");
 
-
-
+        this.jDependActive = PdependOptions.getJDepend();
+        if (this.jDependActive) {
+            this.addSeparator(null, "JDepend Graph", "JDepend Graph");
+            this.addComponent(new JdependGraph(), "JDependGraph", null, "JDepend Graph");
+        }
     }
 
     public void setMetrics(PdependTypes.PdependMetrics metrics) {
@@ -74,6 +79,9 @@ public class PdependMetricsPanel extends PdependGenericResultPanel {
         ((JProgressBar)this.elements.get("clsa")).setMaximum(metrics.noc);
 
         this.setFields(metrics);
+        if (this.jDependActive) {
+            ((JdependGraph)this.elements.get("JDependGraph")).setPackages(this.pdependResult.getPackages());
+        }
     }
 
     /**

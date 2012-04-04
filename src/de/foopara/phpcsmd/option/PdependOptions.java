@@ -34,6 +34,9 @@ public class PdependOptions {
     private static final String _USETABS              = "usetabs";
     private static final String _USETABS_DEFAULT      = "false";
 
+    private static final String _JDEPEND              = "jdepend";
+    private static final String _JDEPEND_DEFAULT      = "false";
+
     private static Preferences _modul() {
         return NbPreferences.forModule(PHPCSMD.class);
     }
@@ -84,5 +87,13 @@ public class PdependOptions {
 
     public static void setUseTabs(boolean useTabs) {
         PdependOptions._modul().put(_PREFIX + _USETABS, useTabs ? "true" : "false");
+    }
+
+    public static boolean getJDepend() {
+        return (PdependOptions._modul().get(_PREFIX + _JDEPEND, _JDEPEND_DEFAULT).compareTo("true") == 0);
+    }
+
+    public static void setJDepend(boolean jdepend) {
+        PdependOptions._modul().put(_PREFIX + _JDEPEND, jdepend ? "true" : "false");
     }
 }

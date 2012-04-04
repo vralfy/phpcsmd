@@ -4,8 +4,11 @@
  */
 package de.foopara.phpcsmd.ui.reports;
 
+import de.foopara.phpcsmd.exec.pdepend.PdependResult;
 import de.foopara.phpcsmd.option.PdependOptions;
-import java.awt.*;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.LayoutManager;
 import java.lang.reflect.Field;
 import java.util.HashMap;
 import javax.swing.*;
@@ -23,6 +26,7 @@ public class PdependGenericResultPanel extends JPanel {
     HashMap<String, JComponent> elements = new HashMap<String, JComponent>();
     protected EditFileButton editorButton = null;
 
+    protected PdependResult pdependResult;
 
     public PdependGenericResultPanel() {
         super();
@@ -55,6 +59,10 @@ public class PdependGenericResultPanel extends JPanel {
         this.add(this.tabContainer, gridBagConstraints);
     }
 
+    public void setPdependResult(PdependResult res) {
+        this.pdependResult = res;
+    }
+
     @Override
     public void setLayout(LayoutManager lm) {
         //overwrite set Layout-Method
@@ -77,7 +85,16 @@ public class PdependGenericResultPanel extends JPanel {
             JComponent comp = this.elements.get(name);
             if (comp.getClass().getCanonicalName().endsWith("JProgressBar")) {
                 JProgressBar tmp = ((JProgressBar) comp);
-                tmp.setValue((Integer)value);
+
+                int v = 0;
+                if (value.getClass().getCanonicalName().compareTo("java.lang.Integer") == 0) {
+                    v = (Integer)value;
+                } else if (value.getClass().getCanonicalName().compareTo("java.lang.Float") == 0) {
+                    Float f = (Float)value;
+                    v = Math.round(f);
+                }
+
+                tmp.setValue(v);
                 tmp.setStringPainted(true);
                 tmp.setString(tmp.getValue() + "/" + tmp.getMaximum());
             } else {
@@ -180,7 +197,7 @@ public class PdependGenericResultPanel extends JPanel {
             gridBagConstraints.gridx = 0;
             gridBagConstraints.gridy = row;
             gridBagConstraints.gridwidth = 2;
-            gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
+            gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHEAST;
             this.addToTab(cap, gridBagConstraints, tab);
         }
 
@@ -210,11 +227,37 @@ public class PdependGenericResultPanel extends JPanel {
             gridBagConstraints.gridx = 0;
             gridBagConstraints.gridy = row;
             gridBagConstraints.gridwidth = 2;
-            gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
+            gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHEAST;
             this.addToTab(cap, gridBagConstraints, tab);
         }
 
         JProgressBar ret = new JProgressBar();
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(0, 0, 2, 2);
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = row;
+        this.addToTab(ret, gridBagConstraints, tab);
+
+        this.elements.put(name, ret);
+    }
+
+    protected void addComponent(JComponent ret, String name, String caption, String tab) {
+        int row = this.elements.size() + 20;
+
+        java.awt.GridBagConstraints gridBagConstraints;
+        if (caption != null) {
+            JLabel cap = new JLabel(caption + ": ");
+            gridBagConstraints = new java.awt.GridBagConstraints();
+            gridBagConstraints.insets = new java.awt.Insets(0, 30, 2, 2);
+            gridBagConstraints.gridx = 0;
+            gridBagConstraints.gridy = row;
+            gridBagConstraints.gridwidth = 2;
+            gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHEAST;
+            this.addToTab(cap, gridBagConstraints, tab);
+        }
+
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.weightx = 1.0;

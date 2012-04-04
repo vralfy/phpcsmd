@@ -44,9 +44,9 @@ public class Phpcpd extends GenericExecute {
 
         PhpcpdParser parser = new PhpcpdParser();
         if (!iAmAlive()) return this.setAndReturnDefault(file);
-        GenericOutputReader reader = GenericProcess.run(cmd.toString(), null, null);
+        GenericOutputReader[] reader = GenericProcess.run(cmd.toString(), "", null);
         if (!iAmAlive()) return this.setAndReturnDefault(file);
-        PhpcpdResult res = parser.parse(reader);
+        PhpcpdResult res = parser.parse(reader[0]);
         if (!iAmAlive()) return this.setAndReturnDefault(file);
         ViolationRegistry.getInstance().setPhpcpd(file, res);
         return res;
