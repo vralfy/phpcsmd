@@ -332,8 +332,13 @@ public final class PdependReportTopComponent extends GenericTopComponent {
                     progress = split[i].trim() + "<br>" + progress;
                     count++;
                 }
+                if (!split[i].trim().startsWith(".") && split[i].trim().length() > 0 && step.length() == 0) {
+                    progress = split[i];
+                    count = 300;
+                    step = "finished ... ";
+                }
             } else {
-                if (step.length() < 1) {
+                if (step.trim().length() == 0) {
                     step = split[i].trim();
                     count = 300;
                 }
