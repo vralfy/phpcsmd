@@ -182,10 +182,12 @@ public final class PdependReportTopComponent extends GenericTopComponent {
         gridBagConstraints.gridy = 2;
         add(lPdependStep, gridBagConstraints);
 
+        lPdependProgress.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         org.openide.awt.Mnemonics.setLocalizedText(lPdependProgress, org.openide.util.NbBundle.getMessage(PdependReportTopComponent.class, "PdependReportTopComponent.lPdependProgress.text")); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         add(lPdependProgress, gridBagConstraints);
     }// </editor-fold>//GEN-END:initComponents
 
@@ -319,14 +321,27 @@ public final class PdependReportTopComponent extends GenericTopComponent {
         this.lPdependProgress.setVisible(true);
         this.lPdependStep.setVisible(true);
 
+        String progress = "";
+        String step = "";
+
+        int count = 0;
         String[] split = output.split("\n");
-        for (String line : split) {
-            if (line.contains(".")) {
-                this.lPdependProgress.setText(line);
+        for (int i= split.length -1; i>=0; i--) {
+            if (split[i].contains(".")) {
+                if (count < 2) {
+                    progress = split[i].trim() + "<br>" + progress;
+                    count++;
+                }
             } else {
-                this.lPdependStep.setText(line);
+                if (step.length() < 1) {
+                    step = split[i].trim();
+                    count = 300;
+                }
             }
         }
+
+        this.lPdependProgress.setText("<html><body>" + progress + "</body></html>");
+        this.lPdependStep.setText(step);
     }
 
     private void hideAllPdependPanels() {
