@@ -30,6 +30,10 @@ public class PdependPackagePanel extends PdependGenericResultPanel {
         this.addLabel("nom", "Number of Methods", "Package");
         this.addLabel("nof", "Number of Functions", "Package");
 
+        this.addSeparator(null, "Code Rank", "Different Metrics");
+        this.addLabel("cr", "Code Rank", "Different Metrics");
+        this.addLabel("rcr", "Reverse Code Rank", "Different Metrics");
+
         this.jDependActive = PdependOptions.getJDepend();
         if (this.jDependActive) {
             this.addSeparator(null, "JDepend Graph", "JDepend Graph");
