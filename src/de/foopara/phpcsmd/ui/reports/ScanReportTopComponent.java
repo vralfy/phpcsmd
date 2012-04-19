@@ -132,6 +132,7 @@ public final class ScanReportTopComponent extends GenericTopComponent {
         gridBagConstraints.insets = new java.awt.Insets(1, 1, 1, 1);
         add(jScrollPane1, gridBagConstraints);
 
+        optFullRescan.setSelected(true);
         org.openide.awt.Mnemonics.setLocalizedText(optFullRescan, org.openide.util.NbBundle.getMessage(ScanReportTopComponent.class, "ScanReportTopComponent.optFullRescan.text")); // NOI18N
         optFullRescan.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -143,7 +144,7 @@ public final class ScanReportTopComponent extends GenericTopComponent {
         gridBagConstraints.gridy = 3;
         add(optFullRescan, gridBagConstraints);
 
-        jLabel3.setFont(new java.awt.Font("DejaVu Sans", 0, 10)); // NOI18N
+        jLabel3.setFont(new java.awt.Font("DejaVu Sans", 0, 10));
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         org.openide.awt.Mnemonics.setLocalizedText(jLabel3, org.openide.util.NbBundle.getMessage(ScanReportTopComponent.class, "ScanReportTopComponent.jLabel3.text")); // NOI18N
         jLabel3.setMaximumSize(new java.awt.Dimension(600, 13));
