@@ -133,6 +133,11 @@ public final class ScanReportTopComponent extends GenericTopComponent {
         add(jScrollPane1, gridBagConstraints);
 
         org.openide.awt.Mnemonics.setLocalizedText(optFullRescan, org.openide.util.NbBundle.getMessage(ScanReportTopComponent.class, "ScanReportTopComponent.optFullRescan.text")); // NOI18N
+        optFullRescan.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                optFullRescanActionPerformed(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 3;
@@ -173,6 +178,15 @@ public final class ScanReportTopComponent extends GenericTopComponent {
         t1.start();
         t2.start();
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void optFullRescanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_optFullRescanActionPerformed
+        if (this.optFullRescan.isSelected()) {
+            this.jButton1.setText("Rescan");
+        } else {
+            this.jButton1.setText("Refresh");
+        }
+    }//GEN-LAST:event_optFullRescanActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;

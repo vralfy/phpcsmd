@@ -4,13 +4,19 @@
  */
 package de.foopara.phpcsmd;
 
+import de.foopara.phpcsmd.exec.phpcpd.PhpcpdResult;
+import de.foopara.phpcsmd.generics.GenericAnnotationBuilder;
 import de.foopara.phpcsmd.generics.GenericResult;
 import de.foopara.phpcsmd.generics.GenericViolation;
+import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.List;
 import org.netbeans.spi.tasklist.PushTaskScanner.Callback;
 import org.netbeans.spi.tasklist.Task;
 import org.openide.filesystems.FileObject;
+import org.openide.filesystems.FileUtil;
 
 /**
  *
@@ -31,6 +37,7 @@ public class ViolationRegistry {
     LinkedHashMap<String, GenericResult> phpmd = new LinkedHashMap<String, GenericResult>();
     LinkedHashMap<String, GenericResult> phpcpd = new LinkedHashMap<String, GenericResult>();
     LinkedHashMap<String, Callback> callbacks = new LinkedHashMap<String, Callback>();
+    LinkedHashMap<FileObject, List<FileObject>> phpcpdDependencies = new LinkedHashMap<FileObject, List<FileObject>>();
 
     public void setPhpcs(FileObject fo, GenericResult res) {
         this.put(fo, res, this.phpcs);
@@ -54,6 +61,42 @@ public class ViolationRegistry {
 
     public GenericResult getPhpcpd(FileObject fo) {
         return this.get(fo, this.phpcpd);
+    }
+
+    public void setPhpcpdFolder(HashMap<String, PhpcpdResult> list) {
+        for (String key : list.keySet()) {
+            FileObject fo = FileUtil.toFileObject(new File(key));
+            if (fo!=null) {
+                this.put(fo, list.get(key), this.phpcpd);
+                GenericAnnotationBuilder.updateAnnotations(fo);
+            }
+        }
+    }
+
+    public void addPhpcpdDependency(FileObject f1, FileObject f2) {
+        if (!this.phpcpdDependencies.containsKey(f1)) {
+            this.phpcpdDependencies.put(f1, new ArrayList<FileObject>());
+        }
+        if (!this.phpcpdDependencies.containsKey(f2)) {
+            this.phpcpdDependencies.put(f2, new ArrayList<FileObject>());
+        }
+
+        this.phpcpdDependencies.get(f1).add(f2);
+        this.phpcpdDependencies.get(f2).add(f1);
+    }
+
+    public List<FileObject> getPhpcpdDependency(FileObject f) {
+         List<FileObject> ret = this.phpcpdDependencies.get(f);
+         if (ret == null) {
+             ret = new ArrayList<FileObject>();
+         }
+         return ret;
+    }
+
+    public void flushPhpcpdDependency(FileObject f) {
+        if (this.phpcpdDependencies.containsKey(f)) {
+            this.phpcpdDependencies.get(f).clear();
+        }
     }
 
     public void setCallback(FileObject fo, Callback clbk) {
@@ -148,4 +191,5 @@ public class ViolationRegistry {
             }
         }
     }
+
 }

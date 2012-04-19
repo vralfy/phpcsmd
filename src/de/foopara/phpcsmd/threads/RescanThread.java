@@ -4,9 +4,14 @@
  */
 package de.foopara.phpcsmd.threads;
 
+import de.foopara.phpcsmd.exec.phpcpd.Phpcpd;
+import de.foopara.phpcsmd.exec.phpcpd.PhpcpdResult;
 import de.foopara.phpcsmd.generics.GenericHelper;
 import de.foopara.phpcsmd.ui.reports.ScanReportTopComponent;
+import java.io.File;
+import java.util.HashMap;
 import org.openide.filesystems.FileObject;
+import org.openide.filesystems.FileUtil;
 
 /**
  *
@@ -44,6 +49,7 @@ public class RescanThread extends Thread {
     }
 
     private int count(FileObject f, int fc) {
+        boolean firstRun = (fc == 0);
         for (FileObject f2 : f.getChildren()) {
             if (GenericHelper.isDesirableFile(f2)) {
                 fc += 1;
@@ -57,6 +63,14 @@ public class RescanThread extends Thread {
                 this.component.addElementToTable(f2);
             } else if (f2.isFolder()) {
                 fc = this.count(f2, fc);
+            }
+        }
+        if (GenericHelper.isDesirableFolder(f) && firstRun) {
+            Phpcpd cpdTask = new Phpcpd();
+            HashMap<String, PhpcpdResult> res = cpdTask.runFolder(f, true);
+            for (String path : res.keySet()) {
+                FileObject tmp = FileUtil.toFileObject(new File(path));
+                if (tmp != null) this.component.addElementToTable(tmp);
             }
         }
         return fc;

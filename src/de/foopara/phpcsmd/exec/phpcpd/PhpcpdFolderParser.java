@@ -11,6 +11,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.Reader;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import org.openide.filesystems.FileObject;
 import org.openide.filesystems.FileUtil;
@@ -20,11 +21,10 @@ import org.openide.util.Exceptions;
  *
  * @author nspecht
  */
-public class PhpcpdParser {
+public class PhpcpdFolderParser {
 
-    public PhpcpdResult parse(GenericOutputReader reader, boolean updateDependencies) {
-        List<GenericViolation> cpdErrors = new ArrayList<GenericViolation>();
-        List<GenericViolation> cpdNoTask = new ArrayList<GenericViolation>();
+    public HashMap<String, PhpcpdResult> parse(GenericOutputReader reader, FileObject containingFolder) {
+        HashMap<String, List<GenericViolation>> cpdErrors = new HashMap<String, List<GenericViolation>>();
 
         try {
             char[] tmp = new char[1024];
@@ -36,11 +36,14 @@ public class PhpcpdParser {
 
             String[] sections = buf.toString().trim().split("\n\n");
             if (sections.length < 3) {
-                return new PhpcpdResult(null, null, null);
+                return new HashMap<String, PhpcpdResult>();
             }
             if (!sections[1].trim().startsWith("Found ")) {
-                return new PhpcpdResult(null, null, null);
+                return new HashMap<String, PhpcpdResult>();
             }
+
+            ArrayList<FileObject> allreadyFlushedDependencies = new ArrayList<FileObject>();
+
             for (int i=2; i < sections.length - 2; i++) {
                 if (!sections[i].contains("duplicated lines out of")
                     && !sections[i].contains("Time: ")
@@ -59,33 +62,51 @@ public class PhpcpdParser {
                     String[] info2 = lines[1].trim().split(":");
                     String f2 = info2[0].trim();
                     String[] cpdLines2 = info2[info2.length - 1].split("-");
-
                     int start1 = Integer.parseInt(cpdLines1[0]);
                     int start2 = Integer.parseInt(cpdLines2[0]);
                     int end1 = Integer.parseInt(cpdLines1[1]);
                     int end2 = Integer.parseInt(cpdLines2[1]);
 
+                    if (!cpdErrors.containsKey(f1)) {
+                        cpdErrors.put(f1, new ArrayList<GenericViolation>());
+                    }
+                    if (!cpdErrors.containsKey(f2)) {
+                        cpdErrors.put(f2, new ArrayList<GenericViolation>());
+                    }
+
                     String fpath = "";
-
-                    if (f1.compareTo(f2) != 0) {
-                        fpath = " " + f2;
-                    }
-                    cpdErrors.add(new GenericViolation("Duplicated Sourcecode" + fpath + ": " + (start2+1) + "-" + (end2+1), start1, end1)
-                            .setAnnotationType("phpcpd-violation"));
-                    if (f1.compareTo(f2) != 0) {
-                        fpath = " " + f1;
-                    }
-                    cpdNoTask.add(new GenericViolation("Duplicated Sourcecode" + fpath + ": " + (start1+1) + "-" + (end1+1), start2, end2)
+                    if (f1.compareTo(f2) != 0) fpath = " " + f2;
+                    cpdErrors.get(f1).add(new GenericViolation("Duplicated Sourcecode" + fpath + ": " + (start2+1) + "-" + (end2+1), start1, end1)
                             .setAnnotationType("phpcpd-violation"));
 
-                    if (updateDependencies && f1.compareTo(f2) != 0) {
-                        ViolationRegistry.getInstance().addPhpcpdDependency(FileUtil.toFileObject(new File(f1)), FileUtil.toFileObject(new File(f2)));
+                    if (f1.compareTo(f2) != 0) fpath = " " + f1;
+                    cpdErrors.get(f2).add(new GenericViolation("Duplicated Sourcecode" + fpath + ": " + (start1+1) + "-" + (end1+1), start2, end2)
+                            .setAnnotationType("phpcpd-violation"));
+
+                    FileObject tmpf1 = FileUtil.toFileObject(new File(f1));
+                    FileObject tmpf2 = FileUtil.toFileObject(new File(f2));
+                    if (tmpf1 != null && tmpf2 != null && tmpf1.getPath().compareTo(tmpf2.getPath()) != 0) {
+                        if (!allreadyFlushedDependencies.contains(tmpf1)) {
+                            ViolationRegistry.getInstance().flushPhpcpdDependency(tmpf1);
+                            allreadyFlushedDependencies.add(tmpf1);
+                        }
+                        if (!allreadyFlushedDependencies.contains(tmpf2)) {
+                            ViolationRegistry.getInstance().flushPhpcpdDependency(tmpf2);
+                            allreadyFlushedDependencies.add(tmpf2);
+                        }
+                        ViolationRegistry.getInstance().addPhpcpdDependency(tmpf1, tmpf2);
                     }
                 }
             }
         } catch (IOException ex) {
             Exceptions.printStackTrace(ex);
         }
-        return new PhpcpdResult(null, cpdErrors, cpdNoTask);
+
+        HashMap<String, PhpcpdResult> ret = new HashMap<String, PhpcpdResult>();
+        for (String key : cpdErrors.keySet()) {
+
+            ret.put(key, new PhpcpdResult(null, cpdErrors.get(key), null));
+        }
+        return ret;
     }
 }

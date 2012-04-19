@@ -6,15 +6,19 @@ package de.foopara.phpcsmd.generics;
 
 import de.foopara.phpcsmd.option.GeneralOptions;
 import java.io.File;
+import java.io.IOException;
 import java.util.regex.Pattern;
 import org.openide.filesystems.FileObject;
 import org.openide.filesystems.FileUtil;
+import org.openide.util.Exceptions;
 
 /**
  *
  * @author n.specht
  */
 public class GenericHelper {
+
+    private static File phpcpdDistractor = null;
 
     public static boolean isDesirableFile(FileObject fileObject) {
         return GenericHelper.isDesirableFile(fileObject, true);
@@ -99,5 +103,14 @@ public class GenericHelper {
         return false;
     }
 
-
+    public static String getPhpcpdDistractor() {
+        if (GenericHelper.phpcpdDistractor == null) {
+            try {
+                GenericHelper.phpcpdDistractor = File.createTempFile("phpcsmd-phpcpdDistractor", ".php");
+            } catch (IOException ex) {
+                GenericHelper.phpcpdDistractor = new File("phpcsmd-phpcpdDistractor.php");
+            }
+        }
+        return GenericHelper.phpcpdDistractor.getAbsolutePath();
+    }
 }

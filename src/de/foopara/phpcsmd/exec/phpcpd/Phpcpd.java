@@ -8,7 +8,10 @@ import de.foopara.phpcsmd.ViolationRegistry;
 import de.foopara.phpcsmd.generics.*;
 import de.foopara.phpcsmd.option.PhpcpdOptions;
 import java.io.File;
+import java.io.IOException;
+import java.util.HashMap;
 import org.openide.filesystems.FileObject;
+import org.openide.util.Exceptions;
 
 /**
  *
@@ -24,7 +27,11 @@ public class Phpcpd extends GenericExecute {
 
     @Override
     protected GenericResult run(FileObject file, boolean annotations) {
-        if (!PhpcpdOptions.getActivated()) return this.setAndReturnDefault(file);
+        if (!PhpcpdOptions.getActivated()
+            && !(PhpcpdOptions.getActivatedFolder() && ViolationRegistry.getInstance().getPhpcpdDependency(file).size() > 0)
+        ) {
+            return this.setAndReturnDefault(file);
+        }
 
         if (!GenericHelper.isDesirableFile(new File(PhpcpdOptions.getScript()))
                 || !GenericHelper.isDesirableFile(file)) {
@@ -35,21 +42,56 @@ public class Phpcpd extends GenericExecute {
 
         if (!iAmAlive()) return this.setAndReturnDefault(file);
 
-        StringBuilder cmd = new StringBuilder(PhpcpdOptions.getScript());
-        this.appendArgument(cmd, "--min-lines ", "" + PhpcpdOptions.getMinLines());
-        this.appendArgument(cmd, "--min-tokens ", "" + PhpcpdOptions.getMinTokens());
-        this.appendArgument(cmd, "--suffixes ", PhpcpdOptions.getSuffixes());
-        this.appendArgument(cmd, "--exclude ", PhpcpdOptions.getExcludes());
+        StringBuilder cmd = this.getGenericCommand();
+        cmd.append(" ").append(GenericHelper.getPhpcpdDistractor());
         cmd.append(" ").append(file.getPath());
+        System.err.println(cmd.toString());
+        boolean updateDependencies = false;
+        for (FileObject fo : ViolationRegistry.getInstance().getPhpcpdDependency(file)) {
+            updateDependencies = true;
+            cmd.append(" ").append(fo.getPath());
+        }
 
         PhpcpdParser parser = new PhpcpdParser();
         if (!iAmAlive()) return this.setAndReturnDefault(file);
         GenericOutputReader[] reader = GenericProcess.run(cmd.toString(), "", null);
         if (!iAmAlive()) return this.setAndReturnDefault(file);
-        PhpcpdResult res = parser.parse(reader[0]);
+
+        //ViolationRegistry.getInstance().flushPhpcpdDependency(file);
+        PhpcpdResult res = parser.parse(reader[0], updateDependencies && false);
         if (!iAmAlive()) return this.setAndReturnDefault(file);
         ViolationRegistry.getInstance().setPhpcpd(file, res);
         return res;
+    }
+
+    public HashMap<String, PhpcpdResult> runFolder(FileObject folder, boolean annotations) {
+        if (!PhpcpdOptions.getActivatedFolder()) return new HashMap<String, PhpcpdResult>();
+
+        if(this.isEnabled() == false) return new HashMap<String, PhpcpdResult>();
+
+        if (!iAmAlive()) return new HashMap<String, PhpcpdResult>();
+
+        StringBuilder cmd = this.getGenericCommand();
+        cmd.append(" ").append(GenericHelper.getPhpcpdDistractor());
+        cmd.append(" ").append(folder.getPath());
+
+        PhpcpdFolderParser parser = new PhpcpdFolderParser();
+        if (!iAmAlive()) return new HashMap<String, PhpcpdResult>();
+        GenericOutputReader[] reader = GenericProcess.run(cmd.toString(), "", null);
+        if (!iAmAlive()) return new HashMap<String, PhpcpdResult>();
+        HashMap<String, PhpcpdResult> res = parser.parse(reader[0], folder);
+        if (!iAmAlive()) return new HashMap<String, PhpcpdResult>();
+        ViolationRegistry.getInstance().setPhpcpdFolder(res);
+        return res;
+    }
+
+    private StringBuilder getGenericCommand() {
+        StringBuilder cmd = new StringBuilder(PhpcpdOptions.getScript());
+        this.appendArgument(cmd, "--min-lines ", "" + PhpcpdOptions.getMinLines());
+        this.appendArgument(cmd, "--min-tokens ", "" + PhpcpdOptions.getMinTokens());
+        this.appendArgument(cmd, "--suffixes ", PhpcpdOptions.getSuffixes());
+        this.appendArgument(cmd, "--exclude ", PhpcpdOptions.getExcludes());
+        return cmd;
     }
 
     private void appendArgument(StringBuilder b, String key, String value) {

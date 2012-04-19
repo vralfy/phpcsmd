@@ -16,23 +16,26 @@ public class PhpcpdOptions {
 
     public static final String _PREFIX = "phpcsmd.phpcpd.";
 
-    private static final String _ACTIVATED          = "activated";
-    private static final String _ACTIVATED_DEFAULT  = "false";
+    private static final String _ACTIVATED               = "activated";
+    private static final String _ACTIVATED_DEFAULT       = "false";
 
-    private static final String _SCRIPT             = "script";
-    private static final String _SCRIPT_DEFAULT     = "/usr/bin/phpcpd";
+    private static final String _ACTIVATEDFOLDER         = "activatedFolder";
+    private static final String _ACTIVATEDFOLDER_DEFAULT = "false";
 
-    private static final String _MINLINES           = "minlines";
-    private static final String _MINLINES_DEFAULT   = "5";
+    private static final String _SCRIPT                  = "script";
+    private static final String _SCRIPT_DEFAULT          = "/usr/bin/phpcpd";
 
-    private static final String _MINTOKENS          = "mintokens";
-    private static final String _MINTOKENS_DEFAULT  = "70";
+    private static final String _MINLINES                = "minlines";
+    private static final String _MINLINES_DEFAULT        = "5";
 
-    private static final String _EXCLUDE            = "exclude";
-    private static final String _EXCLUDE_DEFAULT    = "";
+    private static final String _MINTOKENS               = "mintokens";
+    private static final String _MINTOKENS_DEFAULT       = "70";
 
-    private static final String _SUFFIXES           = "suffix";
-    private static final String _SUFFIXES_DEFAULT   = "";
+    private static final String _EXCLUDE                 = "exclude";
+    private static final String _EXCLUDE_DEFAULT         = "";
+
+    private static final String _SUFFIXES                = "suffix";
+    private static final String _SUFFIXES_DEFAULT        = "";
 
     private static Preferences _modul() {
         return NbPreferences.forModule(PHPCSMD.class);
@@ -44,6 +47,14 @@ public class PhpcpdOptions {
 
     public static void setActivated(boolean activated) {
         PhpcpdOptions._modul().put(_PREFIX + _ACTIVATED, activated ? "true" : "false");
+    }
+
+    public static boolean getActivatedFolder() {
+        return (PhpcpdOptions._modul().get(_PREFIX + _ACTIVATEDFOLDER, _ACTIVATEDFOLDER_DEFAULT).compareTo("true") == 0);
+    }
+
+    public static void setActivatedFolder(boolean activated) {
+        PhpcpdOptions._modul().put(_PREFIX + _ACTIVATEDFOLDER, activated ? "true" : "false");
     }
 
     public static String getScript() {
