@@ -47,7 +47,6 @@ public class Phpmd extends GenericExecute {
             cmd.append(" --strict");
         }
 
-        System.out.println(cmd.toString());
         PhpmdXMLParser parser = new PhpmdXMLParser();
         if (!iAmAlive()) return this.setAndReturnDefault(file);
         GenericOutputReader[] reader = GenericProcess.run(cmd.toString(), "", null);

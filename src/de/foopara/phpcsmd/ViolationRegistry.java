@@ -134,6 +134,7 @@ public class ViolationRegistry {
             oldres.getNoTask().clear();
         }
         //Add new result (will be attached later
+        list.remove(fo.getPath());
         list.put(fo.getPath(), res);
     }
 

@@ -27,9 +27,9 @@ public class Phpcpd extends GenericExecute {
 
     @Override
     protected GenericResult run(FileObject file, boolean annotations) {
-        if (!PhpcpdOptions.getActivated()
-            && !(PhpcpdOptions.getActivatedFolder() && ViolationRegistry.getInstance().getPhpcpdDependency(file).size() > 0)
-        ) {
+        if (!(PhpcpdOptions.getActivated()
+            || (PhpcpdOptions.getActivatedFolder() && ViolationRegistry.getInstance().getPhpcpdDependency(file).size() > 0)
+        )) {
             return this.setAndReturnDefault(file);
         }
 
@@ -45,7 +45,6 @@ public class Phpcpd extends GenericExecute {
         StringBuilder cmd = this.getGenericCommand();
         cmd.append(" ").append(GenericHelper.getPhpcpdDistractor());
         cmd.append(" ").append(file.getPath());
-        System.err.println(cmd.toString());
         boolean updateDependencies = false;
         for (FileObject fo : ViolationRegistry.getInstance().getPhpcpdDependency(file)) {
             updateDependencies = true;
@@ -58,7 +57,7 @@ public class Phpcpd extends GenericExecute {
         if (!iAmAlive()) return this.setAndReturnDefault(file);
 
         //ViolationRegistry.getInstance().flushPhpcpdDependency(file);
-        PhpcpdResult res = parser.parse(reader[0], updateDependencies && false);
+        PhpcpdResult res = parser.parse(reader[0], updateDependencies && false, file);
         if (!iAmAlive()) return this.setAndReturnDefault(file);
         ViolationRegistry.getInstance().setPhpcpd(file, res);
         return res;

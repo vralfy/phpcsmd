@@ -21,7 +21,7 @@ import org.openide.util.Exceptions;
  *
  * @author nspecht
  */
-public class PhpcpdFolderParser {
+public class PhpcpdFolderParser extends GenericPhpcpdParser {
 
     public HashMap<String, PhpcpdResult> parse(GenericOutputReader reader, FileObject containingFolder) {
         HashMap<String, List<GenericViolation>> cpdErrors = new HashMap<String, List<GenericViolation>>();
@@ -74,14 +74,8 @@ public class PhpcpdFolderParser {
                         cpdErrors.put(f2, new ArrayList<GenericViolation>());
                     }
 
-                    String fpath = "";
-                    if (f1.compareTo(f2) != 0) fpath = " " + f2;
-                    cpdErrors.get(f1).add(new GenericViolation("Duplicated Sourcecode" + fpath + ": " + (start2+1) + "-" + (end2+1), start1, end1)
-                            .setAnnotationType("phpcpd-violation"));
-
-                    if (f1.compareTo(f2) != 0) fpath = " " + f1;
-                    cpdErrors.get(f2).add(new GenericViolation("Duplicated Sourcecode" + fpath + ": " + (start1+1) + "-" + (end1+1), start2, end2)
-                            .setAnnotationType("phpcpd-violation"));
+                    this.add(f1, cpdErrors.get(f1), null, f1, start1, end1, f2, start2, end2);
+                    this.add(f2, cpdErrors.get(f2), null, f1, start1, end1, f2, start2, end2);
 
                     FileObject tmpf1 = FileUtil.toFileObject(new File(f1));
                     FileObject tmpf2 = FileUtil.toFileObject(new File(f2));
@@ -104,7 +98,6 @@ public class PhpcpdFolderParser {
 
         HashMap<String, PhpcpdResult> ret = new HashMap<String, PhpcpdResult>();
         for (String key : cpdErrors.keySet()) {
-
             ret.put(key, new PhpcpdResult(null, cpdErrors.get(key), null));
         }
         return ret;

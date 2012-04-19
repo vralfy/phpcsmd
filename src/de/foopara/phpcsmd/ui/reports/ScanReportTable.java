@@ -65,8 +65,19 @@ public class ScanReportTable extends GenericTable {
     }
 
     public void addElement(FileObject fo) {
+        
         if (!fo.getPath().startsWith(this.rootDir.getPath())) return;
-
+        
+        String printedName = fo.getPath().replaceFirst(this.rootDir.getPath(), "");
+        boolean doubleEntry = false;
+        for (int i = 0; i < this.model.getRowCount(); i++) {
+            String val = (String)this.model.getValueAt(i, 0);
+            if (val.compareTo(printedName) == 0) {
+                doubleEntry = true;
+                this.model.removeRow(i);
+            }
+        }
+        
         GenericResult phpcs = ViolationRegistry.getInstance().getPhpcs(fo);
         GenericResult phpmd = ViolationRegistry.getInstance().getPhpmd(fo);
         GenericResult phpcpd = ViolationRegistry.getInstance().getPhpcpd(fo);
@@ -76,21 +87,22 @@ public class ScanReportTable extends GenericTable {
         if (phpcs == null)  phpcs  = new GenericResult(null, null, null);
         if (phpmd == null)  phpmd  = new GenericResult(null, null, null);
         if (phpcpd == null) phpcpd = new GenericResult(null, null, null);
-
+        
         this.model.addRow(new Object[]{
-                    fo.getPath().replaceFirst(this.rootDir.getPath(), ""),
+                    printedName,
                     phpcs.getErrors().size(),
                     phpcs.getWarnings().size(),
                     phpmd.getErrors().size() + phpmd.getWarnings().size(),
                     phpcpd.getErrors().size() + phpcpd.getWarnings().size()
                 });
-
-        this.phpcs_errors += phpcs.getErrors().size();
-        this.phpcs_warnings += phpcs.getWarnings().size();
-        this.phpmd_errors += phpmd.getErrors().size();
-        this.phpmd_warnings += phpmd.getWarnings().size();
-        this.phpcpd_errors += phpcpd.getErrors().size();
-        this.phpcpd_warnings += phpcpd.getWarnings().size();
+        if (!doubleEntry) {
+            this.phpcs_errors += phpcs.getErrors().size();
+            this.phpcs_warnings += phpcs.getWarnings().size();
+            this.phpmd_errors += phpmd.getErrors().size();
+            this.phpmd_warnings += phpmd.getWarnings().size();
+            this.phpcpd_errors += phpcpd.getErrors().size();
+            this.phpcpd_warnings += phpcpd.getWarnings().size();
+        }
     }
 
     public void poke(FileObject fo) {

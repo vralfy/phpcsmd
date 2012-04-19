@@ -20,9 +20,9 @@ import org.openide.util.Exceptions;
  *
  * @author nspecht
  */
-public class PhpcpdParser {
+public class PhpcpdParser extends GenericPhpcpdParser {
 
-    public PhpcpdResult parse(GenericOutputReader reader, boolean updateDependencies) {
+    public PhpcpdResult parse(GenericOutputReader reader, boolean updateDependencies, FileObject fo) {
         List<GenericViolation> cpdErrors = new ArrayList<GenericViolation>();
         List<GenericViolation> cpdNoTask = new ArrayList<GenericViolation>();
 
@@ -65,18 +65,7 @@ public class PhpcpdParser {
                     int end1 = Integer.parseInt(cpdLines1[1]);
                     int end2 = Integer.parseInt(cpdLines2[1]);
 
-                    String fpath = "";
-
-                    if (f1.compareTo(f2) != 0) {
-                        fpath = " " + f2;
-                    }
-                    cpdErrors.add(new GenericViolation("Duplicated Sourcecode" + fpath + ": " + (start2+1) + "-" + (end2+1), start1, end1)
-                            .setAnnotationType("phpcpd-violation"));
-                    if (f1.compareTo(f2) != 0) {
-                        fpath = " " + f1;
-                    }
-                    cpdNoTask.add(new GenericViolation("Duplicated Sourcecode" + fpath + ": " + (start1+1) + "-" + (end1+1), start2, end2)
-                            .setAnnotationType("phpcpd-violation"));
+                    this.add(fo.getPath(), cpdErrors, cpdNoTask, f1, start1, end1, f2, start2, end2);
 
                     if (updateDependencies && f1.compareTo(f2) != 0) {
                         ViolationRegistry.getInstance().addPhpcpdDependency(FileUtil.toFileObject(new File(f1)), FileUtil.toFileObject(new File(f2)));
@@ -88,4 +77,6 @@ public class PhpcpdParser {
         }
         return new PhpcpdResult(null, cpdErrors, cpdNoTask);
     }
+    
+    
 }

@@ -57,10 +57,10 @@ public class RescanThread extends Thread {
                     QAThread qa = new QAThread();
                     qa.setFileObject(f2);
                     qa.setPoking(false);
-                    qa.run();
+//                    qa.run();
                 }
                 this.component.setScannedFilecount(fc);
-                this.component.addElementToTable(f2);
+                this.component.addElementToTable(f2);                
             } else if (f2.isFolder()) {
                 fc = this.count(f2, fc);
             }
@@ -70,7 +70,9 @@ public class RescanThread extends Thread {
             HashMap<String, PhpcpdResult> res = cpdTask.runFolder(f, true);
             for (String path : res.keySet()) {
                 FileObject tmp = FileUtil.toFileObject(new File(path));
-                if (tmp != null) this.component.addElementToTable(tmp);
+                if (tmp != null) {
+                    this.component.addElementToTable(tmp);
+                }
             }
         }
         return fc;
