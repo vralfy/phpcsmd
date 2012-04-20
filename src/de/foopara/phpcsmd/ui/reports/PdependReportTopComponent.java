@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package de.foopara.phpcsmd.ui.reports;
 
 import de.foopara.phpcsmd.exec.pdepend.PdependResult;
@@ -277,24 +273,24 @@ public final class PdependReportTopComponent extends GenericTopComponent {
         this.lPdependProgress.setVisible(false);
         this.lPdependStep.setVisible(false);
         this.hideAllPdependPanels();
-        // TODO add custom code on component opening
+        //add custom code on component opening
     }
 
     @Override
     public void componentClosed() {
-        // TODO add custom code on component closing
+        // add custom code on component closing
     }
 
     void writeProperties(java.util.Properties p) {
         // better to version settings since initial version as advocated at
         // http://wiki.apidesign.org/wiki/PropertyFiles
         p.setProperty("version", "1.0");
-        // TODO store your settings
+        // store your settings
     }
 
     void readProperties(java.util.Properties p) {
         String version = p.getProperty("version");
-        // TODO read your settings according to their version
+        // read your settings according to their version
     }
 
     public void setFileObject(FileObject fo) {

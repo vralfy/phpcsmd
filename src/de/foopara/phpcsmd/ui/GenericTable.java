@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package de.foopara.phpcsmd.ui;
 
 import java.util.Comparator;
@@ -47,7 +43,7 @@ public class GenericTable extends JTable {
                     if (comp != 0) return comp;
                 }
             }
-            
+
             if (s1.length < s2.length) return -1;
             else if (s1.length > s2.length) return 1;
 

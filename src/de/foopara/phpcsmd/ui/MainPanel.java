@@ -1,13 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
-/*
- * MainPanel.java
- *
- * Created on 22.01.2012, 17:17:24
- */
 package de.foopara.phpcsmd.ui;
 
 import de.foopara.phpcsmd.generics.GenericOptionsPanel;

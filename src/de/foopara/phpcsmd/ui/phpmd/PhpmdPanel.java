@@ -1,13 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
-/*
- * PhpmdPanel.java
- *
- * Created on 22.01.2012, 16:54:51
- */
 package de.foopara.phpcsmd.ui.phpmd;
 
 import de.foopara.phpcsmd.generics.GenericOptionsPanel;
@@ -135,11 +125,6 @@ public class PhpmdPanel extends GenericOptionsPanel {
         add(jLabel4, gridBagConstraints);
 
         optPriority.setText(org.openide.util.NbBundle.getMessage(PhpmdPanel.class, "PhpmdPanel.optPriority.text")); // NOI18N
-        optPriority.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                optPriorityActionPerformed(evt);
-            }
-        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 103;
@@ -155,10 +140,6 @@ public class PhpmdPanel extends GenericOptionsPanel {
         gridBagConstraints.insets = new java.awt.Insets(0, 0, 2, 2);
         add(optStrict, gridBagConstraints);
     }// </editor-fold>//GEN-END:initComponents
-
-    private void optPriorityActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_optPriorityActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_optPriorityActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel JLabel4;

@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package de.foopara.phpcsmd.threads;
 
 import de.foopara.phpcsmd.exec.phpcpd.Phpcpd;
@@ -60,7 +56,7 @@ public class RescanThread extends Thread {
 //                    qa.run();
                 }
                 this.component.setScannedFilecount(fc);
-                this.component.addElementToTable(f2);                
+                this.component.addElementToTable(f2);
             } else if (f2.isFolder()) {
                 fc = this.count(f2, fc);
             }

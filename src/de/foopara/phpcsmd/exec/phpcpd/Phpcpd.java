@@ -1,17 +1,11 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package de.foopara.phpcsmd.exec.phpcpd;
 
 import de.foopara.phpcsmd.ViolationRegistry;
 import de.foopara.phpcsmd.generics.*;
 import de.foopara.phpcsmd.option.PhpcpdOptions;
 import java.io.File;
-import java.io.IOException;
 import java.util.HashMap;
 import org.openide.filesystems.FileObject;
-import org.openide.util.Exceptions;
 
 /**
  *

@@ -1,10 +1,5 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package de.foopara.phpcsmd.ui;
 
-import de.foopara.phpcsmd.ui.phpcs.PhpcsPanel;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import javax.swing.JComponent;
@@ -20,7 +15,7 @@ public class PanelController extends OptionsPanelController {
 
     private boolean changed = false;
     private final PropertyChangeSupport pcs = new PropertyChangeSupport(this);
-    
+
     @Override
     public void update() {
         MainPanel.getInstance().load();
@@ -67,5 +62,5 @@ public class PanelController extends OptionsPanelController {
     public void removePropertyChangeListener(PropertyChangeListener pl) {
         this.pcs.removePropertyChangeListener(pl);
     }
-    
+
 }

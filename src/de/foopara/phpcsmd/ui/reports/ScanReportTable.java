@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package de.foopara.phpcsmd.ui.reports;
 
 import de.foopara.phpcsmd.ViolationRegistry;
@@ -65,9 +61,9 @@ public class ScanReportTable extends GenericTable {
     }
 
     public void addElement(FileObject fo) {
-        
+
         if (!fo.getPath().startsWith(this.rootDir.getPath())) return;
-        
+
         String printedName = fo.getPath().replaceFirst(this.rootDir.getPath(), "");
         boolean doubleEntry = false;
         for (int i = 0; i < this.model.getRowCount(); i++) {
@@ -77,7 +73,7 @@ public class ScanReportTable extends GenericTable {
                 this.model.removeRow(i);
             }
         }
-        
+
         GenericResult phpcs = ViolationRegistry.getInstance().getPhpcs(fo);
         GenericResult phpmd = ViolationRegistry.getInstance().getPhpmd(fo);
         GenericResult phpcpd = ViolationRegistry.getInstance().getPhpcpd(fo);
@@ -87,7 +83,7 @@ public class ScanReportTable extends GenericTable {
         if (phpcs == null)  phpcs  = new GenericResult(null, null, null);
         if (phpmd == null)  phpmd  = new GenericResult(null, null, null);
         if (phpcpd == null) phpcpd = new GenericResult(null, null, null);
-        
+
         this.model.addRow(new Object[]{
                     printedName,
                     phpcs.getErrors().size(),

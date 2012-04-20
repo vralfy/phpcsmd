@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package de.foopara.phpcsmd;
 
 import de.foopara.phpcsmd.generics.GenericFileListener;
@@ -30,7 +26,7 @@ public class FileListenerRegistry {
             return this._registry.get(fo.getPath());
         }
         GenericFileListener ret = new GenericFileListener();
-        
+
         fo.addFileChangeListener(ret);
         this._registry.put(fo.getPath(), ret);
         return ret;
