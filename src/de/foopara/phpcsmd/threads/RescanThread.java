@@ -53,7 +53,7 @@ public class RescanThread extends Thread {
                     QAThread qa = new QAThread();
                     qa.setFileObject(f2);
                     qa.setPoking(false);
-//                    qa.run();
+                    qa.run();
                 }
                 this.component.setScannedFilecount(fc);
                 this.component.addElementToTable(f2);
