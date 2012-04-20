@@ -14,7 +14,7 @@ public class GenericPhpcpdParser {
             List<GenericViolation> cpdNoTask,
             String f1, int s1, int e1,
             String f2, int s2, int e2) {
-        if (f1.compareTo(f2) != 0 && f2.compareTo(fo) == 0) {
+        if (f1.compareTo(f2) != 0 && f1.compareTo(f2) != 0 && f2.compareTo(fo) == 0) {
             String tf = f1;
             int ts = s1;
             int te = e1;
@@ -33,14 +33,16 @@ public class GenericPhpcpdParser {
             fpath = " " + f2;
         }
         if (fo.compareTo(f1) == 0) {
+            System.err.println("A-" + fo + " " + f2 + " " + s2 + " : " + e2 + " on lines " + s1 + "-" + e1);
             cpdErrors.add(new GenericViolation("Duplicated Sourcecode" + fpath + ": " + (s2+1) + "-" + (e2+1), s1, e1)
                     .setAnnotationType("phpcpd-violation"));
         }
         if (f1.compareTo(f2) != 0) {
             fpath = " " + f1;
         }
-        if (cpdNoTask != null && (fo.compareTo(f2) == 0 && f1.compareTo(f2) == 0)) {
-            System.err.println(f1 + " " + f2);
+        System.err.println(fo + " ==" + f2);
+        if (cpdNoTask != null && fo.compareTo(f2) == 0) {
+            System.err.println("B-" + fo + " " + f1 + " " + s1 + " : " + e1 + " on lines " + s2 + "-" + e2);
             cpdNoTask.add(new GenericViolation("Duplicated Sourcecode" + fpath + ": " + (s1+1) + "-" + (e1+1), s2, e2)
                     .setAnnotationType("phpcpd-violation"));
         }

@@ -71,7 +71,9 @@ public class PhpcpdFolderParser extends GenericPhpcpdParser {
                     }
 
                     this.add(f1, cpdErrors.get(f1), null, f1, start1, end1, f2, start2, end2);
-                    this.add(f2, cpdErrors.get(f2), null, f1, start1, end1, f2, start2, end2);
+//                    if (f1.compareTo(f2) != 0) {
+                        this.add(f2, cpdErrors.get(f2), null, f1, start1, end1, f2, start2, end2);
+//                    }
 
                     FileObject tmpf1 = FileUtil.toFileObject(new File(f1));
                     FileObject tmpf2 = FileUtil.toFileObject(new File(f2));
