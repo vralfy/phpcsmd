@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package de.foopara.phpcsmd.generics;
 
 import de.foopara.phpcsmd.PHPCSMD;
@@ -32,7 +28,7 @@ public class GenericNotification {
         GenericResult phpcpd = ViolationRegistry.getInstance().getPhpcpd(fo);
 
         int sum = phpcs.getSum() + phpmd.getSum() + phpcpd.getSum();
-        
+
         int phpcsError = phpcs.getErrors().size();
         int phpcsWarn = phpcs.getWarnings().size();
 

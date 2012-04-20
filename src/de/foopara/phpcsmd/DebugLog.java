@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package de.foopara.phpcsmd;
 
 import java.io.File;
@@ -18,7 +14,7 @@ public class DebugLog {
     private static DebugLog instance = null;
     private StringBuilder log = new StringBuilder();
     private static boolean enabled = false;
-    
+
     public static DebugLog getInstance() {
         if (DebugLog.instance == null) {
             DebugLog.instance = new DebugLog();
@@ -31,7 +27,7 @@ public class DebugLog {
             DebugLog.getInstance().write(msg);
         }
     }
-    
+
     public void write(String msg) {
         if (!DebugLog.enabled) {
             return;
@@ -39,7 +35,7 @@ public class DebugLog {
         System.out.println(msg);
         try {
             this.log.append(msg).append("\n");
-            
+
             File f = new File("/home/nspecht/phpcsmd.log");
             f.createNewFile();
             FileOutputStream fos = new FileOutputStream(f);

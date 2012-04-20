@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package de.foopara.phpcsmd.generics;
 
 import de.foopara.phpcsmd.option.GeneralOptions;
@@ -10,7 +6,6 @@ import java.io.IOException;
 import java.util.regex.Pattern;
 import org.openide.filesystems.FileObject;
 import org.openide.filesystems.FileUtil;
-import org.openide.util.Exceptions;
 
 /**
  *

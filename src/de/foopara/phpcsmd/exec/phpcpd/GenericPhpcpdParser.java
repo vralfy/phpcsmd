@@ -1,12 +1,7 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package de.foopara.phpcsmd.exec.phpcpd;
 
 import de.foopara.phpcsmd.generics.GenericViolation;
 import java.util.List;
-import org.openide.filesystems.FileObject;
 
 /**
  *
@@ -23,11 +18,11 @@ public class GenericPhpcpdParser {
             String tf = f1;
             int ts = s1;
             int te = e1;
-            
+
             f1 = f2;
             s1 = s2;
             e1 = e2;
-            
+
             f2 = tf;
             s2 = ts;
             e2 = te;

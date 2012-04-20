@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package de.foopara.phpcsmd.exec.phpcpd;
 
 import de.foopara.phpcsmd.ViolationRegistry;
@@ -77,6 +73,6 @@ public class PhpcpdParser extends GenericPhpcpdParser {
         }
         return new PhpcpdResult(null, cpdErrors, cpdNoTask);
     }
-    
-    
+
+
 }

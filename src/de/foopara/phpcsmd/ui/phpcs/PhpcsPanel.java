@@ -1,13 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
-/*
- * PhpcsPanel.java
- *
- * Created on 21.01.2012, 15:48:32
- */
 package de.foopara.phpcsmd.ui.phpcs;
 
 import de.foopara.phpcsmd.generics.GenericOptionsPanel;
@@ -104,11 +94,6 @@ public class PhpcsPanel extends GenericOptionsPanel {
         add(jLabel2, gridBagConstraints);
 
         optStandard.setText(org.openide.util.NbBundle.getMessage(PhpcsPanel.class, "PhpcsPanel.optStandard.text")); // NOI18N
-        optStandard.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                optStandardActionPerformed(evt);
-            }
-        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 101;
@@ -267,10 +252,6 @@ public class PhpcsPanel extends GenericOptionsPanel {
         gridBagConstraints.insets = new java.awt.Insets(0, 0, 2, 2);
         add(optIniOverwrite, gridBagConstraints);
     }// </editor-fold>//GEN-END:initComponents
-
-    private void optStandardActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_optStandardActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_optStandardActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
 

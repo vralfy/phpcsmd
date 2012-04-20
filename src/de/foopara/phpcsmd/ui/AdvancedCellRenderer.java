@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package de.foopara.phpcsmd.ui;
 
 import javax.swing.JTable;
@@ -44,7 +40,7 @@ public class AdvancedCellRenderer extends DefaultTableCellRenderer {
 
     private void renderInteger(Integer value) {
         String font = value.toString();
-        
+
         if (value > 0) {
             font = "<b style=\"color:#FF0000:\">"+font+"</b>";
         }

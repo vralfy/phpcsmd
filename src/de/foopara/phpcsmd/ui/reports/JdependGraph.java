@@ -1,14 +1,9 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package de.foopara.phpcsmd.ui.reports;
 
 import de.foopara.phpcsmd.exec.pdepend.PdependTypes;
 import java.awt.*;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Hashtable;
 import javax.swing.JPanel;
 
 /**
