@@ -14,7 +14,9 @@ public class GenericPhpcpdParser {
             List<GenericViolation> cpdNoTask,
             String f1, int s1, int e1,
             String f2, int s2, int e2) {
-        if (f1.compareTo(f2) != 0 && f1.compareTo(f2) != 0 && f2.compareTo(fo) == 0) {
+        if ((f1.compareTo(f2) != 0 && f2.compareTo(fo) == 0)
+            || (f1.compareTo(f2) == 0 && s1 > s2)
+        ) {
             String tf = f1;
             int ts = s1;
             int te = e1;

@@ -21,6 +21,7 @@ public class PhpcpdFolderParser extends GenericPhpcpdParser {
 
     public HashMap<String, PhpcpdResult> parse(GenericOutputReader reader, FileObject containingFolder) {
         HashMap<String, List<GenericViolation>> cpdErrors = new HashMap<String, List<GenericViolation>>();
+        HashMap<String, List<GenericViolation>> cpdNoTask = new HashMap<String, List<GenericViolation>>();
 
         try {
             char[] tmp = new char[1024];
@@ -69,11 +70,17 @@ public class PhpcpdFolderParser extends GenericPhpcpdParser {
                     if (!cpdErrors.containsKey(f2)) {
                         cpdErrors.put(f2, new ArrayList<GenericViolation>());
                     }
+                    if (!cpdNoTask.containsKey(f1)) {
+                        cpdNoTask.put(f1, new ArrayList<GenericViolation>());
+                    }
+                    if (!cpdNoTask.containsKey(f2)) {
+                        cpdNoTask.put(f2, new ArrayList<GenericViolation>());
+                    }
 
-                    this.add(f1, cpdErrors.get(f1), null, f1, start1, end1, f2, start2, end2);
-//                    if (f1.compareTo(f2) != 0) {
-                        this.add(f2, cpdErrors.get(f2), null, f1, start1, end1, f2, start2, end2);
-//                    }
+                    this.add(f1, cpdErrors.get(f1), cpdNoTask.get(f1), f1, start1, end1, f2, start2, end2);
+                    if (f1.compareTo(f2) != 0) {
+                        this.add(f2, cpdErrors.get(f2), cpdNoTask.get(f2), f1, start1, end1, f2, start2, end2);
+                    }
 
                     FileObject tmpf1 = FileUtil.toFileObject(new File(f1));
                     FileObject tmpf2 = FileUtil.toFileObject(new File(f2));
@@ -96,7 +103,7 @@ public class PhpcpdFolderParser extends GenericPhpcpdParser {
 
         HashMap<String, PhpcpdResult> ret = new HashMap<String, PhpcpdResult>();
         for (String key : cpdErrors.keySet()) {
-            ret.put(key, new PhpcpdResult(null, cpdErrors.get(key), null));
+            ret.put(key, new PhpcpdResult(null, cpdErrors.get(key), cpdNoTask.get(key)));
         }
         return ret;
     }
