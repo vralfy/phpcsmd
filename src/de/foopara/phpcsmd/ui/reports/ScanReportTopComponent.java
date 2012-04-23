@@ -204,6 +204,9 @@ public final class ScanReportTopComponent extends GenericTopComponent {
         GenericPokeRegistry.getInstance().register(this);
         this.toFront();
         this.setRescanDone();
+
+        this.optFullRescan.setSelected(true);
+        this.jButton1.setText("Rescan");
         // add custom code on component opening
     }
 

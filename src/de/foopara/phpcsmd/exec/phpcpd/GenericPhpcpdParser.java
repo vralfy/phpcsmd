@@ -35,7 +35,6 @@ public class GenericPhpcpdParser {
             fpath = " " + f2;
         }
         if (fo.compareTo(f1) == 0) {
-            System.err.println("A-" + fo + " " + f2 + " " + s2 + " : " + e2 + " on lines " + s1 + "-" + e1);
             cpdErrors.add(new GenericViolation("Duplicated Sourcecode" + fpath + ": " + (s2+1) + "-" + (e2+1), s1, e1)
                     .setAnnotationType("phpcpd-violation"));
         }
@@ -44,7 +43,6 @@ public class GenericPhpcpdParser {
         }
         System.err.println(fo + " ==" + f2);
         if (cpdNoTask != null && fo.compareTo(f2) == 0) {
-            System.err.println("B-" + fo + " " + f1 + " " + s1 + " : " + e1 + " on lines " + s2 + "-" + e2);
             cpdNoTask.add(new GenericViolation("Duplicated Sourcecode" + fpath + ": " + (s1+1) + "-" + (e1+1), s2, e2)
                     .setAnnotationType("phpcpd-violation"));
         }

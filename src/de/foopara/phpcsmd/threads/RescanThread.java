@@ -3,6 +3,7 @@ package de.foopara.phpcsmd.threads;
 import de.foopara.phpcsmd.exec.phpcpd.Phpcpd;
 import de.foopara.phpcsmd.exec.phpcpd.PhpcpdResult;
 import de.foopara.phpcsmd.generics.GenericHelper;
+import de.foopara.phpcsmd.option.PhpcpdOptions;
 import de.foopara.phpcsmd.ui.reports.ScanReportTopComponent;
 import java.io.File;
 import java.util.HashMap;
@@ -40,17 +41,23 @@ public class RescanThread extends Thread {
     }
 
     public void qarun() {
-        this.count(this.fo, 0);
+        this.count(this.fo, -1);
         this.component.setRescanDone();
     }
 
     private int count(FileObject f, int fc) {
-        boolean firstRun = (fc == 0);
+        boolean firstRun = (fc == -1);
+        if (fc < 0) {
+            fc = 0;
+        }
         for (FileObject f2 : f.getChildren()) {
             if (GenericHelper.isDesirableFile(f2)) {
                 fc += 1;
                 if (!this.retrieveValuesFromRegistry) {
                     QAThread qa = new QAThread();
+                    if (PhpcpdOptions.getActivatedFolder()) {
+                        qa.enablePhpcpd(false);
+                    }
                     qa.setFileObject(f2);
                     qa.setPoking(false);
                     qa.run();
@@ -61,7 +68,7 @@ public class RescanThread extends Thread {
                 fc = this.count(f2, fc);
             }
         }
-        if (GenericHelper.isDesirableFolder(f) && firstRun) {
+        if (GenericHelper.isDesirableFolder(f) && firstRun && PhpcpdOptions.getActivatedFolder()) {
             Phpcpd cpdTask = new Phpcpd();
             HashMap<String, PhpcpdResult> res = cpdTask.runFolder(f, true);
             for (String path : res.keySet()) {

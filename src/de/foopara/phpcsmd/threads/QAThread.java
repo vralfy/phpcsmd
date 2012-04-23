@@ -8,6 +8,9 @@ import de.foopara.phpcsmd.generics.GenericAnnotationBuilder;
 import de.foopara.phpcsmd.generics.GenericHelper;
 import de.foopara.phpcsmd.generics.GenericNotification;
 import de.foopara.phpcsmd.generics.GenericPokeRegistry;
+import de.foopara.phpcsmd.option.PhpcpdOptions;
+import de.foopara.phpcsmd.option.PhpcsOptions;
+import de.foopara.phpcsmd.option.PhpmdOptions;
 import java.util.ArrayList;
 import org.openide.filesystems.FileObject;
 
@@ -21,6 +24,23 @@ public class QAThread extends Thread {
     private FileObject fo = null;
     private boolean interupted = false;
     private boolean poke = true;
+
+    private boolean enablePhpcs = PhpcsOptions.getActivated();
+
+    private boolean enablePhpmd = PhpmdOptions.getActivated();
+
+    private boolean enablePhpcpd = PhpcpdOptions.getActivated();
+
+    public void enablePhpcs(boolean enable) {
+        this.enablePhpcs = enable;
+    }
+
+    public void enablePhpmd(boolean enable) {
+        this.enablePhpmd = enable;
+    }
+    public void enablePhpcpd(boolean enable) {
+        this.enablePhpcpd = enable;
+    }
 
     public void setFileObject(FileObject fo) {
         this.fo = fo;
@@ -57,13 +77,13 @@ public class QAThread extends Thread {
         }
 
         QAThread.instances.add(this);
-        if (!this.interupted) {
+        if (!this.interupted && this.enablePhpcs) {
             new Phpcs().execute(this.fo);
         }
-        if (!this.interupted) {
+        if (!this.interupted && this.enablePhpmd) {
             new Phpmd().execute(this.fo);
         }
-        if (!this.interupted) {
+        if (!this.interupted && this.enablePhpcpd) {
             new Phpcpd().execute(this.fo);
         }
 
