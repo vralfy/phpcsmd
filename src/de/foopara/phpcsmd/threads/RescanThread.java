@@ -4,6 +4,8 @@ import de.foopara.phpcsmd.exec.phpcpd.Phpcpd;
 import de.foopara.phpcsmd.exec.phpcpd.PhpcpdResult;
 import de.foopara.phpcsmd.generics.GenericHelper;
 import de.foopara.phpcsmd.option.PhpcpdOptions;
+import de.foopara.phpcsmd.option.PhpcsOptions;
+import de.foopara.phpcsmd.option.PhpmdOptions;
 import de.foopara.phpcsmd.ui.reports.ScanReportTopComponent;
 import java.io.File;
 import java.util.HashMap;
@@ -19,6 +21,23 @@ public class RescanThread extends Thread {
     private FileObject fo = null;
     private ScanReportTopComponent component = null;
     private boolean retrieveValuesFromRegistry = false;
+
+    private boolean enablePhpcs = PhpcsOptions.getActivated();
+
+    private boolean enablePhpmd = PhpmdOptions.getActivated();
+
+    private boolean enablePhpcpd = PhpcpdOptions.getActivated();
+
+    public void enablePhpcs(boolean enable) {
+        this.enablePhpcs = enable;
+    }
+
+    public void enablePhpmd(boolean enable) {
+        this.enablePhpmd = enable;
+    }
+    public void enablePhpcpd(boolean enable) {
+        this.enablePhpcpd = enable;
+    }
 
     public void setFileObject(FileObject fo) {
         this.fo = fo;
@@ -55,6 +74,9 @@ public class RescanThread extends Thread {
                 fc += 1;
                 if (!this.retrieveValuesFromRegistry) {
                     QAThread qa = new QAThread();
+                    qa.enablePhpcs(this.enablePhpcs);
+                    qa.enablePhpmd(this.enablePhpmd);
+                    qa.enablePhpcpd(this.enablePhpcpd);
                     if (PhpcpdOptions.getActivatedFolder()) {
                         qa.enablePhpcpd(false);
                     }
@@ -68,7 +90,7 @@ public class RescanThread extends Thread {
                 fc = this.count(f2, fc);
             }
         }
-        if (GenericHelper.isDesirableFolder(f) && firstRun && PhpcpdOptions.getActivatedFolder()) {
+        if (GenericHelper.isDesirableFolder(f) && firstRun && PhpcpdOptions.getActivatedFolder() && this.enablePhpcpd) {
             Phpcpd cpdTask = new Phpcpd();
             HashMap<String, PhpcpdResult> res = cpdTask.runFolder(f, true);
             for (String path : res.keySet()) {

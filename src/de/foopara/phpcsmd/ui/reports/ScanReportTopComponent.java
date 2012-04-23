@@ -3,6 +3,9 @@ package de.foopara.phpcsmd.ui.reports;
 import de.foopara.phpcsmd.generics.GenericHelper;
 import de.foopara.phpcsmd.generics.GenericPokeRegistry;
 import de.foopara.phpcsmd.generics.GenericTopComponent;
+import de.foopara.phpcsmd.option.PhpcpdOptions;
+import de.foopara.phpcsmd.option.PhpcsOptions;
+import de.foopara.phpcsmd.option.PhpmdOptions;
 import de.foopara.phpcsmd.threads.FileCountThread;
 import de.foopara.phpcsmd.threads.RescanThread;
 import java.awt.event.MouseAdapter;
@@ -69,11 +72,14 @@ public final class ScanReportTopComponent extends GenericTopComponent {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
-        jProgressBar1 = new javax.swing.JProgressBar();
         jScrollPane1 = new javax.swing.JScrollPane();
         scanReportTable1 = new de.foopara.phpcsmd.ui.reports.ScanReportTable();
-        optFullRescan = new javax.swing.JCheckBox();
         jLabel3 = new javax.swing.JLabel();
+        jProgressBar1 = new javax.swing.JProgressBar();
+        optFullRescan = new javax.swing.JCheckBox();
+        enablePhpcs = new javax.swing.JCheckBox();
+        enablePhpmd = new javax.swing.JCheckBox();
+        enablePhpcpd = new javax.swing.JCheckBox();
 
         setLayout(new java.awt.GridBagLayout());
 
@@ -88,7 +94,7 @@ public final class ScanReportTopComponent extends GenericTopComponent {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 0;
-        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.gridwidth = 4;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.insets = new java.awt.Insets(1, 1, 1, 1);
         add(jLabel2, gridBagConstraints);
@@ -103,33 +109,53 @@ public final class ScanReportTopComponent extends GenericTopComponent {
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 3;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.insets = new java.awt.Insets(1, 1, 1, 1);
+        gridBagConstraints.insets = new java.awt.Insets(1, 1, 2, 2);
         add(jButton1, gridBagConstraints);
-
-        jProgressBar1.setMaximum(1);
-        jProgressBar1.setFocusable(false);
-        jProgressBar1.setStringPainted(true);
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 2;
-        gridBagConstraints.gridy = 3;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.insets = new java.awt.Insets(1, 1, 1, 1);
-        add(jProgressBar1, gridBagConstraints);
 
         jScrollPane1.setViewportView(scanReportTable1);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 1;
-        gridBagConstraints.gridwidth = 3;
+        gridBagConstraints.gridwidth = 5;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.weighty = 1.0;
         gridBagConstraints.insets = new java.awt.Insets(1, 1, 1, 1);
         add(jScrollPane1, gridBagConstraints);
 
+        jLabel3.setFont(new java.awt.Font("DejaVu Sans", 0, 10)); // NOI18N
+        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        org.openide.awt.Mnemonics.setLocalizedText(jLabel3, org.openide.util.NbBundle.getMessage(ScanReportTopComponent.class, "ScanReportTopComponent.jLabel3.text")); // NOI18N
+        jLabel3.setMaximumSize(new java.awt.Dimension(600, 13));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.gridwidth = 5;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(2, 2, 2, 10);
+        add(jLabel3, gridBagConstraints);
+
+        jProgressBar1.setMaximum(1);
+        jProgressBar1.setFocusable(false);
+        jProgressBar1.setMaximumSize(new java.awt.Dimension(70000, 35));
+        jProgressBar1.setMinimumSize(new java.awt.Dimension(70, 35));
+        jProgressBar1.setPreferredSize(new java.awt.Dimension(70, 35));
+        jProgressBar1.setStringPainted(true);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 4;
+        gridBagConstraints.gridwidth = 5;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.insets = new java.awt.Insets(1, 1, 2, 2);
+        add(jProgressBar1, gridBagConstraints);
+
         optFullRescan.setSelected(true);
         org.openide.awt.Mnemonics.setLocalizedText(optFullRescan, org.openide.util.NbBundle.getMessage(ScanReportTopComponent.class, "ScanReportTopComponent.optFullRescan.text")); // NOI18N
+        optFullRescan.setMaximumSize(new java.awt.Dimension(80, 35));
+        optFullRescan.setMinimumSize(new java.awt.Dimension(80, 35));
+        optFullRescan.setPreferredSize(new java.awt.Dimension(80, 35));
         optFullRescan.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 optFullRescanActionPerformed(evt);
@@ -138,20 +164,42 @@ public final class ScanReportTopComponent extends GenericTopComponent {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 3;
+        gridBagConstraints.insets = new java.awt.Insets(1, 1, 2, 2);
         add(optFullRescan, gridBagConstraints);
 
-        jLabel3.setFont(new java.awt.Font("DejaVu Sans", 0, 10));
-        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        org.openide.awt.Mnemonics.setLocalizedText(jLabel3, org.openide.util.NbBundle.getMessage(ScanReportTopComponent.class, "ScanReportTopComponent.jLabel3.text")); // NOI18N
-        jLabel3.setMaximumSize(new java.awt.Dimension(600, 13));
+        org.openide.awt.Mnemonics.setLocalizedText(enablePhpcs, org.openide.util.NbBundle.getMessage(ScanReportTopComponent.class, "ScanReportTopComponent.enablePhpcs.text")); // NOI18N
+        enablePhpcs.setMaximumSize(new java.awt.Dimension(80, 35));
+        enablePhpcs.setMinimumSize(new java.awt.Dimension(80, 35));
+        enablePhpcs.setPreferredSize(new java.awt.Dimension(80, 35));
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 2;
-        gridBagConstraints.gridwidth = 3;
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.insets = new java.awt.Insets(1, 1, 2, 2);
+        add(enablePhpcs, gridBagConstraints);
+
+        org.openide.awt.Mnemonics.setLocalizedText(enablePhpmd, org.openide.util.NbBundle.getMessage(ScanReportTopComponent.class, "ScanReportTopComponent.enablePhpmd.text")); // NOI18N
+        enablePhpmd.setMaximumSize(new java.awt.Dimension(80, 35));
+        enablePhpmd.setMinimumSize(new java.awt.Dimension(80, 35));
+        enablePhpmd.setPreferredSize(new java.awt.Dimension(80, 35));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 3;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.insets = new java.awt.Insets(1, 1, 2, 2);
+        add(enablePhpmd, gridBagConstraints);
+
+        org.openide.awt.Mnemonics.setLocalizedText(enablePhpcpd, org.openide.util.NbBundle.getMessage(ScanReportTopComponent.class, "ScanReportTopComponent.enablePhpcpd.text")); // NOI18N
+        enablePhpcpd.setMaximumSize(new java.awt.Dimension(80, 35));
+        enablePhpcpd.setMinimumSize(new java.awt.Dimension(80, 35));
+        enablePhpcpd.setPreferredSize(new java.awt.Dimension(80, 35));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 4;
+        gridBagConstraints.gridy = 3;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.weightx = 1.0;
-        gridBagConstraints.insets = new java.awt.Insets(2, 2, 2, 10);
-        add(jLabel3, gridBagConstraints);
+        gridBagConstraints.insets = new java.awt.Insets(1, 1, 2, 2);
+        add(enablePhpcpd, gridBagConstraints);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -166,11 +214,22 @@ public final class ScanReportTopComponent extends GenericTopComponent {
         t2.setFileObject(this.fileObject);
         t2.setTopComponent(this);
         t2.setRetrieveValuesFromRegistry(!this.optFullRescan.isSelected());
+        t2.enablePhpcs(this.enablePhpcs.isSelected());
+        t2.enablePhpmd(this.enablePhpmd.isSelected());
+        t2.enablePhpcpd(this.enablePhpcpd.isSelected());
 
+        this.scanReportTable1.flushElements();
+        this.jProgressBar1.setVisible(true);
         this.jButton1.setEnabled(false);
         this.optFullRescan.setEnabled(false);
-        this.jProgressBar1.setVisible(true);
-        this.scanReportTable1.flushElements();
+        this.enablePhpcs.setEnabled(false);
+        this.enablePhpmd.setEnabled(false);
+        this.enablePhpcpd.setEnabled(false);
+        this.jButton1.setVisible(false);
+        this.optFullRescan.setVisible(false);
+        this.enablePhpcs.setVisible(false);
+        this.enablePhpmd.setVisible(false);
+        this.enablePhpcpd.setVisible(false);
 
         t1.start();
         t2.start();
@@ -185,6 +244,9 @@ public final class ScanReportTopComponent extends GenericTopComponent {
     }//GEN-LAST:event_optFullRescanActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JCheckBox enablePhpcpd;
+    private javax.swing.JCheckBox enablePhpcs;
+    private javax.swing.JCheckBox enablePhpmd;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -207,6 +269,15 @@ public final class ScanReportTopComponent extends GenericTopComponent {
 
         this.optFullRescan.setSelected(true);
         this.jButton1.setText("Rescan");
+        this.enablePhpcs.setVisible(true);
+        this.enablePhpmd.setVisible(true);
+        this.enablePhpcpd.setVisible(true);
+        this.enablePhpcs.setSelected(PhpcsOptions.getActivated());
+        this.enablePhpmd.setSelected(PhpmdOptions.getActivated());
+        this.enablePhpcpd.setSelected(PhpcpdOptions.getActivated() || PhpcpdOptions.getActivatedFolder());
+        this.enablePhpcs.setEnabled(PhpcsOptions.getActivated());
+        this.enablePhpmd.setEnabled(PhpmdOptions.getActivated());
+        this.enablePhpcpd.setEnabled(PhpcpdOptions.getActivated() || PhpcpdOptions.getActivatedFolder());
         // add custom code on component opening
     }
 
@@ -229,11 +300,20 @@ public final class ScanReportTopComponent extends GenericTopComponent {
     }
 
     public void setRescanDone() {
-        this.jButton1.setEnabled(true);
-        this.optFullRescan.setSelected(false);
-        this.optFullRescan.setEnabled(true);
         this.jProgressBar1.setVisible(false);
+        this.optFullRescan.setSelected(false);
         this.jLabel3.setVisible(false);
+
+        this.jButton1.setEnabled(true);
+        this.optFullRescan.setEnabled(true);
+        this.enablePhpcs.setEnabled(PhpcsOptions.getActivated());
+        this.enablePhpmd.setEnabled(PhpmdOptions.getActivated());
+        this.enablePhpcpd.setEnabled(PhpcpdOptions.getActivated() || PhpcpdOptions.getActivatedFolder());
+        this.jButton1.setVisible(true);
+        this.optFullRescan.setVisible(true);
+        this.enablePhpcs.setVisible(true);
+        this.enablePhpmd.setVisible(true);
+        this.enablePhpcpd.setVisible(true);
         this.printSummary();
     }
 
