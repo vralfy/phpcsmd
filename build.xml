@@ -5,4 +5,11 @@
 <project name="de.foopara.phpcsmd" default="netbeans" basedir=".">
     <description>Builds, tests, and runs the project de.foopara.phpcsmd.</description>
     <import file="nbproject/build-impl.xml"/>
+
+    <target name="-pre-compile" depends="keystore" />
+
+    <target name="keystore" depends="">
+        <delete file="nbproject/private/keystore" />
+        <genkey alias="phpcsmd" storepass="phpcsmd" dname="CN=Norman Specht, OU=Unknown, O=www.foopara.de, L=Unkown, ST=Unknown, C=DE" keystore="nbproject/private/keystore" />
+    </target>
 </project>
