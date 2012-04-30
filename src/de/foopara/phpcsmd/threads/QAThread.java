@@ -8,11 +8,13 @@ import de.foopara.phpcsmd.generics.GenericAnnotationBuilder;
 import de.foopara.phpcsmd.generics.GenericHelper;
 import de.foopara.phpcsmd.generics.GenericNotification;
 import de.foopara.phpcsmd.generics.GenericPokeRegistry;
+import de.foopara.phpcsmd.option.GeneralOptions;
 import de.foopara.phpcsmd.option.PhpcpdOptions;
 import de.foopara.phpcsmd.option.PhpcsOptions;
 import de.foopara.phpcsmd.option.PhpmdOptions;
 import java.util.ArrayList;
 import org.openide.filesystems.FileObject;
+import org.openide.util.Exceptions;
 
 /**
  *
@@ -60,6 +62,11 @@ public class QAThread extends Thread {
      */
     @Override
     public void run() {
+        try {
+            this.join(GeneralOptions.getTimeout());
+        } catch (InterruptedException ex) {
+            Exceptions.printStackTrace(ex);
+        }
         this.qarun();
     }
 

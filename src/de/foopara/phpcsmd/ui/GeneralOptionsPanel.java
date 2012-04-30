@@ -32,6 +32,8 @@ public class GeneralOptionsPanel extends GenericOptionsPanel {
         optNotify = new javax.swing.JCheckBox();
         optIgnorePattern = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        optTimeout = new javax.swing.JSpinner();
 
         setLayout(new java.awt.GridBagLayout());
 
@@ -87,14 +89,32 @@ public class GeneralOptionsPanel extends GenericOptionsPanel {
         gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
         gridBagConstraints.insets = new java.awt.Insets(0, 0, 2, 2);
         add(jLabel2, gridBagConstraints);
+
+        jLabel3.setText(org.openide.util.NbBundle.getMessage(GeneralOptionsPanel.class, "GeneralOptionsPanel.jLabel3.text")); // NOI18N
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 6;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
+        gridBagConstraints.insets = new java.awt.Insets(0, 0, 2, 2);
+        add(jLabel3, gridBagConstraints);
+
+        optTimeout.setModel(new javax.swing.SpinnerNumberModel(Integer.valueOf(1), Integer.valueOf(1), null, Integer.valueOf(1)));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 6;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.insets = new java.awt.Insets(0, 0, 2, 2);
+        add(optTimeout, gridBagConstraints);
     }// </editor-fold>//GEN-END:initComponents
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JTextField optIgnorePattern;
     private javax.swing.JCheckBox optNotify;
     private javax.swing.JCheckBox optThread;
+    private javax.swing.JSpinner optTimeout;
     private javax.swing.JCheckBox optUpdateOnSave;
     // End of variables declaration//GEN-END:variables
 
@@ -104,6 +124,7 @@ public class GeneralOptionsPanel extends GenericOptionsPanel {
         this.optUpdateOnSave.setSelected(GeneralOptions.getUpdateOnSave());
         this.optNotify.setSelected(GeneralOptions.getNotification());
         this.optIgnorePattern.setText(GeneralOptions.getIgnorePattern());
+        this.optTimeout.setValue(GeneralOptions.getTimeout());
     }
 
     @Override
@@ -112,6 +133,7 @@ public class GeneralOptionsPanel extends GenericOptionsPanel {
         GeneralOptions.setUpdateOnSave(this.optUpdateOnSave.isSelected());
         GeneralOptions.setNotification(this.optNotify.isSelected());
         GeneralOptions.setIgnorePattern(this.optIgnorePattern.getText());
+        GeneralOptions.setTimeout((Integer)this.optTimeout.getValue());
     }
 
     @Override

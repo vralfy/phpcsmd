@@ -24,6 +24,10 @@ public class GeneralOptions {
     private static final String _IGNORE_PATTERN          = "ignorepattern";
     private static final String _IGNORE_PATTERN_DEFAULT  = "\\.svn|\\.git";
 
+    private static final String _TIMEOUT                 = "timeout";
+    private static final String _TIMEOUT_DEFAULT         = "5000";
+
+
      private static Preferences _modul() {
         return NbPreferences.forModule(PHPCSMD.class);
     }
@@ -58,5 +62,13 @@ public class GeneralOptions {
 
     public static void setIgnorePattern(String ignorePattern) {
         GeneralOptions._modul().put(_PREFIX + _IGNORE_PATTERN, ignorePattern);
+    }
+
+    public static Integer getTimeout() {
+        return Integer.parseInt(GeneralOptions._modul().get(_PREFIX + _TIMEOUT, _TIMEOUT_DEFAULT));
+    }
+
+    public static void setTimeout(Integer ignorePattern) {
+        GeneralOptions._modul().put(_PREFIX + _TIMEOUT, "" + ignorePattern);
     }
 }
