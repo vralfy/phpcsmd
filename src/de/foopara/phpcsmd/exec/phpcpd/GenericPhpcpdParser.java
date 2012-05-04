@@ -1,6 +1,8 @@
 package de.foopara.phpcsmd.exec.phpcpd;
 
+import de.foopara.phpcsmd.generics.GenericHelper;
 import de.foopara.phpcsmd.generics.GenericViolation;
+import java.io.File;
 import java.util.List;
 
 /**
@@ -14,6 +16,9 @@ public class GenericPhpcpdParser {
             List<GenericViolation> cpdNoTask,
             String f1, int s1, int e1,
             String f2, int s2, int e2) {
+        if (!GenericHelper.isDesirableFile(new File(f1)) || !GenericHelper.isDesirableFile(new File(f2))) {
+            return;
+        }
         if ((f1.compareTo(f2) != 0 && f2.compareTo(fo) == 0)
             || (f1.compareTo(f2) == 0 && s1 > s2)
         ) {
