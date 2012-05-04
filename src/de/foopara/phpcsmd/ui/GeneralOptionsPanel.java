@@ -120,6 +120,8 @@ public class GeneralOptionsPanel extends GenericOptionsPanel {
 
     @Override
     public void load() {
+        this.optTimeout.setVisible(false);
+        this.jLabel3.setVisible(false);
         this.optThread.setSelected(GeneralOptions.getThreaded());
         this.optUpdateOnSave.setSelected(GeneralOptions.getUpdateOnSave());
         this.optNotify.setSelected(GeneralOptions.getNotification());
