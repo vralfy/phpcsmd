@@ -129,7 +129,8 @@ public class ViolationRegistry {
             oldres.getErrors().clear();
             oldres.getNoTask().clear();
         }
-        //Add new result (will be attached later
+        
+        //Add new result (will be attached later)
         list.remove(fo.getPath());
         list.put(fo.getPath(), res);
     }

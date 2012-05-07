@@ -43,10 +43,10 @@ public class GenericPhpcpdParser {
             cpdErrors.add(new GenericViolation("Duplicated Sourcecode" + fpath + ": " + (s2+1) + "-" + (e2+1), s1, e1)
                     .setAnnotationType("phpcpd-violation"));
         }
+
         if (f1.compareTo(f2) != 0) {
             fpath = " " + f1;
         }
-        System.err.println(fo + " ==" + f2);
         if (cpdNoTask != null && fo.compareTo(f2) == 0) {
             cpdNoTask.add(new GenericViolation("Duplicated Sourcecode" + fpath + ": " + (s1+1) + "-" + (e1+1), s2, e2)
                     .setAnnotationType("phpcpd-violation"));
