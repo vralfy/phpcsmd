@@ -25,7 +25,9 @@ public class Phpcpd extends GenericExecute {
         if (PhpcpdOptions.getActivated()) {
             run = true;
         }
-        if (PhpcpdOptions.getActivatedFolder() && ViolationRegistry.getInstance().getPhpcpdDependency(file).size() > 0) {
+        if (PhpcpdOptions.getActivatedFolder() &&
+                (ViolationRegistry.getInstance().getPhpcpdDependency(file).size() > 0)
+                || ViolationRegistry.getInstance().getPhpcpd(file).getSum() > 0) {
             run = true;
         }
         if (!run) {
@@ -37,9 +39,10 @@ public class Phpcpd extends GenericExecute {
             return this.setAndReturnDefault(file);
         }
 
-        if(this.isEnabled() == false) return this.setAndReturnDefault(file);
+        if (this.isEnabled() == false) return this.setAndReturnDefault(file);
 
         if (!iAmAlive()) return this.setAndReturnDefault(file);
+
 
         StringBuilder cmd = this.getGenericCommand();
         cmd.append(" ").append(GenericHelper.getPhpcpdDistractor());
@@ -72,7 +75,7 @@ public class Phpcpd extends GenericExecute {
         StringBuilder cmd = this.getGenericCommand();
         cmd.append(" ").append(GenericHelper.getPhpcpdDistractor());
         cmd.append(" ").append(folder.getPath());
-        
+
         PhpcpdFolderParser parser = new PhpcpdFolderParser();
         if (!iAmAlive()) return new HashMap<String, PhpcpdResult>();
         GenericOutputReader[] reader = GenericProcess.run(cmd.toString(), "", null);
