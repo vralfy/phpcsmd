@@ -26,7 +26,7 @@ public class RescanThread extends Thread {
 
     private boolean enablePhpmd = PhpmdOptions.getActivated();
 
-    private boolean enablePhpcpd = PhpcpdOptions.getActivated();
+    private boolean enablePhpcpd = PhpcpdOptions.getActivated() || PhpcpdOptions.getActivatedFolder();
 
     public void enablePhpcs(boolean enable) {
         this.enablePhpcs = enable;

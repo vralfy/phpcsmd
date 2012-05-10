@@ -31,7 +31,7 @@ public class QAThread extends Thread {
 
     private boolean enablePhpmd = PhpmdOptions.getActivated();
 
-    private boolean enablePhpcpd = PhpcpdOptions.getActivated() | PhpcpdOptions.getActivatedFolder();
+    private boolean enablePhpcpd = PhpcpdOptions.getActivated() || PhpcpdOptions.getActivatedFolder();
 
     public void enablePhpcs(boolean enable) {
         this.enablePhpcs = enable;
@@ -62,11 +62,11 @@ public class QAThread extends Thread {
      */
     @Override
     public void run() {
-        try {
-            this.join(GeneralOptions.getTimeout());
-        } catch (InterruptedException ex) {
-            Exceptions.printStackTrace(ex);
-        }
+//        try {
+//            this.join(GeneralOptions.getTimeout());
+//        } catch (InterruptedException ex) {
+//            Exceptions.printStackTrace(ex);
+//        }
         this.qarun();
     }
 

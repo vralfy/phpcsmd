@@ -68,7 +68,7 @@ public class GeneralOptions {
         return Integer.parseInt(GeneralOptions._modul().get(_PREFIX + _TIMEOUT, _TIMEOUT_DEFAULT));
     }
 
-    public static void setTimeout(Integer ignorePattern) {
-        GeneralOptions._modul().put(_PREFIX + _TIMEOUT, "" + ignorePattern);
+    public static void setTimeout(Integer timeout) {
+        GeneralOptions._modul().put(_PREFIX + _TIMEOUT, "" + timeout);
     }
 }

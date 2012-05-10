@@ -20,16 +20,16 @@ public class Phpmd extends GenericExecute {
 
     @Override
     protected GenericResult run(FileObject file, boolean annotations) {
-        if (!PhpmdOptions.getActivated()) return this.setAndReturnDefault(file);
+        if (!PhpmdOptions.getActivated()) return this.setAndReturnCurrent(file);
 
         if (!GenericHelper.isDesirableFile(new File(PhpmdOptions.getScript()))
                 || !GenericHelper.isDesirableFile(file)) {
             return this.setAndReturnDefault(file);
         }
 
-        if(this.isEnabled() == false) return this.setAndReturnDefault(file);
+        if(this.isEnabled() == false) return this.setAndReturnCurrent(file);
 
-        if (!iAmAlive()) return this.setAndReturnDefault(file);
+        if (!iAmAlive()) return this.setAndReturnCurrent(file);
 
         StringBuilder cmd = new StringBuilder(PhpmdOptions.getScript());
         cmd.append(" ").append(file.getPath());
@@ -44,11 +44,11 @@ public class Phpmd extends GenericExecute {
         }
 
         PhpmdXMLParser parser = new PhpmdXMLParser();
-        if (!iAmAlive()) return this.setAndReturnDefault(file);
+        if (!iAmAlive()) return this.setAndReturnCurrent(file);
         GenericOutputReader[] reader = GenericProcess.run(cmd.toString(), "", null);
-        if (!iAmAlive()) return this.setAndReturnDefault(file);
+        if (!iAmAlive()) return this.setAndReturnCurrent(file);
         PhpmdResult res = parser.parse(reader[0]);
-        if (!iAmAlive()) return this.setAndReturnDefault(file);
+        if (!iAmAlive()) return this.setAndReturnCurrent(file);
         ViolationRegistry.getInstance().setPhpmd(file, res);
         return res;
     }
@@ -63,5 +63,9 @@ public class Phpmd extends GenericExecute {
         GenericResult ret = new GenericResult(null, null, null);
         ViolationRegistry.getInstance().setPhpmd(file, ret);
         return ret;
+    }
+
+    private GenericResult setAndReturnCurrent(FileObject file) {
+        return ViolationRegistry.getInstance().getPhpmd(file);
     }
 }

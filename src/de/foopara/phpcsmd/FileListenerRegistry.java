@@ -25,10 +25,19 @@ public class FileListenerRegistry {
         if (this._registry.containsKey(fo.getPath())) {
             return this._registry.get(fo.getPath());
         }
+
+        if (fo.isFolder() && !fo.isData()) {
+            return null;
+        }
+
         GenericFileListener ret = new GenericFileListener();
 
         fo.addFileChangeListener(ret);
         this._registry.put(fo.getPath(), ret);
         return ret;
+    }
+
+    public void removeListener(String fo) {
+        this._registry.remove(fo);
     }
 }

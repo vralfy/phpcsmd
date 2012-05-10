@@ -25,13 +25,14 @@ public class Phpcpd extends GenericExecute {
         if (PhpcpdOptions.getActivated()) {
             run = true;
         }
+
         if (PhpcpdOptions.getActivatedFolder() &&
-                (ViolationRegistry.getInstance().getPhpcpdDependency(file).size() > 0)
-                || ViolationRegistry.getInstance().getPhpcpd(file).getSum() > 0) {
+                (ViolationRegistry.getInstance().getPhpcpdDependency(file).size() > 0
+                || ViolationRegistry.getInstance().getPhpcpd(file).getSum() > 0)) {
             run = true;
         }
         if (!run) {
-            return this.setAndReturnDefault(file);
+            return this.setAndReturnCurrent(file);
         }
 
         if (!GenericHelper.isDesirableFile(new File(PhpcpdOptions.getScript()))
@@ -39,9 +40,9 @@ public class Phpcpd extends GenericExecute {
             return this.setAndReturnDefault(file);
         }
 
-        if (this.isEnabled() == false) return this.setAndReturnDefault(file);
+        if (this.isEnabled() == false) return this.setAndReturnCurrent(file);
 
-        if (!iAmAlive()) return this.setAndReturnDefault(file);
+        if (!iAmAlive()) return this.setAndReturnCurrent(file);
 
 
         StringBuilder cmd = this.getGenericCommand();
@@ -54,13 +55,13 @@ public class Phpcpd extends GenericExecute {
         }
 
         PhpcpdParser parser = new PhpcpdParser();
-        if (!iAmAlive()) return this.setAndReturnDefault(file);
+        if (!iAmAlive()) return this.setAndReturnCurrent(file);
         GenericOutputReader[] reader = GenericProcess.run(cmd.toString(), "", null);
-        if (!iAmAlive()) return this.setAndReturnDefault(file);
+        if (!iAmAlive()) return this.setAndReturnCurrent(file);
 
         //ViolationRegistry.getInstance().flushPhpcpdDependency(file);
         PhpcpdResult res = parser.parse(reader[0], updateDependencies && false, file);
-        if (!iAmAlive()) return this.setAndReturnDefault(file);
+        if (!iAmAlive()) return this.setAndReturnCurrent(file);
         ViolationRegistry.getInstance().setPhpcpd(file, res);
         return res;
     }
@@ -105,5 +106,9 @@ public class Phpcpd extends GenericExecute {
         GenericResult ret = new GenericResult(null, null, null);
         ViolationRegistry.getInstance().setPhpcpd(file, ret);
         return ret;
+    }
+
+    private GenericResult setAndReturnCurrent(FileObject file) {
+        return ViolationRegistry.getInstance().getPhpcpd(file);
     }
 }

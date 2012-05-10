@@ -33,7 +33,7 @@ public class ViolationRegistry {
     LinkedHashMap<String, GenericResult> phpmd = new LinkedHashMap<String, GenericResult>();
     LinkedHashMap<String, GenericResult> phpcpd = new LinkedHashMap<String, GenericResult>();
     LinkedHashMap<String, Callback> callbacks = new LinkedHashMap<String, Callback>();
-    LinkedHashMap<FileObject, List<FileObject>> phpcpdDependencies = new LinkedHashMap<FileObject, List<FileObject>>();
+    LinkedHashMap<String, List<FileObject>> phpcpdDependencies = new LinkedHashMap<String, List<FileObject>>();
 
     public void setPhpcs(FileObject fo, GenericResult res) {
         this.put(fo, res, this.phpcs);
@@ -70,19 +70,22 @@ public class ViolationRegistry {
     }
 
     public void addPhpcpdDependency(FileObject f1, FileObject f2) {
-        if (!this.phpcpdDependencies.containsKey(f1)) {
-            this.phpcpdDependencies.put(f1, new ArrayList<FileObject>());
+        String p1 = f1.getPath();
+        String p2 = f2.getPath();
+
+        if (!this.phpcpdDependencies.containsKey(p1)) {
+            this.phpcpdDependencies.put(p1, new ArrayList<FileObject>());
         }
-        if (!this.phpcpdDependencies.containsKey(f2)) {
-            this.phpcpdDependencies.put(f2, new ArrayList<FileObject>());
+        if (!this.phpcpdDependencies.containsKey(p2)) {
+            this.phpcpdDependencies.put(p2, new ArrayList<FileObject>());
         }
 
-        this.phpcpdDependencies.get(f1).add(f2);
-        this.phpcpdDependencies.get(f2).add(f1);
+        this.phpcpdDependencies.get(p1).add(FileUtil.toFileObject(new File(p2)));
+        this.phpcpdDependencies.get(p2).add(FileUtil.toFileObject(new File(p1)));
     }
 
     public List<FileObject> getPhpcpdDependency(FileObject f) {
-         List<FileObject> ret = this.phpcpdDependencies.get(f);
+         List<FileObject> ret = this.phpcpdDependencies.get(f.getPath());
          if (ret == null) {
              ret = new ArrayList<FileObject>();
          }
@@ -90,8 +93,8 @@ public class ViolationRegistry {
     }
 
     public void flushPhpcpdDependency(FileObject f) {
-        if (this.phpcpdDependencies.containsKey(f)) {
-            this.phpcpdDependencies.get(f).clear();
+        if (this.phpcpdDependencies.containsKey(f.getPath())) {
+            this.phpcpdDependencies.get(f.getPath()).clear();
         }
     }
 
@@ -129,7 +132,7 @@ public class ViolationRegistry {
             oldres.getErrors().clear();
             oldres.getNoTask().clear();
         }
-        
+
         //Add new result (will be attached later)
         list.remove(fo.getPath());
         list.put(fo.getPath(), res);
@@ -155,13 +158,36 @@ public class ViolationRegistry {
     }
 
     public ArrayList<Task> getTaskList(FileObject fo) {
-        ArrayList<Task> list = new ArrayList<Task>();
         if (fo == null) {
-            return list;
+            return this.getTaskListAll();
         }
+        return this.getTaskListFile(fo);
+    }
+
+    public ArrayList<Task> getTaskListFile(FileObject fo) {
+        ArrayList<Task> list = new ArrayList<Task>();
+
         this.appendTaskList(fo, list, this.phpcs);
         this.appendTaskList(fo, list, this.phpmd);
         this.appendTaskList(fo, list, this.phpcpd);
+        return list;
+    }
+
+    public ArrayList<Task> getTaskListAll() {
+        ArrayList<Task> list = new ArrayList<Task>();
+
+        for (String file : this.phpcs.keySet()) {
+            this.appendTaskList(FileUtil.toFileObject(new File(file)), list, this.phpcs);
+        }
+
+        for (String file : this.phpmd.keySet()) {
+            this.appendTaskList(FileUtil.toFileObject(new File(file)), list, this.phpmd);
+        }
+
+        for (String file : this.phpcpd.keySet()) {
+            this.appendTaskList(FileUtil.toFileObject(new File(file)), list, this.phpcpd);
+        }
+
         return list;
     }
 
@@ -190,4 +216,19 @@ public class ViolationRegistry {
         }
     }
 
+    public void removeFile(FileObject fo) {
+        //remove violations
+        this.put(fo, new GenericResult(null, null, null), phpcs);
+        this.put(fo, new GenericResult(null, null, null), phpmd);
+        this.put(fo, new GenericResult(null, null, null), phpcpd);
+
+        //remove files from lists
+        this.phpcs.remove(fo.getPath());
+        this.phpmd.remove(fo.getPath());
+        this.phpcpd.remove(fo.getPath());
+        this.callbacks.remove(fo.getPath());
+
+        this.flushPhpcpdDependency(fo);
+        this.phpcpdDependencies.remove(fo.getPath());
+    }
 }
