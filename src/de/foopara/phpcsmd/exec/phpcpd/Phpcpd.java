@@ -28,7 +28,8 @@ public class Phpcpd extends GenericExecute {
 
         if (PhpcpdOptions.getActivatedFolder() &&
                 (ViolationRegistry.getInstance().getPhpcpdDependency(file).size() > 0
-                || ViolationRegistry.getInstance().getPhpcpd(file).getSum() > 0)) {
+                || ViolationRegistry.getInstance().getPhpcpd(file).getSum() > 0)
+        ) {
             run = true;
         }
         if (!run) {
