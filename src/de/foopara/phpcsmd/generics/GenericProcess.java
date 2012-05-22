@@ -79,7 +79,7 @@ public class GenericProcess {
 
                 HashSet<GenericOutputReader> reader = new HashSet<GenericOutputReader>();
                 for (File outputFile : outputFiles) {
-                    if (GenericHelper.isDesirableFile(outputFile)) {
+                    if (GenericHelper.isDesirableFile(outputFile, false)) {
                         tmp = new StringBuilder();
                         FileInputStream fis = new FileInputStream(outputFile);
                         while((c = fis.read()) != -1) {
