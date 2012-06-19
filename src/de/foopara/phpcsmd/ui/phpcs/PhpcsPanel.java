@@ -65,6 +65,9 @@ public class PhpcsPanel extends GenericOptionsPanel {
         optXUnreachable = new javax.swing.JCheckBox();
         jLabel7 = new javax.swing.JLabel();
         optIniOverwrite = new javax.swing.JTextField();
+        optXClasscomment = new javax.swing.JCheckBox();
+        optXFunccomment = new javax.swing.JCheckBox();
+        optXInlinecomment = new javax.swing.JCheckBox();
 
         setLayout(new java.awt.GridBagLayout());
 
@@ -251,6 +254,30 @@ public class PhpcsPanel extends GenericOptionsPanel {
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.insets = new java.awt.Insets(0, 0, 2, 2);
         add(optIniOverwrite, gridBagConstraints);
+
+        optXClasscomment.setText(org.openide.util.NbBundle.getMessage(PhpcsPanel.class, "PhpcsPanel.optXClasscomment.text")); // NOI18N
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 302;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        add(optXClasscomment, gridBagConstraints);
+
+        optXFunccomment.setText(org.openide.util.NbBundle.getMessage(PhpcsPanel.class, "PhpcsPanel.optXFunccomment.text")); // NOI18N
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 303;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        add(optXFunccomment, gridBagConstraints);
+
+        optXInlinecomment.setText(org.openide.util.NbBundle.getMessage(PhpcsPanel.class, "PhpcsPanel.optXInlinecomment.text")); // NOI18N
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 304;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        add(optXInlinecomment, gridBagConstraints);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -303,6 +330,9 @@ public class PhpcsPanel extends GenericOptionsPanel {
     private javax.swing.JTextField optStandard;
     private javax.swing.JSpinner optTabwidth;
     private javax.swing.JCheckBox optWarning;
+    private javax.swing.JCheckBox optXClasscomment;
+    private javax.swing.JCheckBox optXFunccomment;
+    private javax.swing.JCheckBox optXInlinecomment;
     private javax.swing.JCheckBox optXUnreachable;
     private javax.swing.JCheckBox optXtra;
     // End of variables declaration//GEN-END:variables
@@ -322,6 +352,9 @@ public class PhpcsPanel extends GenericOptionsPanel {
         this.optWarning.setSelected(PhpcsOptions.getWarnings());
         this.optXtra.setSelected(PhpcsOptions.getExtras());
         this.optXUnreachable.setSelected(PhpcsOptions.getXUnreachable());
+        this.optXClasscomment.setSelected(PhpcsOptions.getXClasscomment());
+        this.optXFunccomment.setSelected(PhpcsOptions.getXFunccomment());
+        this.optXInlinecomment.setSelected(PhpcsOptions.getXInlinecomment());
     }
 
     @Override
@@ -339,6 +372,9 @@ public class PhpcsPanel extends GenericOptionsPanel {
         PhpcsOptions.setWarnings(this.optWarning.isSelected());
         PhpcsOptions.setExtras(this.optXtra.isSelected());
         PhpcsOptions.setXUnreachable(this.optXUnreachable.isSelected());
+        PhpcsOptions.setXClasscomment(this.optXClasscomment.isSelected());
+        PhpcsOptions.setXFunccomment(this.optXFunccomment.isSelected());
+        PhpcsOptions.setXInlinecomment(this.optXInlinecomment.isSelected());
     }
 
     @Override

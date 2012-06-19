@@ -24,6 +24,15 @@ public class CustomStandard {
             if (PhpcsOptions.getXUnreachable()) {
                 content.append("\t<rule ref=\"Squiz.PHP.NonExecutableCode.Unreachable\" />\n");
             }
+            if (PhpcsOptions.getXClasscomment()) {
+                content.append("\t<rule ref=\"PEAR.Commenting.ClassComment\" />\n");
+            }
+            if (PhpcsOptions.getXFunccomment()) {
+                content.append("\t<rule ref=\"PEAR.Commenting.FunctionComment\" />\n");
+            }
+            if (PhpcsOptions.getXInlinecomment()) {
+                content.append("\t<rule ref=\"PEAR.Commenting.InlineComment\" />\n");
+            }
             content.append("</ruleset>");
 
             FileWriter f = new FileWriter(this._ruleset);

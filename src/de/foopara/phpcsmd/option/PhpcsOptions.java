@@ -12,38 +12,47 @@ public class PhpcsOptions {
 
     public static final String _PREFIX = "phpcsmd.phpcs.";
 
-    private static final String _ACTIVATED            = "activated";
-    private static final String _ACTIVATED_DEFAULT    = "false";
+    private static final String _ACTIVATED             = "activated";
+    private static final String _ACTIVATED_DEFAULT     = "false";
 
-    private static final String _SCRIPT               = "script";
-    private static final String _SCRIPT_DEFAULT       = "/usr/bin/phpcs";
+    private static final String _SCRIPT                = "script";
+    private static final String _SCRIPT_DEFAULT        = "/usr/bin/phpcs";
 
-    private static final String _STANDARD             = "standard";
-    private static final String _STANDARD_DEFAULT     = "Zend";
+    private static final String _STANDARD              = "standard";
+    private static final String _STANDARD_DEFAULT      = "Zend";
 
-    private static final String _SNIFFS               = "sniffs";
-    private static final String _SNIFFS_DEFAULT       = "";
+    private static final String _SNIFFS                = "sniffs";
+    private static final String _SNIFFS_DEFAULT        = "";
 
-    private static final String _IGNORES              = "ignores";
-    private static final String _IGNORES_DEFAULT      = "";
+    private static final String _IGNORES               = "ignores";
+    private static final String _IGNORES_DEFAULT       = "";
 
-    private static final String _EXTENSIONS           = "extensions";
-    private static final String _EXTENSIONS_DEFAULT   = "";
+    private static final String _EXTENSIONS             = "extensions";
+    private static final String _EXTENSIONS_DEFAULT     = "";
 
-    private static final String _TABWIDTH             = "tabwidth";
-    private static final String _TABWIDTH_DEFAULT     = "-1";
+    private static final String _TABWIDTH               = "tabwidth";
+    private static final String _TABWIDTH_DEFAULT       = "-1";
 
-    private static final String _INIOVERWRITE         = "inioverwrite";
-    private static final String _INIOVERWRITE_DEFAULT = "";
+    private static final String _INIOVERWRITE           = "inioverwrite";
+    private static final String _INIOVERWRITE_DEFAULT   = "";
 
-    private static final String _WARNINGS             = "warnings";
-    private static final String _WARNINGS_DEFAULT     = "true";
+    private static final String _WARNINGS               = "warnings";
+    private static final String _WARNINGS_DEFAULT       = "true";
 
-    private static final String _EXTRAS               = "extras";
-    private static final String _EXTRAS_DEFAULT       = "false";
+    private static final String _EXTRAS                 = "extras";
+    private static final String _EXTRAS_DEFAULT         = "false";
 
-    private static final String _XUNREACHABLE         = "xunreachable";
-    private static final String _XUNREACHABLE_DEFAULT = "false";
+    private static final String _XUNREACHABLE           = "xunreachable";
+    private static final String _XUNREACHABLE_DEFAULT   = "false";
+
+    private static final String _XCLASSCOMMENT          = "xclasscomment";
+    private static final String _XCLASSCOMMENT_DEFAULT  = "false";
+
+    private static final String _XFUNCCOMMENT           = "xfunccomment";
+    private static final String _XFUNCCOMMENT_DEFAULT   = "false";
+
+    private static final String _XINLINECOMMENT         = "xinlinecomment";
+    private static final String _XINLINECOMMENT_DEFAULT = "false";
 
     private static Preferences _modul() {
         return NbPreferences.forModule(PHPCSMD.class);
@@ -135,5 +144,29 @@ public class PhpcsOptions {
 
     public static void setXUnreachable(boolean unreachable) {
         PhpcsOptions._modul().put(_PREFIX + _XUNREACHABLE, unreachable ? "true" : "false");
+    }
+
+    public static boolean getXClasscomment() {
+        return (PhpcsOptions._modul().get(_PREFIX + _XCLASSCOMMENT, _XCLASSCOMMENT_DEFAULT).compareTo("true") == 0);
+    }
+
+    public static void setXClasscomment(boolean classcomment) {
+        PhpcsOptions._modul().put(_PREFIX + _XCLASSCOMMENT, classcomment ? "true" : "false");
+    }
+
+    public static boolean getXFunccomment() {
+        return (PhpcsOptions._modul().get(_PREFIX + _XFUNCCOMMENT, _XFUNCCOMMENT_DEFAULT).compareTo("true") == 0);
+    }
+
+    public static void setXFunccomment(boolean funccomment) {
+        PhpcsOptions._modul().put(_PREFIX + _XFUNCCOMMENT, funccomment ? "true" : "false");
+    }
+
+    public static boolean getXInlinecomment() {
+        return (PhpcsOptions._modul().get(_PREFIX + _XINLINECOMMENT, _XINLINECOMMENT_DEFAULT).compareTo("true") == 0);
+    }
+
+    public static void setXInlinecomment(boolean inlinecomment) {
+        PhpcsOptions._modul().put(_PREFIX + _XINLINECOMMENT, inlinecomment ? "true" : "false");
     }
 }
