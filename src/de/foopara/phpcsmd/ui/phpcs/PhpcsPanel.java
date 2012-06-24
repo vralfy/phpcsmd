@@ -2,9 +2,13 @@ package de.foopara.phpcsmd.ui.phpcs;
 
 import de.foopara.phpcsmd.generics.GenericOptionsPanel;
 import de.foopara.phpcsmd.option.PhpcsOptions;
+import de.foopara.phpcsmd.option.phpcs.GenericSniffRegistry;
+import de.foopara.phpcsmd.option.phpcs.PhpcsSniff;
+import java.awt.Dimension;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.HashMap;
 import javax.swing.DefaultComboBoxModel;
 import org.openide.util.Exceptions;
 
@@ -15,6 +19,9 @@ import org.openide.util.Exceptions;
 public class PhpcsPanel extends GenericOptionsPanel {
 
     private static PhpcsPanel instance = null;
+
+    private HashMap<String, javax.swing.JCheckBox> sniffOpts = new HashMap<String, javax.swing.JCheckBox>();
+    private HashMap<String, javax.swing.JCheckBox> sniffTask = new HashMap<String, javax.swing.JCheckBox>();
 
     public static PhpcsPanel getInstance() {
         return PhpcsPanel.instance;
@@ -29,6 +36,7 @@ public class PhpcsPanel extends GenericOptionsPanel {
     /** Creates new form PhpcsPanel */
     public PhpcsPanel() {
         initComponents();
+        this.provideStandards();
         this.jComboBox1.setModel(new DefaultComboBoxModel());
         this._clearInstalledStandards();
         PhpcsPanel.instance = this;
@@ -62,12 +70,8 @@ public class PhpcsPanel extends GenericOptionsPanel {
         optTabwidth = new javax.swing.JSpinner();
         optXtra = new javax.swing.JCheckBox();
         jSeparator1 = new javax.swing.JSeparator();
-        optXUnreachable = new javax.swing.JCheckBox();
         jLabel7 = new javax.swing.JLabel();
         optIniOverwrite = new javax.swing.JTextField();
-        optXClasscomment = new javax.swing.JCheckBox();
-        optXFunccomment = new javax.swing.JCheckBox();
-        optXInlinecomment = new javax.swing.JCheckBox();
 
         setLayout(new java.awt.GridBagLayout());
 
@@ -229,14 +233,6 @@ public class PhpcsPanel extends GenericOptionsPanel {
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         add(jSeparator1, gridBagConstraints);
 
-        optXUnreachable.setText(org.openide.util.NbBundle.getMessage(PhpcsPanel.class, "PhpcsPanel.optXUnreachable.text")); // NOI18N
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 301;
-        gridBagConstraints.gridwidth = 2;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        add(optXUnreachable, gridBagConstraints);
-
         jLabel7.setText(org.openide.util.NbBundle.getMessage(PhpcsPanel.class, "PhpcsPanel.jLabel7.text")); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -254,30 +250,6 @@ public class PhpcsPanel extends GenericOptionsPanel {
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.insets = new java.awt.Insets(0, 0, 2, 2);
         add(optIniOverwrite, gridBagConstraints);
-
-        optXClasscomment.setText(org.openide.util.NbBundle.getMessage(PhpcsPanel.class, "PhpcsPanel.optXClasscomment.text")); // NOI18N
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 302;
-        gridBagConstraints.gridwidth = 2;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        add(optXClasscomment, gridBagConstraints);
-
-        optXFunccomment.setText(org.openide.util.NbBundle.getMessage(PhpcsPanel.class, "PhpcsPanel.optXFunccomment.text")); // NOI18N
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 303;
-        gridBagConstraints.gridwidth = 2;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        add(optXFunccomment, gridBagConstraints);
-
-        optXInlinecomment.setText(org.openide.util.NbBundle.getMessage(PhpcsPanel.class, "PhpcsPanel.optXInlinecomment.text")); // NOI18N
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 304;
-        gridBagConstraints.gridwidth = 2;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        add(optXInlinecomment, gridBagConstraints);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -330,10 +302,6 @@ public class PhpcsPanel extends GenericOptionsPanel {
     private javax.swing.JTextField optStandard;
     private javax.swing.JSpinner optTabwidth;
     private javax.swing.JCheckBox optWarning;
-    private javax.swing.JCheckBox optXClasscomment;
-    private javax.swing.JCheckBox optXFunccomment;
-    private javax.swing.JCheckBox optXInlinecomment;
-    private javax.swing.JCheckBox optXUnreachable;
     private javax.swing.JCheckBox optXtra;
     // End of variables declaration//GEN-END:variables
 
@@ -351,10 +319,14 @@ public class PhpcsPanel extends GenericOptionsPanel {
 
         this.optWarning.setSelected(PhpcsOptions.getWarnings());
         this.optXtra.setSelected(PhpcsOptions.getExtras());
-        this.optXUnreachable.setSelected(PhpcsOptions.getXUnreachable());
-        this.optXClasscomment.setSelected(PhpcsOptions.getXClasscomment());
-        this.optXFunccomment.setSelected(PhpcsOptions.getXFunccomment());
-        this.optXInlinecomment.setSelected(PhpcsOptions.getXInlinecomment());
+
+        for (String key : this.sniffOpts.keySet()) {
+            this.sniffOpts.get(key).setSelected(PhpcsOptions.getSniff(key));
+        }
+
+        for (String key : this.sniffTask.keySet()) {
+            this.sniffTask.get(key).setSelected(PhpcsOptions.getSniffTask(key));
+        }
     }
 
     @Override
@@ -371,10 +343,87 @@ public class PhpcsPanel extends GenericOptionsPanel {
 
         PhpcsOptions.setWarnings(this.optWarning.isSelected());
         PhpcsOptions.setExtras(this.optXtra.isSelected());
-        PhpcsOptions.setXUnreachable(this.optXUnreachable.isSelected());
-        PhpcsOptions.setXClasscomment(this.optXClasscomment.isSelected());
-        PhpcsOptions.setXFunccomment(this.optXFunccomment.isSelected());
-        PhpcsOptions.setXInlinecomment(this.optXInlinecomment.isSelected());
+
+        for (String key : this.sniffOpts.keySet()) {
+            PhpcsOptions.setSniff(key, this.sniffOpts.get(key).isSelected());
+        }
+        for (String key : this.sniffTask.keySet()) {
+            PhpcsOptions.setSniffTask(key, this.sniffTask.get(key).isSelected());
+        }
+    }
+
+    public void provideStandards() {
+
+        java.awt.GridBagConstraints gridBagConstraints;
+
+        javax.swing.JTabbedPane standardTab = new javax.swing.JTabbedPane();
+        standardTab.setTabLayoutPolicy(javax.swing.JTabbedPane.SCROLL_TAB_LAYOUT);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 301;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(0, 0, 2, 2);
+        add(standardTab, gridBagConstraints);
+
+
+        for (String standardStr : GenericSniffRegistry.getInstance().getStandards()) {
+            javax.swing.JTabbedPane classTab = new javax.swing.JTabbedPane();
+            classTab.setTabLayoutPolicy(javax.swing.JTabbedPane.SCROLL_TAB_LAYOUT);
+            classTab.setTabPlacement(javax.swing.JTabbedPane.LEFT);
+            standardTab.add(standardStr, classTab);
+
+            for(String classStr : GenericSniffRegistry.getInstance().getStandard(standardStr).getClasses()) {
+                javax.swing.JPanel classPanel = new javax.swing.JPanel();
+                javax.swing.JScrollPane scroll = new javax.swing.JScrollPane(classPanel);
+                classPanel.setLayout(new java.awt.GridBagLayout());
+                scroll.setMaximumSize(new Dimension(-1, 200));
+                classTab.add(scroll, classStr);
+
+                javax.swing.JLabel labelSniff = new javax.swing.JLabel("<html><body><b>Sniff</b></body></html>");
+                javax.swing.JLabel labelTask  = new javax.swing.JLabel("<html><body><b>show in Tasklist</b></body></html>");
+                gridBagConstraints = new java.awt.GridBagConstraints();
+                gridBagConstraints.gridx = 1;
+                gridBagConstraints.gridy = 0;
+                gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+                gridBagConstraints.weightx = 0.8;
+                gridBagConstraints.insets = new java.awt.Insets(0, 0, 2, 2);
+                classPanel.add(labelSniff, gridBagConstraints);
+
+                gridBagConstraints = new java.awt.GridBagConstraints();
+                gridBagConstraints.gridx = 2;
+                gridBagConstraints.gridy = 0;
+                gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+                gridBagConstraints.weightx = 0.2;
+                gridBagConstraints.insets = new java.awt.Insets(0, 0, 2, 2);
+                classPanel.add(labelTask, gridBagConstraints);
+
+                int offset=1;
+                for(PhpcsSniff sniff : GenericSniffRegistry.getInstance().getStandard(standardStr).getClass(classStr).getSniffs()) {
+                    javax.swing.JCheckBox compSniff = new javax.swing.JCheckBox(sniff.getDescription());
+                    this.sniffOpts.put(sniff.shortName, compSniff);
+                    gridBagConstraints = new java.awt.GridBagConstraints();
+                    gridBagConstraints.gridx = 1;
+                    gridBagConstraints.gridy = offset;
+                    gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+                    gridBagConstraints.weightx = 0.8;
+                    gridBagConstraints.insets = new java.awt.Insets(0, 0, 2, 2);
+                    classPanel.add(compSniff, gridBagConstraints);
+
+                    javax.swing.JCheckBox compTask = new javax.swing.JCheckBox();
+                    this.sniffTask.put(sniff.shortName, compTask);
+                    gridBagConstraints = new java.awt.GridBagConstraints();
+                    gridBagConstraints.gridx = 2;
+                    gridBagConstraints.gridy = offset;
+                    gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+                    gridBagConstraints.weightx = 0.2;
+                    gridBagConstraints.insets = new java.awt.Insets(0, 0, 2, 2);
+                    classPanel.add(compTask, gridBagConstraints);
+                    offset++;
+                }
+            }
+        }
     }
 
     @Override

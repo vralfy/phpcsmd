@@ -42,17 +42,8 @@ public class PhpcsOptions {
     private static final String _EXTRAS                 = "extras";
     private static final String _EXTRAS_DEFAULT         = "false";
 
-    private static final String _XUNREACHABLE           = "xunreachable";
-    private static final String _XUNREACHABLE_DEFAULT   = "false";
-
-    private static final String _XCLASSCOMMENT          = "xclasscomment";
-    private static final String _XCLASSCOMMENT_DEFAULT  = "false";
-
-    private static final String _XFUNCCOMMENT           = "xfunccomment";
-    private static final String _XFUNCCOMMENT_DEFAULT   = "false";
-
-    private static final String _XINLINECOMMENT         = "xinlinecomment";
-    private static final String _XINLINECOMMENT_DEFAULT = "false";
+    private static final String _XSNIFF_DEFAULT         = "false";
+    private static final String _XSNIFFTASK_DEFAULT     = "true";
 
     private static Preferences _modul() {
         return NbPreferences.forModule(PHPCSMD.class);
@@ -138,35 +129,19 @@ public class PhpcsOptions {
         PhpcsOptions._modul().put(_PREFIX + _EXTRAS, extras ? "true" : "false");
     }
 
-    public static boolean getXUnreachable() {
-        return (PhpcsOptions._modul().get(_PREFIX + _XUNREACHABLE, _XUNREACHABLE_DEFAULT).compareTo("true") == 0);
+    public static boolean getSniff(String name) {
+        return (PhpcsOptions._modul().get(_PREFIX + "sniff." + name, _XSNIFF_DEFAULT).compareTo("true") == 0);
     }
 
-    public static void setXUnreachable(boolean unreachable) {
-        PhpcsOptions._modul().put(_PREFIX + _XUNREACHABLE, unreachable ? "true" : "false");
+    public static void setSniff(String name, boolean opt) {
+        PhpcsOptions._modul().put(_PREFIX + "sniff." + name, opt ? "true" : "false");
     }
 
-    public static boolean getXClasscomment() {
-        return (PhpcsOptions._modul().get(_PREFIX + _XCLASSCOMMENT, _XCLASSCOMMENT_DEFAULT).compareTo("true") == 0);
+    public static boolean getSniffTask(String name) {
+        return (PhpcsOptions._modul().get(_PREFIX + "snifftask." + name, _XSNIFFTASK_DEFAULT).compareTo("true") == 0);
     }
 
-    public static void setXClasscomment(boolean classcomment) {
-        PhpcsOptions._modul().put(_PREFIX + _XCLASSCOMMENT, classcomment ? "true" : "false");
-    }
-
-    public static boolean getXFunccomment() {
-        return (PhpcsOptions._modul().get(_PREFIX + _XFUNCCOMMENT, _XFUNCCOMMENT_DEFAULT).compareTo("true") == 0);
-    }
-
-    public static void setXFunccomment(boolean funccomment) {
-        PhpcsOptions._modul().put(_PREFIX + _XFUNCCOMMENT, funccomment ? "true" : "false");
-    }
-
-    public static boolean getXInlinecomment() {
-        return (PhpcsOptions._modul().get(_PREFIX + _XINLINECOMMENT, _XINLINECOMMENT_DEFAULT).compareTo("true") == 0);
-    }
-
-    public static void setXInlinecomment(boolean inlinecomment) {
-        PhpcsOptions._modul().put(_PREFIX + _XINLINECOMMENT, inlinecomment ? "true" : "false");
+    public static void setSniffTask(String name, boolean opt) {
+        PhpcsOptions._modul().put(_PREFIX + "snifftask." + name, opt ? "true" : "false");
     }
 }

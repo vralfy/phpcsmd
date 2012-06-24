@@ -1,6 +1,8 @@
 package de.foopara.phpcsmd.exec.phpcs;
 
 import de.foopara.phpcsmd.option.PhpcsOptions;
+import de.foopara.phpcsmd.option.phpcs.GenericSniffRegistry;
+import de.foopara.phpcsmd.option.phpcs.PhpcsSniff;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -21,18 +23,12 @@ public class CustomStandard {
             content.append("\t<description>PHPCSMDCUSTOM</description>\n");
             content.append("\t<rule ref=\"").append(PhpcsOptions.getStandard()).append("\" />\n\n");
 
-            if (PhpcsOptions.getXUnreachable()) {
-                content.append("\t<rule ref=\"Squiz.PHP.NonExecutableCode.Unreachable\" />\n");
+            for (PhpcsSniff sniff : GenericSniffRegistry.getInstance().getFlat()) {
+                if (PhpcsOptions.getSniff(sniff.shortName)) {
+                    content.append("\t<rule ref=\"").append(sniff.name).append("\" />\n");
+                }
             }
-            if (PhpcsOptions.getXClasscomment()) {
-                content.append("\t<rule ref=\"PEAR.Commenting.ClassComment\" />\n");
-            }
-            if (PhpcsOptions.getXFunccomment()) {
-                content.append("\t<rule ref=\"PEAR.Commenting.FunctionComment\" />\n");
-            }
-            if (PhpcsOptions.getXInlinecomment()) {
-                content.append("\t<rule ref=\"PEAR.Commenting.InlineComment\" />\n");
-            }
+            
             content.append("</ruleset>");
 
             FileWriter f = new FileWriter(this._ruleset);
