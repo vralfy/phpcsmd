@@ -2,9 +2,9 @@
 <!DOCTYPE type PUBLIC
           "-//NetBeans//DTD annotation type 1.0//EN"
           "http://www.netbeans.org/dtds/annotation-type-1_0.dtd">
-<type name="de-foopara-phpcsmd-annotation-phpcs-squizphpnonexecutablecode"
+<type name="de-foopara-phpcsmd-annotation-phpcs-comment"
       visible="true"
-      glyph="nbresloc:/de/foopara/phpcsmd/resources/phpcs/unreachable.png"
-      highlight="#CCCCCC"
+      glyph="nbresloc:/de/foopara/phpcsmd/resources/phpcs/comment.png"
+      highlight="#EEEEEE"
       type="line"
 />

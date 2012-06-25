@@ -1,5 +1,7 @@
 <?php
-define('LOCATION', '/usr/share/php/PHP/CodeSniffer/Standards');
+//define('LOCATION', '/usr/share/php/PHP/CodeSniffer/Standards');
+define('LOCATION', '/data/opt/pear/share/pear/PHP/CodeSniffer/Standards');
+
 $STANDARDS = array(
     'Generic', 'PEAR', 'Squiz', 'Zend',
 );
@@ -22,7 +24,7 @@ $sniffs = array();
 foreach ($STANDARDS as $standard) {
     echo '-- ' . $standard . "\n";
     $dir = opendir(LOCATION . '/' . $standard . '/Sniffs');
-    while($sniffdir = readdir($dir)) {
+    while ($sniffdir = readdir($dir)) {
         if (!in_array($sniffdir, array('.', '..'))) {
             echo '-- -- ' . $sniffdir . "\n";
             readSniffs($standard, $sniffdir, $sniffs);
@@ -34,7 +36,7 @@ ksort($sniffs);
 $dynamicRegistry = 'package de.foopara.phpcsmd.option.phpcs;
 
 public class DynamicSniffRegistry extends GenericSniffRegistry {
-    
+
     public DynamicSniffRegistry() {
 ';
 
@@ -43,15 +45,17 @@ require_once 'inc.sniffs.description.php';
 foreach ($sniffs as $standard => $classarr) {
     foreach ($classarr as $class => $sniffarr) {
         foreach ($sniffarr as $sniff) {
-            $shortname = strtolower(preg_replace('/\./','',$sniff));
+            $shortname = strtolower(preg_replace('/\./', '', $sniff));
             $annotationType = 'null';
-            if (is_file('../src/de/foopara/phpcsmd/resources/phpcs/' . $shortname . '.xml')) {
-                $annotationType = '"' . $shortname . '"';
+            if (in_array($sniff, array_keys($ANNOTATIONS))) {
+                $annotationType = '"' . $ANNOTATIONS[$sniff] . '"';
             }
+
             $description = 'null';
             if (in_array($sniff, array_keys($DESCRIPTIONS))) {
                 $description = '"' . $DESCRIPTIONS[$sniff] . '"';
             }
+
             $dynamicRegistry .= '        this.add(new PhpcsSniff("' . $sniff . '", ' . $description . ', ' . $annotationType . '));' . "\n";
         }
     }
@@ -59,4 +63,3 @@ foreach ($sniffs as $standard => $classarr) {
 $dynamicRegistry .= '}}';
 
 file_put_contents('../src/de/foopara/phpcsmd/option/phpcs/DynamicSniffRegistry.java', $dynamicRegistry);
-?>

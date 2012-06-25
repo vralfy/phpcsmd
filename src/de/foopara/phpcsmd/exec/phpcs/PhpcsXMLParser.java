@@ -11,6 +11,7 @@ import java.util.List;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
+import org.openide.util.Exceptions;
 import org.w3c.dom.Document;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.NodeList;
@@ -35,76 +36,49 @@ public class PhpcsXMLParser {
             Document document;
             document = builder.parse(new InputSource(reader.getReader()));
 
+            // WARNINGS
             NodeList ndList = document.getElementsByTagName("warning");
-            for (int i = 0; i < ndList.getLength(); i++) {
-                String message = ndList.item(i).getTextContent().trim();
-                NamedNodeMap nm = ndList.item(i).getAttributes();
-                int lineNum = Integer.parseInt(nm.getNamedItem("line").getTextContent()) - 1;
+            this.parseList(ndList, csWarnings, csExtras, "warning");
 
-                String type = nm.getNamedItem("source").getTextContent();
-
-                boolean addNormal = true;
-                if (PhpcsOptions.getExtras()) {
-                    for (PhpcsSniff sniff : GenericSniffRegistry.getInstance().getFlat()) {
-                        if (type.startsWith(sniff.name)
-                            && PhpcsOptions.getSniff(sniff.shortName)
-                            && sniff.annotationType != null
-                        ) {
-                            GenericViolation violation = new GenericViolation(message, lineNum).setAnnotationType("phpcs-" + sniff.annotationType);
-                            if (PhpcsOptions.getSniffTask(sniff.shortName)) {
-                                csWarnings.add(violation);
-                            } else {
-                                csExtras.add(violation);
-
-                            }
-                            addNormal = false;
-                        }
-                    }
-                }
-
-                if (addNormal) {
-                    csWarnings.add(new GenericViolation(message, lineNum).setAnnotationType("phpcs-warning"));
-                }
-            }
-
+            // ERRORS
             ndList = document.getElementsByTagName("error");
-            for (int i = 0; i < ndList.getLength(); i++) {
-                String message = ndList.item(i).getTextContent().trim();
-                NamedNodeMap nm = ndList.item(i).getAttributes();
-                int lineNum = Integer.parseInt(nm.getNamedItem("line").getTextContent()) - 1;
-                String type = nm.getNamedItem("source").getTextContent();
-
-                boolean addNormal = true;
-                if (PhpcsOptions.getExtras()) {
-                    for (PhpcsSniff sniff : GenericSniffRegistry.getInstance().getFlat()) {
-                        if (type.compareTo(sniff.name) == 0
-                            && PhpcsOptions.getSniff(sniff.shortName)
-                            && sniff.annotationType != null
-                        ) {
-                            GenericViolation violation = new GenericViolation(message, lineNum).setAnnotationType("phpcs-" + sniff.annotationType);
-                            if (PhpcsOptions.getSniffTask(sniff.shortName)) {
-                                csErrors.add(violation);
-                            } else {
-                                csExtras.add(violation);
-
-                            }
-                        }
-                    }
-                }
-
-                if (addNormal) {
-                    csErrors.add(new GenericViolation(message, lineNum).setAnnotationType("phpcs-error"));
-                }
-            }
-        } catch (IOException ex) {
-        } catch (ParserConfigurationException ex) {
-        } catch (SAXParseException ex) {
+            this.parseList(ndList, csErrors, csExtras, "error");
         } catch (SAXException ex) {
+        } catch (ParserConfigurationException ex) {
+        } catch (IOException ex) {
         }
-        /*
-         *
-         */
 
         return new PhpcsResult(csWarnings, csErrors, csExtras);
+    }
+
+    public void parseList(NodeList ndList, List<GenericViolation> normalList, List<GenericViolation> extraList, String annotation) {
+        for (int i = 0; i < ndList.getLength(); i++) {
+            String message = ndList.item(i).getTextContent().trim();
+            NamedNodeMap nm = ndList.item(i).getAttributes();
+            int lineNum = Integer.parseInt(nm.getNamedItem("line").getTextContent()) - 1;
+            String type = nm.getNamedItem("source").getTextContent();
+
+            boolean addNormal = true;
+            if (PhpcsOptions.getExtras()) {
+                for (PhpcsSniff sniff : GenericSniffRegistry.getInstance().getFlat()) {
+                    if ((type.startsWith(sniff.name) || type.compareTo(sniff.name) == 0)
+                        && PhpcsOptions.getSniff(sniff.shortName)
+                        && sniff.annotationType != null
+                    ) {
+                        GenericViolation violation = new GenericViolation(message, lineNum).setAnnotationType("phpcs-" + sniff.annotationType);
+                        if (PhpcsOptions.getSniffTask(sniff.shortName)) {
+                            normalList.add(violation);
+                        } else {
+                            extraList.add(violation);
+                        }
+                        addNormal = false;
+                    }
+                }
+            }
+
+            if (addNormal) {
+                normalList.add(new GenericViolation(message, lineNum).setAnnotationType("phpcs-" + annotation));
+            }
+        }
     }
 }

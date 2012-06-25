@@ -1,7 +1,7 @@
 package de.foopara.phpcsmd.option.phpcs;
 
 public class DynamicSniffRegistry extends GenericSniffRegistry {
-    
+
     public DynamicSniffRegistry() {
         this.add(new PhpcsSniff("Generic.Classes.DuplicateClassName", null, null));
         this.add(new PhpcsSniff("Generic.CodeAnalysis.EmptyStatement", null, null));
@@ -12,8 +12,8 @@ public class DynamicSniffRegistry extends GenericSniffRegistry {
         this.add(new PhpcsSniff("Generic.CodeAnalysis.UnnecessaryFinalModifier", null, null));
         this.add(new PhpcsSniff("Generic.CodeAnalysis.UnusedFunctionParameter", null, null));
         this.add(new PhpcsSniff("Generic.CodeAnalysis.UselessOverridingMethod", null, null));
-        this.add(new PhpcsSniff("Generic.Commenting.Fixme", null, null));
-        this.add(new PhpcsSniff("Generic.Commenting.Todo", null, null));
+        this.add(new PhpcsSniff("Generic.Commenting.Fixme", "Highlight FIXME comments", "comment"));
+        this.add(new PhpcsSniff("Generic.Commenting.Todo", "Highlight TODO comments", "comment"));
         this.add(new PhpcsSniff("Generic.ControlStructures.InlineControlStructure", null, null));
         this.add(new PhpcsSniff("Generic.Debug.ClosureLinter", null, null));
         this.add(new PhpcsSniff("Generic.Debug.JSHint", null, null));
@@ -32,9 +32,9 @@ public class DynamicSniffRegistry extends GenericSniffRegistry {
         this.add(new PhpcsSniff("Generic.Metrics.NestingLevel", null, null));
         this.add(new PhpcsSniff("Generic.NamingConventions.ConstructorName", null, null));
         this.add(new PhpcsSniff("Generic.NamingConventions.UpperCaseConstantName", null, null));
-        this.add(new PhpcsSniff("Generic.PHP.DeprecatedFunctions", null, null));
+        this.add(new PhpcsSniff("Generic.PHP.DeprecatedFunctions", "show deprecated functions", "forbidden"));
         this.add(new PhpcsSniff("Generic.PHP.DisallowShortOpenTag", null, null));
-        this.add(new PhpcsSniff("Generic.PHP.ForbiddenFunctions", null, null));
+        this.add(new PhpcsSniff("Generic.PHP.ForbiddenFunctions", "show forbidden functions", "forbidden"));
         this.add(new PhpcsSniff("Generic.PHP.LowerCaseConstant", null, null));
         this.add(new PhpcsSniff("Generic.PHP.NoSilencedErrors", null, null));
         this.add(new PhpcsSniff("Generic.PHP.UpperCaseConstant", null, null));
@@ -43,10 +43,10 @@ public class DynamicSniffRegistry extends GenericSniffRegistry {
         this.add(new PhpcsSniff("Generic.WhiteSpace.DisallowTabIndent", null, null));
         this.add(new PhpcsSniff("Generic.WhiteSpace.ScopeIndent", null, null));
         this.add(new PhpcsSniff("PEAR.Classes.ClassDeclaration", null, null));
-        this.add(new PhpcsSniff("PEAR.Commenting.ClassComment", "blame missing class comment", null));
-        this.add(new PhpcsSniff("PEAR.Commenting.FileComment", "blame missing file comment", null));
-        this.add(new PhpcsSniff("PEAR.Commenting.FunctionComment", "blame missing function comment", null));
-        this.add(new PhpcsSniff("PEAR.Commenting.InlineComment", "blame missing inline comment", null));
+        this.add(new PhpcsSniff("PEAR.Commenting.ClassComment", "analyse class comments", "comment"));
+        this.add(new PhpcsSniff("PEAR.Commenting.FileComment", "analyse file comments", "comment"));
+        this.add(new PhpcsSniff("PEAR.Commenting.FunctionComment", "analyse function comments", "comment"));
+        this.add(new PhpcsSniff("PEAR.Commenting.InlineComment", "analyse inline comments", "comment"));
         this.add(new PhpcsSniff("PEAR.ControlStructures.ControlSignature", null, null));
         this.add(new PhpcsSniff("PEAR.ControlStructures.MultiLineCondition", null, null));
         this.add(new PhpcsSniff("PEAR.Files.IncludingFile", null, null));
@@ -84,18 +84,18 @@ public class DynamicSniffRegistry extends GenericSniffRegistry {
         this.add(new PhpcsSniff("Squiz.Classes.SelfMemberReference", null, null));
         this.add(new PhpcsSniff("Squiz.Classes.ValidClassName", null, null));
         this.add(new PhpcsSniff("Squiz.CodeAnalysis.EmptyStatement", null, null));
-        this.add(new PhpcsSniff("Squiz.Commenting.BlockComment", null, null));
-        this.add(new PhpcsSniff("Squiz.Commenting.ClassComment", null, null));
-        this.add(new PhpcsSniff("Squiz.Commenting.ClosingDeclarationComment", null, null));
-        this.add(new PhpcsSniff("Squiz.Commenting.DocCommentAlignment", null, null));
-        this.add(new PhpcsSniff("Squiz.Commenting.EmptyCatchComment", null, null));
-        this.add(new PhpcsSniff("Squiz.Commenting.FileComment", null, null));
-        this.add(new PhpcsSniff("Squiz.Commenting.FunctionComment", null, null));
+        this.add(new PhpcsSniff("Squiz.Commenting.BlockComment", "analyse block comments", "comment"));
+        this.add(new PhpcsSniff("Squiz.Commenting.ClassComment", "analyse class comments", "comment"));
+        this.add(new PhpcsSniff("Squiz.Commenting.ClosingDeclarationComment", "analyse closing declaration comments", "comment"));
+        this.add(new PhpcsSniff("Squiz.Commenting.DocCommentAlignment", "analyse alignment in comments", "comment"));
+        this.add(new PhpcsSniff("Squiz.Commenting.EmptyCatchComment", "analyse comments in empty catch clause", "comment"));
+        this.add(new PhpcsSniff("Squiz.Commenting.FileComment", "analyse file comments", "comment"));
+        this.add(new PhpcsSniff("Squiz.Commenting.FunctionComment", "analyse function comments", "comment"));
         this.add(new PhpcsSniff("Squiz.Commenting.FunctionCommentThrowTag", null, null));
-        this.add(new PhpcsSniff("Squiz.Commenting.InlineComment", null, null));
-        this.add(new PhpcsSniff("Squiz.Commenting.LongConditionClosingComment", null, null));
-        this.add(new PhpcsSniff("Squiz.Commenting.PostStatementComment", null, null));
-        this.add(new PhpcsSniff("Squiz.Commenting.VariableComment", null, null));
+        this.add(new PhpcsSniff("Squiz.Commenting.InlineComment", "analyse inline comments", "comment"));
+        this.add(new PhpcsSniff("Squiz.Commenting.LongConditionClosingComment", "force comments at the end of long conditions", "comment"));
+        this.add(new PhpcsSniff("Squiz.Commenting.PostStatementComment", "analyse comments after statements", "comment"));
+        this.add(new PhpcsSniff("Squiz.Commenting.VariableComment", "analyse variable comments", "comment"));
         this.add(new PhpcsSniff("Squiz.ControlStructures.ControlSignature", null, null));
         this.add(new PhpcsSniff("Squiz.ControlStructures.ElseIfDeclaration", null, null));
         this.add(new PhpcsSniff("Squiz.ControlStructures.ForEachLoopDeclaration", null, null));
@@ -128,15 +128,15 @@ public class DynamicSniffRegistry extends GenericSniffRegistry {
         this.add(new PhpcsSniff("Squiz.PHP.DisallowMultipleAssignments", null, null));
         this.add(new PhpcsSniff("Squiz.PHP.DisallowObEndFlush", null, null));
         this.add(new PhpcsSniff("Squiz.PHP.DisallowSizeFunctionsInLoops", null, null));
-        this.add(new PhpcsSniff("Squiz.PHP.DiscouragedFunctions", null, null));
+        this.add(new PhpcsSniff("Squiz.PHP.DiscouragedFunctions", "highlight discouraged functions", "forbidden"));
         this.add(new PhpcsSniff("Squiz.PHP.EmbeddedPhp", null, null));
-        this.add(new PhpcsSniff("Squiz.PHP.Eval", null, null));
+        this.add(new PhpcsSniff("Squiz.PHP.Eval", "highlight eval expressions", "forbidden"));
         this.add(new PhpcsSniff("Squiz.PHP.ForbiddenFunctions", null, null));
         this.add(new PhpcsSniff("Squiz.PHP.GlobalKeyword", null, null));
         this.add(new PhpcsSniff("Squiz.PHP.Heredoc", null, null));
         this.add(new PhpcsSniff("Squiz.PHP.InnerFunctions", null, null));
         this.add(new PhpcsSniff("Squiz.PHP.LowercasePHPFunctions", null, null));
-        this.add(new PhpcsSniff("Squiz.PHP.NonExecutableCode", "show unreachable code", "squizphpnonexecutablecode"));
+        this.add(new PhpcsSniff("Squiz.PHP.NonExecutableCode", "show unreachable code", "unreachable"));
         this.add(new PhpcsSniff("Squiz.Scope.MemberVarScope", null, null));
         this.add(new PhpcsSniff("Squiz.Scope.MethodScope", null, null));
         this.add(new PhpcsSniff("Squiz.Scope.StaticThisUsage", null, null));

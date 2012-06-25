@@ -5,6 +5,7 @@ import de.foopara.phpcsmd.option.PhpcsOptions;
 import de.foopara.phpcsmd.option.phpcs.GenericSniffRegistry;
 import de.foopara.phpcsmd.option.phpcs.PhpcsSniff;
 import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -401,13 +402,28 @@ public class PhpcsPanel extends GenericOptionsPanel {
 
                 int offset=1;
                 for(PhpcsSniff sniff : GenericSniffRegistry.getInstance().getStandard(standardStr).getClass(classStr).getSniffs()) {
+                    java.awt.Image img;
+                    if (sniff.annotationType != null) {
+                        img = Toolkit.getDefaultToolkit().getImage(getClass().getResource("/de/foopara/phpcsmd/resources/phpcs/" + sniff.annotationType + ".png"));
+                    } else {
+                        img = Toolkit.getDefaultToolkit().getImage(getClass().getResource("/de/foopara/phpcsmd/resources/phpcs/violation.jpg"));
+                    }
+                    javax.swing.JLabel icon = new javax.swing.JLabel(new javax.swing.ImageIcon(img));
+                    gridBagConstraints = new java.awt.GridBagConstraints();
+                    gridBagConstraints.gridx = 0;
+                    gridBagConstraints.gridy = offset;
+                    gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+                    gridBagConstraints.weightx = 0;
+                    gridBagConstraints.insets = new java.awt.Insets(0, 0, 2, 2);
+                    classPanel.add(icon, gridBagConstraints);
+
                     javax.swing.JCheckBox compSniff = new javax.swing.JCheckBox(sniff.getDescription());
                     this.sniffOpts.put(sniff.shortName, compSniff);
                     gridBagConstraints = new java.awt.GridBagConstraints();
                     gridBagConstraints.gridx = 1;
                     gridBagConstraints.gridy = offset;
                     gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-                    gridBagConstraints.weightx = 0.8;
+                    gridBagConstraints.weightx = 0.2;
                     gridBagConstraints.insets = new java.awt.Insets(0, 0, 2, 2);
                     classPanel.add(compSniff, gridBagConstraints);
 
@@ -417,7 +433,7 @@ public class PhpcsPanel extends GenericOptionsPanel {
                     gridBagConstraints.gridx = 2;
                     gridBagConstraints.gridy = offset;
                     gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-                    gridBagConstraints.weightx = 0.2;
+                    gridBagConstraints.weightx = 1;
                     gridBagConstraints.insets = new java.awt.Insets(0, 0, 2, 2);
                     classPanel.add(compTask, gridBagConstraints);
                     offset++;
