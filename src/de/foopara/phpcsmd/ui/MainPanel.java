@@ -18,6 +18,7 @@ public class MainPanel extends GenericOptionsPanel {
     public MainPanel() {
         initComponents();
         MainPanel.instance = this;
+        this.jScrollPane1.getVerticalScrollBar().setUnitIncrement(16);
     }
 
     /** This method is called from within the constructor to

@@ -15,6 +15,7 @@
             <file name="de-foopara-phpcsmd-annotation-phpcs-error.xml" url="nbresloc:/de/foopara/phpcsmd/resources/phpcs/error.xml"/>
 
             <file name="de-foopara-phpcsmd-annotation-phpcs-comment.xml"     url="nbresloc:/de/foopara/phpcsmd/resources/phpcs/comment.xml"/>
+            <file name="de-foopara-phpcsmd-annotation-phpcs-complex.xml"     url="nbresloc:/de/foopara/phpcsmd/resources/phpcs/complex.xml"/>
             <file name="de-foopara-phpcsmd-annotation-phpcs-forbidden.xml"   url="nbresloc:/de/foopara/phpcsmd/resources/phpcs/forbidden.xml"/>
             <file name="de-foopara-phpcsmd-annotation-phpcs-unreachable.xml" url="nbresloc:/de/foopara/phpcsmd/resources/phpcs/unreachable.xml"/>
 

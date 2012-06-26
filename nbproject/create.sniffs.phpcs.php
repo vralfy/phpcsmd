@@ -40,7 +40,7 @@ public class DynamicSniffRegistry extends GenericSniffRegistry {
     public DynamicSniffRegistry() {
 ';
 
-require_once 'inc.sniffs.description.php';
+require_once 'inc.phpcs.sniffs.description';
 
 foreach ($sniffs as $standard => $classarr) {
     foreach ($classarr as $class => $sniffarr) {

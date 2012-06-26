@@ -28,8 +28,8 @@ public class DynamicSniffRegistry extends GenericSniffRegistry {
         this.add(new PhpcsSniff("Generic.Functions.FunctionCallArgumentSpacing", null, null));
         this.add(new PhpcsSniff("Generic.Functions.OpeningFunctionBraceBsdAllman", null, null));
         this.add(new PhpcsSniff("Generic.Functions.OpeningFunctionBraceKernighanRitchie", null, null));
-        this.add(new PhpcsSniff("Generic.Metrics.CyclomaticComplexity", null, null));
-        this.add(new PhpcsSniff("Generic.Metrics.NestingLevel", null, null));
+        this.add(new PhpcsSniff("Generic.Metrics.CyclomaticComplexity", "calculate cyclomatic complexity", "complex"));
+        this.add(new PhpcsSniff("Generic.Metrics.NestingLevel", "calculate nesting level", "complex"));
         this.add(new PhpcsSniff("Generic.NamingConventions.ConstructorName", null, null));
         this.add(new PhpcsSniff("Generic.NamingConventions.UpperCaseConstantName", null, null));
         this.add(new PhpcsSniff("Generic.PHP.DeprecatedFunctions", "show deprecated functions", "forbidden"));

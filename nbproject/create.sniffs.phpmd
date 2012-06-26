@@ -1,0 +1,29 @@
+<?php
+define('LOCATION', '/data/opt/pear/data/PHP_PMD/resources/rulesets');
+function xml2array($data)
+{
+    $data = file_get_contents($data);
+    $data = preg_replace('/<\!\[CDATA\[|\]\]>/', '', $data);
+    $data = preg_replace('/<properties \/>/', '', $data);
+
+    $data = preg_replace('/<example.*<\/example>/eisU', '', $data);
+    $data = preg_replace('/<properties.*<\/properties>/eisU', '', $data);
+    $data = preg_replace('/<property.*<\/property>/eisU', '', $data);
+    return json_decode(json_encode((array) simplexml_load_string($data)));
+}
+
+$dir = opendir(LOCATION);
+while ($sniff = readdir($dir)) {
+    if (!in_array($sniff, array('.', '..'))) {
+        echo $sniff . "\n";
+        echo "++++++++++++++++++++++++++++++++++++++++++++++++++\n";
+        $rules = xml2array(LOCATION . '/' . $sniff);
+        $rules = $rules->rule;
+        foreach ($rules as $rule) {
+            $attr = '@attributes';
+            echo $rule->$attr->class . "\n";
+            echo trim($rule->description) . "\n";
+            echo "-----------\n";
+        }
+    }
+}
