@@ -62,4 +62,4 @@ foreach ($sniffs as $standard => $classarr) {
 }
 $dynamicRegistry .= '}}';
 
-file_put_contents('../src/de/foopara/phpcsmd/option/phpcs/DynamicSniffRegistry.java', $dynamicRegistry);
+file_put_contents('../src/de/foopara/phpcsmd/option/phpcs/DynamicPhpcsSniffRegistry.java', $dynamicRegistry);

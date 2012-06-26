@@ -11,6 +11,7 @@
 
     <folder name="Editors">
         <folder name="AnnotationTypes">
+            <!-- phpcs -->
             <file name="de-foopara-phpcsmd-annotation-phpcs-warning.xml" url="nbresloc:/de/foopara/phpcsmd/resources/phpcs/warning.xml"/>
             <file name="de-foopara-phpcsmd-annotation-phpcs-error.xml" url="nbresloc:/de/foopara/phpcsmd/resources/phpcs/error.xml"/>
 
@@ -19,7 +20,11 @@
             <file name="de-foopara-phpcsmd-annotation-phpcs-forbidden.xml"   url="nbresloc:/de/foopara/phpcsmd/resources/phpcs/forbidden.xml"/>
             <file name="de-foopara-phpcsmd-annotation-phpcs-unreachable.xml" url="nbresloc:/de/foopara/phpcsmd/resources/phpcs/unreachable.xml"/>
 
+            <!-- phpmd -->
+            <file name="de-foopara-phpcsmd-annotation-phpmd-complex.xml"   url="nbresloc:/de/foopara/phpcsmd/resources/phpmd/complex.xml"/>
             <file name="de-foopara-phpcsmd-annotation-phpmd-violation.xml" url="nbresloc:/de/foopara/phpcsmd/resources/phpmd/violation.xml"/>
+            
+            <!-- phpcpd -->
             <file name="de-foopara-phpcsmd-annotation-phpcpd-violation.xml" url="nbresloc:/de/foopara/phpcsmd/resources/phpcpd/violation.xml"/>
         </folder>
     </folder>

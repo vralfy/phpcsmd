@@ -1,8 +1,8 @@
 package de.foopara.phpcsmd.option.phpcs;
 
-public class DynamicSniffRegistry extends GenericSniffRegistry {
+public class DynamicPhpcsSniffRegistry extends GenericPhpcsSniffRegistry {
 
-    public DynamicSniffRegistry() {
+    public DynamicPhpcsSniffRegistry() {
         this.add(new PhpcsSniff("Generic.Classes.DuplicateClassName", null, null));
         this.add(new PhpcsSniff("Generic.CodeAnalysis.EmptyStatement", null, null));
         this.add(new PhpcsSniff("Generic.CodeAnalysis.ForLoopShouldBeWhileLoop", null, null));

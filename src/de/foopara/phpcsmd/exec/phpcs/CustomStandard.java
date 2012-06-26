@@ -1,7 +1,7 @@
 package de.foopara.phpcsmd.exec.phpcs;
 
 import de.foopara.phpcsmd.option.PhpcsOptions;
-import de.foopara.phpcsmd.option.phpcs.GenericSniffRegistry;
+import de.foopara.phpcsmd.option.phpcs.GenericPhpcsSniffRegistry;
 import de.foopara.phpcsmd.option.phpcs.PhpcsSniff;
 import java.io.File;
 import java.io.FileWriter;
@@ -23,7 +23,7 @@ public class CustomStandard {
             content.append("\t<description>PHPCSMDCUSTOM</description>\n");
             content.append("\t<rule ref=\"").append(PhpcsOptions.getStandard()).append("\" />\n\n");
 
-            for (PhpcsSniff sniff : GenericSniffRegistry.getInstance().getFlat()) {
+            for (PhpcsSniff sniff : GenericPhpcsSniffRegistry.getInstance().getFlat()) {
                 if (PhpcsOptions.getSniff(sniff.shortName)) {
                     content.append("\t<rule ref=\"").append(sniff.name).append("\" />\n");
                 }

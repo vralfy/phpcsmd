@@ -3,7 +3,7 @@ package de.foopara.phpcsmd.exec.phpcs;
 import de.foopara.phpcsmd.generics.GenericOutputReader;
 import de.foopara.phpcsmd.generics.GenericViolation;
 import de.foopara.phpcsmd.option.PhpcsOptions;
-import de.foopara.phpcsmd.option.phpcs.GenericSniffRegistry;
+import de.foopara.phpcsmd.option.phpcs.GenericPhpcsSniffRegistry;
 import de.foopara.phpcsmd.option.phpcs.PhpcsSniff;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -11,13 +11,11 @@ import java.util.List;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
-import org.openide.util.Exceptions;
 import org.w3c.dom.Document;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
-import org.xml.sax.SAXParseException;
 
 /**
  *
@@ -60,7 +58,7 @@ public class PhpcsXMLParser {
 
             boolean addNormal = true;
             if (PhpcsOptions.getExtras()) {
-                for (PhpcsSniff sniff : GenericSniffRegistry.getInstance().getFlat()) {
+                for (PhpcsSniff sniff : GenericPhpcsSniffRegistry.getInstance().getFlat()) {
                     if ((type.startsWith(sniff.name) || type.compareTo(sniff.name) == 0)
                         && PhpcsOptions.getSniff(sniff.shortName)
                         && sniff.annotationType != null

@@ -11,8 +11,8 @@ package de.foopara.phpcsmd.option.phpcs;
 public class PhpcsSniff {
 
     public String name = "";
-    public String description = "";
-    public String annotationType = "";
+    public String description = null;
+    public String annotationType = null;
     public String shortName = "";
 
     public PhpcsSniff(String name, String description, String annotationType) {

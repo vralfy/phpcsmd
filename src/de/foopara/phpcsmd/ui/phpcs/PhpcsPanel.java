@@ -2,7 +2,7 @@ package de.foopara.phpcsmd.ui.phpcs;
 
 import de.foopara.phpcsmd.generics.GenericOptionsPanel;
 import de.foopara.phpcsmd.option.PhpcsOptions;
-import de.foopara.phpcsmd.option.phpcs.GenericSniffRegistry;
+import de.foopara.phpcsmd.option.phpcs.GenericPhpcsSniffRegistry;
 import de.foopara.phpcsmd.option.phpcs.PhpcsSniff;
 import java.awt.Dimension;
 import java.awt.Toolkit;
@@ -369,13 +369,13 @@ public class PhpcsPanel extends GenericOptionsPanel {
         add(standardTab, gridBagConstraints);
 
 
-        for (String standardStr : GenericSniffRegistry.getInstance().getStandards()) {
+        for (String standardStr : GenericPhpcsSniffRegistry.getInstance().getStandards()) {
             javax.swing.JTabbedPane classTab = new javax.swing.JTabbedPane();
             classTab.setTabLayoutPolicy(javax.swing.JTabbedPane.SCROLL_TAB_LAYOUT);
             classTab.setTabPlacement(javax.swing.JTabbedPane.LEFT);
             standardTab.add(standardStr, classTab);
 
-            for(String classStr : GenericSniffRegistry.getInstance().getStandard(standardStr).getClasses()) {
+            for(String classStr : GenericPhpcsSniffRegistry.getInstance().getStandard(standardStr).getClasses()) {
                 javax.swing.JPanel classPanel = new javax.swing.JPanel();
                 javax.swing.JScrollPane scroll = new javax.swing.JScrollPane(classPanel);
                 classPanel.setLayout(new java.awt.GridBagLayout());
@@ -401,7 +401,7 @@ public class PhpcsPanel extends GenericOptionsPanel {
                 classPanel.add(labelTask, gridBagConstraints);
 
                 int offset=1;
-                for(PhpcsSniff sniff : GenericSniffRegistry.getInstance().getStandard(standardStr).getClass(classStr).getSniffs()) {
+                for(PhpcsSniff sniff : GenericPhpcsSniffRegistry.getInstance().getStandard(standardStr).getClass(classStr).getSniffs()) {
                     java.awt.Image img;
                     if (sniff.annotationType != null) {
                         img = Toolkit.getDefaultToolkit().getImage(getClass().getResource("/de/foopara/phpcsmd/resources/phpcs/" + sniff.annotationType + ".png"));

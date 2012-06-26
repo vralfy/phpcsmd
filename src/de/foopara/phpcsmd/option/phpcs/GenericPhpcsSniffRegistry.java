@@ -12,14 +12,14 @@ import java.util.LinkedHashMap;
  *
  * @author nspecht
  */
-abstract public class GenericSniffRegistry {
+abstract public class GenericPhpcsSniffRegistry {
 
-    private static GenericSniffRegistry instance = null;
-    public static GenericSniffRegistry getInstance() {
-        if (GenericSniffRegistry.instance == null) {
-            GenericSniffRegistry.instance = new DynamicSniffRegistry();
+    private static GenericPhpcsSniffRegistry instance = null;
+    public static GenericPhpcsSniffRegistry getInstance() {
+        if (GenericPhpcsSniffRegistry.instance == null) {
+            GenericPhpcsSniffRegistry.instance = new DynamicPhpcsSniffRegistry();
         }
-        return GenericSniffRegistry.instance;
+        return GenericPhpcsSniffRegistry.instance;
     }
 
     public class SniffClass {
@@ -47,7 +47,7 @@ abstract public class GenericSniffRegistry {
     }
 
     public class SniffStandard {
-        LinkedHashMap<String, GenericSniffRegistry.SniffClass> classes = new LinkedHashMap<String, GenericSniffRegistry.SniffClass>();
+        LinkedHashMap<String, GenericPhpcsSniffRegistry.SniffClass> classes = new LinkedHashMap<String, GenericPhpcsSniffRegistry.SniffClass>();
 
         public SniffClass getSniffClass(String name) {
             if (!this.classes.containsKey(name)) {
@@ -68,13 +68,13 @@ abstract public class GenericSniffRegistry {
             return this.classes.keySet();
         }
 
-        public GenericSniffRegistry.SniffClass getClass(String name) {
+        public GenericPhpcsSniffRegistry.SniffClass getClass(String name) {
             return this.classes.get(name);
         }
     }
 
 
-    LinkedHashMap<String, GenericSniffRegistry.SniffStandard> standards = new LinkedHashMap<String, GenericSniffRegistry.SniffStandard>();
+    LinkedHashMap<String, GenericPhpcsSniffRegistry.SniffStandard> standards = new LinkedHashMap<String, GenericPhpcsSniffRegistry.SniffStandard>();
 
     public void add(PhpcsSniff sniff) {
         String[] path = sniff.name.split("\\.");
@@ -97,7 +97,7 @@ abstract public class GenericSniffRegistry {
         return this.standards.keySet();
     }
 
-    public GenericSniffRegistry.SniffStandard getStandard(String name) {
+    public GenericPhpcsSniffRegistry.SniffStandard getStandard(String name) {
         return this.standards.get(name);
     }
 }

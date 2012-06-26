@@ -2,6 +2,7 @@ package de.foopara.phpcsmd.exec.phpmd;
 
 import de.foopara.phpcsmd.generics.GenericOutputReader;
 import de.foopara.phpcsmd.generics.GenericViolation;
+import de.foopara.phpcsmd.option.phpmd.GenericPhpmdSniffRegistry;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,7 +14,6 @@ import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
-import org.xml.sax.SAXParseException;
 
 /**
  *
@@ -36,17 +36,20 @@ public class PhpmdXMLParser {
                 NamedNodeMap nm = ndList.item(i).getAttributes();
                 int start = Integer.parseInt(nm.getNamedItem("beginline").getTextContent()) - 1;
                 int end = Integer.parseInt(nm.getNamedItem("endline").getTextContent()) - 1;
+                String sniffClass = nm.getNamedItem("rule").getTextContent();
+                
+                String annotationType = "violation";
+                if (GenericPhpmdSniffRegistry.getInstance().get(sniffClass) != null) {
+                    annotationType = GenericPhpmdSniffRegistry.getInstance().get(sniffClass).annotationType;
+                }
                 violations.add(
                         new GenericViolation(message, start, end)
-                        .setAnnotationType("phpmd-violation"));
+                        .setAnnotationType("phpmd-" + annotationType));
             }
-
+        } catch (SAXException ex) {
         } catch (IOException ex) {
         } catch (ParserConfigurationException ex) {
-        } catch (SAXParseException ex) {
-        } catch (SAXException ex) {
-        }
-        /**/
+        }        /**/
 
         return new PhpmdResult(null, violations, null);
     }

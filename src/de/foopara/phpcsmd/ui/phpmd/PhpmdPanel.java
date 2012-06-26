@@ -1,7 +1,9 @@
 package de.foopara.phpcsmd.ui.phpmd;
 
+import de.foopara.phpcsmd.generics.GenericHelper;
 import de.foopara.phpcsmd.generics.GenericOptionsPanel;
 import de.foopara.phpcsmd.option.PhpmdOptions;
+import de.foopara.phpcsmd.option.phpmd.GenericPhpmdSniffRegistry;
 
 /**
  *
@@ -19,6 +21,7 @@ public class PhpmdPanel extends GenericOptionsPanel {
     public PhpmdPanel() {
         initComponents();
         PhpmdPanel.instance = this;
+        this.jLabel5.setText("e.g. " + GenericHelper.implode(",", GenericPhpmdSniffRegistry.getInstance().getRulesets()));
     }
 
     /** This method is called from within the constructor to
@@ -43,6 +46,7 @@ public class PhpmdPanel extends GenericOptionsPanel {
         jLabel4 = new javax.swing.JLabel();
         optPriority = new javax.swing.JTextField();
         optStrict = new javax.swing.JCheckBox();
+        jLabel5 = new javax.swing.JLabel();
 
         setLayout(new java.awt.GridBagLayout());
 
@@ -88,7 +92,7 @@ public class PhpmdPanel extends GenericOptionsPanel {
 
         jLabel3.setText(org.openide.util.NbBundle.getMessage(PhpmdPanel.class, "PhpmdPanel.jLabel3.text")); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridy = 101;
+        gridBagConstraints.gridy = 102;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
         gridBagConstraints.insets = new java.awt.Insets(0, 0, 2, 2);
         add(jLabel3, gridBagConstraints);
@@ -96,14 +100,14 @@ public class PhpmdPanel extends GenericOptionsPanel {
         optSuffixes.setText(org.openide.util.NbBundle.getMessage(PhpmdPanel.class, "PhpmdPanel.optSuffixes.text")); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 101;
+        gridBagConstraints.gridy = 102;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.insets = new java.awt.Insets(0, 0, 2, 2);
         add(optSuffixes, gridBagConstraints);
 
         JLabel4.setText(org.openide.util.NbBundle.getMessage(PhpmdPanel.class, "PhpmdPanel.JLabel4.text")); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridy = 102;
+        gridBagConstraints.gridy = 103;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
         gridBagConstraints.insets = new java.awt.Insets(0, 0, 2, 2);
         add(JLabel4, gridBagConstraints);
@@ -111,7 +115,7 @@ public class PhpmdPanel extends GenericOptionsPanel {
         optExclude.setText(org.openide.util.NbBundle.getMessage(PhpmdPanel.class, "PhpmdPanel.optExclude.text")); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 102;
+        gridBagConstraints.gridy = 103;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.insets = new java.awt.Insets(0, 0, 2, 2);
         add(optExclude, gridBagConstraints);
@@ -119,7 +123,7 @@ public class PhpmdPanel extends GenericOptionsPanel {
         jLabel4.setText(org.openide.util.NbBundle.getMessage(PhpmdPanel.class, "PhpmdPanel.jLabel4.text")); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 103;
+        gridBagConstraints.gridy = 104;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
         gridBagConstraints.insets = new java.awt.Insets(0, 0, 2, 2);
         add(jLabel4, gridBagConstraints);
@@ -127,7 +131,7 @@ public class PhpmdPanel extends GenericOptionsPanel {
         optPriority.setText(org.openide.util.NbBundle.getMessage(PhpmdPanel.class, "PhpmdPanel.optPriority.text")); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 103;
+        gridBagConstraints.gridy = 104;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.insets = new java.awt.Insets(0, 0, 2, 2);
         add(optPriority, gridBagConstraints);
@@ -135,10 +139,18 @@ public class PhpmdPanel extends GenericOptionsPanel {
         optStrict.setText(org.openide.util.NbBundle.getMessage(PhpmdPanel.class, "PhpmdPanel.optStrict.text")); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 104;
+        gridBagConstraints.gridy = 105;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.insets = new java.awt.Insets(0, 0, 2, 2);
         add(optStrict, gridBagConstraints);
+
+        jLabel5.setText(org.openide.util.NbBundle.getMessage(PhpmdPanel.class, "PhpmdPanel.jLabel5.text")); // NOI18N
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 101;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.insets = new java.awt.Insets(0, 0, 2, 2);
+        add(jLabel5, gridBagConstraints);
     }// </editor-fold>//GEN-END:initComponents
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -147,6 +159,7 @@ public class PhpmdPanel extends GenericOptionsPanel {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JCheckBox optActive;
     private javax.swing.JTextField optExclude;
     private javax.swing.JTextField optPriority;
