@@ -12,6 +12,7 @@ public class GenericViolation extends Annotation {
     protected int _beginLine = 0;
     protected int _endLine = 0;
     protected String _annotationType = "generic";
+    protected boolean multiline = true;
 
     protected String typePrefix = "de-foopara-phpcsmd-annotation-";
 
@@ -39,7 +40,10 @@ public class GenericViolation extends Annotation {
     }
 
     public int getEndLine() {
-        return this._endLine;
+        if (this.multiline) {
+            return this._endLine;
+        }
+        return this.getBeginLine();
     }
 
     @Override
@@ -63,11 +67,17 @@ public class GenericViolation extends Annotation {
         return child;
     }
 
-    public void detachChildren() {
+    public GenericViolation detachChildren() {
         for (int i=0; i<this.children.size();i++) {
             this.children.get(i).detach();
             this.children.get(i).detachChildren();
         }
         this.children.clear();
+        return this;
+    }
+
+    public GenericViolation setMultiline(boolean multiline) {
+        this.multiline = multiline;
+        return this;
     }
 }

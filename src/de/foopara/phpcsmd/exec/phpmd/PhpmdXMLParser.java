@@ -37,14 +37,15 @@ public class PhpmdXMLParser {
                 int start = Integer.parseInt(nm.getNamedItem("beginline").getTextContent()) - 1;
                 int end = Integer.parseInt(nm.getNamedItem("endline").getTextContent()) - 1;
                 String sniffClass = nm.getNamedItem("rule").getTextContent();
-                
+
                 String annotationType = "violation";
                 if (GenericPhpmdSniffRegistry.getInstance().get(sniffClass) != null) {
                     annotationType = GenericPhpmdSniffRegistry.getInstance().get(sniffClass).annotationType;
                 }
                 violations.add(
                         new GenericViolation(message, start, end)
-                        .setAnnotationType("phpmd-" + annotationType));
+                        .setAnnotationType("phpmd-" + annotationType)
+                        .setMultiline(false));
             }
         } catch (SAXException ex) {
         } catch (IOException ex) {

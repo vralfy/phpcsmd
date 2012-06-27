@@ -1,21 +1,25 @@
 <?php
-define('LOCATION', '/usr/share/php/data/PHP_PMD/resources/rulesets');
-#define('LOCATION', '/data/opt/pear/data/PHP_PMD/resources/rulesets');
+#define('LOCATION', '/usr/share/php/data/PHP_PMD/resources/rulesets');
+define('LOCATION', '/data/opt/pear/data/PHP_PMD/resources/rulesets');
 function xml2array($data)
 {
     $data = file_get_contents($data);
-    $data = preg_replace('/<\!\[CDATA\[|\]\]>/', '', $data);
-    $data = preg_replace('/<properties \/>/', '', $data);
 
-    $data = preg_replace('/<example.*<\/example>/eisU', '', $data);
-    $data = preg_replace('/<properties.*<\/properties>/eisU', '', $data);
-    $data = preg_replace('/<property.*<\/property>/eisU', '', $data);
     $data = explode("\n", $data);
-    
     foreach ($data as &$line) {
         $line = trim($line);
     }
     $data = implode(' ', $data);
+
+    $data = preg_replace('/<\!\[CDATA\[|\]\]>/', '', $data);
+    $data = preg_replace('/<properties \/>/', '', $data);
+    $data = preg_replace('/<example \/>/', '', $data);
+
+    $data = preg_replace('/<example.*<\/example>/iU', '', $data);
+    $data = preg_replace('/<properties.*<\/properties>/iU', '', $data);
+    $data = preg_replace('/<property.*<\/property>/iU', '', $data);
+
+
 
     return json_decode(json_encode((array) simplexml_load_string($data)));
 }
@@ -41,7 +45,7 @@ while ($sniff = readdir($dir)) {
             echo "-----------\n";
 
             $type = 'null';
-            if ($sniff == 'codesize.xml') {
+            if ($sniff == 'codesize.xml' || $sniff == 'complexity.xml') {
                 $type = '"complex"';
             }
 
