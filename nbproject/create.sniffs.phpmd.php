@@ -12,6 +12,7 @@ function xml2array($data)
     $data = implode(' ', $data);
 
     $data = preg_replace('/<\!\[CDATA\[|\]\]>/', '', $data);
+    $data = preg_replace('/<property[^>]*?\/>/', '', $data);
     $data = preg_replace('/<properties \/>/', '', $data);
     $data = preg_replace('/<example \/>/', '', $data);
 
@@ -49,7 +50,7 @@ while ($sniff = readdir($dir)) {
                 $type = '"complex"';
             }
 
-            $classStr .= '        this.add(new PhpmdSniff("' . $rule->$attr->class .'", "' . trim($rule->description) . '", ' . $type . '));' . "\n";
+            $classStr .= '        this.add(new PhpmdSniff("' . $rule->$attr->name . '", "' . trim($rule->description) . '", ' . $type . '));' . "\n";
         }
     }
 }
