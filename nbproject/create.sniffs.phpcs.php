@@ -3,7 +3,7 @@
 define('LOCATION', '/data/opt/pear/share/pear/PHP/CodeSniffer/Standards');
 
 $STANDARDS = array(
-    'Generic', 'PEAR', 'Squiz', 'Zend',
+    'Generic', 'PEAR', 'Squiz', 'Zend', 'MySource'
 );
 
 function readSniffs($standard, $sniffclass, &$res) {
@@ -35,12 +35,12 @@ ksort($sniffs);
 
 $dynamicRegistry = 'package de.foopara.phpcsmd.option.phpcs;
 
-public class DynamicSniffRegistry extends GenericSniffRegistry {
+public class DynamicPhpcsSniffRegistry extends GenericPhpcsSniffRegistry {
 
-    public DynamicSniffRegistry() {
+    public DynamicPhpcsSniffRegistry() {
 ';
 
-require_once 'inc.phpcs.sniffs.description';
+require_once 'inc.phpcs.sniffs.description.php';
 
 foreach ($sniffs as $standard => $classarr) {
     foreach ($classarr as $class => $sniffarr) {
