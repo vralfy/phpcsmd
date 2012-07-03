@@ -93,7 +93,7 @@ public class PHPCSMD extends CookieAction {
         if (dataObj == null) {
             return null;
         }
-        fileObj = (FileObject) dataObj.getPrimaryFile();
+        fileObj = dataObj.getPrimaryFile();
         if (fileObj != null && fileObj.isValid()) {
             return fileObj;
         }

@@ -47,7 +47,7 @@ public class DynamicPhpcsSniffRegistry extends GenericPhpcsSniffRegistry {
         this.add(new PhpcsSniff("MySource.Channels.DisallowSelfActions", null, null));
         this.add(new PhpcsSniff("MySource.Channels.IncludeSystem", null, null));
         this.add(new PhpcsSniff("MySource.Channels.UnusedSystem", null, null));
-        this.add(new PhpcsSniff("MySource.Commenting.FunctionComment", null, null));
+        this.add(new PhpcsSniff("MySource.Commenting.FunctionComment", "analyse function comments", "comment"));
         this.add(new PhpcsSniff("MySource.Debug.DebugCode", null, null));
         this.add(new PhpcsSniff("MySource.Debug.FirebugConsole", null, null));
         this.add(new PhpcsSniff("MySource.Objects.AssignThis", null, null));
@@ -106,7 +106,7 @@ public class DynamicPhpcsSniffRegistry extends GenericPhpcsSniffRegistry {
         this.add(new PhpcsSniff("Squiz.Commenting.EmptyCatchComment", "analyse comments in empty catch clause", "comment"));
         this.add(new PhpcsSniff("Squiz.Commenting.FileComment", "analyse file comments", "comment"));
         this.add(new PhpcsSniff("Squiz.Commenting.FunctionComment", "analyse function comments", "comment"));
-        this.add(new PhpcsSniff("Squiz.Commenting.FunctionCommentThrowTag", null, null));
+        this.add(new PhpcsSniff("Squiz.Commenting.FunctionCommentThrowTag", "force @throws tags at Exception throwing Functions", "comment"));
         this.add(new PhpcsSniff("Squiz.Commenting.InlineComment", "analyse inline comments", "comment"));
         this.add(new PhpcsSniff("Squiz.Commenting.LongConditionClosingComment", "force comments at the end of long conditions", "comment"));
         this.add(new PhpcsSniff("Squiz.Commenting.PostStatementComment", "analyse comments after statements", "comment"));

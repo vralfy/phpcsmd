@@ -21,14 +21,17 @@ public class CustomStandard {
             content.append("<?xml version=\"1.0\"?>\n");
             content.append("<ruleset name=\"PhpcsmdCustom\">\n");
             content.append("\t<description>PHPCSMDCUSTOM</description>\n");
-            content.append("\t<rule ref=\"").append(PhpcsOptions.getStandard()).append("\" />\n\n");
+
+            if (PhpcsOptions.getStandard().trim().length() > 0) {
+                content.append("\t<rule ref=\"").append(PhpcsOptions.getStandard()).append("\" />\n\n");
+            }
 
             for (PhpcsSniff sniff : GenericPhpcsSniffRegistry.getInstance().getFlat()) {
                 if (PhpcsOptions.getSniff(sniff.shortName)) {
                     content.append("\t<rule ref=\"").append(sniff.name).append("\" />\n");
                 }
             }
-            
+
             content.append("</ruleset>");
 
             FileWriter f = new FileWriter(this._ruleset);

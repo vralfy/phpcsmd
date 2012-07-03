@@ -33,7 +33,7 @@ public class Phpcs extends GenericExecute {
 
         CustomStandard cstandard = null;
         StringBuilder cmd = new StringBuilder(PhpcsOptions.getScript());
-        if (PhpcsOptions.getExtras()) {
+        if (PhpcsOptions.getExtras() || PhpcsOptions.getStandard().trim().length() == 0) {
             cstandard = new CustomStandard();
             this.appendArgument(cmd, "--standard=", cstandard.toString());
         } else {

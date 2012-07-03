@@ -15,18 +15,20 @@ public class PdependTreeNode extends DefaultMutableTreeNode {
         super(o);
     }
 
-    protected Comparator nodeComparator = new Comparator() {
+    protected class NodeComparator implements Comparator<PdependTreeNode> {
         @Override
-        public int compare(Object o1, Object o2) {
+        public int compare(PdependTreeNode o1, PdependTreeNode o2) {
             if (o1 == null || o1.toString() == null) {return -1;}
             if (o2 == null || o2.toString() == null) {return  1;}
             return o1.toString().compareToIgnoreCase(o2.toString());
         }
-    };
+    }
+
+    protected NodeComparator nodeComparator = new NodeComparator();
 
     @Override
     public void insert(MutableTreeNode newChild, int childIndex) {
         super.insert(newChild, childIndex);
-        Collections.sort(this.children, this.nodeComparator);
+        Collections.<PdependTreeNode>sort(this.children, this.nodeComparator);
     }
 }
