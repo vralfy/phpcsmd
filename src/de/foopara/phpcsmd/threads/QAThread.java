@@ -12,8 +12,10 @@ import de.foopara.phpcsmd.option.GeneralOptions;
 import de.foopara.phpcsmd.option.PhpcpdOptions;
 import de.foopara.phpcsmd.option.PhpcsOptions;
 import de.foopara.phpcsmd.option.PhpmdOptions;
+import java.io.IOException;
 import java.util.ArrayList;
 import org.openide.filesystems.FileObject;
+import org.openide.filesystems.FileUtil;
 import org.openide.util.Exceptions;
 
 /**
@@ -71,45 +73,49 @@ public class QAThread extends Thread {
     }
 
     public void qarun() {
-        if (!GenericHelper.isDesirableFile(this.fo)) {
-            return;
-        }
-
-        for (QAThread t : QAThread.instances) {
-            if (t.isThreadFor(this.fo)) {
-                t.interupt();
+        try {
+            if (!GenericHelper.isDesirableFile(this.fo) || GenericHelper.isSymlink(FileUtil.toFile(this.fo))) {
+                return;
             }
-            while (QAThread.instances.lastIndexOf(this) > 0) {
+
+            for (QAThread t : QAThread.instances) {
+                if (t.isThreadFor(this.fo)) {
+                    t.interupt();
+                }
+                while (QAThread.instances.lastIndexOf(this) > 0) {
+                }
             }
-        }
 
-        QAThread.instances.add(this);
-        if (!this.interupted && this.enablePhpcs) {
-            new Phpcs().execute(this.fo);
-        }
-        if (!this.interupted && this.enablePhpmd) {
-            new Phpmd().execute(this.fo);
-        }
-        if (!this.interupted && this.enablePhpcpd) {
-            new Phpcpd().execute(this.fo);
-        }
+            QAThread.instances.add(this);
+            if (!this.interupted && this.enablePhpcs) {
+                new Phpcs().execute(this.fo);
+            }
+            if (!this.interupted && this.enablePhpmd) {
+                new Phpmd().execute(this.fo);
+            }
+            if (!this.interupted && this.enablePhpcpd) {
+                new Phpcpd().execute(this.fo);
+            }
 
 
-        if (!this.interupted) {
-            GenericAnnotationBuilder.updateAnnotations(this.fo);
-        }
-        if (!this.interupted) {
-            GenericNotification.displayNotification(this.fo);
-        }
-        if (!this.interupted) {
-            ViolationRegistry.getInstance().reprintTasks(this.fo);
-        }
+            if (!this.interupted) {
+                GenericAnnotationBuilder.updateAnnotations(this.fo);
+            }
+            if (!this.interupted) {
+                GenericNotification.displayNotification(this.fo);
+            }
+            if (!this.interupted) {
+                ViolationRegistry.getInstance().reprintTasks(this.fo);
+            }
 
-        if (!this.interupted && this.poke) {
-            GenericPokeRegistry.getInstance().poke(this.fo);
-        }
+            if (!this.interupted && this.poke) {
+                GenericPokeRegistry.getInstance().poke(this.fo);
+            }
 
-        QAThread.instances.remove(this);
+            QAThread.instances.remove(this);
+        } catch (IOException ex) {
+            Exceptions.printStackTrace(ex);
+        }
     }
 
     public void interupt() {

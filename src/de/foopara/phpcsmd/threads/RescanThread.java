@@ -8,9 +8,11 @@ import de.foopara.phpcsmd.option.PhpcsOptions;
 import de.foopara.phpcsmd.option.PhpmdOptions;
 import de.foopara.phpcsmd.ui.reports.ScanReportTopComponent;
 import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
 import org.openide.filesystems.FileObject;
 import org.openide.filesystems.FileUtil;
+import org.openide.util.Exceptions;
 
 /**
  *
@@ -70,24 +72,28 @@ public class RescanThread extends Thread {
             fc = 0;
         }
         for (FileObject f2 : f.getChildren()) {
-            if (GenericHelper.isDesirableFile(f2)) {
-                fc += 1;
-                if (!this.retrieveValuesFromRegistry) {
-                    QAThread qa = new QAThread();
-                    qa.enablePhpcs(this.enablePhpcs);
-                    qa.enablePhpmd(this.enablePhpmd);
-                    qa.enablePhpcpd(this.enablePhpcpd);
-                    if (PhpcpdOptions.getActivatedFolder()) {
-                        qa.enablePhpcpd(false);
+            try {
+                if (GenericHelper.isDesirableFile(f2) && !GenericHelper.isSymlink(FileUtil.toFile(f2))) {
+                    fc += 1;
+                    if (!this.retrieveValuesFromRegistry) {
+                        QAThread qa = new QAThread();
+                        qa.enablePhpcs(this.enablePhpcs);
+                        qa.enablePhpmd(this.enablePhpmd);
+                        qa.enablePhpcpd(this.enablePhpcpd);
+                        if (PhpcpdOptions.getActivatedFolder()) {
+                            qa.enablePhpcpd(false);
+                        }
+                        qa.setFileObject(f2);
+                        qa.setPoking(false);
+                        qa.run();
                     }
-                    qa.setFileObject(f2);
-                    qa.setPoking(false);
-                    qa.run();
+                    this.component.setScannedFilecount(fc);
+                    this.component.addElementToTable(f2);
+                } else if (f2.isFolder() && !GenericHelper.isSymlink(FileUtil.toFile(f2))) {
+                    fc = this.count(f2, fc);
                 }
-                this.component.setScannedFilecount(fc);
-                this.component.addElementToTable(f2);
-            } else if (f2.isFolder()) {
-                fc = this.count(f2, fc);
+            } catch (IOException ex) {
+                Exceptions.printStackTrace(ex);
             }
         }
         if (GenericHelper.isDesirableFolder(f) && firstRun && PhpcpdOptions.getActivatedFolder() && this.enablePhpcpd) {

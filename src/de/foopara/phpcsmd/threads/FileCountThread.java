@@ -3,8 +3,10 @@ package de.foopara.phpcsmd.threads;
 import de.foopara.phpcsmd.generics.GenericHelper;
 import de.foopara.phpcsmd.ui.reports.ScanReportTopComponent;
 import java.io.File;
+import java.io.IOException;
 import org.openide.filesystems.FileObject;
 import org.openide.filesystems.FileUtil;
+import org.openide.util.Exceptions;
 
 /**
  *
@@ -40,11 +42,15 @@ public class FileCountThread extends Thread {
 
     private int count(File f, int fc) {
         for (File f2 : f.listFiles()) {
-            if (GenericHelper.isDesirableFile(f2)) {
-                fc += 1;
-                this.component.setMaximumFilecount(fc);
-            } else if (f2.isDirectory()) {
-                fc = this.count(f2, fc);
+            try {
+                if (GenericHelper.isDesirableFile(f2) && !GenericHelper.isSymlink(f2)) {
+                    fc += 1;
+                    this.component.setMaximumFilecount(fc);
+                } else if (f2.isDirectory() && !GenericHelper.isSymlink(f2)) {
+                    fc = this.count(f2, fc);
+                }
+            } catch (IOException ex) {
+                Exceptions.printStackTrace(ex);
             }
         }
         return fc;
