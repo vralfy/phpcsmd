@@ -39,7 +39,9 @@ public class PhpmdXMLParser {
                 String sniffClass = nm.getNamedItem("rule").getTextContent();
 
                 String annotationType = "violation";
-                if (GenericPhpmdSniffRegistry.getInstance().get(sniffClass) != null) {
+                if (GenericPhpmdSniffRegistry.getInstance().get(sniffClass) != null
+                    && GenericPhpmdSniffRegistry.getInstance().get(sniffClass).annotationType != null
+                ) {
                     annotationType = GenericPhpmdSniffRegistry.getInstance().get(sniffClass).annotationType;
                 }
                 violations.add(
