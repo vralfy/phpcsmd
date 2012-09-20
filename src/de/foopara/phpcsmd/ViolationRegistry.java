@@ -99,6 +99,12 @@ public class ViolationRegistry {
     }
 
     public void setCallback(FileObject fo, Callback clbk) {
+        if (fo == null) {
+            return;
+        }
+        if (clbk == null) {
+            return;
+        }
         this.callbacks.put(fo.getPath(), clbk);
     }
 
@@ -110,6 +116,15 @@ public class ViolationRegistry {
     }
 
     private void put(FileObject fo, GenericResult res, LinkedHashMap<String, GenericResult> list) {
+        if (fo == null) {
+            return;
+        }
+        if (res == null) {
+            return;
+        }
+        if (list == null) {
+            return;
+        }
         //Detach old result
         if (list.containsKey(fo.getPath())) {
             GenericResult oldres = list.get(fo.getPath());
@@ -195,6 +210,17 @@ public class ViolationRegistry {
             FileObject fo,
             ArrayList<Task> dst,
             LinkedHashMap<String, GenericResult> registry) {
+
+        if (registry == null) {
+            return;
+        }
+        if (fo == null) {
+            return;
+        }
+        if (dst == null) {
+            return;
+        }
+
         if (registry.containsKey(fo.getPath())) {
             for (GenericViolation res : registry.get(fo.getPath()).getWarnings()) {
                 dst.add(
@@ -217,6 +243,9 @@ public class ViolationRegistry {
     }
 
     public void removeFile(FileObject fo) {
+        if (fo == null) {
+            return;
+        }
         //remove violations
         this.put(fo, new GenericResult(null, null, null), phpcs);
         this.put(fo, new GenericResult(null, null, null), phpmd);
