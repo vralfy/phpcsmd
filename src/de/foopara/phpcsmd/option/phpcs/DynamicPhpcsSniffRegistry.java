@@ -18,6 +18,7 @@ public class DynamicPhpcsSniffRegistry extends GenericPhpcsSniffRegistry {
         this.add(new PhpcsSniff("Generic.Debug.ClosureLinter", null, null));
         this.add(new PhpcsSniff("Generic.Debug.JSHint", null, null));
         this.add(new PhpcsSniff("Generic.Files.ByteOrderMark", null, null));
+        this.add(new PhpcsSniff("Generic.Files.EndFileNewline", null, null));
         this.add(new PhpcsSniff("Generic.Files.LineEndings", null, null));
         this.add(new PhpcsSniff("Generic.Files.LineLength", null, null));
         this.add(new PhpcsSniff("Generic.Formatting.DisallowMultipleStatements", null, null));
@@ -30,6 +31,7 @@ public class DynamicPhpcsSniffRegistry extends GenericPhpcsSniffRegistry {
         this.add(new PhpcsSniff("Generic.Functions.OpeningFunctionBraceKernighanRitchie", null, null));
         this.add(new PhpcsSniff("Generic.Metrics.CyclomaticComplexity", "calculate cyclomatic complexity", "complex"));
         this.add(new PhpcsSniff("Generic.Metrics.NestingLevel", "calculate nesting level", "complex"));
+        this.add(new PhpcsSniff("Generic.NamingConventions.CamelCapsFunctionName", null, null));
         this.add(new PhpcsSniff("Generic.NamingConventions.ConstructorName", null, null));
         this.add(new PhpcsSniff("Generic.NamingConventions.UpperCaseConstantName", null, null));
         this.add(new PhpcsSniff("Generic.PHP.DeprecatedFunctions", "show deprecated functions", "forbidden"));
