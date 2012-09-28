@@ -29,6 +29,19 @@ public class CustomStandard {
             for (PhpcsSniff sniff : GenericPhpcsSniffRegistry.getInstance().getFlat()) {
                 if (PhpcsOptions.getSniff(sniff.shortName)) {
                     content.append("\t<rule ref=\"").append(sniff.name).append("\" />\n");
+                    if (sniff.getKeyCount() > 1) {
+                        for(String sniffKey : sniff.getKeys().keySet()) {
+                            if (PhpcsOptions.getSniff(sniffKey)) {
+                                content.append("\t<rule ref=\"")
+                                        .append(sniff.name)
+                                        .append(".")
+                                        .append(sniff.getKeys().get(sniffKey))
+                                        .append("\">\n")
+                                        .append("\t\t<severity>0</severity>\n")
+                                        .append("\t</rule>\n");
+                            }
+                        }
+                    }
                 }
             }
 
@@ -38,6 +51,7 @@ public class CustomStandard {
             f.write(content.toString());
             f.flush();
             f.close();
+            System.out.println(content.toString());
         } catch (IOException ex) {
             Exceptions.printStackTrace(ex);
         }

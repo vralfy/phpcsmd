@@ -26,6 +26,7 @@ $DESCRIPTIONS = array(
     'Squiz.Commenting.VariableComment'             => 'analyse variable comments',
     'Squiz.PHP.DiscouragedFunctions'               => 'highlight discouraged functions',
     'Squiz.PHP.Eval'                               => 'highlight eval expressions',
+    'Squiz.PHP.ForbiddenFunctions'                 => 'highlight forbidden functions',
     'Squiz.PHP.NonExecutableCode'                  => 'show unreachable code',
 );
 
@@ -55,6 +56,6 @@ $ANNOTATIONS = array(
     'Squiz.Commenting.VariableComment'             => 'comment',
     'Squiz.PHP.DiscouragedFunctions'               => 'forbidden',
     'Squiz.PHP.Eval'                               => 'forbidden',
+    'Squiz.PHP.ForbiddenFunctions'                 => 'forbidden',
     'Squiz.PHP.NonExecutableCode'                  => 'unreachable',
 );
-

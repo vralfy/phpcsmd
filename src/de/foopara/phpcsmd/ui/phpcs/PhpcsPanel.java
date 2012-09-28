@@ -358,7 +358,21 @@ public class PhpcsPanel extends GenericOptionsPanel {
         java.awt.GridBagConstraints gridBagConstraints;
 
         javax.swing.JTabbedPane standardTab = new javax.swing.JTabbedPane();
-        standardTab.setTabLayoutPolicy(javax.swing.JTabbedPane.SCROLL_TAB_LAYOUT);
+        standardTab.setTabLayoutPolicy(javax.swing.JTabbedPane.WRAP_TAB_LAYOUT);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.weighty = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(0, 0, 0, 0);
+
+        javax.swing.JPanel standardPanel = new javax.swing.JPanel();
+        standardPanel.setLayout(new java.awt.GridBagLayout());
+        standardPanel.add(standardTab, gridBagConstraints);
+        standardPanel.setMinimumSize(new Dimension(-1,200));
+        standardPanel.setMaximumSize(new Dimension(-1,400));
+        standardPanel.setPreferredSize(new Dimension(-1,400));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 301;
@@ -366,7 +380,7 @@ public class PhpcsPanel extends GenericOptionsPanel {
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.insets = new java.awt.Insets(0, 0, 2, 2);
-        add(standardTab, gridBagConstraints);
+        add(standardPanel, gridBagConstraints);
 
 
         for (String standardStr : GenericPhpcsSniffRegistry.getInstance().getStandards()) {
@@ -437,6 +451,21 @@ public class PhpcsPanel extends GenericOptionsPanel {
                     gridBagConstraints.insets = new java.awt.Insets(0, 0, 2, 2);
                     classPanel.add(compTask, gridBagConstraints);
                     offset++;
+
+                    if (sniff.getKeyCount() > 1) {
+                        for (String sniffKey : sniff.getKeys().keySet()) {
+                            javax.swing.JCheckBox compSniffKey = new javax.swing.JCheckBox("ignore " + sniff.getKeys().get(sniffKey));
+                            this.sniffOpts.put(sniffKey, compSniffKey);
+                            gridBagConstraints = new java.awt.GridBagConstraints();
+                            gridBagConstraints.gridx = 1;
+                            gridBagConstraints.gridy = offset;
+                            gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+                            gridBagConstraints.weightx = 0.2;
+                            gridBagConstraints.insets = new java.awt.Insets(0, 20, 2, 2);
+                            classPanel.add(compSniffKey, gridBagConstraints);
+                            offset++;
+                        }
+                    }
                 }
             }
         }
