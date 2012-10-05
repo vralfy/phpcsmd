@@ -57,8 +57,8 @@ public class Phpcs extends GenericExecute {
 
         cmd.append(" --report=xml");
         cmd.append(" ").append(file.getPath());
-        Logger.getInstance().log(cmd.toString());
-        
+        Logger.getInstance().logPre(cmd.toString(),"phpcs command");
+
         /*
         ExternalProcessBuilder epb = new ExternalProcessBuilder(PhpcsOptions.getScript());
         epb.workingDirectory(root);

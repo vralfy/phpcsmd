@@ -55,7 +55,7 @@ public class Pdepend {
         }
 
         cmd.append(" ").append(file.getPath());
-        Logger.getInstance().log(cmd.toString());
+        Logger.getInstance().logPre(cmd.toString(), "pdepend command");
 
         PdependParser parser = new PdependParser();
 

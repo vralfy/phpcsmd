@@ -16,7 +16,7 @@ public class GenericOutputReader implements InputProcessor, ExecutionDescriptor.
     private StringBuilder output = new StringBuilder();
 
     public GenericOutputReader(StringBuilder s) {
-        Logger.getInstance().logPre("Output", s.toString());
+        Logger.getInstance().logPre(s.toString(), "Output");
         this.output.append(s);
     }
 

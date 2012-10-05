@@ -55,8 +55,8 @@ public class Phpcpd extends GenericExecute {
             updateDependencies = true;
             cmd.append(" ").append(fo.getPath());
         }
-        Logger.getInstance().log(cmd.toString());
-        
+        Logger.getInstance().logPre(cmd.toString(), "php-cpd command");
+
         PhpcpdParser parser = new PhpcpdParser();
         if (!iAmAlive()) return this.setAndReturnCurrent(file);
         GenericOutputReader[] reader = GenericProcess.run(cmd.toString(), "", null);

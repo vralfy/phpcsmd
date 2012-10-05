@@ -30,7 +30,7 @@ public class PhpcpdParser extends GenericPhpcpdParser {
             while (r.read(tmp) > 0) {
                 buf.append(tmp);
             }
-            Logger.getInstance().logPre("Phpcpd output", buf.toString());
+            Logger.getInstance().logPre(buf.toString(), "Phpcpd output");
             String[] sections = buf.toString().trim().split("\n\n");
             if (sections.length < 3) {
                 return new PhpcpdResult(null, null, null);

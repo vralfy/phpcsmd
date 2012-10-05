@@ -43,8 +43,8 @@ public class Phpmd extends GenericExecute {
         if (PhpmdOptions.getStrict()) {
             cmd.append(" --strict");
         }
-        Logger.getInstance().log(cmd.toString());
-        
+        Logger.getInstance().logPre(cmd.toString(), "pmd command");
+
         PhpmdXMLParser parser = new PhpmdXMLParser();
         if (!iAmAlive()) return this.setAndReturnCurrent(file);
         GenericOutputReader[] reader = GenericProcess.run(cmd.toString(), "", null);
