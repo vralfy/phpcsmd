@@ -1,5 +1,6 @@
 package de.foopara.phpcsmd.exec.pdepend;
 
+import de.foopara.phpcsmd.debug.Logger;
 import de.foopara.phpcsmd.generics.GenericHelper;
 import de.foopara.phpcsmd.generics.GenericOutputReader;
 import de.foopara.phpcsmd.generics.GenericProcess;
@@ -54,6 +55,7 @@ public class Pdepend {
         }
 
         cmd.append(" ").append(file.getPath());
+        Logger.getInstance().log(cmd.toString());
 
         PdependParser parser = new PdependParser();
 

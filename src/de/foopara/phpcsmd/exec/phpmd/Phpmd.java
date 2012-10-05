@@ -1,6 +1,7 @@
 package de.foopara.phpcsmd.exec.phpmd;
 
 import de.foopara.phpcsmd.ViolationRegistry;
+import de.foopara.phpcsmd.debug.Logger;
 import de.foopara.phpcsmd.generics.*;
 import de.foopara.phpcsmd.option.PhpmdOptions;
 import java.io.File;
@@ -42,7 +43,8 @@ public class Phpmd extends GenericExecute {
         if (PhpmdOptions.getStrict()) {
             cmd.append(" --strict");
         }
-
+        Logger.getInstance().log(cmd.toString());
+        
         PhpmdXMLParser parser = new PhpmdXMLParser();
         if (!iAmAlive()) return this.setAndReturnCurrent(file);
         GenericOutputReader[] reader = GenericProcess.run(cmd.toString(), "", null);

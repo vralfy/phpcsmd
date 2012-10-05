@@ -1,5 +1,6 @@
 package de.foopara.phpcsmd.exec.phpcs;
 
+import de.foopara.phpcsmd.debug.Logger;
 import de.foopara.phpcsmd.generics.GenericOutputReader;
 import de.foopara.phpcsmd.generics.GenericViolation;
 import de.foopara.phpcsmd.option.PhpcsOptions;
@@ -42,8 +43,13 @@ public class PhpcsXMLParser {
             ndList = document.getElementsByTagName("error");
             this.parseList(ndList, csErrors, csExtras, "error");
         } catch (SAXException ex) {
+            Logger.getInstance().log(ex);
         } catch (ParserConfigurationException ex) {
+            Logger.getInstance().log(ex);
         } catch (IOException ex) {
+            Logger.getInstance().log(ex);
+        } catch (Exception ex) {
+            Logger.getInstance().log(ex);
         }
 
         return new PhpcsResult(csWarnings, csErrors, csExtras);

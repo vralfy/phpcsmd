@@ -1,6 +1,7 @@
 package de.foopara.phpcsmd.threads;
 
 import de.foopara.phpcsmd.ViolationRegistry;
+import de.foopara.phpcsmd.debug.Logger;
 import de.foopara.phpcsmd.exec.phpcpd.Phpcpd;
 import de.foopara.phpcsmd.exec.phpcs.Phpcs;
 import de.foopara.phpcsmd.exec.phpmd.Phpmd;
@@ -67,6 +68,7 @@ public class QAThread extends Thread {
 //        try {
 //            this.join(GeneralOptions.getTimeout());
 //        } catch (InterruptedException ex) {
+//            Logger.getInstance().log(ex);
 //            Exceptions.printStackTrace(ex);
 //        }
         this.qarun();
@@ -114,6 +116,7 @@ public class QAThread extends Thread {
 
             QAThread.instances.remove(this);
         } catch (IOException ex) {
+            Logger.getInstance().log(ex);
             Exceptions.printStackTrace(ex);
         }
     }

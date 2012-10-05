@@ -1,5 +1,6 @@
 package de.foopara.phpcsmd.threads;
 
+import de.foopara.phpcsmd.debug.Logger;
 import de.foopara.phpcsmd.generics.GenericHelper;
 import de.foopara.phpcsmd.ui.reports.ScanReportTopComponent;
 import java.io.File;
@@ -50,6 +51,7 @@ public class FileCountThread extends Thread {
                     fc = this.count(f2, fc);
                 }
             } catch (IOException ex) {
+                Logger.getInstance().log(ex);
                 Exceptions.printStackTrace(ex);
             }
         }

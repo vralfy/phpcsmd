@@ -1,6 +1,7 @@
 package de.foopara.phpcsmd.exec.phpcpd;
 
 import de.foopara.phpcsmd.ViolationRegistry;
+import de.foopara.phpcsmd.debug.Logger;
 import de.foopara.phpcsmd.generics.GenericOutputReader;
 import de.foopara.phpcsmd.generics.GenericViolation;
 import java.io.File;
@@ -98,6 +99,7 @@ public class PhpcpdFolderParser extends GenericPhpcpdParser {
                 }
             }
         } catch (IOException ex) {
+            Logger.getInstance().log(ex);
             Exceptions.printStackTrace(ex);
         }
 

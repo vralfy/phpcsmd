@@ -1,5 +1,6 @@
 package de.foopara.phpcsmd.generics;
 
+import de.foopara.phpcsmd.debug.Logger;
 import java.io.CharArrayReader;
 import java.io.IOException;
 import java.io.Reader;
@@ -15,6 +16,7 @@ public class GenericOutputReader implements InputProcessor, ExecutionDescriptor.
     private StringBuilder output = new StringBuilder();
 
     public GenericOutputReader(StringBuilder s) {
+        Logger.getInstance().logPre("Output", s.toString());
         this.output.append(s);
     }
 

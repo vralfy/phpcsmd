@@ -1,6 +1,7 @@
 package de.foopara.phpcsmd.exec.phpcpd;
 
 import de.foopara.phpcsmd.ViolationRegistry;
+import de.foopara.phpcsmd.debug.Logger;
 import de.foopara.phpcsmd.generics.*;
 import de.foopara.phpcsmd.option.PhpcpdOptions;
 import java.io.File;
@@ -54,7 +55,8 @@ public class Phpcpd extends GenericExecute {
             updateDependencies = true;
             cmd.append(" ").append(fo.getPath());
         }
-
+        Logger.getInstance().log(cmd.toString());
+        
         PhpcpdParser parser = new PhpcpdParser();
         if (!iAmAlive()) return this.setAndReturnCurrent(file);
         GenericOutputReader[] reader = GenericProcess.run(cmd.toString(), "", null);

@@ -1,5 +1,6 @@
 package de.foopara.phpcsmd.ui.reports;
 
+import de.foopara.phpcsmd.debug.Logger;
 import de.foopara.phpcsmd.exec.pdepend.PdependResult;
 import de.foopara.phpcsmd.exec.pdepend.PdependTypes;
 import de.foopara.phpcsmd.generics.GenericHelper;
@@ -367,6 +368,7 @@ public final class PdependReportTopComponent extends GenericTopComponent {
                 oc.open();
             }
         } catch (DataObjectNotFoundException ex) {
+            Logger.getInstance().log(ex);
             Exceptions.printStackTrace(ex);
         }
     }

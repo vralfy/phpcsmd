@@ -1,5 +1,6 @@
 package de.foopara.phpcsmd.exec.phpcs;
 
+import de.foopara.phpcsmd.debug.Logger;
 import de.foopara.phpcsmd.option.PhpcsOptions;
 import de.foopara.phpcsmd.option.phpcs.GenericPhpcsSniffRegistry;
 import de.foopara.phpcsmd.option.phpcs.PhpcsSniff;
@@ -53,6 +54,7 @@ public class CustomStandard {
             f.close();
             System.out.println(content.toString());
         } catch (IOException ex) {
+            Logger.getInstance().log(ex);
             Exceptions.printStackTrace(ex);
         }
     }

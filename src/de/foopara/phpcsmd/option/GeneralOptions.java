@@ -24,6 +24,9 @@ public class GeneralOptions {
     private static final String _IGNORE_PATTERN          = "ignorepattern";
     private static final String _IGNORE_PATTERN_DEFAULT  = "\\.svn|\\.git";
 
+    private static final String _DEBUG_LOG               = "debuglog";
+    private static final String _DEBUG_LOG_DEFAULT       = "false";
+
     private static final String _TIMEOUT                 = "timeout";
     private static final String _TIMEOUT_DEFAULT         = "5000";
 
@@ -62,6 +65,14 @@ public class GeneralOptions {
 
     public static void setIgnorePattern(String ignorePattern) {
         GeneralOptions._modul().put(_PREFIX + _IGNORE_PATTERN, ignorePattern);
+    }
+
+    public static boolean getDebugLog() {
+        return (GeneralOptions._modul().get(_PREFIX + _DEBUG_LOG, _DEBUG_LOG_DEFAULT).compareTo("true") == 0);
+    }
+
+    public static void setDebugLog(boolean debuglog) {
+        GeneralOptions._modul().put(_PREFIX + _DEBUG_LOG, debuglog ? "true" : "false");
     }
 
     public static Integer getTimeout() {

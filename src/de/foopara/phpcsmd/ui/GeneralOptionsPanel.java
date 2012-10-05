@@ -1,7 +1,11 @@
 package de.foopara.phpcsmd.ui;
 
+import de.foopara.phpcsmd.debug.Logger;
 import de.foopara.phpcsmd.generics.GenericOptionsPanel;
 import de.foopara.phpcsmd.option.GeneralOptions;
+import java.awt.Color;
+import javax.swing.text.BadLocationException;
+import org.openide.util.Exceptions;
 
 /**
  *
@@ -34,6 +38,9 @@ public class GeneralOptionsPanel extends GenericOptionsPanel {
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         optTimeout = new javax.swing.JSpinner();
+        optDebug = new javax.swing.JCheckBox();
+        jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
 
         setLayout(new java.awt.GridBagLayout());
 
@@ -44,7 +51,7 @@ public class GeneralOptionsPanel extends GenericOptionsPanel {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 1;
-        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.gridwidth = 4;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.insets = new java.awt.Insets(0, 0, 2, 2);
@@ -54,7 +61,9 @@ public class GeneralOptionsPanel extends GenericOptionsPanel {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 2;
+        gridBagConstraints.gridwidth = 3;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.weightx = 1.0;
         gridBagConstraints.insets = new java.awt.Insets(0, 0, 2, 2);
         add(optThread, gridBagConstraints);
 
@@ -62,7 +71,9 @@ public class GeneralOptionsPanel extends GenericOptionsPanel {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 3;
+        gridBagConstraints.gridwidth = 3;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.weightx = 1.0;
         gridBagConstraints.insets = new java.awt.Insets(0, 0, 2, 2);
         add(optUpdateOnSave, gridBagConstraints);
 
@@ -70,7 +81,9 @@ public class GeneralOptionsPanel extends GenericOptionsPanel {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 4;
+        gridBagConstraints.gridwidth = 3;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.weightx = 1.0;
         gridBagConstraints.insets = new java.awt.Insets(0, 0, 2, 2);
         add(optNotify, gridBagConstraints);
 
@@ -78,7 +91,9 @@ public class GeneralOptionsPanel extends GenericOptionsPanel {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 5;
+        gridBagConstraints.gridwidth = 3;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.weightx = 1.0;
         gridBagConstraints.insets = new java.awt.Insets(0, 0, 2, 2);
         add(optIgnorePattern, gridBagConstraints);
 
@@ -93,7 +108,7 @@ public class GeneralOptionsPanel extends GenericOptionsPanel {
         jLabel3.setText(org.openide.util.NbBundle.getMessage(GeneralOptionsPanel.class, "GeneralOptionsPanel.jLabel3.text")); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 6;
+        gridBagConstraints.gridy = 10;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
         gridBagConstraints.insets = new java.awt.Insets(0, 0, 2, 2);
         add(jLabel3, gridBagConstraints);
@@ -101,16 +116,76 @@ public class GeneralOptionsPanel extends GenericOptionsPanel {
         optTimeout.setModel(new javax.swing.SpinnerNumberModel(Integer.valueOf(1), Integer.valueOf(1), null, Integer.valueOf(1)));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 6;
+        gridBagConstraints.gridy = 10;
+        gridBagConstraints.gridwidth = 3;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.weightx = 1.0;
         gridBagConstraints.insets = new java.awt.Insets(0, 0, 2, 2);
         add(optTimeout, gridBagConstraints);
+
+        optDebug.setText(org.openide.util.NbBundle.getMessage(GeneralOptionsPanel.class, "GeneralOptionsPanel.optDebug.text")); // NOI18N
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 6;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.weightx = 1.0;
+        add(optDebug, gridBagConstraints);
+
+        jButton1.setText(org.openide.util.NbBundle.getMessage(GeneralOptionsPanel.class, "GeneralOptionsPanel.jButton1.text")); // NOI18N
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 6;
+        add(jButton1, gridBagConstraints);
+
+        jButton2.setLabel(org.openide.util.NbBundle.getMessage(GeneralOptionsPanel.class, "GeneralOptionsPanel.jButton2.label")); // NOI18N
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 3;
+        gridBagConstraints.gridy = 6;
+        add(jButton2, gridBagConstraints);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        javax.swing.JScrollPane scroll = new javax.swing.JScrollPane();
+        javax.swing.JTextPane area = new javax.swing.JTextPane();
+
+        scroll.setViewportView(area);
+        scroll.setPreferredSize(new java.awt.Dimension(800,300));
+        scroll.setMaximumSize(new java.awt.Dimension(800,300));
+
+        area.setEditable(false);
+        area.setBackground(Color.white);
+        area.setSelectedTextColor(Color.white);
+        area.setSelectionColor(Color.blue);
+        area.setEditorKit(new javax.swing.text.html.HTMLEditorKit());
+        area.setText(Logger.getInstance().toString());
+        javax.swing.JOptionPane.showMessageDialog(
+                null,
+                scroll, "phpcsmd debug log",
+                javax.swing.JOptionPane.ERROR_MESSAGE + javax.swing.JOptionPane.OK_OPTION);
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        Logger.getInstance().clear();
+    }//GEN-LAST:event_jButton2ActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JCheckBox optDebug;
     private javax.swing.JTextField optIgnorePattern;
     private javax.swing.JCheckBox optNotify;
     private javax.swing.JCheckBox optThread;
@@ -126,6 +201,7 @@ public class GeneralOptionsPanel extends GenericOptionsPanel {
         this.optUpdateOnSave.setSelected(GeneralOptions.getUpdateOnSave());
         this.optNotify.setSelected(GeneralOptions.getNotification());
         this.optIgnorePattern.setText(GeneralOptions.getIgnorePattern());
+        this.optDebug.setSelected(GeneralOptions.getDebugLog());
         this.optTimeout.setValue(GeneralOptions.getTimeout());
     }
 
@@ -135,6 +211,7 @@ public class GeneralOptionsPanel extends GenericOptionsPanel {
         GeneralOptions.setUpdateOnSave(this.optUpdateOnSave.isSelected());
         GeneralOptions.setNotification(this.optNotify.isSelected());
         GeneralOptions.setIgnorePattern(this.optIgnorePattern.getText());
+        GeneralOptions.setDebugLog(this.optDebug.isSelected());
         GeneralOptions.setTimeout((Integer)this.optTimeout.getValue());
     }
 

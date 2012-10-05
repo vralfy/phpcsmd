@@ -2,6 +2,7 @@ package de.foopara.phpcsmd.generics;
 
 import de.foopara.phpcsmd.FileListenerRegistry;
 import de.foopara.phpcsmd.ViolationRegistry;
+import de.foopara.phpcsmd.debug.Logger;
 import java.util.List;
 import org.openide.cookies.LineCookie;
 import org.openide.filesystems.FileObject;
@@ -44,6 +45,7 @@ public class GenericAnnotationBuilder {
                     cookie
             );
         } catch (DataObjectNotFoundException ex) {
+            Logger.getInstance().log(ex);
             Exceptions.printStackTrace(ex);
         }
     }
@@ -63,7 +65,7 @@ public class GenericAnnotationBuilder {
                 Line line = lineSet.getOriginal(i);
                 v.getViolationForLine(i).attach(line);
             } catch (Exception e) {
-
+                Logger.getInstance().log(e);
             }
         }
     }

@@ -1,6 +1,7 @@
 package de.foopara.phpcsmd.exec.phpcs;
 
 import de.foopara.phpcsmd.ViolationRegistry;
+import de.foopara.phpcsmd.debug.Logger;
 import de.foopara.phpcsmd.generics.*;
 import de.foopara.phpcsmd.option.PhpcsOptions;
 import java.io.File;
@@ -56,7 +57,8 @@ public class Phpcs extends GenericExecute {
 
         cmd.append(" --report=xml");
         cmd.append(" ").append(file.getPath());
-
+        Logger.getInstance().log(cmd.toString());
+        
         /*
         ExternalProcessBuilder epb = new ExternalProcessBuilder(PhpcsOptions.getScript());
         epb.workingDirectory(root);

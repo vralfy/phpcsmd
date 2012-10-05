@@ -1,5 +1,6 @@
 package de.foopara.phpcsmd.ui.reports;
 
+import de.foopara.phpcsmd.debug.Logger;
 import de.foopara.phpcsmd.exec.pdepend.PdependResult;
 import de.foopara.phpcsmd.option.PdependOptions;
 import java.awt.GridBagConstraints;
@@ -69,8 +70,10 @@ public class PdependGenericResultPanel extends JPanel {
             try {
                 this.setComponent(f.getName(), f.get(o));
             } catch (IllegalArgumentException ex) {
+                Logger.getInstance().log(ex);
                 Exceptions.printStackTrace(ex);
             } catch (IllegalAccessException ex) {
+                Logger.getInstance().log(ex);
                 Exceptions.printStackTrace(ex);
             }
         }

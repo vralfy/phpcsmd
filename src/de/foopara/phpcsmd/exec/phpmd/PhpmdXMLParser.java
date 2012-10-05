@@ -1,5 +1,6 @@
 package de.foopara.phpcsmd.exec.phpmd;
 
+import de.foopara.phpcsmd.debug.Logger;
 import de.foopara.phpcsmd.generics.GenericOutputReader;
 import de.foopara.phpcsmd.generics.GenericViolation;
 import de.foopara.phpcsmd.option.phpmd.GenericPhpmdSniffRegistry;
@@ -50,9 +51,14 @@ public class PhpmdXMLParser {
                         .setMultiline(false));
             }
         } catch (SAXException ex) {
+            Logger.getInstance().log(ex);
         } catch (IOException ex) {
+            Logger.getInstance().log(ex);
         } catch (ParserConfigurationException ex) {
-        }        /**/
+            Logger.getInstance().log(ex);
+        } catch (Exception ex) {
+            Logger.getInstance().log(ex);
+        }
 
         return new PhpmdResult(null, violations, null);
     }

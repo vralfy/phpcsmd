@@ -1,5 +1,6 @@
 package de.foopara.phpcsmd.ui.phpcs;
 
+import de.foopara.phpcsmd.debug.Logger;
 import de.foopara.phpcsmd.generics.GenericOptionsPanel;
 import de.foopara.phpcsmd.option.PhpcsOptions;
 import de.foopara.phpcsmd.option.phpcs.GenericPhpcsSniffRegistry;
@@ -275,6 +276,7 @@ public class PhpcsPanel extends GenericOptionsPanel {
                 ((DefaultComboBoxModel)this.jComboBox1.getModel()).addElement(standard);
             }
         } catch (IOException ex) {
+            Logger.getInstance().log(ex);
             Exceptions.printStackTrace(ex);
         }
     }//GEN-LAST:event_jButton2ActionPerformed

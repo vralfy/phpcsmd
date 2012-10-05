@@ -1,5 +1,6 @@
 package de.foopara.phpcsmd.exec.pdepend;
 
+import de.foopara.phpcsmd.debug.Logger;
 import java.util.HashSet;
 import org.openide.util.Exceptions;
 
@@ -37,6 +38,7 @@ public class PdependResult {
         if (name == null) try {
             throw new Exception();
         } catch (Exception ex) {
+            Logger.getInstance().log(ex);
             Exceptions.printStackTrace(ex);
         }
         for(PdependTypes.PdependPackage p: this._packages) {

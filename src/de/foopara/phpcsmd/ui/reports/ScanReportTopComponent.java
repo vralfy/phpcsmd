@@ -1,5 +1,6 @@
 package de.foopara.phpcsmd.ui.reports;
 
+import de.foopara.phpcsmd.debug.Logger;
 import de.foopara.phpcsmd.generics.GenericHelper;
 import de.foopara.phpcsmd.generics.GenericPokeRegistry;
 import de.foopara.phpcsmd.generics.GenericTopComponent;
@@ -357,6 +358,7 @@ public final class ScanReportTopComponent extends GenericTopComponent {
                 oc.open();
             }
         } catch (DataObjectNotFoundException ex) {
+            Logger.getInstance().log(ex);
             Exceptions.printStackTrace(ex);
         }
 

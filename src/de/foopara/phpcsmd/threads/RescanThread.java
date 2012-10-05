@@ -1,5 +1,6 @@
 package de.foopara.phpcsmd.threads;
 
+import de.foopara.phpcsmd.debug.Logger;
 import de.foopara.phpcsmd.exec.phpcpd.Phpcpd;
 import de.foopara.phpcsmd.exec.phpcpd.PhpcpdResult;
 import de.foopara.phpcsmd.generics.GenericHelper;
@@ -93,6 +94,7 @@ public class RescanThread extends Thread {
                     fc = this.count(f2, fc);
                 }
             } catch (IOException ex) {
+                Logger.getInstance().log(ex);
                 Exceptions.printStackTrace(ex);
             }
         }

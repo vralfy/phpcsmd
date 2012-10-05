@@ -1,5 +1,6 @@
 package de.foopara.phpcsmd.generics;
 
+import de.foopara.phpcsmd.debug.Logger;
 import de.foopara.phpcsmd.option.GeneralOptions;
 import java.io.File;
 import java.io.IOException;
@@ -103,6 +104,7 @@ public class GenericHelper {
             try {
                 GenericHelper.phpcpdDistractor = File.createTempFile("phpcsmd-phpcpdDistractor", ".php");
             } catch (IOException ex) {
+                Logger.getInstance().log(ex);
                 GenericHelper.phpcpdDistractor = new File("phpcsmd-phpcpdDistractor.php");
             }
         }

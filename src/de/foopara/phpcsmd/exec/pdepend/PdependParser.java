@@ -1,5 +1,6 @@
 package de.foopara.phpcsmd.exec.pdepend;
 
+import de.foopara.phpcsmd.debug.Logger;
 import de.foopara.phpcsmd.generics.GenericOutputReader;
 import java.io.IOException;
 import java.lang.reflect.Field;
@@ -37,10 +38,16 @@ public class PdependParser {
                     this.parseJDepend(document, res);
                 }
             } catch (IOException ex) {
+                Logger.getInstance().log(ex);
             } catch (ParserConfigurationException ex) {
+                Logger.getInstance().log(ex);
             } catch (SAXParseException ex) {
+                Logger.getInstance().log(ex);
             } catch (SAXException ex) {
-            }
+                Logger.getInstance().log(ex);
+            } catch (Exception ex) {
+            Logger.getInstance().log(ex);
+        }
         }
 
         return res;
@@ -105,8 +112,10 @@ public class PdependParser {
                 throw new Exception("Unknown type '" + type + "' for field '" + f.getName() + "'");
             }
         } catch (NoSuchFieldException ex) {
+            Logger.getInstance().log(ex);
             Exceptions.printStackTrace(ex);
         } catch (Exception ex) {
+            Logger.getInstance().log(ex);
             Exceptions.printStackTrace(ex);
         }
     }

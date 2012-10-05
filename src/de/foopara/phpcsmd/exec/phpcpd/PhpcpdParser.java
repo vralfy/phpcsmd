@@ -1,6 +1,7 @@
 package de.foopara.phpcsmd.exec.phpcpd;
 
 import de.foopara.phpcsmd.ViolationRegistry;
+import de.foopara.phpcsmd.debug.Logger;
 import de.foopara.phpcsmd.generics.GenericOutputReader;
 import de.foopara.phpcsmd.generics.GenericViolation;
 import java.io.File;
@@ -29,7 +30,7 @@ public class PhpcpdParser extends GenericPhpcpdParser {
             while (r.read(tmp) > 0) {
                 buf.append(tmp);
             }
-
+            Logger.getInstance().logPre("Phpcpd output", buf.toString());
             String[] sections = buf.toString().trim().split("\n\n");
             if (sections.length < 3) {
                 return new PhpcpdResult(null, null, null);
@@ -69,7 +70,10 @@ public class PhpcpdParser extends GenericPhpcpdParser {
                 }
             }
         } catch (IOException ex) {
+            Logger.getInstance().log(ex);
             Exceptions.printStackTrace(ex);
+        } catch (Exception ex) {
+            Logger.getInstance().log(ex);
         }
         return new PhpcpdResult(null, cpdErrors, cpdNoTask);
     }

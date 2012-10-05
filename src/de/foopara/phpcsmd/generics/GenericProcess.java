@@ -1,5 +1,6 @@
 package de.foopara.phpcsmd.generics;
 
+import de.foopara.phpcsmd.debug.Logger;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -32,8 +33,10 @@ public class GenericProcess {
         try {
             task.get();
         } catch (InterruptedException ex) {
+            Logger.getInstance().log(ex);
             Exceptions.printStackTrace(ex);
         } catch (ExecutionException ex) {
+            Logger.getInstance().log(ex);
             Exceptions.printStackTrace(ex);
         }
 
@@ -98,8 +101,10 @@ public class GenericProcess {
                 return res;
             }
         } catch (InterruptedException ex) {
+            Logger.getInstance().log(ex);
             Exceptions.printStackTrace(ex);
         } catch (IOException ex) {
+            Logger.getInstance().log(ex);
             Exceptions.printStackTrace(ex);
         }
         return new GenericOutputReader[]{};
