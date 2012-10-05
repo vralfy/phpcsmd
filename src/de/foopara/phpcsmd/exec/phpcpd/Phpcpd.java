@@ -79,6 +79,7 @@ public class Phpcpd extends GenericExecute {
         StringBuilder cmd = this.getGenericCommand();
         cmd.append(" ").append(GenericHelper.getPhpcpdDistractor());
         cmd.append(" ").append(folder.getPath());
+        Logger.getInstance().logPre(cmd.toString(), "php-cpd command (folder scan)");
 
         PhpcpdFolderParser parser = new PhpcpdFolderParser();
         if (!iAmAlive()) return new HashMap<String, PhpcpdResult>();
