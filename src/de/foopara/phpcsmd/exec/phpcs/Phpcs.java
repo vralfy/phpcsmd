@@ -56,7 +56,8 @@ public class Phpcs extends GenericExecute {
         }
 
         cmd.append(" --report=xml");
-        cmd.append(" ").append(file.getPath());
+
+        cmd.append(" ").append(GenericHelper.escapePath(file));
         Logger.getInstance().logPre(cmd.toString(),"phpcs command");
 
         /*

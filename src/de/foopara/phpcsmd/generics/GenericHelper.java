@@ -124,4 +124,12 @@ public class GenericHelper {
         }
         return !canon.getCanonicalFile().equals(canon.getAbsoluteFile());
     }
+
+    public static String escapePath(FileObject f) {
+        String escapedFilename = f.getPath();
+        if (escapedFilename.contains(" ")) {
+            escapedFilename = escapedFilename.replaceAll(" ", "\\\\ ");
+        }
+        return escapedFilename;
+    }
 }

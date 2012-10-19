@@ -49,7 +49,8 @@ public class Phpcpd extends GenericExecute {
 
         StringBuilder cmd = this.getGenericCommand();
         cmd.append(" ").append(GenericHelper.getPhpcpdDistractor());
-        cmd.append(" ").append(file.getPath());
+        cmd.append(" ").append(GenericHelper.escapePath(file));
+
         boolean updateDependencies = false;
         for (FileObject fo : ViolationRegistry.getInstance().getPhpcpdDependency(file)) {
             updateDependencies = true;
@@ -78,7 +79,7 @@ public class Phpcpd extends GenericExecute {
 
         StringBuilder cmd = this.getGenericCommand();
         cmd.append(" ").append(GenericHelper.getPhpcpdDistractor());
-        cmd.append(" ").append(folder.getPath());
+        cmd.append(" ").append(GenericHelper.escapePath(folder));
         Logger.getInstance().logPre(cmd.toString(), "php-cpd command (folder scan)");
 
         PhpcpdFolderParser parser = new PhpcpdFolderParser();

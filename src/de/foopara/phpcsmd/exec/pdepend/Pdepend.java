@@ -1,6 +1,7 @@
 package de.foopara.phpcsmd.exec.pdepend;
 
 import de.foopara.phpcsmd.debug.Logger;
+import de.foopara.phpcsmd.generics.GenericExecute;
 import de.foopara.phpcsmd.generics.GenericHelper;
 import de.foopara.phpcsmd.generics.GenericOutputReader;
 import de.foopara.phpcsmd.generics.GenericProcess;
@@ -53,8 +54,7 @@ public class Pdepend {
             this.appendArgument(cmd, "--jdepend-xml=", jdepend.getAbsolutePath());
             tmpFiles.add(jdepend);
         }
-
-        cmd.append(" ").append(file.getPath());
+        cmd.append(" ").append(GenericHelper.escapePath(file));
         Logger.getInstance().logPre(cmd.toString(), "pdepend command");
 
         PdependParser parser = new PdependParser();

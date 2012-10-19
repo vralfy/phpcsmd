@@ -33,7 +33,7 @@ public class Phpmd extends GenericExecute {
         if (!iAmAlive()) return this.setAndReturnCurrent(file);
 
         StringBuilder cmd = new StringBuilder(PhpmdOptions.getScript());
-        cmd.append(" ").append(file.getPath());
+        cmd.append(" ").append(GenericHelper.escapePath(file));
         cmd.append(" ").append("xml");
         cmd.append(" ").append(PhpmdOptions.getRules());
 
