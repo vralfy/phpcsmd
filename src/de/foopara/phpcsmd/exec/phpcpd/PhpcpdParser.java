@@ -12,12 +12,17 @@ import java.util.List;
 import org.openide.filesystems.FileObject;
 import org.openide.filesystems.FileUtil;
 import org.openide.util.Exceptions;
+import org.openide.util.Lookup;
 
 /**
  *
  * @author nspecht
  */
 public class PhpcpdParser extends GenericPhpcpdParser {
+
+    public PhpcpdParser(Lookup lkp) {
+        super(lkp);
+    }
 
     public PhpcpdResult parse(GenericOutputReader reader, boolean updateDependencies, FileObject fo) {
         List<GenericViolation> cpdErrors = new ArrayList<GenericViolation>();

@@ -310,18 +310,18 @@ public class PhpcsPanel extends GenericOptionsPanel {
 
     @Override
     public void load() {
-        this.optActive.setSelected(PhpcsOptions.getActivated());
+        this.optActive.setSelected((Boolean)PhpcsOptions.loadOriginal(PhpcsOptions.Settings.ACTIVATED));
 
-        this.optScript.setText(PhpcsOptions.getScript());
-        this.optStandard.setText(PhpcsOptions.getStandard());
-        this.optSniffs.setText(PhpcsOptions.getSniffs());
-        this.optExt.setText(PhpcsOptions.getExtensions());
-        this.optIgnore.setText(PhpcsOptions.getIgnore());
-        this.optTabwidth.setValue(PhpcsOptions.getTabwidth());
-        this.optIniOverwrite.setText(PhpcsOptions.getIniOverwrite());
+        this.optScript.setText((String)PhpcsOptions.loadOriginal(PhpcsOptions.Settings.SCRIPT));
+        this.optStandard.setText((String)PhpcsOptions.loadOriginal(PhpcsOptions.Settings.STANDARD));
+        this.optSniffs.setText((String)PhpcsOptions.loadOriginal(PhpcsOptions.Settings.SNIFFS));
+        this.optExt.setText((String)PhpcsOptions.loadOriginal(PhpcsOptions.Settings.EXTENSIONS));
+        this.optIgnore.setText((String)PhpcsOptions.loadOriginal(PhpcsOptions.Settings.IGNORES));
+        this.optTabwidth.setValue((Integer)PhpcsOptions.loadOriginal(PhpcsOptions.Settings.TABWIDTH));
+        this.optIniOverwrite.setText((String)PhpcsOptions.loadOriginal(PhpcsOptions.Settings.INIOVERWRITE));
 
-        this.optWarning.setSelected(PhpcsOptions.getWarnings());
-        this.optXtra.setSelected(PhpcsOptions.getExtras());
+        this.optWarning.setSelected((Boolean)PhpcsOptions.loadOriginal(PhpcsOptions.Settings.WARNINGS));
+        this.optXtra.setSelected((Boolean)PhpcsOptions.loadOriginal(PhpcsOptions.Settings.EXTRAS));
 
         for (String key : this.sniffOpts.keySet()) {
             this.sniffOpts.get(key).setSelected(PhpcsOptions.getSniff(key));
@@ -334,18 +334,18 @@ public class PhpcsPanel extends GenericOptionsPanel {
 
     @Override
     public void save() {
-        PhpcsOptions.setActivated(this.optActive.isSelected());
+        PhpcsOptions.set(PhpcsOptions.Settings.ACTIVATED, this.optActive.isSelected());
 
-        PhpcsOptions.setScript(this.optScript.getText());
-        PhpcsOptions.setStandard(this.optStandard.getText());
-        PhpcsOptions.setSniffs(this.optSniffs.getText());
-        PhpcsOptions.setExtensions(this.optExt.getText());
-        PhpcsOptions.setIgnore(this.optIgnore.getText());
-        PhpcsOptions.setTabwidth((Integer)this.optTabwidth.getValue());
-        PhpcsOptions.setIniOverwrite(this.optIniOverwrite.getText());
+        PhpcsOptions.set(PhpcsOptions.Settings.SCRIPT, this.optScript.getText());
+        PhpcsOptions.set(PhpcsOptions.Settings.STANDARD, this.optStandard.getText());
+        PhpcsOptions.set(PhpcsOptions.Settings.SNIFFS, this.optSniffs.getText());
+        PhpcsOptions.set(PhpcsOptions.Settings.EXTENSIONS, this.optExt.getText());
+        PhpcsOptions.set(PhpcsOptions.Settings.IGNORES, this.optIgnore.getText());
+        PhpcsOptions.set(PhpcsOptions.Settings.TABWIDTH, (Integer)this.optTabwidth.getValue());
+        PhpcsOptions.set(PhpcsOptions.Settings.INIOVERWRITE, this.optIniOverwrite.getText());
 
-        PhpcsOptions.setWarnings(this.optWarning.isSelected());
-        PhpcsOptions.setExtras(this.optXtra.isSelected());
+        PhpcsOptions.set(PhpcsOptions.Settings.WARNINGS, this.optWarning.isSelected());
+        PhpcsOptions.set(PhpcsOptions.Settings.EXTRAS, this.optXtra.isSelected());
 
         for (String key : this.sniffOpts.keySet()) {
             PhpcsOptions.setSniff(key, this.sniffOpts.get(key).isSelected());

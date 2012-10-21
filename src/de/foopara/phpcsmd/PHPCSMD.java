@@ -39,7 +39,7 @@ public class PHPCSMD extends CookieAction {
             return;
         }
         FileObject fo = getFileObject(nodes[0]);
-        GenericExecute.executeQATools(fo);
+        GenericExecute.executeQATools(fo, nodes[0].getLookup());
     }
 
     @Override

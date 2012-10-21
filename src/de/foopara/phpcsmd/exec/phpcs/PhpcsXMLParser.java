@@ -12,6 +12,7 @@ import java.util.List;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
+import org.openide.util.Lookup;
 import org.w3c.dom.Document;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.NodeList;
@@ -23,6 +24,12 @@ import org.xml.sax.SAXException;
  * @author nspecht
  */
 public class PhpcsXMLParser {
+
+    private Lookup lkp;
+
+    public PhpcsXMLParser(Lookup lkp) {
+        this.lkp = lkp;
+    }
 
     public PhpcsResult parse(GenericOutputReader reader) {
         List<GenericViolation> csWarnings = new ArrayList<GenericViolation>();
@@ -63,7 +70,7 @@ public class PhpcsXMLParser {
             String type = nm.getNamedItem("source").getTextContent();
 
             boolean addNormal = true;
-            if (PhpcsOptions.getExtras()) {
+            if ((Boolean)PhpcsOptions.load(PhpcsOptions.Settings.EXTRAS, this.lkp)) {
                 for (PhpcsSniff sniff : GenericPhpcsSniffRegistry.getInstance().getFlat()) {
                     if ((type.startsWith(sniff.name) || type.compareTo(sniff.name) == 0)
                         && PhpcsOptions.getSniff(sniff.shortName)

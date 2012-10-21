@@ -5,6 +5,7 @@ import de.foopara.phpcsmd.option.PdependOptions;
 import java.util.HashSet;
 import javax.swing.JLabel;
 import javax.swing.JProgressBar;
+import org.openide.util.Lookup;
 
 /**
  *
@@ -16,8 +17,8 @@ public class PdependPackagePanel extends PdependGenericResultPanel {
     /**
      * Creates new form PdependPackagePanel
      */
-    public PdependPackagePanel() {
-        super();
+    public PdependPackagePanel(Lookup lkp) {
+        super(lkp);
         initComponents();
         this.addLabel("name", "Name", "Package");
         this.addSeparator(null, "Counts", "Package");
@@ -30,7 +31,7 @@ public class PdependPackagePanel extends PdependGenericResultPanel {
         this.addLabel("cr", "Code Rank", "Different Metrics");
         this.addLabel("rcr", "Reverse Code Rank", "Different Metrics");
 
-        this.jDependActive = PdependOptions.getJDepend();
+        this.jDependActive = (Boolean)PdependOptions.load(PdependOptions.Settings.JDEPEND, this.lkp);
         if (this.jDependActive) {
             this.addSeparator(null, "JDepend Graph", "JDepend Graph");
             this.addComponent(new JdependGraph(), "JDependGraph", null, "JDepend Graph");

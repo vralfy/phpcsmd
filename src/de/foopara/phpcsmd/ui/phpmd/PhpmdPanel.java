@@ -171,26 +171,25 @@ public class PhpmdPanel extends GenericOptionsPanel {
 
     @Override
     public void load() {
-        this.optActive.setSelected(PhpmdOptions.getActivated());
-
-        this.optScript.setText(PhpmdOptions.getScript());
-        this.optRules.setText(PhpmdOptions.getRules());
-        this.optSuffixes.setText(PhpmdOptions.getSuffixes());
-        this.optExclude.setText(PhpmdOptions.getExcludes());
-        this.optPriority.setText(PhpmdOptions.getMinPriority());
-        this.optStrict.setSelected(PhpmdOptions.getStrict());
+        this.optActive.setSelected((Boolean)PhpmdOptions.loadOriginal(PhpmdOptions.Settings.ACTIVATED));
+        this.optScript.setText((String)PhpmdOptions.loadOriginal(PhpmdOptions.Settings.SCRIPT));
+        this.optRules.setText((String)PhpmdOptions.loadOriginal(PhpmdOptions.Settings.RULES));
+        this.optSuffixes.setText((String)PhpmdOptions.loadOriginal(PhpmdOptions.Settings.SUFFIXES));
+        this.optExclude.setText((String)PhpmdOptions.loadOriginal(PhpmdOptions.Settings.EXCLUDE));
+        this.optPriority.setText((String)PhpmdOptions.loadOriginal(PhpmdOptions.Settings.MINPRIORITY));
+        this.optStrict.setSelected((Boolean)PhpmdOptions.loadOriginal(PhpmdOptions.Settings.STRICT));
     }
 
     @Override
     public void save() {
-        PhpmdOptions.setActivated(this.optActive.isSelected());
+        PhpmdOptions.set(PhpmdOptions.Settings.ACTIVATED,this.optActive.isSelected());
 
-        PhpmdOptions.setScript(this.optScript.getText());
-        PhpmdOptions.setRules(this.optRules.getText());
-        PhpmdOptions.setSuffixes(this.optSuffixes.getText());
-        PhpmdOptions.setExcludes(this.optExclude.getText());
-        PhpmdOptions.setMinPriority(this.optPriority.getText());
-        PhpmdOptions.setStrict(this.optStrict.isSelected());
+        PhpmdOptions.set(PhpmdOptions.Settings.SCRIPT, this.optScript.getText());
+        PhpmdOptions.set(PhpmdOptions.Settings.RULES, this.optRules.getText());
+        PhpmdOptions.set(PhpmdOptions.Settings.SUFFIXES, this.optSuffixes.getText());
+        PhpmdOptions.set(PhpmdOptions.Settings.EXCLUDE, this.optExclude.getText());
+        PhpmdOptions.set(PhpmdOptions.Settings.MINPRIORITY, this.optPriority.getText());
+        PhpmdOptions.set(PhpmdOptions.Settings.STRICT, this.optStrict.isSelected());
     }
 
     @Override

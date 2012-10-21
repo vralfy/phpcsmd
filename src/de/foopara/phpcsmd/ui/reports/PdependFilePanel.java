@@ -3,6 +3,7 @@ package de.foopara.phpcsmd.ui.reports;
 import de.foopara.phpcsmd.exec.pdepend.PdependTypes;
 import javax.swing.JLabel;
 import javax.swing.JProgressBar;
+import org.openide.util.Lookup;
 
 /**
  *
@@ -13,8 +14,8 @@ public class PdependFilePanel extends PdependGenericResultPanel {
     /**
      * Creates new form PdependFilePanel
      */
-    public PdependFilePanel() {
-        super();
+    public PdependFilePanel(Lookup lkp) {
+        super(lkp);
         initComponents();
         this.addLabel("name", null, "File");
         ((JLabel)this.elements.get("name")).setVisible(false);

@@ -14,6 +14,7 @@ import java.util.HashMap;
 import org.openide.filesystems.FileObject;
 import org.openide.filesystems.FileUtil;
 import org.openide.util.Exceptions;
+import org.openide.util.Lookup;
 
 /**
  *
@@ -25,11 +26,21 @@ public class RescanThread extends Thread {
     private ScanReportTopComponent component = null;
     private boolean retrieveValuesFromRegistry = false;
 
-    private boolean enablePhpcs = PhpcsOptions.getActivated();
+    private boolean enablePhpcs = false;
 
-    private boolean enablePhpmd = PhpmdOptions.getActivated();
+    private boolean enablePhpmd = false;
 
-    private boolean enablePhpcpd = PhpcpdOptions.getActivated() || PhpcpdOptions.getActivatedFolder();
+    private boolean enablePhpcpd = false;
+
+    private Lookup lkp;
+
+    public RescanThread(Lookup lkp) {
+        super();
+        this.lkp = lkp;
+        this.enablePhpcs = (Boolean)PhpcsOptions.load(PhpcsOptions.Settings.ACTIVATED, this.lkp);
+        this.enablePhpmd = (Boolean)PhpmdOptions.load(PhpmdOptions.Settings.ACTIVATED, this.lkp);
+        this.enablePhpcpd = (Boolean)PhpcpdOptions.load(PhpcpdOptions.Settings.ACTIVATED, this.lkp) || (Boolean)PhpcpdOptions.load(PhpcpdOptions.Settings.ACTIVATEDFOLDER, this.lkp);
+    }
 
     public void enablePhpcs(boolean enable) {
         this.enablePhpcs = enable;
@@ -74,14 +85,14 @@ public class RescanThread extends Thread {
         }
         for (FileObject f2 : f.getChildren()) {
             try {
-                if (GenericHelper.isDesirableFile(f2) && !GenericHelper.isSymlink(FileUtil.toFile(f2))) {
+                if (GenericHelper.isDesirableFile(f2, this.lkp) && !GenericHelper.isSymlink(FileUtil.toFile(f2))) {
                     fc += 1;
                     if (!this.retrieveValuesFromRegistry) {
-                        QAThread qa = new QAThread();
+                        QAThread qa = new QAThread(this.lkp);
                         qa.enablePhpcs(this.enablePhpcs);
                         qa.enablePhpmd(this.enablePhpmd);
                         qa.enablePhpcpd(this.enablePhpcpd);
-                        if (PhpcpdOptions.getActivatedFolder()) {
+                        if ((Boolean)PhpcpdOptions.load(PhpcpdOptions.Settings.ACTIVATEDFOLDER, this.lkp)) {
                             qa.enablePhpcpd(false);
                         }
                         qa.setFileObject(f2);
@@ -98,8 +109,12 @@ public class RescanThread extends Thread {
                 Exceptions.printStackTrace(ex);
             }
         }
-        if (GenericHelper.isDesirableFolder(f) && firstRun && PhpcpdOptions.getActivatedFolder() && this.enablePhpcpd) {
-            Phpcpd cpdTask = new Phpcpd();
+        if (GenericHelper.isDesirableFolder(f, this.lkp)
+            && firstRun
+            && (Boolean)PhpcpdOptions.load(PhpcpdOptions.Settings.ACTIVATEDFOLDER, this.lkp)
+            && this.enablePhpcpd
+        ) {
+            Phpcpd cpdTask = new Phpcpd(this.lkp);
             HashMap<String, PhpcpdResult> res = cpdTask.runFolder(f, true);
             for (String path : res.keySet()) {
                 FileObject tmp = FileUtil.toFileObject(new File(path));

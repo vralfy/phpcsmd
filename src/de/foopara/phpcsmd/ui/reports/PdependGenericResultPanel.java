@@ -11,6 +11,7 @@ import java.util.HashMap;
 import javax.swing.*;
 import javax.swing.plaf.basic.BasicTabbedPaneUI;
 import org.openide.util.Exceptions;
+import org.openide.util.Lookup;
 
 /**
  *
@@ -25,16 +26,18 @@ public class PdependGenericResultPanel extends JPanel {
 
     protected PdependResult pdependResult;
 
-    public PdependGenericResultPanel() {
-        super();
+    protected Lookup lkp;
 
+    public PdependGenericResultPanel(Lookup lkp) {
+        super();
+        this.lkp = lkp;
         this.tabContainer = new JTabbedPane();
         this.tabContainer.setUI(new BasicTabbedPaneUI() {
             private int useTabs = -1;
             @Override
             protected int calculateTabAreaHeight(int tabPlacement, int horizRunCount, int maxTabHeight) {
                 if (this.useTabs == -1) {
-                    this.useTabs = PdependOptions.getUseTabs() ? 1 : 0;
+                    this.useTabs = (Boolean)PdependOptions.loadOriginal(PdependOptions.Settings.USETABS) ? 1 : 0;
                 }
 
                 if (this.useTabs > 0) {
@@ -114,7 +117,7 @@ public class PdependGenericResultPanel extends JPanel {
     public void setEditorButton(String filename) {
         if (this.editorButton == null) {
             java.awt.GridBagConstraints gridBagConstraints;
-            this.editorButton = new EditFileButton();
+            this.editorButton = new EditFileButton(this.lkp);
             gridBagConstraints = new java.awt.GridBagConstraints();
 //            gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
 //            gridBagConstraints.weightx = 1.0;
@@ -147,7 +150,7 @@ public class PdependGenericResultPanel extends JPanel {
     }
 
     protected void addSeparator(String name, String caption, String tab) {
-        if (!PdependOptions.getUseTabs()) {
+        if ((Boolean)PdependOptions.load(PdependOptions.Settings.USETABS, this.lkp) == false) {
             tab = "---";
         }
         int row = this.elements.size() + 20;
@@ -183,7 +186,7 @@ public class PdependGenericResultPanel extends JPanel {
     }
 
     protected void addLabel(String name, String caption, String tab) {
-        if (!PdependOptions.getUseTabs()) {
+        if ((Boolean)PdependOptions.load(PdependOptions.Settings.USETABS, this.lkp) == false) {
             tab = "---";
         }
         int row = this.elements.size() + 20;
@@ -213,7 +216,7 @@ public class PdependGenericResultPanel extends JPanel {
     }
 
     protected void addProgressbar(String name, String caption, String tab) {
-        if (!PdependOptions.getUseTabs()) {
+        if ((Boolean)PdependOptions.load(PdependOptions.Settings.USETABS, this.lkp) == false) {
             tab = "---";
         }
         int row = this.elements.size() + 20;

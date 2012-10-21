@@ -3,6 +3,7 @@ package de.foopara.phpcsmd.ui.reports;
 import de.foopara.phpcsmd.exec.pdepend.PdependTypes;
 import de.foopara.phpcsmd.option.PdependOptions;
 import javax.swing.JProgressBar;
+import org.openide.util.Lookup;
 
 /**
  *
@@ -15,8 +16,8 @@ public class PdependMetricsPanel extends PdependGenericResultPanel {
     /**
      * Creates new form PdependMetricsPanel
      */
-    public PdependMetricsPanel() {
-        super();
+    public PdependMetricsPanel(Lookup lkp) {
+        super(lkp);
         initComponents();
         this.addLabel("pdepend", "Pdepend Version", "Metrics");
         this.addLabel("generated", "Generated", "Metrics");
@@ -28,7 +29,7 @@ public class PdependMetricsPanel extends PdependGenericResultPanel {
         this.addProgressbar("eloc", "Executable Lines of Code", "Metrics");
         this.addProgressbar("lloc", "Logical Lines Of Code", "Metrics");
 
-        if (!PdependOptions.getUseTabs()) {
+        if ((Boolean)PdependOptions.load(PdependOptions.Settings.USETABS, this.lkp) == false) {
             this.addSeparator(null, "Counts", "Counts");
         }
         this.addLabel("nop", "Number of Packages", "Counts");
@@ -37,7 +38,7 @@ public class PdependMetricsPanel extends PdependGenericResultPanel {
         this.addLabel("nom", "Number of Methods", "Counts");
         this.addLabel("nof", "Number of Functions", "Counts");
 
-        if (!PdependOptions.getUseTabs()) {
+        if ((Boolean)PdependOptions.load(PdependOptions.Settings.USETABS, this.lkp) == false) {
             this.addSeparator(null, "Classes", "Classes");
         }
         this.addProgressbar("roots", "Number of Root Classes", "Classes");
@@ -56,7 +57,7 @@ public class PdependMetricsPanel extends PdependGenericResultPanel {
         this.addLabel("calls", "Number of Method or Function Calls", "Different Metrics");
         this.addLabel("fanout", "Number of Fanouts", "Different Metrics");
 
-        this.jDependActive = PdependOptions.getJDepend();
+        this.jDependActive = (Boolean)PdependOptions.load(PdependOptions.Settings.JDEPEND, this.lkp);
         if (this.jDependActive) {
             this.addSeparator(null, "JDepend Graph", "JDepend Graph");
             this.addComponent(new JdependGraph(), "JDependGraph", null, "JDepend Graph");

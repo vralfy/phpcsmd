@@ -8,6 +8,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import org.openide.util.Exceptions;
+import org.openide.util.Lookup;
 
 /**
  *
@@ -15,6 +16,12 @@ import org.openide.util.Exceptions;
  */
 public class CustomStandard {
     private File _ruleset;
+    private Lookup lkp;
+
+    public CustomStandard(Lookup lkp) {
+        this.lkp = lkp;
+    }
+
     public CustomStandard() {
         try {
             this._ruleset = File.createTempFile("phpcsmdCustom",".xml");
@@ -23,8 +30,11 @@ public class CustomStandard {
             content.append("<ruleset name=\"PhpcsmdCustom\">\n");
             content.append("\t<description>PHPCSMDCUSTOM</description>\n");
 
-            if (PhpcsOptions.getStandard().trim().length() > 0) {
-                content.append("\t<rule ref=\"").append(PhpcsOptions.getStandard()).append("\" />\n\n");
+            if (((String)PhpcsOptions.load(PhpcsOptions.Settings.STANDARD, this.lkp)).trim().length() > 0) {
+                content
+                        .append("\t<rule ref=\"")
+                        .append((String)PhpcsOptions.load(PhpcsOptions.Settings.STANDARD, this.lkp))
+                        .append("\" />\n\n");
             }
 
             for (PhpcsSniff sniff : GenericPhpcsSniffRegistry.getInstance().getFlat()) {

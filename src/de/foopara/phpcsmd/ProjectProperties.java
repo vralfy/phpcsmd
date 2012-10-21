@@ -22,16 +22,15 @@ public class ProjectProperties implements ProjectCustomizer.CompositeCategoryPro
 
     @Override
     public Category createCategory(Lookup context) {
-        ResourceBundle bundle = NbBundle.getBundle(ProjectProperties.class);
-        for (String s : bundle.keySet()) {
-            System.err.println(s);
-        }
+        ResourceBundle bundle = NbBundle.getBundle(PHPCSMD.class);
         return  ProjectCustomizer.Category.create("phpcsmd", "Phpcsmd", null);
     }
 
     @Override
     public JComponent createComponent(Category category, Lookup context) {
-        return new PropertyPanel();
+        PropertyPanel panel = new PropertyPanel();
+        panel.setLookup(context);
+        return panel;
     }
 
 }

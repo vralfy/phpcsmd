@@ -1,9 +1,8 @@
 package de.foopara.phpcsmd.option;
 
-import de.foopara.phpcsmd.PHPCSMD;
-import java.util.prefs.Preferences;
-import org.openide.util.NbPreferences;
-
+import java.util.EnumMap;
+import de.foopara.phpcsmd.option.GenericOption.SettingTypes;
+import org.openide.util.Lookup;
 /**
  *
  * @author n.specht
@@ -12,84 +11,81 @@ public class PhpmdOptions {
 
     public static final String _PREFIX = "phpcsmd.phpmd.";
 
-    private static final String _ACTIVATED          = "activated";
-    private static final String _ACTIVATED_DEFAULT  = "false";
-
-    private static final String _SCRIPT             = "script";
-    private static final String _SCRIPT_DEFAULT     = "/usr/bin/phpmd";
-
-    private static final String _RULES              = "rules";
-    private static final String _RULES_DEFAULT      = "";
-
-    private static final String _EXCLUDE            = "exclude";
-    private static final String _EXCLUDE_DEFAULT    = "";
-
-    private static final String _SUFFIXES           = "suffix";
-    private static final String _SUFFIXES_DEFAULT   = "";
-
-    private static final String _MINPRIORITY         = "minpriority";
-    private static final String _MINPRIORITY_DEFAULT = "";
-
-    private static final String _STRICT              = "strict";
-    private static final String _STRICT_DEFAULT      = "false";
-
-    private static Preferences _modul() {
-        return NbPreferences.forModule(PHPCSMD.class);
+    public enum Settings {
+        ACTIVATED, SCRIPT, RULES, EXCLUDE, SUFFIXES, MINPRIORITY, STRICT
     }
 
-    public static boolean getActivated() {
-        return (PhpmdOptions._modul().get(_PREFIX + _ACTIVATED, _ACTIVATED_DEFAULT).compareTo("true") == 0);
+    private static final EnumMap<Settings, String> keys = new EnumMap<Settings, String>(Settings.class);
+    static {
+        keys.put(Settings.ACTIVATED, "activated");
+        keys.put(Settings.SCRIPT, "script");
+        keys.put(Settings.RULES, "rules");
+        keys.put(Settings.EXCLUDE, "exclude");
+        keys.put(Settings.SUFFIXES, "suffix");
+        keys.put(Settings.MINPRIORITY, "minpriority");
+        keys.put(Settings.STRICT, "strict");
     }
 
-    public static void setActivated(boolean activated) {
-        PhpmdOptions._modul().put(_PREFIX + _ACTIVATED, activated ? "true" : "false");
+    private static final EnumMap<Settings, SettingTypes> types = new EnumMap<Settings, SettingTypes>(Settings.class);
+    static {
+        types.put(Settings.ACTIVATED, SettingTypes.BOOLEAN);
+        types.put(Settings.STRICT, SettingTypes.BOOLEAN);
     }
 
-    public static String getScript() {
-        return PhpmdOptions._modul().get(_PREFIX + _SCRIPT, _SCRIPT_DEFAULT);
+    private static final EnumMap<Settings, String> defaults = new EnumMap<Settings, String>(Settings.class);
+    static {
+        defaults.put(Settings.ACTIVATED, "false");
+        defaults.put(Settings.SCRIPT, "/usr/bin/phpmd");
+        defaults.put(Settings.RULES, "");
+        defaults.put(Settings.EXCLUDE, "");
+        defaults.put(Settings.SUFFIXES, "");
+        defaults.put(Settings.MINPRIORITY, "");
+        defaults.put(Settings.STRICT, "false");
     }
 
-    public static void setScript(String script) {
-        PhpmdOptions._modul().put(_PREFIX + _SCRIPT, script);
+    public static Object load(PhpmdOptions.Settings key, Lookup lkp) {
+        String defaultVal = "";
+        if (PhpmdOptions.defaults.containsKey(key)) {
+            defaultVal = PhpmdOptions.defaults.get(key);
+        }
+
+        String val = GenericOption.loadMerged(_PREFIX + keys.get(key), defaultVal, lkp);
+
+        if (!types.containsKey(key)) {
+            return val;
+        }
+
+        return GenericOption.castValue(val, types.get(key));
     }
 
-    public static String getRules() {
-        return PhpmdOptions._modul().get(_PREFIX + _RULES, _RULES_DEFAULT);
+    public static Object loadOriginal(PhpmdOptions.Settings key) {
+        String defaultVal = "";
+        if (PhpmdOptions.defaults.containsKey(key)) {
+            defaultVal = PhpmdOptions.defaults.get(key);
+        }
+
+        String val = GenericOption.loadModul(_PREFIX +keys.get(key), defaultVal);
+
+        if (!types.containsKey(key)) {
+            return val;
+        }
+
+        return GenericOption.castValue(val, types.get(key));
     }
 
-    public static void setRules(String rules) {
-        PhpmdOptions._modul().put(_PREFIX + _RULES, rules);
+    public static void set(PhpmdOptions.Settings key, Object value) {
+        String val = value.toString();
+        if (types.containsKey(key)) {
+            val = GenericOption.castValueToString(value, types.get(key));
+        }
+        GenericOption.setModul(_PREFIX + keys.get(key), val);
     }
 
-    public static String getExcludes() {
-        return PhpmdOptions._modul().get(_PREFIX + _EXCLUDE, _EXCLUDE_DEFAULT);
-    }
-
-    public static void setExcludes(String excludes) {
-        PhpmdOptions._modul().put(_PREFIX + _EXCLUDE, excludes);
-    }
-
-    public static String getSuffixes() {
-        return PhpmdOptions._modul().get(_PREFIX + _SUFFIXES, _SUFFIXES_DEFAULT);
-    }
-
-    public static void setSuffixes(String suffixes) {
-        PhpmdOptions._modul().put(_PREFIX + _SUFFIXES, suffixes);
-    }
-
-    public static String getMinPriority() {
-        return PhpmdOptions._modul().get(_PREFIX + _MINPRIORITY, _MINPRIORITY_DEFAULT);
-    }
-
-    public static void setMinPriority(String minPriority) {
-        PhpmdOptions._modul().put(_PREFIX + _MINPRIORITY, minPriority);
-    }
-
-    public static boolean getStrict() {
-        return (PhpmdOptions._modul().get(_PREFIX + _STRICT, _STRICT_DEFAULT).compareTo("true") == 0);
-    }
-
-    public static void setStrict(boolean strict) {
-        PhpmdOptions._modul().put(_PREFIX + _STRICT, strict ? "true" : "false");
+    public static void overwrite(PhpmdOptions.Settings key, Object value, Lookup lkp) {
+        String val = value.toString();
+        if (types.containsKey(key)) {
+            val = GenericOption.castValueToString(value, types.get(key));
+        }
+        GenericOption.setProject(_PREFIX + keys.get(key), val, lkp);
     }
 }

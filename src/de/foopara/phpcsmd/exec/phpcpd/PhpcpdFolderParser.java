@@ -13,12 +13,18 @@ import java.util.List;
 import org.openide.filesystems.FileObject;
 import org.openide.filesystems.FileUtil;
 import org.openide.util.Exceptions;
+import org.openide.util.Lookup;
 
 /**
  *
  * @author nspecht
  */
 public class PhpcpdFolderParser extends GenericPhpcpdParser {
+
+
+    public PhpcpdFolderParser(Lookup lkp) {
+        super(lkp);
+    }
 
     public HashMap<String, PhpcpdResult> parse(GenericOutputReader reader, FileObject containingFolder) {
         HashMap<String, List<GenericViolation>> cpdErrors = new HashMap<String, List<GenericViolation>>();

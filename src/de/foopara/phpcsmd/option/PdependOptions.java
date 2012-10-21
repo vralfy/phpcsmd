@@ -1,8 +1,7 @@
 package de.foopara.phpcsmd.option;
 
-import de.foopara.phpcsmd.PHPCSMD;
-import java.util.prefs.Preferences;
-import org.openide.util.NbPreferences;
+import java.util.EnumMap;
+import org.openide.util.Lookup;
 
 /**
  *
@@ -12,84 +11,82 @@ public class PdependOptions {
 
     public static final String _PREFIX = "phpcsmd.pdepend.";
 
-    private static final String _SCRIPT             = "script";
-    private static final String _SCRIPT_DEFAULT     = "/usr/bin/pdepend";
-
-    private static final String _EXCLUDE            = "exclude";
-    private static final String _EXCLUDE_DEFAULT    = "";
-
-    private static final String _SUFFIXES           = "suffix";
-    private static final String _SUFFIXES_DEFAULT   = "";
-
-    private static final String _IGNORES            = "ignore";
-    private static final String _IGNORES_DEFAULT    = "";
-
-    private static final String _INIOVERWRITE         = "inioverwrite";
-    private static final String _INIOVERWRITE_DEFAULT = "";
-
-    private static final String _USETABS              = "usetabs";
-    private static final String _USETABS_DEFAULT      = "false";
-
-    private static final String _JDEPEND              = "jdepend";
-    private static final String _JDEPEND_DEFAULT      = "false";
-
-    private static Preferences _modul() {
-        return NbPreferences.forModule(PHPCSMD.class);
+   public enum Settings {
+        SCRIPT, EXCLUDE, SUFFIXES, IGNORES, INIOVERWRITE, USETABS, JDEPEND
     }
 
-    public static String getScript() {
-        return PdependOptions._modul().get(_PREFIX + _SCRIPT, _SCRIPT_DEFAULT);
+    private static final EnumMap<PdependOptions.Settings, String> keys = new EnumMap<PdependOptions.Settings, String>(PdependOptions.Settings.class);
+    static {
+        keys.put(PdependOptions.Settings.SCRIPT, "script");
+        keys.put(PdependOptions.Settings.EXCLUDE, "exclude");
+        keys.put(PdependOptions.Settings.SUFFIXES, "suffix");
+        keys.put(PdependOptions.Settings.IGNORES, "ignore");
+        keys.put(PdependOptions.Settings.INIOVERWRITE, "inioverwrite");
+        keys.put(PdependOptions.Settings.USETABS, "usetabs");
+        keys.put(PdependOptions.Settings.JDEPEND, "jdepend");
+
     }
 
-    public static void setScript(String script) {
-        PdependOptions._modul().put(_PREFIX + _SCRIPT, script);
+    private static final EnumMap<PdependOptions.Settings, GenericOption.SettingTypes> types = new EnumMap<PdependOptions.Settings, GenericOption.SettingTypes>(PdependOptions.Settings.class);
+    static {
+        types.put(PdependOptions.Settings.USETABS, GenericOption.SettingTypes.BOOLEAN);
+        types.put(PdependOptions.Settings.JDEPEND, GenericOption.SettingTypes.BOOLEAN);
     }
 
-    public static String getExcludes() {
-        return PdependOptions._modul().get(_PREFIX + _EXCLUDE, _EXCLUDE_DEFAULT);
+    private static final EnumMap<PdependOptions.Settings, String> defaults = new EnumMap<PdependOptions.Settings, String>(PdependOptions.Settings.class);
+    static {
+        defaults.put(PdependOptions.Settings.SCRIPT, "/usr/bin/pdepend");
+        defaults.put(PdependOptions.Settings.EXCLUDE, "");
+        defaults.put(PdependOptions.Settings.SUFFIXES, "");
+        defaults.put(PdependOptions.Settings.IGNORES, "");
+        defaults.put(PdependOptions.Settings.INIOVERWRITE, "");
+        defaults.put(PdependOptions.Settings.USETABS, "false");
+        defaults.put(PdependOptions.Settings.JDEPEND, "false");
     }
 
-    public static void setExcludes(String excludes) {
-        PdependOptions._modul().put(_PREFIX + _EXCLUDE, excludes);
+    public static Object load(PdependOptions.Settings key, Lookup lkp) {
+        String defaultVal = "";
+        if (PdependOptions.defaults.containsKey(key)) {
+            defaultVal = PdependOptions.defaults.get(key);
+        }
+
+        String val = GenericOption.loadMerged(_PREFIX + keys.get(key), defaultVal, lkp);
+
+        if (!types.containsKey(key)) {
+            return val;
+        }
+
+        return GenericOption.castValue(val, types.get(key));
     }
 
-    public static String getSuffixes() {
-        return PdependOptions._modul().get(_PREFIX + _SUFFIXES, _SUFFIXES_DEFAULT);
+    public static Object loadOriginal(PdependOptions.Settings key) {
+        String defaultVal = "";
+        if (PdependOptions.defaults.containsKey(key)) {
+            defaultVal = PdependOptions.defaults.get(key);
+        }
+
+        String val = GenericOption.loadModul(_PREFIX +keys.get(key), defaultVal);
+
+        if (!types.containsKey(key)) {
+            return val;
+        }
+
+        return GenericOption.castValue(val, types.get(key));
     }
 
-    public static void setSuffixes(String suffixes) {
-        PdependOptions._modul().put(_PREFIX + _SUFFIXES, suffixes);
+    public static void set(PdependOptions.Settings key, Object value) {
+        String val = value.toString();
+        if (types.containsKey(key)) {
+            val = GenericOption.castValueToString(value, types.get(key));
+        }
+        GenericOption.setModul(_PREFIX + keys.get(key), val);
     }
 
-    public static String getIgnores() {
-        return PdependOptions._modul().get(_PREFIX + _IGNORES, _IGNORES_DEFAULT);
-    }
-
-    public static void setIgnores(String ignores) {
-        PdependOptions._modul().put(_PREFIX + _IGNORES, ignores);
-    }
-
-    public static String getIniOverwrite() {
-        return PdependOptions._modul().get(_PREFIX + _INIOVERWRITE, _INIOVERWRITE_DEFAULT);
-    }
-
-    public static void setIniOverwrite(String overwrite) {
-        PdependOptions._modul().put(_PREFIX + _INIOVERWRITE, overwrite);
-    }
-
-    public static boolean getUseTabs() {
-        return (PdependOptions._modul().get(_PREFIX + _USETABS, _USETABS_DEFAULT).compareTo("true") == 0);
-    }
-
-    public static void setUseTabs(boolean useTabs) {
-        PdependOptions._modul().put(_PREFIX + _USETABS, useTabs ? "true" : "false");
-    }
-
-    public static boolean getJDepend() {
-        return (PdependOptions._modul().get(_PREFIX + _JDEPEND, _JDEPEND_DEFAULT).compareTo("true") == 0);
-    }
-
-    public static void setJDepend(boolean jdepend) {
-        PdependOptions._modul().put(_PREFIX + _JDEPEND, jdepend ? "true" : "false");
+    public static void overwrite(PdependOptions.Settings key, Object value, Lookup lkp) {
+        String val = value.toString();
+        if (types.containsKey(key)) {
+            val = GenericOption.castValueToString(value, types.get(key));
+        }
+        GenericOption.setProject(_PREFIX + keys.get(key), val, lkp);
     }
 }

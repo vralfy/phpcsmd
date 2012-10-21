@@ -4,8 +4,7 @@ import de.foopara.phpcsmd.debug.Logger;
 import de.foopara.phpcsmd.generics.GenericOptionsPanel;
 import de.foopara.phpcsmd.option.GeneralOptions;
 import java.awt.Color;
-import javax.swing.text.BadLocationException;
-import org.openide.util.Exceptions;
+import org.openide.util.Lookup;
 
 /**
  *
@@ -197,22 +196,22 @@ public class GeneralOptionsPanel extends GenericOptionsPanel {
     public void load() {
         this.optTimeout.setVisible(false);
         this.jLabel3.setVisible(false);
-        this.optThread.setSelected(GeneralOptions.getThreaded());
-        this.optUpdateOnSave.setSelected(GeneralOptions.getUpdateOnSave());
-        this.optNotify.setSelected(GeneralOptions.getNotification());
-        this.optIgnorePattern.setText(GeneralOptions.getIgnorePattern());
-        this.optDebug.setSelected(GeneralOptions.getDebugLog());
-        this.optTimeout.setValue(GeneralOptions.getTimeout());
+        this.optThread.setSelected((Boolean)GeneralOptions.loadOriginal(GeneralOptions.Settings.THREADED));
+        this.optUpdateOnSave.setSelected((Boolean)GeneralOptions.loadOriginal(GeneralOptions.Settings.UPDATEONSAVE));
+        this.optNotify.setSelected((Boolean)GeneralOptions.loadOriginal(GeneralOptions.Settings.NOTIFY));
+        this.optIgnorePattern.setText((String)GeneralOptions.loadOriginal(GeneralOptions.Settings.IGNORE));
+        this.optDebug.setSelected((Boolean)GeneralOptions.loadOriginal(GeneralOptions.Settings.DEBUGLOG));
+        this.optTimeout.setValue((Integer)GeneralOptions.loadOriginal(GeneralOptions.Settings.TIMEOUT));
     }
 
     @Override
     public void save() {
-        GeneralOptions.setThreaded(this.optThread.isSelected());
-        GeneralOptions.setUpdateOnSave(this.optUpdateOnSave.isSelected());
-        GeneralOptions.setNotification(this.optNotify.isSelected());
-        GeneralOptions.setIgnorePattern(this.optIgnorePattern.getText());
-        GeneralOptions.setDebugLog(this.optDebug.isSelected());
-        GeneralOptions.setTimeout((Integer)this.optTimeout.getValue());
+        GeneralOptions.set(GeneralOptions.Settings.THREADED, this.optThread.isSelected());
+        GeneralOptions.set(GeneralOptions.Settings.UPDATEONSAVE, this.optUpdateOnSave.isSelected());
+        GeneralOptions.set(GeneralOptions.Settings.NOTIFY, this.optNotify.isSelected());
+        GeneralOptions.set(GeneralOptions.Settings.IGNORE, this.optIgnorePattern.getText());
+        GeneralOptions.set(GeneralOptions.Settings.DEBUGLOG, this.optDebug.isSelected());
+        GeneralOptions.set(GeneralOptions.Settings.TIMEOUT, (Integer)this.optTimeout.getValue());
     }
 
     @Override

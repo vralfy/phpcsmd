@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.util.regex.Pattern;
 import org.openide.filesystems.FileObject;
 import org.openide.filesystems.FileUtil;
+import org.openide.util.Lookup;
 
 /**
  *
@@ -16,55 +17,55 @@ public class GenericHelper {
 
     private static File phpcpdDistractor = null;
 
-    public static boolean isDesirableFile(FileObject fileObject) {
-        return GenericHelper.isDesirableFile(fileObject, true);
+    public static boolean isDesirableFile(FileObject fileObject, Lookup lkp) {
+        return GenericHelper.isDesirableFile(fileObject, true, lkp);
     }
 
-    public static boolean isDesirableFile(FileObject fileObject, boolean filter) {
+    public static boolean isDesirableFile(FileObject fileObject, boolean filter, Lookup lkp) {
         if (fileObject == null) return false;
-        return GenericHelper.isDesirableFile(FileUtil.toFile(fileObject), filter);
+        return GenericHelper.isDesirableFile(FileUtil.toFile(fileObject), filter, lkp);
     }
 
-    public static boolean isDesirableFile(File file) {
-        return GenericHelper.isDesirableFile(file, true);
+    public static boolean isDesirableFile(File file, Lookup lkp) {
+        return GenericHelper.isDesirableFile(file, true, lkp);
     }
 
-    public static boolean isDesirableFile(File file, boolean filter) {
+    public static boolean isDesirableFile(File file, boolean filter, Lookup lkp) {
         if (file == null) return false;
 
         if (!file.exists())  return false;
         if (!file.canRead()) return false;
         if (!file.isFile())  return false;
 
-        if (filter && GenericHelper.shouldBeIgnored(file)) return false;
+        if (filter && GenericHelper.shouldBeIgnored(file, lkp)) return false;
 
         File parent = new File(file.getParent());
-        if (!GenericHelper.isDesirableFolder(parent, filter)) return false;
+        if (!GenericHelper.isDesirableFolder(parent, filter, lkp)) return false;
 
         return true;
     }
 
-    public static boolean isDesirableFolder(FileObject fileObject) {
-        return GenericHelper.isDesirableFolder(fileObject, true);
+    public static boolean isDesirableFolder(FileObject fileObject, Lookup lkp) {
+        return GenericHelper.isDesirableFolder(fileObject, true, lkp);
     }
 
-    public static boolean isDesirableFolder(FileObject fileObject, boolean filter) {
+    public static boolean isDesirableFolder(FileObject fileObject, boolean filter, Lookup lkp) {
         if (fileObject == null) return false;
-        return GenericHelper.isDesirableFolder(FileUtil.toFile(fileObject), filter);
+        return GenericHelper.isDesirableFolder(FileUtil.toFile(fileObject), filter, lkp);
     }
 
-    public static boolean isDesirableFolder(File file) {
-        return GenericHelper.isDesirableFolder(file, true);
+    public static boolean isDesirableFolder(File file, Lookup lkp) {
+        return GenericHelper.isDesirableFolder(file, true, lkp);
     }
 
-    public static boolean isDesirableFolder(File file, boolean filter) {
+    public static boolean isDesirableFolder(File file, boolean filter, Lookup lkp) {
         if (file == null) return false;
 
         if (!file.exists())      return false;
         if (!file.canRead())     return false;
         if (!file.isDirectory()) return false;
 
-        if (filter && GenericHelper.shouldBeIgnored(file)) return false;
+        if (filter && GenericHelper.shouldBeIgnored(file, lkp)) return false;
 
         return true;
     }
@@ -82,15 +83,15 @@ public class GenericHelper {
         return tmp.toString();
     }
 
-    private static boolean shouldBeIgnored(FileObject fileObject) {
+    private static boolean shouldBeIgnored(FileObject fileObject, Lookup lkp) {
         if (fileObject == null) return true;
-        return GenericHelper.shouldBeIgnored(FileUtil.toFile(fileObject));
+        return GenericHelper.shouldBeIgnored(FileUtil.toFile(fileObject), lkp);
     }
 
-    private static boolean shouldBeIgnored(File file) {
+    private static boolean shouldBeIgnored(File file, Lookup lkp) {
         if (file == null) return true;
 
-        String pattern = GeneralOptions.getIgnorePattern();
+        String pattern = (String)GeneralOptions.load(GeneralOptions.Settings.IGNORE, lkp);
         if (pattern.trim().length() > 0) {
             if (Pattern.matches(".*(" + pattern + ").*", file.getAbsolutePath())) {
                 return true;

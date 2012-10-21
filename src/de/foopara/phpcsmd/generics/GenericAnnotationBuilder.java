@@ -10,6 +10,7 @@ import org.openide.loaders.DataObject;
 import org.openide.loaders.DataObjectNotFoundException;
 import org.openide.text.Line;
 import org.openide.util.Exceptions;
+import org.openide.util.Lookup;
 
 /**
  *
@@ -17,16 +18,16 @@ import org.openide.util.Exceptions;
  */
 public class GenericAnnotationBuilder {
 
-    public static void updateAnnotations(FileObject fo) {
-        GenericAnnotationBuilder.run(fo, ViolationRegistry.getInstance().getPhpcs(fo));
-        GenericAnnotationBuilder.run(fo, ViolationRegistry.getInstance().getPhpmd(fo));
-        GenericAnnotationBuilder.run(fo, ViolationRegistry.getInstance().getPhpcpd(fo));
+    public static void updateAnnotations(FileObject fo, Lookup lkp) {
+        GenericAnnotationBuilder.run(fo, ViolationRegistry.getInstance().getPhpcs(fo), lkp);
+        GenericAnnotationBuilder.run(fo, ViolationRegistry.getInstance().getPhpmd(fo), lkp);
+        GenericAnnotationBuilder.run(fo, ViolationRegistry.getInstance().getPhpcpd(fo), lkp);
     }
 
-    public static void run(FileObject fo, GenericResult res) {
-        if (!GenericHelper.isDesirableFile(fo)) return;
+    public static void run(FileObject fo, GenericResult res, Lookup lkp) {
+        if (!GenericHelper.isDesirableFile(fo, lkp)) return;
 
-        FileListenerRegistry.getListener(fo);
+        FileListenerRegistry.getListener(fo, lkp);
 
         try {
             DataObject oData = DataObject.find(fo);

@@ -1,8 +1,7 @@
 package de.foopara.phpcsmd.option;
 
-import de.foopara.phpcsmd.PHPCSMD;
-import java.util.prefs.Preferences;
-import org.openide.util.NbPreferences;
+import java.util.EnumMap;
+import org.openide.util.Lookup;
 
 /**
  *
@@ -12,74 +11,83 @@ public class GeneralOptions {
 
     public static final String _PREFIX = "phpcsmd.general.";
 
-    private static final String _THREADED                = "threaded";
-    private static final String _THREADED_DEFAULT        = "false";
-
-    private static final String _UPDATE_ON_SAVE          = "updateonsave";
-    private static final String _UPDATE_ON_SAVE_DEFAULT  = "false";
-
-    private static final String _NOTIFICATION            = "notification";
-    private static final String _NOTIFICATION_DEFAULT    = "false";
-
-    private static final String _IGNORE_PATTERN          = "ignorepattern";
-    private static final String _IGNORE_PATTERN_DEFAULT  = "\\.svn|\\.git";
-
-    private static final String _DEBUG_LOG               = "debuglog";
-    private static final String _DEBUG_LOG_DEFAULT       = "false";
-
-    private static final String _TIMEOUT                 = "timeout";
-    private static final String _TIMEOUT_DEFAULT         = "5000";
-
-
-     private static Preferences _modul() {
-        return NbPreferences.forModule(PHPCSMD.class);
+    public enum Settings {
+        THREADED, UPDATEONSAVE, NOTIFY, IGNORE, DEBUGLOG, TIMEOUT
     }
 
-    public static boolean getThreaded() {
-        return (GeneralOptions._modul().get(_PREFIX + _THREADED, _THREADED_DEFAULT).compareTo("true") == 0);
+    private static final EnumMap<GeneralOptions.Settings, String> keys = new EnumMap<GeneralOptions.Settings, String>(GeneralOptions.Settings.class);
+    static {
+        keys.put(GeneralOptions.Settings.THREADED, "threaded");
+        keys.put(GeneralOptions.Settings.UPDATEONSAVE, "updateonsave");
+        keys.put(GeneralOptions.Settings.NOTIFY, "notification");
+        keys.put(GeneralOptions.Settings.IGNORE, "ignorepattern");
+        keys.put(GeneralOptions.Settings.DEBUGLOG, "debuglog");
+        keys.put(GeneralOptions.Settings.TIMEOUT, "timeout");
+
     }
 
-    public static void setThreaded(boolean threaded) {
-        GeneralOptions._modul().put(_PREFIX + _THREADED, threaded ? "true" : "false");
+    private static final EnumMap<GeneralOptions.Settings, GenericOption.SettingTypes> types = new EnumMap<GeneralOptions.Settings, GenericOption.SettingTypes>(GeneralOptions.Settings.class);
+    static {
+        types.put(GeneralOptions.Settings.THREADED, GenericOption.SettingTypes.BOOLEAN);
+        types.put(GeneralOptions.Settings.UPDATEONSAVE, GenericOption.SettingTypes.BOOLEAN);
+        types.put(GeneralOptions.Settings.NOTIFY, GenericOption.SettingTypes.BOOLEAN);
+        types.put(GeneralOptions.Settings.DEBUGLOG, GenericOption.SettingTypes.BOOLEAN);
+        types.put(GeneralOptions.Settings.TIMEOUT, GenericOption.SettingTypes.INTEGER);
     }
 
-    public static boolean getUpdateOnSave() {
-        return (GeneralOptions._modul().get(_PREFIX + _UPDATE_ON_SAVE, _UPDATE_ON_SAVE_DEFAULT).compareTo("true") == 0);
+    private static final EnumMap<GeneralOptions.Settings, String> defaults = new EnumMap<GeneralOptions.Settings, String>(GeneralOptions.Settings.class);
+    static {
+        defaults.put(GeneralOptions.Settings.THREADED, "false");
+        defaults.put(GeneralOptions.Settings.UPDATEONSAVE, "false");
+        defaults.put(GeneralOptions.Settings.NOTIFY, "false");
+        defaults.put(GeneralOptions.Settings.IGNORE, "\\.(svn|git)|\\.(phtml|html|xml|txt|java|svg|png|jpg|gif)$");
+        defaults.put(GeneralOptions.Settings.DEBUGLOG, "false");
+        defaults.put(GeneralOptions.Settings.TIMEOUT, "5000");
     }
 
-    public static void setUpdateOnSave(boolean updateOnSave) {
-        GeneralOptions._modul().put(_PREFIX + _UPDATE_ON_SAVE, updateOnSave ? "true" : "false");
+    public static Object load(GeneralOptions.Settings key, Lookup lkp) {
+        String defaultVal = "";
+        if (GeneralOptions.defaults.containsKey(key)) {
+            defaultVal = GeneralOptions.defaults.get(key);
+        }
+
+        String val = GenericOption.loadMerged(_PREFIX + keys.get(key), defaultVal, lkp);
+
+        if (!types.containsKey(key)) {
+            return val;
+        }
+
+        return GenericOption.castValue(val, types.get(key));
     }
 
-    public static boolean getNotification() {
-        return (GeneralOptions._modul().get(_PREFIX + _NOTIFICATION, _NOTIFICATION_DEFAULT).compareTo("true") == 0);
+    public static Object loadOriginal(GeneralOptions.Settings key) {
+        String defaultVal = "";
+        if (GeneralOptions.defaults.containsKey(key)) {
+            defaultVal = GeneralOptions.defaults.get(key);
+        }
+
+        String val = GenericOption.loadModul(_PREFIX +keys.get(key), defaultVal);
+
+        if (!types.containsKey(key)) {
+            return val;
+        }
+
+        return GenericOption.castValue(val, types.get(key));
     }
 
-    public static void setNotification(boolean notification) {
-        GeneralOptions._modul().put(_PREFIX + _NOTIFICATION, notification ? "true" : "false");
+    public static void set(GeneralOptions.Settings key, Object value) {
+        String val = value.toString();
+        if (types.containsKey(key)) {
+            val = GenericOption.castValueToString(value, types.get(key));
+        }
+        GenericOption.setModul(_PREFIX + keys.get(key), val);
     }
 
-    public static String getIgnorePattern() {
-        return GeneralOptions._modul().get(_PREFIX + _IGNORE_PATTERN, _IGNORE_PATTERN_DEFAULT);
-    }
-
-    public static void setIgnorePattern(String ignorePattern) {
-        GeneralOptions._modul().put(_PREFIX + _IGNORE_PATTERN, ignorePattern);
-    }
-
-    public static boolean getDebugLog() {
-        return (GeneralOptions._modul().get(_PREFIX + _DEBUG_LOG, _DEBUG_LOG_DEFAULT).compareTo("true") == 0);
-    }
-
-    public static void setDebugLog(boolean debuglog) {
-        GeneralOptions._modul().put(_PREFIX + _DEBUG_LOG, debuglog ? "true" : "false");
-    }
-
-    public static Integer getTimeout() {
-        return Integer.parseInt(GeneralOptions._modul().get(_PREFIX + _TIMEOUT, _TIMEOUT_DEFAULT));
-    }
-
-    public static void setTimeout(Integer timeout) {
-        GeneralOptions._modul().put(_PREFIX + _TIMEOUT, "" + timeout);
+    public static void overwrite(GeneralOptions.Settings key, Object value, Lookup lkp) {
+        String val = value.toString();
+        if (types.containsKey(key)) {
+            val = GenericOption.castValueToString(value, types.get(key));
+        }
+        GenericOption.setProject(_PREFIX + keys.get(key), val, lkp);
     }
 }

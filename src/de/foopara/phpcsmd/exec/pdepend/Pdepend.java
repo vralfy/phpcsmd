@@ -1,7 +1,6 @@
 package de.foopara.phpcsmd.exec.pdepend;
 
 import de.foopara.phpcsmd.debug.Logger;
-import de.foopara.phpcsmd.generics.GenericExecute;
 import de.foopara.phpcsmd.generics.GenericHelper;
 import de.foopara.phpcsmd.generics.GenericOutputReader;
 import de.foopara.phpcsmd.generics.GenericProcess;
@@ -10,6 +9,7 @@ import de.foopara.phpcsmd.ui.reports.PdependReportTopComponent;
 import java.io.File;
 import java.util.HashSet;
 import org.openide.filesystems.FileObject;
+import org.openide.util.Lookup;
 
 /**
  *
@@ -17,17 +17,24 @@ import org.openide.filesystems.FileObject;
  */
 public class Pdepend {
 
+
     private boolean _enabled = true;
 
     private PdependReportTopComponent component = null;
 
+    private Lookup lkp;
+
+    public Pdepend(Lookup lkp) {
+       this.lkp = lkp;
+    }
     public boolean isEnabled() {
         return this._enabled;
     }
 
     public PdependResult run(FileObject file) {
-        if (!GenericHelper.isDesirableFile(new File(PdependOptions.getScript()))
-            || (!GenericHelper.isDesirableFile(file) && !GenericHelper.isDesirableFolder(file))
+        if (!GenericHelper.isDesirableFile(new File((String)PdependOptions.load(PdependOptions.Settings.SCRIPT, this.lkp)), this.lkp)
+            || (!GenericHelper.isDesirableFile(file, this.lkp)
+            && !GenericHelper.isDesirableFolder(file, this.lkp))
         ) {
             return this.setAndReturnDefault();
         }
@@ -39,17 +46,20 @@ public class Pdepend {
         HashSet<File> tmpFiles = new HashSet<File>();
 
 
-        StringBuilder cmd = new StringBuilder(PdependOptions.getScript());
-        this.appendArgument(cmd, "--suffix=", "" + PdependOptions.getSuffixes());
-        this.appendArgument(cmd, "--exclude=", "" + PdependOptions.getExcludes());
-        this.appendArgument(cmd, "--ignore=", "" + PdependOptions.getIgnores());
-        this.appendArgument(cmd, "-d ", GenericHelper.implode(" -d ", PdependOptions.getIniOverwrite().split(";")));
+        StringBuilder cmd = new StringBuilder((String)PdependOptions.load(PdependOptions.Settings.SCRIPT, this.lkp));
+        this.appendArgument(cmd, "--suffix=", "" + (String)PdependOptions.load(PdependOptions.Settings.SUFFIXES, this.lkp));
+        this.appendArgument(cmd, "--exclude=", "" + (String)PdependOptions.load(PdependOptions.Settings.EXCLUDE, this.lkp));
+        this.appendArgument(cmd, "--ignore=", "" + (String)PdependOptions.load(PdependOptions.Settings.IGNORES, this.lkp));
+        this.appendArgument(cmd, "-d ", GenericHelper.implode(
+                " -d ",
+                ((String)PdependOptions.load(PdependOptions.Settings.INIOVERWRITE, this.lkp)).split(";")
+            ));
 
         File summary = new File(System.getProperty("java.io.tmpdir"), "phpcsmd_pdepend_" + file.hashCode() + ".xml");
         this.appendArgument(cmd, "--summary-xml=", summary.getAbsolutePath());
         tmpFiles.add(summary);
 
-        if (PdependOptions.getJDepend()) {
+        if ((Boolean)PdependOptions.load(PdependOptions.Settings.JDEPEND, this.lkp)) {
             File jdepend = new File(System.getProperty("java.io.tmpdir"), "phpcsmd_jdepend_" + file.hashCode() + ".xml");
             this.appendArgument(cmd, "--jdepend-xml=", jdepend.getAbsolutePath());
             tmpFiles.add(jdepend);
@@ -64,7 +74,7 @@ public class Pdepend {
         for (int i=0;i<tmpFilesArray.length;i++) {
             outputFiles[i] = (File)tmpFilesArray[i];
         }
-        GenericOutputReader[] reader = GenericProcess.run(cmd.toString(), outputFiles, this.component);
+        GenericOutputReader[] reader = GenericProcess.run(cmd.toString(), outputFiles, this.component, this.lkp);
 
         for (File f : tmpFiles) {
             if (f.exists()) {

@@ -16,6 +16,7 @@ import org.openide.filesystems.FileUtil;
 import org.openide.loaders.DataObject;
 import org.openide.loaders.DataObjectNotFoundException;
 import org.openide.util.Exceptions;
+import org.openide.util.Lookup;
 import org.openide.util.NbBundle.Messages;
 import org.openide.windows.TopComponent;
 
@@ -63,12 +64,12 @@ public final class PdependReportTopComponent extends GenericTopComponent {
         jScrollPane1 = new javax.swing.JScrollPane();
         pdependTree1 = new de.foopara.phpcsmd.ui.reports.PdependTree();
         jPanel1 = new javax.swing.JPanel();
-        metricsPanel = new de.foopara.phpcsmd.ui.reports.PdependMetricsPanel();
-        filePanel = new de.foopara.phpcsmd.ui.reports.PdependFilePanel();
-        packagePanel = new de.foopara.phpcsmd.ui.reports.PdependPackagePanel();
-        classPanel = new de.foopara.phpcsmd.ui.reports.PdependClassPanel();
-        methodPanel = new de.foopara.phpcsmd.ui.reports.PdependMethodPanel();
-        functionPanel = new de.foopara.phpcsmd.ui.reports.PdependFunctionPanel();
+        metricsPanel = new de.foopara.phpcsmd.ui.reports.PdependMetricsPanel(this.lkp);
+        filePanel = new de.foopara.phpcsmd.ui.reports.PdependFilePanel(this.lkp);
+        packagePanel = new de.foopara.phpcsmd.ui.reports.PdependPackagePanel(this.lkp);
+        classPanel = new de.foopara.phpcsmd.ui.reports.PdependClassPanel(this.lkp);
+        methodPanel = new de.foopara.phpcsmd.ui.reports.PdependMethodPanel(this.lkp);
+        functionPanel = new de.foopara.phpcsmd.ui.reports.PdependFunctionPanel(this.lkp);
         jButton1 = new javax.swing.JButton();
         lPdependStep = new javax.swing.JLabel();
         lPdependProgress = new javax.swing.JLabel();
@@ -191,7 +192,7 @@ public final class PdependReportTopComponent extends GenericTopComponent {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         this.jButton1.setEnabled(false);
 
-        PdependThread t = new PdependThread();
+        PdependThread t = new PdependThread(this.lkp);
         t.setFileObject(this.fileObject);
         t.setTopComponent(this);
         t.start();
@@ -359,7 +360,7 @@ public final class PdependReportTopComponent extends GenericTopComponent {
         if (filename == null) return;
         try {
             FileObject fo = FileUtil.toFileObject(new File(filename));
-            if (!GenericHelper.isDesirableFile(fo)) {
+            if (!GenericHelper.isDesirableFile(fo, this.lkp)) {
                 return;
             }
             DataObject dob = DataObject.find(fo);

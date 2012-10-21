@@ -6,13 +6,18 @@ import de.foopara.phpcsmd.generics.*;
 import de.foopara.phpcsmd.option.PhpcsOptions;
 import java.io.File;
 import org.openide.filesystems.FileObject;
+import org.openide.util.Lookup;
 
 /**
  *
  * @author nspecht
  */
 public class Phpcs extends GenericExecute {
-   private boolean _enabled = true;
+    private boolean _enabled = true;
+
+    public Phpcs(Lookup lkp) {
+        this.lkp = lkp;
+    }
 
     @Override
     public boolean isEnabled() {
@@ -21,10 +26,12 @@ public class Phpcs extends GenericExecute {
 
     @Override
     protected GenericResult run(FileObject file, boolean annotations) {
-        if (!PhpcsOptions.getActivated()) return this.setAndReturnCurrent(file);
+        if ((Boolean)PhpcsOptions.load(PhpcsOptions.Settings.ACTIVATED, this.lkp) == false) {
+            return this.setAndReturnCurrent(file);
+        }
 
-        if (!GenericHelper.isDesirableFile(new File(PhpcsOptions.getScript()))
-                || !GenericHelper.isDesirableFile(file)) {
+        if (!GenericHelper.isDesirableFile(new File((String)PhpcsOptions.load(PhpcsOptions.Settings.SCRIPT, this.lkp)), this.lkp)
+                || !GenericHelper.isDesirableFile(file, this.lkp)) {
             return this.setAndReturnDefault(file);
         }
 
@@ -33,23 +40,25 @@ public class Phpcs extends GenericExecute {
         if (!iAmAlive()) return this.setAndReturnCurrent(file);
 
         CustomStandard cstandard = null;
-        StringBuilder cmd = new StringBuilder(PhpcsOptions.getScript());
-        if (PhpcsOptions.getExtras() || PhpcsOptions.getStandard().trim().length() == 0) {
+        StringBuilder cmd = new StringBuilder((String)PhpcsOptions.load(PhpcsOptions.Settings.SCRIPT, this.lkp));
+        if ((Boolean)PhpcsOptions.load(PhpcsOptions.Settings.EXTRAS, this.lkp) == true
+            || ((String)PhpcsOptions.load(PhpcsOptions.Settings.STANDARD, this.lkp)).trim().length() == 0
+        ) {
             cstandard = new CustomStandard();
             this.appendArgument(cmd, "--standard=", cstandard.toString());
         } else {
-            this.appendArgument(cmd, "--standard=", PhpcsOptions.getStandard());
+            this.appendArgument(cmd, "--standard=", (String)PhpcsOptions.load(PhpcsOptions.Settings.STANDARD, this.lkp));
         }
-        this.appendArgument(cmd, "--sniffs=", PhpcsOptions.getSniffs());
-        this.appendArgument(cmd, "--extensions=", PhpcsOptions.getExtensions());
-        this.appendArgument(cmd, "--ignore=", PhpcsOptions.getIgnore());
-        this.appendArgument(cmd, "-d ", GenericHelper.implode(" -d ", PhpcsOptions.getIniOverwrite().split(";")));
+        this.appendArgument(cmd, "--sniffs=", (String)PhpcsOptions.load(PhpcsOptions.Settings.SNIFFS, this.lkp));
+        this.appendArgument(cmd, "--extensions=", (String)PhpcsOptions.load(PhpcsOptions.Settings.EXTENSIONS, this.lkp));
+        this.appendArgument(cmd, "--ignore=", (String)PhpcsOptions.load(PhpcsOptions.Settings.IGNORES, this.lkp));
+        this.appendArgument(cmd, "-d ", GenericHelper.implode(" -d ", ((String)PhpcsOptions.load(PhpcsOptions.Settings.INIOVERWRITE, this.lkp)).split(";")));
 
-        if (PhpcsOptions.getTabwidth() > -1) {
-            cmd.append(" --tab-width=").append(PhpcsOptions.getTabwidth());
+        if ((Integer)PhpcsOptions.load(PhpcsOptions.Settings.TABWIDTH, this.lkp) > -1) {
+            cmd.append(" --tab-width=").append((String)PhpcsOptions.load(PhpcsOptions.Settings.TABWIDTH, this.lkp));
         }
 
-        if (PhpcsOptions.getWarnings()) {
+        if ((Boolean)PhpcsOptions.load(PhpcsOptions.Settings.WARNINGS, this.lkp) == true) {
             cmd.append(" -w");
         } else {
             cmd.append(" -n");
@@ -68,15 +77,15 @@ public class Phpcs extends GenericExecute {
         epb.addArgument("--report=xml");
         epb.addArgument(file.getPath());
          */
-        PhpcsXMLParser parser = new PhpcsXMLParser();
+        PhpcsXMLParser parser = new PhpcsXMLParser(this.lkp);
         if (!iAmAlive()) return this.setAndReturnCurrent(file);
-        GenericOutputReader[] reader = GenericProcess.run(cmd.toString(), "", null);
+        GenericOutputReader[] reader = GenericProcess.run(cmd.toString(), "", null, this.lkp);
         if (!iAmAlive()) return this.setAndReturnCurrent(file);
         PhpcsResult res = parser.parse(reader[0]);
         if (!iAmAlive()) return this.setAndReturnCurrent(file);
         ViolationRegistry.getInstance().setPhpcs(file, res);
 
-        if (PhpcsOptions.getExtras() && cstandard != null) {
+        if ((Boolean)PhpcsOptions.load(PhpcsOptions.Settings.EXTRAS, this.lkp) && cstandard != null) {
             cstandard.delete();
         }
 

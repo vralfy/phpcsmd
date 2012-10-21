@@ -3,6 +3,7 @@ package de.foopara.phpcsmd.ui.reports;
 import de.foopara.phpcsmd.exec.pdepend.PdependTypes;
 import de.foopara.phpcsmd.option.PdependOptions;
 import javax.swing.JProgressBar;
+import org.openide.util.Lookup;
 
 /**
  *
@@ -13,8 +14,8 @@ public class PdependClassPanel extends PdependGenericResultPanel {
     /**
      * Creates new form PdependClassPanel
      */
-    public PdependClassPanel() {
-        super();
+    public PdependClassPanel(Lookup lkp) {
+        super(lkp);
         initComponents();
         this.addLabel("name", "Name", "Class");
         this.addLabel("nocc", "Number of Child Classes", "Class");
@@ -22,7 +23,7 @@ public class PdependClassPanel extends PdependGenericResultPanel {
         this.addLabel("cis", "Class Interface Size", "Class");
         this.addLabel("dit",  "Depth of Inheritance Tree", "Class");
 
-        if (!PdependOptions.getUseTabs()) {
+        if ((Boolean)PdependOptions.load(PdependOptions.Settings.USETABS, this.lkp) == false) {
             this.addSeparator(null, "Codelines", "Codelines");
         }
         this.addLabel("loc", "Lines of Code", "Codelines");
@@ -31,7 +32,7 @@ public class PdependClassPanel extends PdependGenericResultPanel {
         this.addProgressbar("eloc", "Executable Lines of Code", "Codelines");
         this.addProgressbar("lloc", "Logical Lines Of Code", "Codelines");
 
-        if (!PdependOptions.getUseTabs()) {
+        if ((Boolean)PdependOptions.load(PdependOptions.Settings.USETABS, this.lkp) == false) {
             this.addSeparator(null, "Methods", "Methods");
         }
         this.addLabel("nom", "Number of Methods", "Methods");
@@ -39,7 +40,7 @@ public class PdependClassPanel extends PdependGenericResultPanel {
         this.addProgressbar("noom", "Number of Overwritten Methods", "Methods");
         this.addProgressbar("npm", "Number of Public Methods", "Methods");
 
-        if (!PdependOptions.getUseTabs()) {
+        if ((Boolean)PdependOptions.load(PdependOptions.Settings.USETABS, this.lkp) == false) {
             this.addSeparator(null, "Properties", "Properties");
         }
         this.addLabel("vars", "Number of Properties", "Properties");

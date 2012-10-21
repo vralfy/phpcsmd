@@ -6,6 +6,7 @@ package de.foopara.phpcsmd.ui.phpcs;
 
 import de.foopara.phpcsmd.generics.GenericOptionsPanel;
 import javax.swing.JCheckBox;
+import org.openide.util.Lookup;
 
 /**
  *
@@ -18,6 +19,7 @@ public class PhpcsPropertyPanel extends GenericOptionsPanel {
      */
     public PhpcsPropertyPanel() {
         initComponents();
+        this.load();
     }
 
     /**
@@ -68,6 +70,7 @@ public class PhpcsPropertyPanel extends GenericOptionsPanel {
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 1;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
+        gridBagConstraints.insets = new java.awt.Insets(0, 0, 5, 5);
         add(btnStandard, gridBagConstraints);
 
         cmbStandard.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "-- select --" }));
@@ -77,6 +80,7 @@ public class PhpcsPropertyPanel extends GenericOptionsPanel {
         gridBagConstraints.gridwidth = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(0, 0, 5, 5);
         add(cmbStandard, gridBagConstraints);
 
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
@@ -85,6 +89,7 @@ public class PhpcsPropertyPanel extends GenericOptionsPanel {
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.insets = new java.awt.Insets(0, 0, 5, 5);
         add(jLabel1, gridBagConstraints);
 
         optStandard.setText(org.openide.util.NbBundle.getMessage(PhpcsPropertyPanel.class, "PhpcsPropertyPanel.optStandard.text")); // NOI18N
@@ -93,6 +98,7 @@ public class PhpcsPropertyPanel extends GenericOptionsPanel {
         gridBagConstraints.gridy = 2;
         gridBagConstraints.gridwidth = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.insets = new java.awt.Insets(0, 0, 5, 5);
         add(optStandard, gridBagConstraints);
 
         org.openide.awt.Mnemonics.setLocalizedText(jLabel5, org.openide.util.NbBundle.getMessage(PhpcsPropertyPanel.class, "PhpcsPropertyPanel.jLabel5.text")); // NOI18N
@@ -100,7 +106,7 @@ public class PhpcsPropertyPanel extends GenericOptionsPanel {
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 4;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
-        gridBagConstraints.insets = new java.awt.Insets(0, 0, 2, 2);
+        gridBagConstraints.insets = new java.awt.Insets(0, 0, 5, 5);
         add(jLabel5, gridBagConstraints);
 
         optSniff.setText(org.openide.util.NbBundle.getMessage(PhpcsPropertyPanel.class, "PhpcsPropertyPanel.optSniff.text")); // NOI18N
@@ -109,7 +115,7 @@ public class PhpcsPropertyPanel extends GenericOptionsPanel {
         gridBagConstraints.gridy = 4;
         gridBagConstraints.gridwidth = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.insets = new java.awt.Insets(0, 0, 2, 2);
+        gridBagConstraints.insets = new java.awt.Insets(0, 0, 5, 5);
         add(optSniff, gridBagConstraints);
 
         org.openide.awt.Mnemonics.setLocalizedText(jLabel3, org.openide.util.NbBundle.getMessage(PhpcsPropertyPanel.class, "PhpcsPropertyPanel.jLabel3.text")); // NOI18N
@@ -117,7 +123,7 @@ public class PhpcsPropertyPanel extends GenericOptionsPanel {
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 5;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
-        gridBagConstraints.insets = new java.awt.Insets(0, 0, 2, 2);
+        gridBagConstraints.insets = new java.awt.Insets(0, 0, 5, 5);
         add(jLabel3, gridBagConstraints);
 
         optExt.setText(org.openide.util.NbBundle.getMessage(PhpcsPropertyPanel.class, "PhpcsPropertyPanel.optExt.text")); // NOI18N
@@ -127,7 +133,7 @@ public class PhpcsPropertyPanel extends GenericOptionsPanel {
         gridBagConstraints.gridwidth = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.weightx = 1.0;
-        gridBagConstraints.insets = new java.awt.Insets(0, 0, 2, 2);
+        gridBagConstraints.insets = new java.awt.Insets(0, 0, 5, 5);
         add(optExt, gridBagConstraints);
 
         org.openide.awt.Mnemonics.setLocalizedText(jLabel4, org.openide.util.NbBundle.getMessage(PhpcsPropertyPanel.class, "PhpcsPropertyPanel.jLabel4.text")); // NOI18N
@@ -135,7 +141,7 @@ public class PhpcsPropertyPanel extends GenericOptionsPanel {
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 6;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
-        gridBagConstraints.insets = new java.awt.Insets(0, 0, 2, 2);
+        gridBagConstraints.insets = new java.awt.Insets(0, 0, 5, 5);
         add(jLabel4, gridBagConstraints);
 
         optIgnore.setText(org.openide.util.NbBundle.getMessage(PhpcsPropertyPanel.class, "PhpcsPropertyPanel.optIgnore.text")); // NOI18N
@@ -145,7 +151,7 @@ public class PhpcsPropertyPanel extends GenericOptionsPanel {
         gridBagConstraints.gridwidth = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.weightx = 1.0;
-        gridBagConstraints.insets = new java.awt.Insets(0, 0, 2, 2);
+        gridBagConstraints.insets = new java.awt.Insets(0, 0, 5, 5);
         add(optIgnore, gridBagConstraints);
 
         org.openide.awt.Mnemonics.setLocalizedText(jLabel6, org.openide.util.NbBundle.getMessage(PhpcsPropertyPanel.class, "PhpcsPropertyPanel.jLabel6.text")); // NOI18N
@@ -153,7 +159,7 @@ public class PhpcsPropertyPanel extends GenericOptionsPanel {
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 7;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
-        gridBagConstraints.insets = new java.awt.Insets(0, 0, 2, 2);
+        gridBagConstraints.insets = new java.awt.Insets(0, 0, 5, 5);
         add(jLabel6, gridBagConstraints);
 
         optTabwidth.setModel(new javax.swing.SpinnerNumberModel(Integer.valueOf(-1), Integer.valueOf(-1), null, Integer.valueOf(1)));
@@ -163,7 +169,7 @@ public class PhpcsPropertyPanel extends GenericOptionsPanel {
         gridBagConstraints.gridy = 7;
         gridBagConstraints.gridwidth = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.insets = new java.awt.Insets(0, 0, 2, 2);
+        gridBagConstraints.insets = new java.awt.Insets(0, 0, 5, 5);
         add(optTabwidth, gridBagConstraints);
 
         org.openide.awt.Mnemonics.setLocalizedText(jLabel7, org.openide.util.NbBundle.getMessage(PhpcsPropertyPanel.class, "PhpcsPropertyPanel.jLabel7.text")); // NOI18N
@@ -171,7 +177,7 @@ public class PhpcsPropertyPanel extends GenericOptionsPanel {
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 8;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
-        gridBagConstraints.insets = new java.awt.Insets(0, 0, 2, 2);
+        gridBagConstraints.insets = new java.awt.Insets(0, 0, 5, 5);
         add(jLabel7, gridBagConstraints);
 
         optIniOverwrite.setText(org.openide.util.NbBundle.getMessage(PhpcsPropertyPanel.class, "PhpcsPropertyPanel.optIniOverwrite.text")); // NOI18N
@@ -181,7 +187,7 @@ public class PhpcsPropertyPanel extends GenericOptionsPanel {
         gridBagConstraints.gridy = 8;
         gridBagConstraints.gridwidth = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.insets = new java.awt.Insets(0, 0, 2, 2);
+        gridBagConstraints.insets = new java.awt.Insets(0, 0, 5, 5);
         add(optIniOverwrite, gridBagConstraints);
 
         org.openide.awt.Mnemonics.setLocalizedText(optWarning, org.openide.util.NbBundle.getMessage(PhpcsPropertyPanel.class, "PhpcsPropertyPanel.optWarning.text")); // NOI18N
@@ -189,7 +195,7 @@ public class PhpcsPropertyPanel extends GenericOptionsPanel {
         gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 9;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.insets = new java.awt.Insets(0, 0, 2, 2);
+        gridBagConstraints.insets = new java.awt.Insets(0, 0, 5, 5);
         add(optWarning, gridBagConstraints);
 
         org.openide.awt.Mnemonics.setLocalizedText(jLabel2, org.openide.util.NbBundle.getMessage(PhpcsPropertyPanel.class, "PhpcsPropertyPanel.jLabel2.text")); // NOI18N
@@ -198,6 +204,7 @@ public class PhpcsPropertyPanel extends GenericOptionsPanel {
         gridBagConstraints.gridy = 0;
         gridBagConstraints.gridwidth = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.insets = new java.awt.Insets(0, 0, 5, 5);
         add(jLabel2, gridBagConstraints);
 
         org.openide.awt.Mnemonics.setLocalizedText(owStandard, org.openide.util.NbBundle.getMessage(PhpcsPropertyPanel.class, "PhpcsPropertyPanel.owStandard.text")); // NOI18N
@@ -210,6 +217,7 @@ public class PhpcsPropertyPanel extends GenericOptionsPanel {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 1;
+        gridBagConstraints.insets = new java.awt.Insets(0, 0, 5, 5);
         add(owStandard, gridBagConstraints);
 
         org.openide.awt.Mnemonics.setLocalizedText(owSniff, org.openide.util.NbBundle.getMessage(PhpcsPropertyPanel.class, "PhpcsPropertyPanel.owSniff.text")); // NOI18N
@@ -222,6 +230,7 @@ public class PhpcsPropertyPanel extends GenericOptionsPanel {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 4;
+        gridBagConstraints.insets = new java.awt.Insets(0, 0, 5, 5);
         add(owSniff, gridBagConstraints);
 
         org.openide.awt.Mnemonics.setLocalizedText(owExtension, org.openide.util.NbBundle.getMessage(PhpcsPropertyPanel.class, "PhpcsPropertyPanel.owExtension.text")); // NOI18N
@@ -234,6 +243,7 @@ public class PhpcsPropertyPanel extends GenericOptionsPanel {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 5;
+        gridBagConstraints.insets = new java.awt.Insets(0, 0, 5, 5);
         add(owExtension, gridBagConstraints);
 
         org.openide.awt.Mnemonics.setLocalizedText(owIgnore, org.openide.util.NbBundle.getMessage(PhpcsPropertyPanel.class, "PhpcsPropertyPanel.owIgnore.text")); // NOI18N
@@ -246,6 +256,7 @@ public class PhpcsPropertyPanel extends GenericOptionsPanel {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 6;
+        gridBagConstraints.insets = new java.awt.Insets(0, 0, 5, 5);
         add(owIgnore, gridBagConstraints);
 
         org.openide.awt.Mnemonics.setLocalizedText(owTabWidth, org.openide.util.NbBundle.getMessage(PhpcsPropertyPanel.class, "PhpcsPropertyPanel.owTabWidth.text")); // NOI18N
@@ -258,6 +269,7 @@ public class PhpcsPropertyPanel extends GenericOptionsPanel {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 7;
+        gridBagConstraints.insets = new java.awt.Insets(0, 0, 5, 5);
         add(owTabWidth, gridBagConstraints);
 
         org.openide.awt.Mnemonics.setLocalizedText(owIniOverwrite, org.openide.util.NbBundle.getMessage(PhpcsPropertyPanel.class, "PhpcsPropertyPanel.owIniOverwrite.text")); // NOI18N
@@ -270,6 +282,7 @@ public class PhpcsPropertyPanel extends GenericOptionsPanel {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 8;
+        gridBagConstraints.insets = new java.awt.Insets(0, 0, 5, 5);
         add(owIniOverwrite, gridBagConstraints);
 
         org.openide.awt.Mnemonics.setLocalizedText(owWarning, org.openide.util.NbBundle.getMessage(PhpcsPropertyPanel.class, "PhpcsPropertyPanel.owWarning.text")); // NOI18N
@@ -282,6 +295,7 @@ public class PhpcsPropertyPanel extends GenericOptionsPanel {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 9;
+        gridBagConstraints.insets = new java.awt.Insets(0, 0, 5, 5);
         add(owWarning, gridBagConstraints);
     }// </editor-fold>//GEN-END:initComponents
 
@@ -316,9 +330,11 @@ public class PhpcsPropertyPanel extends GenericOptionsPanel {
     private javax.swing.JCheckBox owWarning;
     // End of variables declaration//GEN-END:variables
 
+    private Lookup lkp;
+
     @Override
     public void load() {
-
+        this.updateForm();
     }
 
     @Override
@@ -349,5 +365,9 @@ public class PhpcsPropertyPanel extends GenericOptionsPanel {
         optIniOverwrite.setEnabled(enabled);
         enabled = owWarning.isSelected();
         optWarning.setEnabled(enabled);
+    }
+
+    public void setLookup(Lookup lkp) {
+        this.lkp = lkp;
     }
 }

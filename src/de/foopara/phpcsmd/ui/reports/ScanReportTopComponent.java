@@ -21,6 +21,7 @@ import org.openide.filesystems.FileUtil;
 import org.openide.loaders.DataObject;
 import org.openide.loaders.DataObjectNotFoundException;
 import org.openide.util.Exceptions;
+import org.openide.util.Lookup;
 import org.openide.util.NbBundle.Messages;
 import org.openide.windows.TopComponent;
 
@@ -207,11 +208,11 @@ public final class ScanReportTopComponent extends GenericTopComponent {
         this.jProgressBar1.setValue(0);
         this.jProgressBar1.setMaximum(1);
 
-        FileCountThread t1 = new FileCountThread();
+        FileCountThread t1 = new FileCountThread(this.lkp);
         t1.setFileObject(this.fileObject);
         t1.setTopComponent(this);
 
-        RescanThread t2 = new RescanThread();
+        RescanThread t2 = new RescanThread(this.lkp);
         t2.setFileObject(this.fileObject);
         t2.setTopComponent(this);
         t2.setRetrieveValuesFromRegistry(!this.optFullRescan.isSelected());
@@ -273,12 +274,12 @@ public final class ScanReportTopComponent extends GenericTopComponent {
         this.enablePhpcs.setVisible(true);
         this.enablePhpmd.setVisible(true);
         this.enablePhpcpd.setVisible(true);
-        this.enablePhpcs.setSelected(PhpcsOptions.getActivated());
-        this.enablePhpmd.setSelected(PhpmdOptions.getActivated());
-        this.enablePhpcpd.setSelected(PhpcpdOptions.getActivated() || PhpcpdOptions.getActivatedFolder());
-        this.enablePhpcs.setEnabled(PhpcsOptions.getActivated());
-        this.enablePhpmd.setEnabled(PhpmdOptions.getActivated());
-        this.enablePhpcpd.setEnabled(PhpcpdOptions.getActivated() || PhpcpdOptions.getActivatedFolder());
+        this.enablePhpcs.setSelected((Boolean)PhpcsOptions.load(PhpcsOptions.Settings.ACTIVATED, this.lkp));
+        this.enablePhpmd.setSelected((Boolean)PhpmdOptions.load(PhpmdOptions.Settings.ACTIVATED, this.lkp));
+        this.enablePhpcpd.setSelected((Boolean)PhpcpdOptions.load(PhpcpdOptions.Settings.ACTIVATED, this.lkp) || (Boolean)PhpcpdOptions.load(PhpcpdOptions.Settings.ACTIVATEDFOLDER, this.lkp));
+        this.enablePhpcs.setEnabled((Boolean)PhpcsOptions.load(PhpcsOptions.Settings.ACTIVATED, this.lkp));
+        this.enablePhpmd.setEnabled((Boolean)PhpmdOptions.load(PhpmdOptions.Settings.ACTIVATED, this.lkp));
+        this.enablePhpcpd.setEnabled((Boolean)PhpcpdOptions.load(PhpcpdOptions.Settings.ACTIVATED, this.lkp) || (Boolean)PhpcpdOptions.load(PhpcpdOptions.Settings.ACTIVATEDFOLDER, this.lkp));
         // add custom code on component opening
     }
 
@@ -307,9 +308,9 @@ public final class ScanReportTopComponent extends GenericTopComponent {
 
         this.jButton1.setEnabled(true);
         this.optFullRescan.setEnabled(true);
-        this.enablePhpcs.setEnabled(PhpcsOptions.getActivated());
-        this.enablePhpmd.setEnabled(PhpmdOptions.getActivated());
-        this.enablePhpcpd.setEnabled(PhpcpdOptions.getActivated() || PhpcpdOptions.getActivatedFolder());
+        this.enablePhpcs.setEnabled((Boolean)PhpcsOptions.load(PhpcsOptions.Settings.ACTIVATED, this.lkp));
+        this.enablePhpmd.setEnabled((Boolean)PhpmdOptions.load(PhpmdOptions.Settings.ACTIVATED, this.lkp));
+        this.enablePhpcpd.setEnabled((Boolean)PhpcpdOptions.load(PhpcpdOptions.Settings.ACTIVATED, this.lkp) || (Boolean)PhpcpdOptions.load(PhpcpdOptions.Settings.ACTIVATEDFOLDER, this.lkp));
         this.jButton1.setVisible(true);
         this.optFullRescan.setVisible(true);
         this.enablePhpcs.setVisible(true);
@@ -350,7 +351,7 @@ public final class ScanReportTopComponent extends GenericTopComponent {
             String path = (String)this.scanReportTable1.getValueAt(this.scanReportTable1.getSelectedRow(), 0);
             path = this.fileObject.getPath() + path;
             FileObject fo = FileUtil.toFileObject(new File(path));
-            if (!GenericHelper.isDesirableFile(fo)) return;
+            if (!GenericHelper.isDesirableFile(fo, this.lkp)) return;
 
             DataObject dob = DataObject.find(fo);
             Openable oc = dob.getLookup().lookup(Openable.class);

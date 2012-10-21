@@ -7,16 +7,23 @@ import org.openide.filesystems.FileAttributeEvent;
 import org.openide.filesystems.FileChangeListener;
 import org.openide.filesystems.FileEvent;
 import org.openide.filesystems.FileRenameEvent;
+import org.openide.util.Lookup;
 
 /**
  *
  * @author nspecht
  */
 public class GenericFileListener implements FileChangeListener {
+    protected Lookup lkp;
+
+    public GenericFileListener(Lookup lkp) {
+        this.lkp = lkp;
+    }
+
     @Override
     public void fileChanged(FileEvent fe) {
-        if (GeneralOptions.getUpdateOnSave()) {
-            GenericExecute.executeQATools(fe.getFile());
+        if ((Boolean)GeneralOptions.load(GeneralOptions.Settings.UPDATEONSAVE, this.lkp)) {
+            GenericExecute.executeQATools(fe.getFile(), this.lkp);
         }
     }
 
@@ -42,8 +49,8 @@ public class GenericFileListener implements FileChangeListener {
 
     @Override
     public void fileAttributeChanged(FileAttributeEvent fae) {
-        if (GeneralOptions.getUpdateOnSave()) {
-            GenericExecute.executeQATools(fae.getFile());
+        if ((Boolean)GeneralOptions.load(GeneralOptions.Settings.UPDATEONSAVE, this.lkp)) {
+            GenericExecute.executeQATools(fae.getFile(), this.lkp);
         }
     }
 }

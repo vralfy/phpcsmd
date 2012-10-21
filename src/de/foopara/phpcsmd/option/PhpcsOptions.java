@@ -1,8 +1,7 @@
 package de.foopara.phpcsmd.option;
 
-import de.foopara.phpcsmd.PHPCSMD;
-import java.util.prefs.Preferences;
-import org.openide.util.NbPreferences;
+import java.util.EnumMap;
+import org.openide.util.Lookup;
 
 /**
  *
@@ -12,136 +11,122 @@ public class PhpcsOptions {
 
     public static final String _PREFIX = "phpcsmd.phpcs.";
 
-    private static final String _ACTIVATED             = "activated";
-    private static final String _ACTIVATED_DEFAULT     = "false";
-
-    private static final String _SCRIPT                = "script";
-    private static final String _SCRIPT_DEFAULT        = "/usr/bin/phpcs";
-
-    private static final String _STANDARD              = "standard";
-    private static final String _STANDARD_DEFAULT      = "Zend";
-
-    private static final String _SNIFFS                = "sniffs";
-    private static final String _SNIFFS_DEFAULT        = "";
-
-    private static final String _IGNORES               = "ignores";
-    private static final String _IGNORES_DEFAULT       = "";
-
-    private static final String _EXTENSIONS             = "extensions";
-    private static final String _EXTENSIONS_DEFAULT     = "";
-
-    private static final String _TABWIDTH               = "tabwidth";
-    private static final String _TABWIDTH_DEFAULT       = "-1";
-
-    private static final String _INIOVERWRITE           = "inioverwrite";
-    private static final String _INIOVERWRITE_DEFAULT   = "";
-
-    private static final String _WARNINGS               = "warnings";
-    private static final String _WARNINGS_DEFAULT       = "true";
-
-    private static final String _EXTRAS                 = "extras";
-    private static final String _EXTRAS_DEFAULT         = "false";
-
-    private static final String _XSNIFF_DEFAULT         = "false";
-    private static final String _XSNIFFTASK_DEFAULT     = "true";
-
-    private static Preferences _modul() {
-        return NbPreferences.forModule(PHPCSMD.class);
+    public enum Settings {
+        ACTIVATED, SCRIPT, STANDARD, SNIFFS, IGNORES, EXTENSIONS, TABWIDTH, INIOVERWRITE,
+        WARNINGS, EXTRAS, XSNIFF, XSNIFFTASK
     }
 
-    public static boolean getActivated() {
-        return (PhpcsOptions._modul().get(_PREFIX + _ACTIVATED, _ACTIVATED_DEFAULT).compareTo("true") == 0);
+    private static final EnumMap<PhpcsOptions.Settings, String> keys = new EnumMap<PhpcsOptions.Settings, String>(PhpcsOptions.Settings.class);
+    static {
+        keys.put(PhpcsOptions.Settings.ACTIVATED, "activated");
+        keys.put(PhpcsOptions.Settings.SCRIPT, "script");
+        keys.put(PhpcsOptions.Settings.STANDARD, "standard");
+        keys.put(PhpcsOptions.Settings.SNIFFS, "sniffs");
+        keys.put(PhpcsOptions.Settings.IGNORES, "ignores");
+        keys.put(PhpcsOptions.Settings.EXTENSIONS, "extensions");
+        keys.put(PhpcsOptions.Settings.TABWIDTH, "tabwidth");
+        keys.put(PhpcsOptions.Settings.INIOVERWRITE, "inioverwrite");
+        keys.put(PhpcsOptions.Settings.WARNINGS, "warnings");
+        keys.put(PhpcsOptions.Settings.EXTRAS, "extras");
+        keys.put(PhpcsOptions.Settings.XSNIFF, "sniff.");
+        keys.put(PhpcsOptions.Settings.XSNIFFTASK, "snifftask.");
     }
 
-    public static void setActivated(boolean activated) {
-        PhpcsOptions._modul().put(_PREFIX + _ACTIVATED, activated ? "true" : "false");
+    private static final EnumMap<PhpcsOptions.Settings, GenericOption.SettingTypes> types = new EnumMap<PhpcsOptions.Settings, GenericOption.SettingTypes>(PhpcsOptions.Settings.class);
+    static {
+        types.put(PhpcsOptions.Settings.ACTIVATED, GenericOption.SettingTypes.BOOLEAN);
+        types.put(PhpcsOptions.Settings.TABWIDTH, GenericOption.SettingTypes.INTEGER);
+        types.put(PhpcsOptions.Settings.WARNINGS, GenericOption.SettingTypes.BOOLEAN);
+        types.put(PhpcsOptions.Settings.EXTRAS, GenericOption.SettingTypes.BOOLEAN);
+        types.put(PhpcsOptions.Settings.XSNIFF, GenericOption.SettingTypes.BOOLEAN);
+        types.put(PhpcsOptions.Settings.XSNIFFTASK, GenericOption.SettingTypes.BOOLEAN);
     }
 
-    public static String getScript() {
-        return PhpcsOptions._modul().get(_PREFIX + _SCRIPT, _SCRIPT_DEFAULT);
+    private static final EnumMap<PhpcsOptions.Settings, String> defaults = new EnumMap<PhpcsOptions.Settings, String>(PhpcsOptions.Settings.class);
+    static {
+        defaults.put(PhpcsOptions.Settings.ACTIVATED, "false");
+        defaults.put(PhpcsOptions.Settings.SCRIPT, "/usr/bin/phpcs");
+        defaults.put(PhpcsOptions.Settings.STANDARD, "Zend");
+        defaults.put(PhpcsOptions.Settings.SNIFFS, "");
+        defaults.put(PhpcsOptions.Settings.IGNORES, "");
+        defaults.put(PhpcsOptions.Settings.EXTENSIONS, "");
+        defaults.put(PhpcsOptions.Settings.TABWIDTH, "-1");
+        defaults.put(PhpcsOptions.Settings.INIOVERWRITE, "");
+        defaults.put(PhpcsOptions.Settings.WARNINGS, "true");
+        defaults.put(PhpcsOptions.Settings.EXTRAS, "false");
+        defaults.put(PhpcsOptions.Settings.XSNIFF, "false");
+        defaults.put(PhpcsOptions.Settings.XSNIFFTASK, "true");
     }
 
-    public static void setScript(String script) {
-        PhpcsOptions._modul().put(_PREFIX + _SCRIPT, script);
+    public static Object load(PhpcsOptions.Settings key, Lookup lkp) {
+        String defaultVal = "";
+        if (PhpcsOptions.defaults.containsKey(key)) {
+            defaultVal = PhpcsOptions.defaults.get(key);
+        }
+
+        String val = GenericOption.loadMerged(_PREFIX + keys.get(key), defaultVal, lkp);
+
+        if (!types.containsKey(key)) {
+            return val;
+        }
+
+        return GenericOption.castValue(val, types.get(key));
     }
 
-    public static String getStandard() {
-        return PhpcsOptions._modul().get(_PREFIX + _STANDARD, _STANDARD_DEFAULT);
+    public static Object loadOriginal(PhpcsOptions.Settings key) {
+        String defaultVal = "";
+        if (PhpcsOptions.defaults.containsKey(key)) {
+            defaultVal = PhpcsOptions.defaults.get(key);
+        }
+
+        String val = GenericOption.loadModul(_PREFIX +keys.get(key), defaultVal);
+
+        if (!types.containsKey(key)) {
+            return val;
+        }
+
+        return GenericOption.castValue(val, types.get(key));
     }
 
-    public static void setStandard(String standard) {
-        PhpcsOptions._modul().put(_PREFIX + _STANDARD, standard);
+    public static void set(PhpcsOptions.Settings key, Object value) {
+        String val = value.toString();
+        if (types.containsKey(key)) {
+            val = GenericOption.castValueToString(value, types.get(key));
+        }
+        GenericOption.setModul(_PREFIX + keys.get(key), val);
     }
 
-    public static String getSniffs() {
-        return PhpcsOptions._modul().get(_PREFIX + _SNIFFS, _SNIFFS_DEFAULT);
-    }
-
-    public static void setSniffs(String sniffs) {
-        PhpcsOptions._modul().put(_PREFIX + _SNIFFS, sniffs);
-    }
-
-    public static String getIgnore() {
-        return PhpcsOptions._modul().get(_PREFIX + _IGNORES, _IGNORES_DEFAULT);
-    }
-
-    public static void setIgnore(String ignore) {
-        PhpcsOptions._modul().put(_PREFIX + _IGNORES, ignore);
-    }
-
-    public static String getExtensions() {
-        return PhpcsOptions._modul().get(_PREFIX + _EXTENSIONS, _EXTENSIONS_DEFAULT);
-    }
-
-    public static void setExtensions(String extensions) {
-        PhpcsOptions._modul().put(_PREFIX + _EXTENSIONS, extensions);
-    }
-
-    public static Integer getTabwidth() {
-        return Integer.parseInt(PhpcsOptions._modul().get(_PREFIX + _TABWIDTH, _TABWIDTH_DEFAULT));
-    }
-
-    public static void setTabwidth(Integer tabwidth) {
-        PhpcsOptions._modul().put(_PREFIX + _TABWIDTH, "" + tabwidth);
-    }
-
-    public static String getIniOverwrite() {
-        return PhpcsOptions._modul().get(_PREFIX + _INIOVERWRITE, _INIOVERWRITE_DEFAULT);
-    }
-
-    public static void setIniOverwrite(String overwrite) {
-        PhpcsOptions._modul().put(_PREFIX + _INIOVERWRITE, overwrite);
-    }
-
-    public static boolean getWarnings() {
-        return (PhpcsOptions._modul().get(_PREFIX + _WARNINGS, _WARNINGS_DEFAULT).compareTo("true") == 0);
-    }
-
-    public static void setWarnings(boolean showWarnings) {
-        PhpcsOptions._modul().put(_PREFIX + _WARNINGS, showWarnings ? "true" : "false");
-    }
-
-    public static boolean getExtras() {
-        return (PhpcsOptions._modul().get(_PREFIX + _EXTRAS, _EXTRAS_DEFAULT).compareTo("true") == 0);
-    }
-
-    public static void setExtras(boolean extras) {
-        PhpcsOptions._modul().put(_PREFIX + _EXTRAS, extras ? "true" : "false");
+    public static void overwrite(PhpcsOptions.Settings key, Object value, Lookup lkp) {
+        String val = value.toString();
+        if (types.containsKey(key)) {
+            val = GenericOption.castValueToString(value, types.get(key));
+        }
+        GenericOption.setProject(_PREFIX + keys.get(key), val, lkp);
     }
 
     public static boolean getSniff(String name) {
-        return (PhpcsOptions._modul().get(_PREFIX + "sniff." + name, _XSNIFF_DEFAULT).compareTo("true") == 0);
+        String val = GenericOption.loadModul(
+                _PREFIX + keys.get(Settings.XSNIFF) + name,
+                defaults.get(Settings.XSNIFF));
+        return (Boolean)GenericOption.castValue(val, types.get(Settings.XSNIFF));
     }
 
     public static void setSniff(String name, boolean opt) {
-        PhpcsOptions._modul().put(_PREFIX + "sniff." + name, opt ? "true" : "false");
+        GenericOption.setModul(
+                _PREFIX + keys.get(Settings.XSNIFF) + name,
+                GenericOption.castValueToString(opt, types.get(Settings.XSNIFF)));
     }
 
     public static boolean getSniffTask(String name) {
-        return (PhpcsOptions._modul().get(_PREFIX + "snifftask." + name, _XSNIFFTASK_DEFAULT).compareTo("true") == 0);
+        String val = GenericOption.loadModul(
+                _PREFIX + keys.get(Settings.XSNIFFTASK) + name,
+                defaults.get(Settings.XSNIFFTASK));
+        return (Boolean)GenericOption.castValue(val, types.get(Settings.XSNIFFTASK));
     }
 
     public static void setSniffTask(String name, boolean opt) {
-        PhpcsOptions._modul().put(_PREFIX + "snifftask." + name, opt ? "true" : "false");
+        GenericOption.setModul(
+                _PREFIX + keys.get(Settings.XSNIFFTASK) + name,
+                GenericOption.castValueToString(opt, types.get(Settings.XSNIFFTASK)));
     }
 }

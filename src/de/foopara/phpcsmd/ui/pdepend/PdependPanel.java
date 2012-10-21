@@ -169,24 +169,24 @@ public class PdependPanel extends GenericOptionsPanel {
 
     @Override
     public void load() {
-        this.optScript.setText(PdependOptions.getScript());
-        this.optSuffix.setText(PdependOptions.getSuffixes());
-        this.optExclude.setText(PdependOptions.getExcludes());
-        this.optIgnore.setText(PdependOptions.getIgnores());
-        this.optIniOverwrite.setText(PdependOptions.getIniOverwrite());
-        this.optUseTabs.setSelected(PdependOptions.getUseTabs());
-        this.optJdepend.setSelected(PdependOptions.getJDepend());
+        this.optScript.setText((String)PdependOptions.loadOriginal(PdependOptions.Settings.SCRIPT));
+        this.optSuffix.setText((String)PdependOptions.loadOriginal(PdependOptions.Settings.SUFFIXES));
+        this.optExclude.setText((String)PdependOptions.loadOriginal(PdependOptions.Settings.EXCLUDE));
+        this.optIgnore.setText((String)PdependOptions.loadOriginal(PdependOptions.Settings.IGNORES));
+        this.optIniOverwrite.setText((String)PdependOptions.loadOriginal(PdependOptions.Settings.INIOVERWRITE));
+        this.optUseTabs.setSelected((Boolean)PdependOptions.loadOriginal(PdependOptions.Settings.USETABS));
+        this.optJdepend.setSelected((Boolean)PdependOptions.loadOriginal(PdependOptions.Settings.JDEPEND));
     }
 
     @Override
     public void save() {
-        PdependOptions.setScript(this.optScript.getText());
-        PdependOptions.setSuffixes(this.optSuffix.getText());
-        PdependOptions.setExcludes(this.optExclude.getText());
-        PdependOptions.setIgnores(this.optIgnore.getText());
-        PdependOptions.setIniOverwrite(this.optIniOverwrite.getText());
-        PdependOptions.setUseTabs(this.optUseTabs.isSelected());
-        PdependOptions.setJDepend(this.optJdepend.isSelected());
+        PdependOptions.set(PdependOptions.Settings.SCRIPT, this.optScript.getText());
+        PdependOptions.set(PdependOptions.Settings.SUFFIXES, this.optSuffix.getText());
+        PdependOptions.set(PdependOptions.Settings.EXCLUDE, this.optExclude.getText());
+        PdependOptions.set(PdependOptions.Settings.IGNORES, this.optIgnore.getText());
+        PdependOptions.set(PdependOptions.Settings.INIOVERWRITE, this.optIniOverwrite.getText());
+        PdependOptions.set(PdependOptions.Settings.USETABS, this.optUseTabs.isSelected());
+        PdependOptions.set(PdependOptions.Settings.JDEPEND, this.optJdepend.isSelected());
     }
 
     @Override

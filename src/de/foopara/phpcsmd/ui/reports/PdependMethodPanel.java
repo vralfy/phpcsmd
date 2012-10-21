@@ -2,6 +2,7 @@ package de.foopara.phpcsmd.ui.reports;
 
 import de.foopara.phpcsmd.exec.pdepend.PdependTypes;
 import javax.swing.JProgressBar;
+import org.openide.util.Lookup;
 
 /**
  *
@@ -12,8 +13,8 @@ public class PdependMethodPanel extends PdependGenericResultPanel {
     /**
      * Creates new form PdependMethodPanel
      */
-    public PdependMethodPanel() {
-        super();
+    public PdependMethodPanel(Lookup lkp) {
+        super(lkp);
         initComponents();
         this.addLabel("name", "Name", "Method");
 

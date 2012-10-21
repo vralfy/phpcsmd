@@ -13,6 +13,7 @@ import org.netbeans.spi.tasklist.PushTaskScanner.Callback;
 import org.netbeans.spi.tasklist.Task;
 import org.openide.filesystems.FileObject;
 import org.openide.filesystems.FileUtil;
+import org.openide.util.Lookup;
 
 /**
  *
@@ -59,12 +60,12 @@ public class ViolationRegistry {
         return this.get(fo, this.phpcpd);
     }
 
-    public void setPhpcpdFolder(HashMap<String, PhpcpdResult> list) {
+    public void setPhpcpdFolder(HashMap<String, PhpcpdResult> list, Lookup lkp) {
         for (String key : list.keySet()) {
             FileObject fo = FileUtil.toFileObject(new File(key));
             if (fo!=null) {
                 this.put(fo, list.get(key), this.phpcpd);
-                GenericAnnotationBuilder.updateAnnotations(fo);
+                GenericAnnotationBuilder.updateAnnotations(fo, lkp);
             }
         }
     }

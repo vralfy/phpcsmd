@@ -9,6 +9,7 @@ import org.netbeans.spi.tasklist.Task;
 import org.netbeans.spi.tasklist.TaskScanningScope;
 import org.openide.filesystems.FileObject;
 import org.openide.filesystems.FileUtil;
+import org.openide.util.Lookup;
 
 /**
  *
@@ -59,15 +60,15 @@ public class ViolationReporter extends PushTaskScanner {
         if (fileList.size() > 0) {
             for (FileObject file : fileList) {
                 ViolationRegistry.getInstance().setCallback(file, clbck);
-                clbck.setTasks(file, scan(file));
+                clbck.setTasks(file, scan(file, this.scope.getLookup()));
             }
         } else {
             clbck.setTasks(this.getList());
         }
     }
 
-    public List<? extends Task> scan(FileObject fo) {
-         GenericExecute.executeQATools(fo);
+    public List<? extends Task> scan(FileObject fo, Lookup lkp) {
+         GenericExecute.executeQATools(fo, lkp);
          return ViolationRegistry.getInstance().getTaskList(fo);
     }
 

@@ -8,6 +8,7 @@ import java.io.IOException;
 import org.openide.filesystems.FileObject;
 import org.openide.filesystems.FileUtil;
 import org.openide.util.Exceptions;
+import org.openide.util.Lookup;
 
 /**
  *
@@ -18,6 +19,11 @@ public class FileCountThread extends Thread {
     private FileObject fo = null;
     private boolean interupted = false;
     private ScanReportTopComponent component = null;
+    private Lookup lkp;
+
+    public FileCountThread(Lookup lkp) {
+        this.lkp = lkp;
+    }
 
     public void setFileObject(FileObject fo) {
         this.fo = fo;
@@ -44,7 +50,7 @@ public class FileCountThread extends Thread {
     private int count(File f, int fc) {
         for (File f2 : f.listFiles()) {
             try {
-                if (GenericHelper.isDesirableFile(f2) && !GenericHelper.isSymlink(f2)) {
+                if (GenericHelper.isDesirableFile(f2, this.lkp) && !GenericHelper.isSymlink(f2)) {
                     fc += 1;
                     this.component.setMaximumFilecount(fc);
                 } else if (f2.isDirectory() && !GenericHelper.isSymlink(f2)) {

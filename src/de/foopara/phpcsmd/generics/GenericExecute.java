@@ -3,6 +3,7 @@ package de.foopara.phpcsmd.generics;
 import de.foopara.phpcsmd.option.GeneralOptions;
 import de.foopara.phpcsmd.threads.QAThread;
 import org.openide.filesystems.FileObject;
+import org.openide.util.Lookup;
 
 /**
  *
@@ -11,6 +12,8 @@ import org.openide.filesystems.FileObject;
 abstract public class GenericExecute {
 
     protected QAThread qaThread = null;
+    protected Lookup lkp;
+
     public abstract boolean isEnabled();
     protected abstract GenericResult run(FileObject file, boolean annotations);
 
@@ -36,10 +39,10 @@ abstract public class GenericExecute {
         return !this.qaThread.isInterupted();
     }
 
-    public static void executeQATools(FileObject fo) {
-        QAThread qaThread = new QAThread();
+    public static void executeQATools(FileObject fo, Lookup lkp) {
+        QAThread qaThread = new QAThread(lkp);
         qaThread.setFileObject(fo);
-        if (GeneralOptions.getThreaded()) {
+        if ((Boolean)GeneralOptions.load(GeneralOptions.Settings.THREADED, lkp)) {
             qaThread.start();
         } else {
             qaThread.qarun();

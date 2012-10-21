@@ -4,19 +4,28 @@ import de.foopara.phpcsmd.generics.GenericHelper;
 import de.foopara.phpcsmd.generics.GenericViolation;
 import java.io.File;
 import java.util.List;
+import org.openide.util.Lookup;
 
 /**
  *
  * @author nspecht
  */
 public class GenericPhpcpdParser {
+    private Lookup lkp;
+
+    public GenericPhpcpdParser(Lookup lkp) {
+        this.lkp = lkp;
+    }
+
     protected void add(
             String fo,
             List<GenericViolation> cpdErrors,
             List<GenericViolation> cpdNoTask,
             String f1, int s1, int e1,
             String f2, int s2, int e2) {
-        if (!GenericHelper.isDesirableFile(new File(f1)) || !GenericHelper.isDesirableFile(new File(f2))) {
+        if (!GenericHelper.isDesirableFile(new File(f1), this.lkp)
+            || !GenericHelper.isDesirableFile(new File(f2), this.lkp)
+        ) {
             return;
         }
         if ((f1.compareTo(f2) != 0 && f2.compareTo(fo) == 0)

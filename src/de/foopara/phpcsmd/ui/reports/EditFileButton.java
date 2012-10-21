@@ -12,6 +12,7 @@ import org.openide.filesystems.FileUtil;
 import org.openide.loaders.DataObject;
 import org.openide.loaders.DataObjectNotFoundException;
 import org.openide.util.Exceptions;
+import org.openide.util.Lookup;
 
 /**
  *
@@ -20,7 +21,11 @@ import org.openide.util.Exceptions;
 public class EditFileButton extends JButton {
     public String _filename = null;
 
-    public EditFileButton() {
+    public Lookup lkp;
+
+    public EditFileButton(Lookup lkp) {
+        super();
+        this.lkp = lkp;
         this.setText("Edit File");
         this.addActionListener(new ActionListener() {
             @Override
@@ -38,7 +43,7 @@ public class EditFileButton extends JButton {
         if (this._filename == null) return;
         try {
             FileObject fo = FileUtil.toFileObject(new File(this._filename));
-            if (!GenericHelper.isDesirableFile(fo)) {
+            if (!GenericHelper.isDesirableFile(fo, this.lkp)) {
                 return;
             }
             DataObject dob = DataObject.find(fo);

@@ -1,10 +1,8 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package de.foopara.phpcsmd.ui;
 
 import de.foopara.phpcsmd.generics.GenericOptionsPanel;
+import de.foopara.phpcsmd.option.GeneralOptions;
+import org.openide.util.Lookup;
 
 /**
  *
@@ -17,6 +15,7 @@ public class GeneralPropertyPanel extends GenericOptionsPanel {
      */
     public GeneralPropertyPanel() {
         initComponents();
+        this.load();
     }
 
     /**
@@ -81,8 +80,11 @@ public class GeneralPropertyPanel extends GenericOptionsPanel {
     private javax.swing.JTextField optRegex;
     // End of variables declaration//GEN-END:variables
 
+    private Lookup lkp;
+
     @Override
     public void load() {
+        optRegex.setText((String)GeneralOptions.load(GeneralOptions.Settings.IGNORE, this.lkp));
         this.updateForm();
     }
 
@@ -94,6 +96,10 @@ public class GeneralPropertyPanel extends GenericOptionsPanel {
     @Override
     public boolean hasValidValues() {
         return true;
+    }
+
+    public void setLookup(Lookup lkp) {
+        this.lkp = lkp;
     }
 
     private void updateForm() {

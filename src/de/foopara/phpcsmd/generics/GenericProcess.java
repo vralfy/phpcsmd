@@ -12,6 +12,7 @@ import org.netbeans.api.extexecution.ExecutionDescriptor;
 import org.netbeans.api.extexecution.ExecutionService;
 import org.netbeans.api.extexecution.ExternalProcessBuilder;
 import org.openide.util.Exceptions;
+import org.openide.util.Lookup;
 
 /**
  *
@@ -43,15 +44,15 @@ public class GenericProcess {
         return output;
     }
 
-    public static GenericOutputReader[] run(String cmd, String outputFile, GenericTopComponent topComponent) {
+    public static GenericOutputReader[] run(String cmd, String outputFile, GenericTopComponent topComponent, Lookup lkp) {
         if (outputFile == "" || outputFile == null) {
-            return GenericProcess.run(cmd, new File[] {}, topComponent);
+            return GenericProcess.run(cmd, new File[] {}, topComponent, lkp);
         }
-        return GenericProcess.run(cmd, new File[] {new File(outputFile)}, topComponent);
+        return GenericProcess.run(cmd, new File[] {new File(outputFile)}, topComponent, lkp);
 
     }
 
-    public static GenericOutputReader[] run(String cmd, File[] outputFiles, GenericTopComponent topComponent) {
+    public static GenericOutputReader[] run(String cmd, File[] outputFiles, GenericTopComponent topComponent, Lookup lkp) {
         if (outputFiles.length == 0) {
             outputFiles = null;
         }
@@ -82,7 +83,7 @@ public class GenericProcess {
 
                 HashSet<GenericOutputReader> reader = new HashSet<GenericOutputReader>();
                 for (File outputFile : outputFiles) {
-                    if (GenericHelper.isDesirableFile(outputFile, false)) {
+                    if (GenericHelper.isDesirableFile(outputFile, false, lkp)) {
                         tmp = new StringBuilder();
                         FileInputStream fis = new FileInputStream(outputFile);
                         while((c = fis.read()) != -1) {

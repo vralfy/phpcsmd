@@ -5,6 +5,7 @@
 package de.foopara.phpcsmd.ui;
 
 import de.foopara.phpcsmd.generics.GenericOptionsPanel;
+import org.openide.util.Lookup;
 
 /**
  *
@@ -29,27 +30,56 @@ public class PropertyPanel extends GenericOptionsPanel {
     private void initComponents() {
         java.awt.GridBagConstraints gridBagConstraints;
 
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jPanel1 = new javax.swing.JPanel();
         phpcsPropertyPanel1 = new de.foopara.phpcsmd.ui.phpcs.PhpcsPropertyPanel();
         generalPropertyPanel1 = new de.foopara.phpcsmd.ui.GeneralPropertyPanel();
+        jLabel1 = new javax.swing.JLabel();
+        jSeparator1 = new javax.swing.JSeparator();
 
         setLayout(new java.awt.GridBagLayout());
+
+        jPanel1.setLayout(new java.awt.GridBagLayout());
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(0, 0, 5, 5);
+        jPanel1.add(phpcsPropertyPanel1, gridBagConstraints);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(0, 0, 5, 5);
+        jPanel1.add(generalPropertyPanel1, gridBagConstraints);
+
+        org.openide.awt.Mnemonics.setLocalizedText(jLabel1, org.openide.util.NbBundle.getMessage(PropertyPanel.class, "PropertyPanel.jLabel1.text")); // NOI18N
+        jPanel1.add(jLabel1, new java.awt.GridBagConstraints());
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 1;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.weightx = 1.0;
-        gridBagConstraints.insets = new java.awt.Insets(0, 0, 5, 5);
-        add(phpcsPropertyPanel1, gridBagConstraints);
+        jPanel1.add(jSeparator1, gridBagConstraints);
+
+        jScrollPane1.setViewportView(jPanel1);
+
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.weightx = 1.0;
-        gridBagConstraints.insets = new java.awt.Insets(0, 0, 5, 5);
-        add(generalPropertyPanel1, gridBagConstraints);
+        gridBagConstraints.weighty = 1.0;
+        add(jScrollPane1, gridBagConstraints);
     }// </editor-fold>//GEN-END:initComponents
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private de.foopara.phpcsmd.ui.GeneralPropertyPanel generalPropertyPanel1;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JSeparator jSeparator1;
     private de.foopara.phpcsmd.ui.phpcs.PhpcsPropertyPanel phpcsPropertyPanel1;
     // End of variables declaration//GEN-END:variables
 
@@ -63,6 +93,11 @@ public class PropertyPanel extends GenericOptionsPanel {
     public void save() {
         generalPropertyPanel1.save();
         phpcsPropertyPanel1.save();
+    }
+
+    public void setLookup(Lookup lkp) {
+        generalPropertyPanel1.setLookup(lkp);
+        phpcsPropertyPanel1.setLookup(lkp);
     }
 
     @Override

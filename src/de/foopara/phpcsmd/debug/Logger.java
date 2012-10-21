@@ -24,7 +24,7 @@ public class Logger {
     }
 
     public void log(String str, String caption) {
-        if (GeneralOptions.getDebugLog()) {
+        if ((Boolean)GeneralOptions.loadOriginal(GeneralOptions.Settings.DEBUGLOG) == true) {
             if (caption != null) {
                 this.buff.append("<b>").append(caption).append("</b><br />\n");
             }

@@ -157,24 +157,24 @@ public class PhpcpdPanel extends GenericOptionsPanel {
 
     @Override
     public void load() {
-        this.optActiveSingle.setSelected(PhpcpdOptions.getActivated());
-        this.optActiveFolder.setSelected(PhpcpdOptions.getActivatedFolder());
-        this.optScript.setText(PhpcpdOptions.getScript());
-        this.optMinLines.setValue(PhpcpdOptions.getMinLines());
-        this.optMinTokens.setValue(PhpcpdOptions.getMinTokens());
-        this.optSuffix.setText(PhpcpdOptions.getSuffixes());
-        this.optExlude.setText(PhpcpdOptions.getExcludes());
+        this.optActiveSingle.setSelected((Boolean)PhpcpdOptions.loadOriginal(PhpcpdOptions.Settings.ACTIVATED));
+        this.optActiveFolder.setSelected((Boolean)PhpcpdOptions.loadOriginal(PhpcpdOptions.Settings.ACTIVATEDFOLDER));
+        this.optScript.setText((String)PhpcpdOptions.loadOriginal(PhpcpdOptions.Settings.SCRIPT));
+        this.optMinLines.setValue((Integer)PhpcpdOptions.loadOriginal(PhpcpdOptions.Settings.MINLINES));
+        this.optMinTokens.setValue((Integer)PhpcpdOptions.loadOriginal(PhpcpdOptions.Settings.MINTOKENS));
+        this.optSuffix.setText((String)PhpcpdOptions.loadOriginal(PhpcpdOptions.Settings.SUFFIXES));
+        this.optExlude.setText((String)PhpcpdOptions.loadOriginal(PhpcpdOptions.Settings.EXCLUDE));
     }
 
     @Override
     public void save() {
-        PhpcpdOptions.setActivated(this.optActiveSingle.isSelected());
-        PhpcpdOptions.setActivatedFolder(this.optActiveFolder.isSelected());
-        PhpcpdOptions.setScript(this.optScript.getText());
-        PhpcpdOptions.setMinLines((Integer)this.optMinLines.getValue());
-        PhpcpdOptions.setMinTokens((Integer)this.optMinTokens.getValue());
-        PhpcpdOptions.setSuffixes(this.optSuffix.getText());
-        PhpcpdOptions.setExcludes(this.optExlude.getText());
+        PhpcpdOptions.set(PhpcpdOptions.Settings.ACTIVATED, this.optActiveSingle.isSelected());
+        PhpcpdOptions.set(PhpcpdOptions.Settings.ACTIVATEDFOLDER, this.optActiveFolder.isSelected());
+        PhpcpdOptions.set(PhpcpdOptions.Settings.SCRIPT, this.optScript.getText());
+        PhpcpdOptions.set(PhpcpdOptions.Settings.MINLINES, (Integer)this.optMinLines.getValue());
+        PhpcpdOptions.set(PhpcpdOptions.Settings.MINTOKENS, (Integer)this.optMinTokens.getValue());
+        PhpcpdOptions.set(PhpcpdOptions.Settings.SUFFIXES, this.optSuffix.getText());
+        PhpcpdOptions.set(PhpcpdOptions.Settings.EXCLUDE, this.optExlude.getText());
     }
 
     @Override

@@ -3,6 +3,7 @@ package de.foopara.phpcsmd;
 import de.foopara.phpcsmd.generics.GenericFileListener;
 import java.util.LinkedHashMap;
 import org.openide.filesystems.FileObject;
+import org.openide.util.Lookup;
 
 /**
  *
@@ -17,11 +18,11 @@ public class FileListenerRegistry {
 
     private LinkedHashMap<String, GenericFileListener> _registry = new LinkedHashMap<String, GenericFileListener>();
 
-    public static GenericFileListener getListener(FileObject fo) {
-        return FileListenerRegistry.getInstance().getNewInstance(fo);
+    public static GenericFileListener getListener(FileObject fo, Lookup lkp) {
+        return FileListenerRegistry.getInstance().getNewInstance(fo, lkp);
     }
 
-    public GenericFileListener getNewInstance(FileObject fo) {
+    public GenericFileListener getNewInstance(FileObject fo, Lookup lkp) {
         if (this._registry.containsKey(fo.getPath())) {
             return this._registry.get(fo.getPath());
         }
@@ -30,7 +31,7 @@ public class FileListenerRegistry {
             return null;
         }
 
-        GenericFileListener ret = new GenericFileListener();
+        GenericFileListener ret = new GenericFileListener(lkp);
 
         fo.addFileChangeListener(ret);
         this._registry.put(fo.getPath(), ret);

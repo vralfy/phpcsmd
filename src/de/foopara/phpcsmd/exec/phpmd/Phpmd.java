@@ -6,13 +6,19 @@ import de.foopara.phpcsmd.generics.*;
 import de.foopara.phpcsmd.option.PhpmdOptions;
 import java.io.File;
 import org.openide.filesystems.FileObject;
+import org.openide.util.Lookup;
 
 /**
  *
  * @author nspecht
  */
 public class Phpmd extends GenericExecute {
-   private boolean _enabled = true;
+    private boolean _enabled = true;
+    private Lookup lkp;
+
+    public Phpmd(Lookup lkp) {
+        this.lkp = lkp;
+    }
 
     @Override
     public boolean isEnabled() {
@@ -21,36 +27,48 @@ public class Phpmd extends GenericExecute {
 
     @Override
     protected GenericResult run(FileObject file, boolean annotations) {
-        if (!PhpmdOptions.getActivated()) return this.setAndReturnCurrent(file);
+        if ((Boolean)PhpmdOptions.load(PhpmdOptions.Settings.ACTIVATED, this.lkp) == false) {
+            return this.setAndReturnCurrent(file);
+        }
 
-        if (!GenericHelper.isDesirableFile(new File(PhpmdOptions.getScript()))
-                || !GenericHelper.isDesirableFile(file)) {
+        if (!GenericHelper.isDesirableFile(new File((String)PhpmdOptions.load(PhpmdOptions.Settings.SCRIPT, this.lkp)), this.lkp)
+                || !GenericHelper.isDesirableFile(file, this.lkp)) {
             return this.setAndReturnDefault(file);
         }
 
-        if(this.isEnabled() == false) return this.setAndReturnCurrent(file);
+        if(this.isEnabled() == false) {
+            return this.setAndReturnCurrent(file);
+        }
 
-        if (!iAmAlive()) return this.setAndReturnCurrent(file);
+        if (!iAmAlive()) {
+            return this.setAndReturnCurrent(file);
+        }
 
-        StringBuilder cmd = new StringBuilder(PhpmdOptions.getScript());
+        StringBuilder cmd = new StringBuilder((String)PhpmdOptions.load(PhpmdOptions.Settings.SCRIPT, this.lkp));
         cmd.append(" ").append(GenericHelper.escapePath(file));
         cmd.append(" ").append("xml");
-        cmd.append(" ").append(PhpmdOptions.getRules());
+        cmd.append(" ").append((String)PhpmdOptions.load(PhpmdOptions.Settings.RULES, this.lkp));
 
-        this.appendArgument(cmd, "--suffixes", PhpmdOptions.getSuffixes());
-        this.appendArgument(cmd, "--exclude", PhpmdOptions.getExcludes());
-        this.appendArgument(cmd, "--minimumpriority", PhpmdOptions.getMinPriority());
-        if (PhpmdOptions.getStrict()) {
+        this.appendArgument(cmd, "--suffixes", (String)PhpmdOptions.load(PhpmdOptions.Settings.SUFFIXES, this.lkp));
+        this.appendArgument(cmd, "--exclude", (String)PhpmdOptions.load(PhpmdOptions.Settings.EXCLUDE, this.lkp));
+        this.appendArgument(cmd, "--minimumpriority", (String)PhpmdOptions.load(PhpmdOptions.Settings.MINPRIORITY, this.lkp));
+        if ((Boolean)PhpmdOptions.load(PhpmdOptions.Settings.STRICT, this.lkp) == true) {
             cmd.append(" --strict");
         }
         Logger.getInstance().logPre(cmd.toString(), "pmd command");
 
         PhpmdXMLParser parser = new PhpmdXMLParser();
-        if (!iAmAlive()) return this.setAndReturnCurrent(file);
-        GenericOutputReader[] reader = GenericProcess.run(cmd.toString(), "", null);
-        if (!iAmAlive()) return this.setAndReturnCurrent(file);
+        if (!iAmAlive()) {
+            return this.setAndReturnCurrent(file);
+        }
+        GenericOutputReader[] reader = GenericProcess.run(cmd.toString(), "", null, this.lkp);
+        if (!iAmAlive()) {
+            return this.setAndReturnCurrent(file);
+        }
         PhpmdResult res = parser.parse(reader[0]);
-        if (!iAmAlive()) return this.setAndReturnCurrent(file);
+        if (!iAmAlive()) {
+            return this.setAndReturnCurrent(file);
+        }
         ViolationRegistry.getInstance().setPhpmd(file, res);
         return res;
     }
