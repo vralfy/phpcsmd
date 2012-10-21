@@ -3,6 +3,7 @@ package de.foopara.phpcsmd;
 import de.foopara.phpcsmd.ui.reports.PdependReportTopComponent;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import org.netbeans.api.project.Project;
 import org.openide.awt.ActionID;
 import org.openide.awt.ActionReference;
 import org.openide.awt.ActionReferences;
@@ -37,9 +38,11 @@ public final class PdependScanner implements ActionListener {
     }
 
     private void performOnFileObject(FileObject fo) {
+        System.out.println(this.context.getLookup() + "\n\n\n");
         if (fo.isFolder() || fo.isData()) {
             PdependReportTopComponent form = new PdependReportTopComponent();
             form.setFileObject(fo);
+            form.setLookup(this.context.getLookup());
             form.open();
         }
     }

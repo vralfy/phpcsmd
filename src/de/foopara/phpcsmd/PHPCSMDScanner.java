@@ -32,6 +32,7 @@ public final class PHPCSMDScanner implements ActionListener {
         if (fo.isFolder()) {
             ScanReportTopComponent form = new ScanReportTopComponent();
             form.setFileObject(fo);
+            form.setLookup(this.context.getLookup());
             form.open();
         }
     }

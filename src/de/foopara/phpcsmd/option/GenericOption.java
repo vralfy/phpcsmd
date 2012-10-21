@@ -20,7 +20,6 @@ import org.openide.util.NbPreferences;
 import org.netbeans.api.project.Project;
 import org.openide.filesystems.FileObject;
 import org.openide.filesystems.FileUtil;
-import org.openide.util.Exceptions;
 /**
  *
  * @author nspecht
@@ -53,6 +52,10 @@ abstract public class GenericOption
 
     protected static String loadProject(String id, String def, Lookup lkp) {
         File config = GenericOption.getProjectProperties(lkp);
+        if (config == null) {
+            return def;
+        }
+
         Properties p = new Properties();
         try {
             p.load(new FileInputStream(config));
@@ -67,17 +70,25 @@ abstract public class GenericOption
     protected static void setProject(String id, String value, Lookup lkp) {
         try {
             File config = GenericOption.getProjectProperties(lkp);
-            Properties p = new Properties();
-            p.load(new FileInputStream(config));
-            p.setProperty(id, value);
-            p.store(new FileOutputStream(config), "Phpcsmd options");
+            if (config != null) {
+                Properties p = new Properties();
+                p.load(new FileInputStream(config));
+                p.setProperty(id, value);
+                p.store(new FileOutputStream(config), "Phpcsmd options");
+            }
         } catch (IOException ex) {
             Logger.getInstance().log(ex);
         }
     }
 
     protected static File getProjectProperties(Lookup lkp) {
+        if (lkp == null) {
+            return null;
+        }
         Project project = lkp.lookup(Project.class);
+        if (project == null) {
+            return null;
+        }
         FileObject fo = project.getProjectDirectory();
         File config = FileUtil.toFile(fo.getFileObject("nbproject/phpcsmd.properties"));
         if (!config.exists()) {
