@@ -62,7 +62,6 @@ public class CustomStandard {
             f.write(content.toString());
             f.flush();
             f.close();
-            System.out.println(content.toString());
         } catch (IOException ex) {
             Logger.getInstance().log(ex);
             Exceptions.printStackTrace(ex);

@@ -91,7 +91,6 @@ abstract public class GenericOption
     }
 
     public static Object castValue(String val, SettingTypes type) {
-        System.out.println("\n\n\n\n" + val + "\n" + type.name() + "\n");
         switch (type) {
             case BOOLEAN :
                 return val.compareTo("true") == 0;
