@@ -187,7 +187,6 @@ public class PhpcpdPropertyPanel extends GenericOptionsPanel {
 
     @Override
     public void save() {
-        System.out.println("save " + this.getClass().getCanonicalName() + "\n\n\n");
         PhpcpdOptions.overwrite(PhpcpdOptions.Settings.MINLINES, owMinLines.isSelected() ? optMinLines.getValue() : null, this.lkp);
         PhpcpdOptions.overwrite(PhpcpdOptions.Settings.MINTOKENS, owMinTokens.isSelected() ? optMinTokens.getValue() : null, this.lkp);
         PhpcpdOptions.overwrite(PhpcpdOptions.Settings.SUFFIXES, owSuffix.isSelected() ? optSuffixes.getText() : null, this.lkp);

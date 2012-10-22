@@ -44,14 +44,12 @@ public class PropertyPanel extends GenericOptionsPanel {
         phpmdPropertyPanel1 = new de.foopara.phpcsmd.ui.phpmd.PhpmdPropertyPanel(this.lkp);
         phpcpdPropertyPanel1 = new de.foopara.phpcsmd.ui.phpcpd.PhpcpdPropertyPanel(this.lkp);
         pdependPropertyPanel1 = new de.foopara.phpcsmd.ui.pdepend.PdependPropertyPanel(this.lkp);
-        jButton1 = new javax.swing.JButton();
 
         setLayout(new java.awt.GridBagLayout());
 
         jPanel1.setMinimumSize(new java.awt.Dimension(50, 50));
         jPanel1.setLayout(new javax.swing.BoxLayout(jPanel1, javax.swing.BoxLayout.PAGE_AXIS));
 
-        generalPropertyPanel1.setLookup(null);
         generalPropertyPanel1.setMinimumSize(new java.awt.Dimension(50, 50));
         jPanel1.add(generalPropertyPanel1);
 
@@ -60,14 +58,6 @@ public class PropertyPanel extends GenericOptionsPanel {
         jPanel1.add(phpmdPropertyPanel1);
         jPanel1.add(phpcpdPropertyPanel1);
         jPanel1.add(pdependPropertyPanel1);
-
-        org.openide.awt.Mnemonics.setLocalizedText(jButton1, org.openide.util.NbBundle.getMessage(PropertyPanel.class, "PropertyPanel.jButton1.text")); // NOI18N
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
-        jPanel1.add(jButton1);
 
         jScrollPane1.setViewportView(jPanel1);
 
@@ -80,13 +70,8 @@ public class PropertyPanel extends GenericOptionsPanel {
         add(jScrollPane1, gridBagConstraints);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        this.save();
-    }//GEN-LAST:event_jButton1ActionPerformed
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private de.foopara.phpcsmd.ui.GeneralPropertyPanel generalPropertyPanel1;
-    private javax.swing.JButton jButton1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private de.foopara.phpcsmd.ui.pdepend.PdependPropertyPanel pdependPropertyPanel1;

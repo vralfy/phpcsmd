@@ -10,7 +10,7 @@ import org.openide.util.Lookup;
  */
 public class GeneralPropertyPanel extends GenericOptionsPanel {
 
-    private Lookup lkp;
+    protected Lookup lkp;
 
     public GeneralPropertyPanel() {
         this(null);
@@ -55,7 +55,7 @@ public class GeneralPropertyPanel extends GenericOptionsPanel {
 
         optIgnore.setText(org.openide.util.NbBundle.getMessage(GeneralPropertyPanel.class, "GeneralPropertyPanel.optIgnore.text")); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 1;
         gridBagConstraints.gridwidth = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
@@ -107,12 +107,7 @@ public class GeneralPropertyPanel extends GenericOptionsPanel {
         return true;
     }
 
-    public void setLookup(Lookup lkp) {
-        this.lkp = lkp;
-    }
-
     private void updateForm() {
-        boolean enabled = owIgnore.isSelected();
-        optIgnore.setEnabled(enabled);
+        optIgnore.setEnabled(owIgnore.isSelected());
     }
 }

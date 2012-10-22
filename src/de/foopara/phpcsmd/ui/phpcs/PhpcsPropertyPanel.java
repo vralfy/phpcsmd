@@ -339,17 +339,12 @@ public class PhpcsPropertyPanel extends GenericOptionsPanel {
         btnStandard.setEnabled(enabled);
         cmbStandard.setEnabled(enabled);
         optStandard.setEnabled(enabled);
-        enabled = owSniff.isSelected();
-        optSniff.setEnabled(enabled);
-        enabled = owExtension.isSelected();
-        optExt.setEnabled(enabled);
-        enabled = owIgnore.isSelected();
-        optIgnore.setEnabled(enabled);
-        enabled = owTabWidth.isSelected();
-        optTabwidth.setEnabled(enabled);
-        enabled = owIniOverwrite.isSelected();
-        optIniOverwrite.setEnabled(enabled);
-        enabled = owWarning.isSelected();
-        optWarning.setEnabled(enabled);
+
+        optSniff.setEnabled(owSniff.isSelected());
+        optExt.setEnabled(owExtension.isSelected());
+        optIgnore.setEnabled(owIgnore.isSelected());
+        optTabwidth.setEnabled(owTabWidth.isSelected());
+        optIniOverwrite.setEnabled(owIniOverwrite.isSelected());
+        optWarning.setEnabled(owWarning.isSelected());
     }
 }

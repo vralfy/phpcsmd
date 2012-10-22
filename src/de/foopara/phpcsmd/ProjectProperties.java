@@ -2,6 +2,9 @@
 package de.foopara.phpcsmd;
 
 import de.foopara.phpcsmd.ui.PropertyPanel;
+import de.foopara.phpcsmd.ui.PropertyPanelOkAction;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ResourceBundle;
 import javax.swing.JComponent;
 import org.netbeans.spi.project.ui.support.ProjectCustomizer;
@@ -30,6 +33,9 @@ public class ProjectProperties implements ProjectCustomizer.CompositeCategoryPro
     @Override
     public JComponent createComponent(Category category, Lookup context) {
         PropertyPanel panel = new PropertyPanel(context);
+        PropertyPanelOkAction act = new PropertyPanelOkAction();
+        act.setPanel(panel);
+        category.setOkButtonListener(act);
         return panel;
     }
 
