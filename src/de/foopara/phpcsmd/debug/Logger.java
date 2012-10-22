@@ -25,20 +25,22 @@ public class Logger {
 
     public void log(String str, String caption) {
         if ((Boolean)GeneralOptions.loadOriginal(GeneralOptions.Settings.DEBUGLOG) == true) {
+            this.buff.append("<tr>");
             if (caption != null) {
-                this.buff.append("<b>").append(caption).append("</b><br />\n");
+                this.buff.append("<td><b>").append(caption).append("</b></td>");
             }
-            this.buff.append(str).append("<br />\n");
+            this.buff.append("<td>").append(str).append("</td>");
+            this.buff.append("</tr>");
         }
     }
 
     public void log(Exception ex) {
         StringBuilder exStr = new StringBuilder();
-        exStr.append(ex.getMessage()).append("\n");
+//        exStr.append(ex.getMessage()).append("\n");
         for(StackTraceElement element : ex.getStackTrace()) {
             exStr.append(element.toString()).append("\n");
         }
-        this.log("<pre style=\"padding:5px\">" + exStr.toString() + "</pre>", "Exception");
+        this.log("<pre style=\"padding:5px\">" + exStr.toString() + "</pre>", "Exception:<br />" + ex.getMessage());
     }
 
     public void logPre(String str, String caption) {
@@ -55,7 +57,9 @@ public class Logger {
         StringBuilder ret = new StringBuilder();
         ret.append("<html>")
             .append("<body style=\"font-size:10px\">")
+            .append("<table cellspacing=\"0\" cellpadding=\"1\">")
             .append(this.buff.toString())
+            .append("</table>")
             .append("</body>")
             .append("</html>")
                 ;

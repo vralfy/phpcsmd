@@ -16,6 +16,7 @@ import org.openide.util.NbBundle;
 public class ProjectProperties implements ProjectCustomizer.CompositeCategoryProvider {
 
     @ProjectCustomizer.CompositeCategoryProvider.Registration(projectType = "org-netbeans-modules-php-project", position = 900)
+//    @ProjectCustomizer.CompositeCategoryProvider.Registration(projectType = "org-netbeans-api-project", position = 900)
     public static ProjectProperties createProperties() {
         return new ProjectProperties();
     }
@@ -28,8 +29,7 @@ public class ProjectProperties implements ProjectCustomizer.CompositeCategoryPro
 
     @Override
     public JComponent createComponent(Category category, Lookup context) {
-        PropertyPanel panel = new PropertyPanel();
-        panel.setLookup(context);
+        PropertyPanel panel = new PropertyPanel(context);
         return panel;
     }
 

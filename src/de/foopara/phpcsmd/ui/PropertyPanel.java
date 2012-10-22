@@ -13,10 +13,14 @@ import org.openide.util.Lookup;
  */
 public class PropertyPanel extends GenericOptionsPanel {
 
+    protected Lookup lkp;
+
     /**
      * Creates new form PropertyPanel
      */
-    public PropertyPanel() {
+    public PropertyPanel(Lookup lkp) {
+        super();
+        this.lkp = lkp;
         initComponents();
         this.load();
     }
@@ -32,8 +36,8 @@ public class PropertyPanel extends GenericOptionsPanel {
 
         jScrollPane1 = new javax.swing.JScrollPane();
         jPanel1 = new javax.swing.JPanel();
-        phpcsPropertyPanel1 = new de.foopara.phpcsmd.ui.phpcs.PhpcsPropertyPanel();
-        generalPropertyPanel1 = new de.foopara.phpcsmd.ui.GeneralPropertyPanel();
+        phpcsPropertyPanel1 = new de.foopara.phpcsmd.ui.phpcs.PhpcsPropertyPanel(this.lkp);
+        generalPropertyPanel1 = new de.foopara.phpcsmd.ui.GeneralPropertyPanel(this.lkp);
         jLabel1 = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
 
@@ -93,11 +97,6 @@ public class PropertyPanel extends GenericOptionsPanel {
     public void save() {
         generalPropertyPanel1.save();
         phpcsPropertyPanel1.save();
-    }
-
-    public void setLookup(Lookup lkp) {
-        generalPropertyPanel1.setLookup(lkp);
-        phpcsPropertyPanel1.setLookup(lkp);
     }
 
     @Override

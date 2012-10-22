@@ -10,10 +10,14 @@ import org.openide.util.Lookup;
  */
 public class GeneralPropertyPanel extends GenericOptionsPanel {
 
+    private Lookup lkp;
+
     /**
      * Creates new form GeneralPropertyPanel
      */
-    public GeneralPropertyPanel() {
+    public GeneralPropertyPanel(Lookup lkp) {
+        super();
+        this.lkp = lkp;
         initComponents();
         this.load();
     }
@@ -79,8 +83,6 @@ public class GeneralPropertyPanel extends GenericOptionsPanel {
     private javax.swing.JCheckBox optOverwrite;
     private javax.swing.JTextField optRegex;
     // End of variables declaration//GEN-END:variables
-
-    private Lookup lkp;
 
     @Override
     public void load() {

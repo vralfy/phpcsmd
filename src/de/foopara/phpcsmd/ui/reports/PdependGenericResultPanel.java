@@ -59,6 +59,10 @@ public class PdependGenericResultPanel extends JPanel {
         this.add(this.tabContainer, gridBagConstraints);
     }
 
+    public void setLookup(Lookup lkp) {
+        this.lkp = lkp;
+    }
+
     public void setPdependResult(PdependResult res) {
         this.pdependResult = res;
     }

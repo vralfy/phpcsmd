@@ -5,7 +5,6 @@
 package de.foopara.phpcsmd.ui.phpcs;
 
 import de.foopara.phpcsmd.generics.GenericOptionsPanel;
-import javax.swing.JCheckBox;
 import org.openide.util.Lookup;
 
 /**
@@ -14,10 +13,14 @@ import org.openide.util.Lookup;
  */
 public class PhpcsPropertyPanel extends GenericOptionsPanel {
 
+    protected Lookup lkp;
+
     /**
      * Creates new form PhpcsPropertyPanel
      */
-    public PhpcsPropertyPanel() {
+    public PhpcsPropertyPanel(Lookup lkp) {
+        super();
+        this.lkp = lkp;
         initComponents();
         this.load();
     }
@@ -330,8 +333,6 @@ public class PhpcsPropertyPanel extends GenericOptionsPanel {
     private javax.swing.JCheckBox owWarning;
     // End of variables declaration//GEN-END:variables
 
-    private Lookup lkp;
-
     @Override
     public void load() {
         this.updateForm();
@@ -365,9 +366,5 @@ public class PhpcsPropertyPanel extends GenericOptionsPanel {
         optIniOverwrite.setEnabled(enabled);
         enabled = owWarning.isSelected();
         optWarning.setEnabled(enabled);
-    }
-
-    public void setLookup(Lookup lkp) {
-        this.lkp = lkp;
     }
 }

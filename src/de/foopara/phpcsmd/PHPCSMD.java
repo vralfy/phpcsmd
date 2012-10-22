@@ -2,6 +2,7 @@ package de.foopara.phpcsmd;
 
 import de.foopara.phpcsmd.generics.GenericExecute;
 import javax.swing.JMenuItem;
+import org.netbeans.api.project.Project;
 import org.openide.awt.ActionID;
 import org.openide.awt.ActionReference;
 import org.openide.awt.ActionReferences;
@@ -30,7 +31,7 @@ public class PHPCSMD extends CookieAction {
 
     @Override
     protected Class[] cookieClasses() {
-        return new Class[]{EditorCookie.class};
+        return new Class[]{Project.class, EditorCookie.class};
     }
 
     @Override
@@ -39,6 +40,7 @@ public class PHPCSMD extends CookieAction {
             return;
         }
         FileObject fo = getFileObject(nodes[0]);
+
         GenericExecute.executeQATools(fo, nodes[0].getLookup());
     }
 

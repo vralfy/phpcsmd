@@ -45,7 +45,6 @@ public final class PdependReportTopComponent extends GenericTopComponent {
     private FileObject fileObject;
 
     public PdependReportTopComponent() {
-        initComponents();
         setName(Bundle.CTL_PdependReportTopComponent());
         setToolTipText(Bundle.HINT_PdependReportTopComponent());
     }
@@ -371,6 +370,14 @@ public final class PdependReportTopComponent extends GenericTopComponent {
         } catch (DataObjectNotFoundException ex) {
             Logger.getInstance().log(ex);
             Exceptions.printStackTrace(ex);
+        }
+    }
+
+    @Override
+    public void setLookup(Lookup lkp) {
+        if (this.lkp == null) {
+            super.setLookup(lkp);
+            initComponents();
         }
     }
 }

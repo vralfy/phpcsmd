@@ -14,12 +14,14 @@ import java.io.IOException;
 import java.util.Properties;
 import java.util.ResourceBundle;
 import java.util.prefs.Preferences;
+import org.netbeans.api.project.FileOwnerQuery;
 import org.openide.util.Lookup;
 import org.openide.util.NbBundle;
 import org.openide.util.NbPreferences;
 import org.netbeans.api.project.Project;
 import org.openide.filesystems.FileObject;
 import org.openide.filesystems.FileUtil;
+import org.openide.loaders.DataObject;
 /**
  *
  * @author nspecht
@@ -83,14 +85,17 @@ abstract public class GenericOption
 
     protected static File getProjectProperties(Lookup lkp) {
         if (lkp == null) {
+            Logger.getInstance().log(new Exception("Lookup is null."));
             return null;
         }
-        Project project = lkp.lookup(Project.class);
+        Project project = GenericOption.getProjectFromLookup(lkp);
         if (project == null) {
+            Logger.getInstance().log(new Exception("Project was not found in lookup."));
             return null;
         }
         FileObject fo = project.getProjectDirectory();
-        File config = FileUtil.toFile(fo.getFileObject("nbproject/phpcsmd.properties"));
+
+        File config = new File(FileUtil.toFile(fo), "nbproject/phpcsmd.properties");
         if (!config.exists()) {
             try {
                 config.createNewFile();
@@ -99,6 +104,19 @@ abstract public class GenericOption
             }
         }
         return config;
+    }
+
+    protected static Project getProjectFromLookup(Lookup lkp) {
+        Project ret = lkp.lookup(Project.class);
+        //Try getting it from Dataobject
+        if (ret == null) {
+            DataObject dataObject = lkp.lookup(DataObject.class);
+            if (dataObject != null) {
+                FileObject primary = dataObject.getPrimaryFile();
+                ret = FileOwnerQuery.getOwner(primary);
+            }
+        }
+        return ret;
     }
 
     public static Object castValue(String val, SettingTypes type) {
