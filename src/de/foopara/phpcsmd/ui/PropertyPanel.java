@@ -15,6 +15,9 @@ public class PropertyPanel extends GenericOptionsPanel {
 
     protected Lookup lkp;
 
+    public PropertyPanel() {
+        this(null);
+    }
     /**
      * Creates new form PropertyPanel
      */
@@ -36,37 +39,35 @@ public class PropertyPanel extends GenericOptionsPanel {
 
         jScrollPane1 = new javax.swing.JScrollPane();
         jPanel1 = new javax.swing.JPanel();
-        phpcsPropertyPanel1 = new de.foopara.phpcsmd.ui.phpcs.PhpcsPropertyPanel(this.lkp);
         generalPropertyPanel1 = new de.foopara.phpcsmd.ui.GeneralPropertyPanel(this.lkp);
-        jLabel1 = new javax.swing.JLabel();
-        jSeparator1 = new javax.swing.JSeparator();
+        phpcsPropertyPanel1 = new de.foopara.phpcsmd.ui.phpcs.PhpcsPropertyPanel(this.lkp);
+        phpmdPropertyPanel1 = new de.foopara.phpcsmd.ui.phpmd.PhpmdPropertyPanel(this.lkp);
+        phpcpdPropertyPanel1 = new de.foopara.phpcsmd.ui.phpcpd.PhpcpdPropertyPanel(this.lkp);
+        pdependPropertyPanel1 = new de.foopara.phpcsmd.ui.pdepend.PdependPropertyPanel(this.lkp);
+        jButton1 = new javax.swing.JButton();
 
         setLayout(new java.awt.GridBagLayout());
 
-        jPanel1.setLayout(new java.awt.GridBagLayout());
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 3;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.weightx = 1.0;
-        gridBagConstraints.insets = new java.awt.Insets(0, 0, 5, 5);
-        jPanel1.add(phpcsPropertyPanel1, gridBagConstraints);
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 2;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.weightx = 1.0;
-        gridBagConstraints.insets = new java.awt.Insets(0, 0, 5, 5);
-        jPanel1.add(generalPropertyPanel1, gridBagConstraints);
+        jPanel1.setMinimumSize(new java.awt.Dimension(50, 50));
+        jPanel1.setLayout(new javax.swing.BoxLayout(jPanel1, javax.swing.BoxLayout.PAGE_AXIS));
 
-        org.openide.awt.Mnemonics.setLocalizedText(jLabel1, org.openide.util.NbBundle.getMessage(PropertyPanel.class, "PropertyPanel.jLabel1.text")); // NOI18N
-        jPanel1.add(jLabel1, new java.awt.GridBagConstraints());
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 1;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.weightx = 1.0;
-        jPanel1.add(jSeparator1, gridBagConstraints);
+        generalPropertyPanel1.setLookup(null);
+        generalPropertyPanel1.setMinimumSize(new java.awt.Dimension(50, 50));
+        jPanel1.add(generalPropertyPanel1);
+
+        phpcsPropertyPanel1.setMinimumSize(new java.awt.Dimension(50, 50));
+        jPanel1.add(phpcsPropertyPanel1);
+        jPanel1.add(phpmdPropertyPanel1);
+        jPanel1.add(phpcpdPropertyPanel1);
+        jPanel1.add(pdependPropertyPanel1);
+
+        org.openide.awt.Mnemonics.setLocalizedText(jButton1, org.openide.util.NbBundle.getMessage(PropertyPanel.class, "PropertyPanel.jButton1.text")); // NOI18N
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jButton1);
 
         jScrollPane1.setViewportView(jPanel1);
 
@@ -78,25 +79,38 @@ public class PropertyPanel extends GenericOptionsPanel {
         gridBagConstraints.weighty = 1.0;
         add(jScrollPane1, gridBagConstraints);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        this.save();
+    }//GEN-LAST:event_jButton1ActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private de.foopara.phpcsmd.ui.GeneralPropertyPanel generalPropertyPanel1;
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JButton jButton1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JSeparator jSeparator1;
+    private de.foopara.phpcsmd.ui.pdepend.PdependPropertyPanel pdependPropertyPanel1;
+    private de.foopara.phpcsmd.ui.phpcpd.PhpcpdPropertyPanel phpcpdPropertyPanel1;
     private de.foopara.phpcsmd.ui.phpcs.PhpcsPropertyPanel phpcsPropertyPanel1;
+    private de.foopara.phpcsmd.ui.phpmd.PhpmdPropertyPanel phpmdPropertyPanel1;
     // End of variables declaration//GEN-END:variables
 
     @Override
     public void load() {
         generalPropertyPanel1.load();
         phpcsPropertyPanel1.load();
+        phpmdPropertyPanel1.load();
+        phpcpdPropertyPanel1.load();
+        pdependPropertyPanel1.load();
     }
 
     @Override
     public void save() {
         generalPropertyPanel1.save();
         phpcsPropertyPanel1.save();
+        phpmdPropertyPanel1.save();
+        phpcpdPropertyPanel1.save();
+        pdependPropertyPanel1.save();
     }
 
     @Override

@@ -83,6 +83,35 @@ abstract public class GenericOption
         }
     }
 
+    protected static void flushProject(String id, Lookup lkp) {
+        try {
+            File config = GenericOption.getProjectProperties(lkp);
+            if (config != null) {
+                Properties p = new Properties();
+                p.load(new FileInputStream(config));
+                p.remove(id);
+                p.store(new FileOutputStream(config), "Phpcsmd options");
+            }
+        } catch (IOException ex) {
+            Logger.getInstance().log(ex);
+        }
+    }
+
+    protected static Boolean isInProject(String id, Lookup lkp) {
+        Boolean ret = false;
+        try {
+            File config = GenericOption.getProjectProperties(lkp);
+            if (config != null) {
+                Properties p = new Properties();
+                p.load(new FileInputStream(config));
+                ret = p.containsKey(id);
+            }
+        } catch (IOException ex) {
+            Logger.getInstance().log(ex);
+        }
+        return ret;
+    }
+
     protected static File getProjectProperties(Lookup lkp) {
         if (lkp == null) {
             Logger.getInstance().log(new Exception("Lookup is null."));

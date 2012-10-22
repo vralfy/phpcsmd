@@ -9,7 +9,6 @@ import java.awt.LayoutManager;
 import java.lang.reflect.Field;
 import java.util.HashMap;
 import javax.swing.*;
-import javax.swing.plaf.basic.BasicTabbedPaneUI;
 import org.openide.util.Exceptions;
 import org.openide.util.Lookup;
 
@@ -22,6 +21,7 @@ public class PdependGenericResultPanel extends JPanel {
     JTabbedPane tabContainer;
     HashMap<String, JPanel> tabs = new HashMap<String, JPanel>();
     HashMap<String, JComponent> elements = new HashMap<String, JComponent>();
+    PdependTabbedPaneUI btpui = null;
     protected EditFileButton editorButton = null;
 
     protected PdependResult pdependResult;
@@ -31,21 +31,10 @@ public class PdependGenericResultPanel extends JPanel {
     public PdependGenericResultPanel(Lookup lkp) {
         super();
         this.lkp = lkp;
-        this.tabContainer = new JTabbedPane();
-        this.tabContainer.setUI(new BasicTabbedPaneUI() {
-            private int useTabs = -1;
-            @Override
-            protected int calculateTabAreaHeight(int tabPlacement, int horizRunCount, int maxTabHeight) {
-                if (this.useTabs == -1) {
-                    this.useTabs = (Boolean)PdependOptions.loadOriginal(PdependOptions.Settings.USETABS) ? 1 : 0;
-                }
 
-                if (this.useTabs > 0) {
-                    return super.calculateTabAreaHeight(tabPlacement, horizRunCount, maxTabHeight);
-                }
-                return 0;
-            }
-        });
+        this.btpui = new PdependTabbedPaneUI(this.lkp);
+        this.tabContainer = new JTabbedPane();
+        this.tabContainer.setUI(this.btpui);
 
         java.awt.GridBagConstraints gridBagConstraints = new java.awt.GridBagConstraints();
         super.setLayout(new GridBagLayout());
@@ -61,6 +50,7 @@ public class PdependGenericResultPanel extends JPanel {
 
     public void setLookup(Lookup lkp) {
         this.lkp = lkp;
+        this.btpui.setLookup(lkp);
     }
 
     public void setPdependResult(PdependResult res) {

@@ -83,10 +83,18 @@ public class PdependOptions {
     }
 
     public static void overwrite(PdependOptions.Settings key, Object value, Lookup lkp) {
+        if (value == null) {
+            GenericOption.flushProject(_PREFIX + keys.get(key), lkp);
+            return;
+        }
         String val = value.toString();
         if (types.containsKey(key)) {
             val = GenericOption.castValueToString(value, types.get(key));
         }
         GenericOption.setProject(_PREFIX + keys.get(key), val, lkp);
+    }
+
+    public static Boolean isOverwritten(PdependOptions.Settings key, Lookup lkp) {
+        return GenericOption.isInProject(_PREFIX + keys.get(key), lkp);
     }
 }

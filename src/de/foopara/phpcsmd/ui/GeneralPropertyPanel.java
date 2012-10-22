@@ -12,6 +12,9 @@ public class GeneralPropertyPanel extends GenericOptionsPanel {
 
     private Lookup lkp;
 
+    public GeneralPropertyPanel() {
+        this(null);
+    }
     /**
      * Creates new form GeneralPropertyPanel
      */
@@ -31,68 +34,72 @@ public class GeneralPropertyPanel extends GenericOptionsPanel {
     private void initComponents() {
         java.awt.GridBagConstraints gridBagConstraints;
 
-        optOverwrite = new javax.swing.JCheckBox();
-        jSeparator1 = new javax.swing.JSeparator();
-        jLabel1 = new javax.swing.JLabel();
-        optRegex = new javax.swing.JTextField();
+        owIgnore = new javax.swing.JCheckBox();
+        optIgnore = new javax.swing.JTextField();
+        jLabel2 = new javax.swing.JLabel();
+        jSeparator2 = new javax.swing.JSeparator();
 
         setLayout(new java.awt.GridBagLayout());
 
-        org.openide.awt.Mnemonics.setLocalizedText(optOverwrite, org.openide.util.NbBundle.getMessage(GeneralPropertyPanel.class, "GeneralPropertyPanel.optOverwrite.text")); // NOI18N
-        optOverwrite.addActionListener(new java.awt.event.ActionListener() {
+        org.openide.awt.Mnemonics.setLocalizedText(owIgnore, org.openide.util.NbBundle.getMessage(GeneralPropertyPanel.class, "GeneralPropertyPanel.owIgnore.text")); // NOI18N
+        owIgnore.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                optOverwriteActionPerformed(evt);
+                owIgnoreActionPerformed(evt);
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.insets = new java.awt.Insets(0, 0, 2, 2);
+        add(owIgnore, gridBagConstraints);
+
+        optIgnore.setText(org.openide.util.NbBundle.getMessage(GeneralPropertyPanel.class, "GeneralPropertyPanel.optIgnore.text")); // NOI18N
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 1;
         gridBagConstraints.gridwidth = 2;
-        gridBagConstraints.insets = new java.awt.Insets(0, 0, 5, 5);
-        add(optOverwrite, gridBagConstraints);
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(0, 0, 2, 2);
+        add(optIgnore, gridBagConstraints);
+
+        org.openide.awt.Mnemonics.setLocalizedText(jLabel2, org.openide.util.NbBundle.getMessage(GeneralPropertyPanel.class, "GeneralPropertyPanel.jLabel2.text")); // NOI18N
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.insets = new java.awt.Insets(10, 0, 2, 2);
+        add(jLabel2, gridBagConstraints);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 0;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.weightx = 1.0;
-        gridBagConstraints.insets = new java.awt.Insets(0, 0, 5, 5);
-        add(jSeparator1, gridBagConstraints);
-
-        org.openide.awt.Mnemonics.setLocalizedText(jLabel1, org.openide.util.NbBundle.getMessage(GeneralPropertyPanel.class, "GeneralPropertyPanel.jLabel1.text")); // NOI18N
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 1;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        add(jLabel1, gridBagConstraints);
-
-        optRegex.setText(org.openide.util.NbBundle.getMessage(GeneralPropertyPanel.class, "GeneralPropertyPanel.optRegex.text")); // NOI18N
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 1;
-        gridBagConstraints.gridwidth = 2;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.weightx = 1.0;
-        add(optRegex, gridBagConstraints);
+        gridBagConstraints.insets = new java.awt.Insets(10, 0, 2, 2);
+        add(jSeparator2, gridBagConstraints);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void optOverwriteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_optOverwriteActionPerformed
+    private void owIgnoreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_owIgnoreActionPerformed
         this.updateForm();
-    }//GEN-LAST:event_optOverwriteActionPerformed
+    }//GEN-LAST:event_owIgnoreActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JCheckBox optOverwrite;
-    private javax.swing.JTextField optRegex;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JSeparator jSeparator2;
+    private javax.swing.JTextField optIgnore;
+    private javax.swing.JCheckBox owIgnore;
     // End of variables declaration//GEN-END:variables
 
     @Override
     public void load() {
-        optRegex.setText((String)GeneralOptions.load(GeneralOptions.Settings.IGNORE, this.lkp));
+        owIgnore.setSelected(GeneralOptions.isOverwritten(GeneralOptions.Settings.IGNORE, this.lkp));
+        optIgnore.setText((String)GeneralOptions.load(GeneralOptions.Settings.IGNORE, this.lkp));
         this.updateForm();
     }
 
     @Override
     public void save() {
-
+        GeneralOptions.overwrite(GeneralOptions.Settings.IGNORE, owIgnore.isSelected() ? optIgnore.getText() : null, this.lkp);
     }
 
     @Override
@@ -105,7 +112,7 @@ public class GeneralPropertyPanel extends GenericOptionsPanel {
     }
 
     private void updateForm() {
-        boolean enabled = optOverwrite.isSelected();
-        optRegex.setEnabled(enabled);
+        boolean enabled = owIgnore.isSelected();
+        optIgnore.setEnabled(enabled);
     }
 }
