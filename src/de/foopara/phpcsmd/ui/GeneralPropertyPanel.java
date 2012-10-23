@@ -34,22 +34,42 @@ public class GeneralPropertyPanel extends GenericOptionsPanel {
     private void initComponents() {
         java.awt.GridBagConstraints gridBagConstraints;
 
+        jLabel2 = new javax.swing.JLabel();
+        jSeparator1 = new javax.swing.JSeparator();
         owIgnore = new javax.swing.JCheckBox();
         optIgnore = new javax.swing.JTextField();
-        jLabel2 = new javax.swing.JLabel();
-        jSeparator2 = new javax.swing.JSeparator();
 
         setLayout(new java.awt.GridBagLayout());
 
+        org.openide.awt.Mnemonics.setLocalizedText(jLabel2, org.openide.util.NbBundle.getMessage(GeneralPropertyPanel.class, "GeneralPropertyPanel.jLabel2.text")); // NOI18N
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.insets = new java.awt.Insets(10, 0, 2, 2);
+        add(jLabel2, gridBagConstraints);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(10, 0, 2, 2);
+        add(jSeparator1, gridBagConstraints);
+
         org.openide.awt.Mnemonics.setLocalizedText(owIgnore, org.openide.util.NbBundle.getMessage(GeneralPropertyPanel.class, "GeneralPropertyPanel.owIgnore.text")); // NOI18N
+        owIgnore.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        owIgnore.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        owIgnore.setName("owIgnore"); // NOI18N
         owIgnore.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                owIgnoreActionPerformed(evt);
+                owIgnoreowActionPerformed(evt);
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 1;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.insets = new java.awt.Insets(0, 0, 2, 2);
         add(owIgnore, gridBagConstraints);
 
@@ -59,33 +79,17 @@ public class GeneralPropertyPanel extends GenericOptionsPanel {
         gridBagConstraints.gridy = 1;
         gridBagConstraints.gridwidth = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.weightx = 1.0;
         gridBagConstraints.insets = new java.awt.Insets(0, 0, 2, 2);
         add(optIgnore, gridBagConstraints);
-
-        org.openide.awt.Mnemonics.setLocalizedText(jLabel2, org.openide.util.NbBundle.getMessage(GeneralPropertyPanel.class, "GeneralPropertyPanel.jLabel2.text")); // NOI18N
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.gridwidth = 2;
-        gridBagConstraints.insets = new java.awt.Insets(10, 0, 2, 2);
-        add(jLabel2, gridBagConstraints);
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 2;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.weightx = 1.0;
-        gridBagConstraints.insets = new java.awt.Insets(10, 0, 2, 2);
-        add(jSeparator2, gridBagConstraints);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void owIgnoreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_owIgnoreActionPerformed
+    private void owIgnoreowActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_owIgnoreowActionPerformed
         this.updateForm();
-    }//GEN-LAST:event_owIgnoreActionPerformed
+    }//GEN-LAST:event_owIgnoreowActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JSeparator jSeparator2;
+    private javax.swing.JSeparator jSeparator1;
     private javax.swing.JTextField optIgnore;
     private javax.swing.JCheckBox owIgnore;
     // End of variables declaration//GEN-END:variables

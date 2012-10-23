@@ -5,6 +5,7 @@ import de.foopara.phpcsmd.debug.Logger;
 import de.foopara.phpcsmd.generics.*;
 import de.foopara.phpcsmd.option.PhpcsOptions;
 import java.io.File;
+import java.io.InputStream;
 import org.openide.filesystems.FileObject;
 import org.openide.util.Lookup;
 
@@ -106,5 +107,30 @@ public class Phpcs extends GenericExecute {
 
     private GenericResult setAndReturnCurrent(FileObject file) {
         return ViolationRegistry.getInstance().getPhpcs(file);
+    }
+
+    public static String[] getStandards(String executable) {
+        try {
+            File script = new File(executable);
+            if (!script.exists() || !script.canExecute() || !script.isFile()) {
+                return null;
+            }
+            Process child = Runtime.getRuntime().exec(executable + " -i");
+            InputStream in = child.getInputStream();
+            StringBuilder tmp = new StringBuilder();
+            int c;
+            while ((c = in.read()) != -1) {
+                tmp.append((char) c);
+            }
+            String installed[] = tmp.toString()
+                    .replaceFirst("The installed.*are ", "")
+                    .replaceFirst(" and ", ", ")
+                    .split(", ");
+            return installed;
+        } catch (Exception e) {
+            Logger.getInstance().log(e);
+        }
+
+        return null;
     }
 }

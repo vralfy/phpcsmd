@@ -4,8 +4,10 @@
  */
 package de.foopara.phpcsmd.ui.phpcs;
 
+import de.foopara.phpcsmd.exec.phpcs.Phpcs;
 import de.foopara.phpcsmd.generics.GenericOptionsPanel;
 import de.foopara.phpcsmd.option.PhpcsOptions;
+import javax.swing.DefaultComboBoxModel;
 import org.openide.util.Lookup;
 
 /**
@@ -26,6 +28,7 @@ public class PhpcsPropertyPanel extends GenericOptionsPanel {
         super();
         this.lkp = lkp;
         initComponents();
+        this._clearInstalledStandards();
         this.load();
     }
 
@@ -67,6 +70,11 @@ public class PhpcsPropertyPanel extends GenericOptionsPanel {
         add(jSeparator1, gridBagConstraints);
 
         org.openide.awt.Mnemonics.setLocalizedText(btnStandard, org.openide.util.NbBundle.getMessage(PhpcsPropertyPanel.class, "PhpcsPropertyPanel.btnStandard.text")); // NOI18N
+        btnStandard.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnStandardActionPerformed(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 1;
@@ -75,6 +83,11 @@ public class PhpcsPropertyPanel extends GenericOptionsPanel {
         add(btnStandard, gridBagConstraints);
 
         cmbStandard.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "-- select --" }));
+        cmbStandard.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbStandardActionPerformed(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 1;
@@ -277,6 +290,23 @@ public class PhpcsPropertyPanel extends GenericOptionsPanel {
         this.updateForm();
     }//GEN-LAST:event_owActionPerformed
 
+    private void btnStandardActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnStandardActionPerformed
+        this._clearInstalledStandards();
+
+        String[] installed = Phpcs.getStandards((String)PhpcsOptions.load(PhpcsOptions.Settings.SCRIPT, this.lkp));
+        if (installed != null) {
+            for (String standard : installed) {
+                ((DefaultComboBoxModel) this.cmbStandard.getModel()).addElement(standard);
+            }
+        }
+    }//GEN-LAST:event_btnStandardActionPerformed
+
+    private void cmbStandardActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbStandardActionPerformed
+        if (this.cmbStandard.getSelectedIndex() > 0) {
+            this.optStandard.setText((String)this.cmbStandard.getModel().getSelectedItem());
+        }
+    }//GEN-LAST:event_cmbStandardActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnStandard;
     private javax.swing.JComboBox cmbStandard;
@@ -346,5 +376,10 @@ public class PhpcsPropertyPanel extends GenericOptionsPanel {
         optTabwidth.setEnabled(owTabWidth.isSelected());
         optIniOverwrite.setEnabled(owIniOverwrite.isSelected());
         optWarning.setEnabled(owWarning.isSelected());
+    }
+
+    private void _clearInstalledStandards() {
+        this.cmbStandard.removeAllItems();
+        ((DefaultComboBoxModel)this.cmbStandard.getModel()).addElement("-- select --");
     }
 }

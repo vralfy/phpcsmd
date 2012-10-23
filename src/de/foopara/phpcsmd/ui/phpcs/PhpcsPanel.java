@@ -1,6 +1,7 @@
 package de.foopara.phpcsmd.ui.phpcs;
 
 import de.foopara.phpcsmd.debug.Logger;
+import de.foopara.phpcsmd.exec.phpcs.Phpcs;
 import de.foopara.phpcsmd.generics.GenericOptionsPanel;
 import de.foopara.phpcsmd.option.PhpcsOptions;
 import de.foopara.phpcsmd.option.phpcs.GenericPhpcsSniffRegistry;
@@ -255,34 +256,20 @@ public class PhpcsPanel extends GenericOptionsPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        this._clearInstalledStandards();
 
-        try {
-            File script = new File(optScript.getText());
-            if (!script.exists() || !script.canExecute() || !script.isFile()) {
-                return;
-            }
-            Process child = Runtime.getRuntime().exec(optScript.getText() + " -i");
-            InputStream in = child.getInputStream();
-            StringBuilder tmp = new StringBuilder();
-            int c;
-            while ((c = in.read()) != -1) {
-                tmp.append((char) c);
-            }
-            String installed[] = tmp.toString()
-                    .replaceFirst("The installed.*are ", "")
-                    .replaceFirst(" and ", ", ")
-                    .split(", ");
+        String installed[] = Phpcs.getStandards(optScript.getText());
+        if (installed != null) {
             for(String standard : installed) {
                 ((DefaultComboBoxModel)this.jComboBox1.getModel()).addElement(standard);
             }
-        } catch (IOException ex) {
-            Logger.getInstance().log(ex);
-            Exceptions.printStackTrace(ex);
         }
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
-        this.optStandard.setText((String)this.jComboBox1.getModel().getSelectedItem());
+        if (this.jComboBox1.getSelectedIndex() > 0) {
+            this.optStandard.setText((String)this.jComboBox1.getModel().getSelectedItem());
+        }
     }//GEN-LAST:event_jComboBox1ActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
