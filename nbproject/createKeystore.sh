@@ -1,2 +1,2 @@
 rm private/keystore
-keytool -genkey -storepass phpcsmd -alias phpcsmd -keystore private/keystore -dname "CN=Norman Specht, OU=Unknown, O=www.foopara.de, L=Unkown, ST=Unknown, C=DE"
+keytool -genkeypair -storepass phpcsmd -alias phpcsmd -validity 730 -keystore private/keystore -dname "CN=Norman Specht, OU=Unknown, O=www.foopara.de, L=Unkown, ST=Unknown, C=DE"
