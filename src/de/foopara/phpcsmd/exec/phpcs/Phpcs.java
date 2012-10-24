@@ -36,16 +36,20 @@ public class Phpcs extends GenericExecute {
             return this.setAndReturnDefault(file);
         }
 
-        if(this.isEnabled() == false) return this.setAndReturnCurrent(file);
+        if(this.isEnabled() == false) {
+            return this.setAndReturnCurrent(file);
+        }
 
-        if (!iAmAlive()) return this.setAndReturnCurrent(file);
+        if (!iAmAlive()) {
+            return this.setAndReturnCurrent(file);
+        }
 
         CustomStandard cstandard = null;
         StringBuilder cmd = new StringBuilder((String)PhpcsOptions.load(PhpcsOptions.Settings.SCRIPT, this.lkp));
         if ((Boolean)PhpcsOptions.load(PhpcsOptions.Settings.EXTRAS, this.lkp) == true
             || ((String)PhpcsOptions.load(PhpcsOptions.Settings.STANDARD, this.lkp)).trim().length() == 0
         ) {
-            cstandard = new CustomStandard();
+            cstandard = new CustomStandard(this.lkp);
             this.appendArgument(cmd, "--standard=", cstandard.toString());
         } else {
             this.appendArgument(cmd, "--standard=", (String)PhpcsOptions.load(PhpcsOptions.Settings.STANDARD, this.lkp));
@@ -79,11 +83,17 @@ public class Phpcs extends GenericExecute {
         epb.addArgument(file.getPath());
          */
         PhpcsXMLParser parser = new PhpcsXMLParser(this.lkp);
-        if (!iAmAlive()) return this.setAndReturnCurrent(file);
+        if (!iAmAlive()) {
+            return this.setAndReturnCurrent(file);
+        }
         GenericOutputReader[] reader = GenericProcess.run(cmd.toString(), "", null, this.lkp);
-        if (!iAmAlive()) return this.setAndReturnCurrent(file);
+        if (!iAmAlive()) {
+            return this.setAndReturnCurrent(file);
+        }
         PhpcsResult res = parser.parse(reader[0]);
-        if (!iAmAlive()) return this.setAndReturnCurrent(file);
+        if (!iAmAlive()) {
+            return this.setAndReturnCurrent(file);
+        }
         ViolationRegistry.getInstance().setPhpcs(file, res);
 
         if ((Boolean)PhpcsOptions.load(PhpcsOptions.Settings.EXTRAS, this.lkp) && cstandard != null) {

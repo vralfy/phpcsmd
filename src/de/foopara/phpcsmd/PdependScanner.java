@@ -3,7 +3,6 @@ package de.foopara.phpcsmd;
 import de.foopara.phpcsmd.ui.reports.PdependReportTopComponent;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import org.netbeans.api.project.Project;
 import org.openide.awt.ActionID;
 import org.openide.awt.ActionReference;
 import org.openide.awt.ActionReferences;
@@ -13,14 +12,12 @@ import org.openide.loaders.DataObject;
 import org.openide.util.NbBundle.Messages;
 
 @ActionID(id = "de.foopara.phpcsmd.PdependScanner", category = "PHP")
-@ActionRegistration(displayName = "#CTL_PHPdependScanner",
-        iconBase = "de/foopara/phpcsmd/resources/icon.png")
+@ActionRegistration(displayName = "#CTL_PHPdependScanner", iconBase = "de/foopara/phpcsmd/resources/icon.png")
 @ActionReferences({
     @ActionReference(path = "Loaders/folder/any/Actions", position = 877),
     @ActionReference(path = "Loaders/text/x-php5/Actions", position = 877),
 //    @ActionReference(path = "Projects/Actions", position = 877),
     @ActionReference(path = "UI/ToolActions/PHP", position = 877)
-
 })
 @Messages("CTL_PHPdependScanner=Scan with Pdepend")
 public final class PdependScanner implements ActionListener {

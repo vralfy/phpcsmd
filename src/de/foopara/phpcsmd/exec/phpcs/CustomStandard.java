@@ -18,12 +18,13 @@ public class CustomStandard {
     private File _ruleset;
     private Lookup lkp;
 
-    public CustomStandard(Lookup lkp) {
-        this.lkp = lkp;
+    public CustomStandard() {
+        this(null);
     }
 
-    public CustomStandard() {
+    public CustomStandard(Lookup lkp) {
         try {
+            this.lkp = lkp;
             this._ruleset = File.createTempFile("phpcsmdCustom",".xml");
             StringBuilder content = new StringBuilder();
             content.append("<?xml version=\"1.0\"?>\n");
