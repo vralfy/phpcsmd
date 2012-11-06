@@ -32,9 +32,11 @@ public class CustomStandard {
             content.append("\t<description>PHPCSMDCUSTOM</description>\n");
 
             if (((String)PhpcsOptions.load(PhpcsOptions.Settings.STANDARD, this.lkp)).trim().length() > 0) {
+                String standard = (String)PhpcsOptions.load(PhpcsOptions.Settings.STANDARD, this.lkp);
+                Logger.getInstance().log("using standard " + standard, "Creating custom phpcs standard");
                 content
                         .append("\t<rule ref=\"")
-                        .append((String)PhpcsOptions.load(PhpcsOptions.Settings.STANDARD, this.lkp))
+                        .append(standard)
                         .append("\" />\n\n");
             }
 

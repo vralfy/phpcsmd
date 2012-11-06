@@ -12,7 +12,9 @@ import org.openide.util.Lookup;
 public class FileListenerRegistry {
     private static FileListenerRegistry instance = null;
     public static FileListenerRegistry getInstance() {
-        if (FileListenerRegistry.instance == null) FileListenerRegistry.instance = new FileListenerRegistry();
+        if (FileListenerRegistry.instance == null) {
+            FileListenerRegistry.instance = new FileListenerRegistry();
+        }
         return FileListenerRegistry.instance;
     }
 
@@ -31,7 +33,7 @@ public class FileListenerRegistry {
             return null;
         }
 
-        GenericFileListener ret = new GenericFileListener(lkp);
+        GenericFileListener ret = new GenericFileListener();
 
         fo.addFileChangeListener(ret);
         this._registry.put(fo.getPath(), ret);

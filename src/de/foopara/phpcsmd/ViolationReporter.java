@@ -1,6 +1,7 @@
 package de.foopara.phpcsmd;
 
 import de.foopara.phpcsmd.generics.GenericExecute;
+import de.foopara.phpcsmd.option.GeneralOptions;
 import java.io.File;
 import java.util.HashSet;
 import java.util.List;
@@ -68,7 +69,9 @@ public class ViolationReporter extends PushTaskScanner {
     }
 
     public List<? extends Task> scan(FileObject fo, Lookup lkp) {
-         GenericExecute.executeQATools(fo, lkp);
+         if ((Boolean)GeneralOptions.load(GeneralOptions.Settings.UPDATEONSAVE, fo.getLookup())) {
+            GenericExecute.executeQATools(fo, fo.getLookup());
+         }
          return ViolationRegistry.getInstance().getTaskList(fo);
     }
 

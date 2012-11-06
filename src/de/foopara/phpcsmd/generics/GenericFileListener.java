@@ -7,23 +7,17 @@ import org.openide.filesystems.FileAttributeEvent;
 import org.openide.filesystems.FileChangeListener;
 import org.openide.filesystems.FileEvent;
 import org.openide.filesystems.FileRenameEvent;
-import org.openide.util.Lookup;
 
 /**
  *
  * @author nspecht
  */
 public class GenericFileListener implements FileChangeListener {
-    protected Lookup lkp;
-
-    public GenericFileListener(Lookup lkp) {
-        this.lkp = lkp;
-    }
 
     @Override
     public void fileChanged(FileEvent fe) {
-        if ((Boolean)GeneralOptions.load(GeneralOptions.Settings.UPDATEONSAVE, this.lkp)) {
-            GenericExecute.executeQATools(fe.getFile(), this.lkp);
+        if ((Boolean)GeneralOptions.load(GeneralOptions.Settings.UPDATEONSAVE, fe.getFile().getLookup())) {
+            GenericExecute.executeQATools(fe.getFile(), fe.getFile().getLookup());
         }
     }
 
@@ -34,7 +28,9 @@ public class GenericFileListener implements FileChangeListener {
 
     @Override
     public void fileDataCreated(FileEvent fe) {
-        //only for folders
+        if ((Boolean)GeneralOptions.load(GeneralOptions.Settings.UPDATEONSAVE, fe.getFile().getLookup())) {
+            GenericExecute.executeQATools(fe.getFile(), fe.getFile().getLookup());
+        }
     }
 
     @Override
@@ -45,12 +41,14 @@ public class GenericFileListener implements FileChangeListener {
 
     @Override
     public void fileRenamed(FileRenameEvent fre) {
+        ViolationRegistry.getInstance().removeFile(fre.getFile());
+        FileListenerRegistry.getInstance().removeListener(fre.getFile().getPath());
     }
 
     @Override
     public void fileAttributeChanged(FileAttributeEvent fae) {
-        if ((Boolean)GeneralOptions.load(GeneralOptions.Settings.UPDATEONSAVE, this.lkp)) {
-            GenericExecute.executeQATools(fae.getFile(), this.lkp);
+        if ((Boolean)GeneralOptions.load(GeneralOptions.Settings.UPDATEONSAVE, fae.getFile().getLookup())) {
+            GenericExecute.executeQATools(fae.getFile(), fae.getFile().getLookup());
         }
     }
 }
