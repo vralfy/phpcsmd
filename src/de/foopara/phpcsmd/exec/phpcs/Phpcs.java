@@ -60,7 +60,7 @@ public class Phpcs extends GenericExecute {
         this.appendArgument(cmd, "-d ", GenericHelper.implode(" -d ", ((String)PhpcsOptions.load(PhpcsOptions.Settings.INIOVERWRITE, this.lkp)).split(";")));
 
         if ((Integer)PhpcsOptions.load(PhpcsOptions.Settings.TABWIDTH, this.lkp) > -1) {
-            cmd.append(" --tab-width=").append((String)PhpcsOptions.load(PhpcsOptions.Settings.TABWIDTH, this.lkp));
+            cmd.append(" --tab-width=").append((Integer)PhpcsOptions.load(PhpcsOptions.Settings.TABWIDTH, this.lkp));
         }
 
         if ((Boolean)PhpcsOptions.load(PhpcsOptions.Settings.WARNINGS, this.lkp) == true) {
