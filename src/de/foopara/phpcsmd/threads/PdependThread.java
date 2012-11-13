@@ -4,7 +4,6 @@ import de.foopara.phpcsmd.exec.pdepend.Pdepend;
 import de.foopara.phpcsmd.exec.pdepend.PdependResult;
 import de.foopara.phpcsmd.ui.reports.PdependReportTopComponent;
 import org.openide.filesystems.FileObject;
-import org.openide.util.Lookup;
 
 /**
  *
@@ -14,11 +13,6 @@ public class PdependThread extends Thread {
 
     private FileObject fo = null;
     private PdependReportTopComponent component = null;
-    protected Lookup lkp;
-
-    public PdependThread(Lookup lkp) {
-        this.lkp = lkp;
-    }
 
     public void setFileObject(FileObject fo) {
         this.fo = fo;
@@ -34,7 +28,7 @@ public class PdependThread extends Thread {
      */
     @Override
     public void run() {
-        Pdepend pdepend = new Pdepend(this.lkp);
+        Pdepend pdepend = new Pdepend();
         pdepend.setTopComponent(this.component);
         PdependResult res = pdepend.run(fo);
         this.component.setPdependResult(res);

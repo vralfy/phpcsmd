@@ -85,7 +85,7 @@ public class RescanThread extends Thread {
         }
         for (FileObject f2 : f.getChildren()) {
             try {
-                if (GenericHelper.isDesirableFile(f2, this.lkp) && !GenericHelper.isSymlink(FileUtil.toFile(f2))) {
+                if (GenericHelper.isDesirableFile(f2) && !GenericHelper.isSymlink(FileUtil.toFile(f2))) {
                     fc += 1;
                     if (!this.retrieveValuesFromRegistry) {
                         QAThread qa = new QAThread(this.lkp);
@@ -109,12 +109,12 @@ public class RescanThread extends Thread {
                 Exceptions.printStackTrace(ex);
             }
         }
-        if (GenericHelper.isDesirableFolder(f, this.lkp)
+        if (GenericHelper.isDesirableFolder(f)
             && firstRun
             && (Boolean)PhpcpdOptions.load(PhpcpdOptions.Settings.ACTIVATEDFOLDER, this.lkp)
             && this.enablePhpcpd
         ) {
-            Phpcpd cpdTask = new Phpcpd(this.lkp);
+            Phpcpd cpdTask = new Phpcpd();
             HashMap<String, PhpcpdResult> res = cpdTask.runFolder(f, true);
             for (String path : res.keySet()) {
                 FileObject tmp = FileUtil.toFileObject(new File(path));

@@ -18,16 +18,18 @@ import org.openide.util.Lookup;
  */
 public class GenericAnnotationBuilder {
 
-    public static void updateAnnotations(FileObject fo, Lookup lkp) {
-        GenericAnnotationBuilder.run(fo, ViolationRegistry.getInstance().getPhpcs(fo), lkp);
-        GenericAnnotationBuilder.run(fo, ViolationRegistry.getInstance().getPhpmd(fo), lkp);
-        GenericAnnotationBuilder.run(fo, ViolationRegistry.getInstance().getPhpcpd(fo), lkp);
+    public static void updateAnnotations(FileObject fo) {
+        GenericAnnotationBuilder.run(fo, ViolationRegistry.getInstance().getPhpcs(fo));
+        GenericAnnotationBuilder.run(fo, ViolationRegistry.getInstance().getPhpmd(fo));
+        GenericAnnotationBuilder.run(fo, ViolationRegistry.getInstance().getPhpcpd(fo));
     }
 
-    public static void run(FileObject fo, GenericResult res, Lookup lkp) {
-        if (!GenericHelper.isDesirableFile(fo, lkp)) return;
+    public static void run(FileObject fo, GenericResult res) {
+        if (!GenericHelper.isDesirableFile(fo)) {
+            return;
+        }
 
-        FileListenerRegistry.getListener(fo, lkp);
+        FileListenerRegistry.getListener(fo);
 
         try {
             DataObject oData = DataObject.find(fo);

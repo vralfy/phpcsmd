@@ -16,8 +16,8 @@ public class GenericFileListener implements FileChangeListener {
 
     @Override
     public void fileChanged(FileEvent fe) {
-        if ((Boolean)GeneralOptions.load(GeneralOptions.Settings.UPDATEONSAVE, fe.getFile().getLookup())) {
-            GenericExecute.executeQATools(fe.getFile(), fe.getFile().getLookup());
+        if ((Boolean)GeneralOptions.load(GeneralOptions.Settings.UPDATEONSAVE, GenericHelper.getFileLookup(fe.getFile()))) {
+            GenericExecute.executeQATools(fe.getFile());
         }
     }
 
@@ -28,8 +28,8 @@ public class GenericFileListener implements FileChangeListener {
 
     @Override
     public void fileDataCreated(FileEvent fe) {
-        if ((Boolean)GeneralOptions.load(GeneralOptions.Settings.UPDATEONSAVE, fe.getFile().getLookup())) {
-            GenericExecute.executeQATools(fe.getFile(), fe.getFile().getLookup());
+        if ((Boolean)GeneralOptions.load(GeneralOptions.Settings.UPDATEONSAVE, GenericHelper.getFileLookup(fe.getFile()))) {
+            GenericExecute.executeQATools(fe.getFile());
         }
     }
 
@@ -47,8 +47,8 @@ public class GenericFileListener implements FileChangeListener {
 
     @Override
     public void fileAttributeChanged(FileAttributeEvent fae) {
-        if ((Boolean)GeneralOptions.load(GeneralOptions.Settings.UPDATEONSAVE, fae.getFile().getLookup())) {
-            GenericExecute.executeQATools(fae.getFile(), fae.getFile().getLookup());
+        if ((Boolean)GeneralOptions.load(GeneralOptions.Settings.UPDATEONSAVE, GenericHelper.getFileLookup(fae.getFile()))) {
+            GenericExecute.executeQATools(fae.getFile());
         }
     }
 }

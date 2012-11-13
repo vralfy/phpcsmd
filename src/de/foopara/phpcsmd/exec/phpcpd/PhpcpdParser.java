@@ -2,6 +2,7 @@ package de.foopara.phpcsmd.exec.phpcpd;
 
 import de.foopara.phpcsmd.ViolationRegistry;
 import de.foopara.phpcsmd.debug.Logger;
+import de.foopara.phpcsmd.generics.GenericHelper;
 import de.foopara.phpcsmd.generics.GenericOutputReader;
 import de.foopara.phpcsmd.generics.GenericViolation;
 import java.io.File;
@@ -20,13 +21,10 @@ import org.openide.util.Lookup;
  */
 public class PhpcpdParser extends GenericPhpcpdParser {
 
-    public PhpcpdParser(Lookup lkp) {
-        super(lkp);
-    }
-
     public PhpcpdResult parse(GenericOutputReader reader, boolean updateDependencies, FileObject fo) {
         List<GenericViolation> cpdErrors = new ArrayList<GenericViolation>();
         List<GenericViolation> cpdNoTask = new ArrayList<GenericViolation>();
+        Lookup lookup =  GenericHelper.getFileLookup(fo);
 
         try {
             char[] tmp = new char[1024];
@@ -67,7 +65,7 @@ public class PhpcpdParser extends GenericPhpcpdParser {
                     int end1 = Integer.parseInt(cpdLines1[1]);
                     int end2 = Integer.parseInt(cpdLines2[1]);
 
-                    this.add(fo.getPath(), cpdErrors, cpdNoTask, f1, start1, end1, f2, start2, end2);
+                    this.add(fo.getPath(), lookup, cpdErrors, cpdNoTask, f1, start1, end1, f2, start2, end2);
 
                     if (updateDependencies && f1.compareTo(f2) != 0) {
                         ViolationRegistry.getInstance().addPhpcpdDependency(FileUtil.toFileObject(new File(f1)), FileUtil.toFileObject(new File(f2)));

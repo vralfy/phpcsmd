@@ -12,7 +12,6 @@ import org.openide.util.Lookup;
 abstract public class GenericExecute {
 
     protected QAThread qaThread = null;
-    protected Lookup lkp;
 
     public abstract boolean isEnabled();
     protected abstract GenericResult run(FileObject file, boolean annotations);
@@ -39,7 +38,8 @@ abstract public class GenericExecute {
         return !this.qaThread.isInterupted();
     }
 
-    public static void executeQATools(FileObject fo, Lookup lkp) {
+    public static void executeQATools(FileObject fo) {
+        Lookup lkp = GenericHelper.getFileLookup(fo);
         QAThread qaThread = new QAThread(lkp);
         qaThread.setFileObject(fo);
         if ((Boolean)GeneralOptions.load(GeneralOptions.Settings.THREADED, lkp)) {

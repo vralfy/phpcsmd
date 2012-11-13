@@ -8,7 +8,6 @@ import javax.swing.ImageIcon;
 import org.openide.awt.Notification;
 import org.openide.awt.NotificationDisplayer;
 import org.openide.filesystems.FileObject;
-import org.openide.util.Lookup;
 
 /**
  *
@@ -17,12 +16,12 @@ import org.openide.util.Lookup;
 public class GenericNotification {
     private static Notification notify = null;
 
-    public static void displayNotification(FileObject fo, Lookup lkp) {
+    public static void displayNotification(FileObject fo) {
         if (GenericNotification.notify != null) {
             GenericNotification.notify.clear();
         }
 
-        if ((Boolean)GeneralOptions.load(GeneralOptions.Settings.NOTIFY, lkp) == false) return;
+        if ((Boolean)GeneralOptions.load(GeneralOptions.Settings.NOTIFY, GenericHelper.getFileLookup(fo)) == false) return;
 
         GenericResult phpcs = ViolationRegistry.getInstance().getPhpcs(fo);
         GenericResult phpmd = ViolationRegistry.getInstance().getPhpmd(fo);

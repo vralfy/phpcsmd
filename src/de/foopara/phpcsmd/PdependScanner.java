@@ -1,5 +1,6 @@
 package de.foopara.phpcsmd;
 
+import de.foopara.phpcsmd.generics.GenericHelper;
 import de.foopara.phpcsmd.ui.reports.PdependReportTopComponent;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -37,7 +38,7 @@ public final class PdependScanner implements ActionListener {
     private void performOnFileObject(FileObject fo) {
         if (fo.isFolder() || fo.isData()) {
             PdependReportTopComponent form = new PdependReportTopComponent();
-            form.setLookup(fo.getLookup());
+            form.setLookup(GenericHelper.getFileLookup(fo));
             form.setFileObject(fo);
             form.open();
         }

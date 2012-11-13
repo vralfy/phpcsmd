@@ -2,6 +2,7 @@ package de.foopara.phpcsmd.exec.phpcpd;
 
 import de.foopara.phpcsmd.ViolationRegistry;
 import de.foopara.phpcsmd.debug.Logger;
+import de.foopara.phpcsmd.generics.GenericHelper;
 import de.foopara.phpcsmd.generics.GenericOutputReader;
 import de.foopara.phpcsmd.generics.GenericViolation;
 import java.io.File;
@@ -21,15 +22,10 @@ import org.openide.util.Lookup;
  */
 public class PhpcpdFolderParser extends GenericPhpcpdParser {
 
-
-    public PhpcpdFolderParser(Lookup lkp) {
-        super(lkp);
-    }
-
     public HashMap<String, PhpcpdResult> parse(GenericOutputReader reader, FileObject containingFolder) {
         HashMap<String, List<GenericViolation>> cpdErrors = new HashMap<String, List<GenericViolation>>();
         HashMap<String, List<GenericViolation>> cpdNoTask = new HashMap<String, List<GenericViolation>>();
-
+        Lookup lookup = GenericHelper.getFileLookup(containingFolder);
         try {
             char[] tmp = new char[1024];
             StringBuilder buf = new StringBuilder();
@@ -84,9 +80,9 @@ public class PhpcpdFolderParser extends GenericPhpcpdParser {
                         cpdNoTask.put(f2, new ArrayList<GenericViolation>());
                     }
 
-                    this.add(f1, cpdErrors.get(f1), cpdNoTask.get(f1), f1, start1, end1, f2, start2, end2);
+                    this.add(f1, lookup, cpdErrors.get(f1), cpdNoTask.get(f1), f1, start1, end1, f2, start2, end2);
                     if (f1.compareTo(f2) != 0) {
-                        this.add(f2, cpdErrors.get(f2), cpdNoTask.get(f2), f1, start1, end1, f2, start2, end2);
+                        this.add(f2, lookup, cpdErrors.get(f2), cpdNoTask.get(f2), f1, start1, end1, f2, start2, end2);
                     }
 
                     FileObject tmpf1 = FileUtil.toFileObject(new File(f1));

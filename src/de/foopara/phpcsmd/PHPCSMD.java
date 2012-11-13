@@ -1,6 +1,7 @@
 package de.foopara.phpcsmd;
 
 import de.foopara.phpcsmd.generics.GenericExecute;
+import de.foopara.phpcsmd.generics.GenericHelper;
 import javax.swing.JMenuItem;
 import org.netbeans.api.project.Project;
 import org.openide.awt.ActionID;
@@ -41,7 +42,7 @@ public class PHPCSMD extends CookieAction {
         }
         FileObject fo = getFileObject(nodes[0]);
 
-        GenericExecute.executeQATools(fo, nodes[0].getLookup());
+        GenericExecute.executeQATools(fo);
     }
 
     @Override

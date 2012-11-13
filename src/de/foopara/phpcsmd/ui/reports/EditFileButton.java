@@ -41,19 +41,13 @@ public class EditFileButton extends JButton {
 
     private void openFile() {
         if (this._filename == null) return;
-        try {
-            FileObject fo = FileUtil.toFileObject(new File(this._filename));
-            if (!GenericHelper.isDesirableFile(fo, this.lkp)) {
-                return;
-            }
-            DataObject dob = DataObject.find(fo);
-            Openable oc = dob.getLookup().lookup(Openable.class);
-            if (oc != null) {
-                oc.open();
-            }
-        } catch (DataObjectNotFoundException ex) {
-            Logger.getInstance().log(ex);
-            Exceptions.printStackTrace(ex);
+        FileObject fo = FileUtil.toFileObject(new File(this._filename));
+        if (!GenericHelper.isDesirableFile(fo)) {
+            return;
+        }
+        Openable oc = GenericHelper.getFileLookup(fo).lookup(Openable.class);
+        if (oc != null) {
+            oc.open();
         }
     }
 }

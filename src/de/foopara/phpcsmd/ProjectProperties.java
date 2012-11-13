@@ -3,8 +3,6 @@ package de.foopara.phpcsmd;
 
 import de.foopara.phpcsmd.ui.PropertyPanel;
 import de.foopara.phpcsmd.ui.PropertyPanelOkAction;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.ResourceBundle;
 import javax.swing.JComponent;
 import org.netbeans.spi.project.ui.support.ProjectCustomizer;

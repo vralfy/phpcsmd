@@ -1,6 +1,5 @@
 package de.foopara.phpcsmd.ui.reports;
 
-import de.foopara.phpcsmd.debug.Logger;
 import de.foopara.phpcsmd.generics.GenericHelper;
 import de.foopara.phpcsmd.generics.GenericPokeRegistry;
 import de.foopara.phpcsmd.generics.GenericTopComponent;
@@ -18,10 +17,6 @@ import org.openide.awt.ActionID;
 import org.openide.awt.ActionReference;
 import org.openide.filesystems.FileObject;
 import org.openide.filesystems.FileUtil;
-import org.openide.loaders.DataObject;
-import org.openide.loaders.DataObjectNotFoundException;
-import org.openide.util.Exceptions;
-import org.openide.util.Lookup;
 import org.openide.util.NbBundle.Messages;
 import org.openide.windows.TopComponent;
 
@@ -347,20 +342,16 @@ public final class ScanReportTopComponent extends GenericTopComponent {
     }
 
     public void openSelectedFile() {
-        try {
-            String path = (String)this.scanReportTable1.getValueAt(this.scanReportTable1.getSelectedRow(), 0);
-            path = this.fileObject.getPath() + path;
-            FileObject fo = FileUtil.toFileObject(new File(path));
-            if (!GenericHelper.isDesirableFile(fo, this.lkp)) return;
+        String path = (String)this.scanReportTable1.getValueAt(this.scanReportTable1.getSelectedRow(), 0);
+        path = this.fileObject.getPath() + path;
+        FileObject fo = FileUtil.toFileObject(new File(path));
+        if (!GenericHelper.isDesirableFile(fo)) {
+            return;
+        }
 
-            DataObject dob = DataObject.find(fo);
-            Openable oc = dob.getLookup().lookup(Openable.class);
-            if (oc != null) {
-                oc.open();
-            }
-        } catch (DataObjectNotFoundException ex) {
-            Logger.getInstance().log(ex);
-            Exceptions.printStackTrace(ex);
+        Openable oc = GenericHelper.getFileLookup(fo).lookup(Openable.class);
+        if (oc != null) {
+            oc.open();
         }
 
     }

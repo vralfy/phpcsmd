@@ -16,10 +16,6 @@ import org.openide.util.Lookup;
 public class Phpcs extends GenericExecute {
     private boolean _enabled = true;
 
-    public Phpcs(Lookup lkp) {
-        this.lkp = lkp;
-    }
-
     @Override
     public boolean isEnabled() {
         return this._enabled;
@@ -27,12 +23,13 @@ public class Phpcs extends GenericExecute {
 
     @Override
     protected GenericResult run(FileObject file, boolean annotations) {
-        if ((Boolean)PhpcsOptions.load(PhpcsOptions.Settings.ACTIVATED, this.lkp) == false) {
+        Lookup lookup = GenericHelper.getFileLookup(file);
+        if ((Boolean)PhpcsOptions.load(PhpcsOptions.Settings.ACTIVATED, lookup) == false) {
             return this.setAndReturnCurrent(file);
         }
 
-        if (!GenericHelper.isDesirableFile(new File((String)PhpcsOptions.load(PhpcsOptions.Settings.SCRIPT, this.lkp)), this.lkp)
-                || !GenericHelper.isDesirableFile(file, this.lkp)) {
+        if (!GenericHelper.isDesirableFile(new File((String)PhpcsOptions.load(PhpcsOptions.Settings.SCRIPT, lookup)), lookup)
+                || !GenericHelper.isDesirableFile(file)) {
             return this.setAndReturnDefault(file);
         }
 
@@ -45,25 +42,25 @@ public class Phpcs extends GenericExecute {
         }
 
         CustomStandard cstandard = null;
-        StringBuilder cmd = new StringBuilder((String)PhpcsOptions.load(PhpcsOptions.Settings.SCRIPT, this.lkp));
-        if ((Boolean)PhpcsOptions.load(PhpcsOptions.Settings.EXTRAS, this.lkp) == true
-            || ((String)PhpcsOptions.load(PhpcsOptions.Settings.STANDARD, this.lkp)).trim().length() == 0
+        StringBuilder cmd = new StringBuilder((String)PhpcsOptions.load(PhpcsOptions.Settings.SCRIPT, lookup));
+        if ((Boolean)PhpcsOptions.load(PhpcsOptions.Settings.EXTRAS, lookup) == true
+            || ((String)PhpcsOptions.load(PhpcsOptions.Settings.STANDARD, lookup)).trim().length() == 0
         ) {
-            cstandard = new CustomStandard(this.lkp);
+            cstandard = new CustomStandard(lookup);
             this.appendArgument(cmd, "--standard=", cstandard.toString());
         } else {
-            this.appendArgument(cmd, "--standard=", (String)PhpcsOptions.load(PhpcsOptions.Settings.STANDARD, this.lkp));
+            this.appendArgument(cmd, "--standard=", (String)PhpcsOptions.load(PhpcsOptions.Settings.STANDARD, lookup));
         }
-        this.appendArgument(cmd, "--sniffs=", (String)PhpcsOptions.load(PhpcsOptions.Settings.SNIFFS, this.lkp));
-        this.appendArgument(cmd, "--extensions=", (String)PhpcsOptions.load(PhpcsOptions.Settings.EXTENSIONS, this.lkp));
-        this.appendArgument(cmd, "--ignore=", (String)PhpcsOptions.load(PhpcsOptions.Settings.IGNORES, this.lkp));
-        this.appendArgument(cmd, "-d ", GenericHelper.implode(" -d ", ((String)PhpcsOptions.load(PhpcsOptions.Settings.INIOVERWRITE, this.lkp)).split(";")));
+        this.appendArgument(cmd, "--sniffs=", (String)PhpcsOptions.load(PhpcsOptions.Settings.SNIFFS, lookup));
+        this.appendArgument(cmd, "--extensions=", (String)PhpcsOptions.load(PhpcsOptions.Settings.EXTENSIONS, lookup));
+        this.appendArgument(cmd, "--ignore=", (String)PhpcsOptions.load(PhpcsOptions.Settings.IGNORES, lookup));
+        this.appendArgument(cmd, "-d ", GenericHelper.implode(" -d ", ((String)PhpcsOptions.load(PhpcsOptions.Settings.INIOVERWRITE, lookup)).split(";")));
 
-        if ((Integer)PhpcsOptions.load(PhpcsOptions.Settings.TABWIDTH, this.lkp) > -1) {
-            cmd.append(" --tab-width=").append((Integer)PhpcsOptions.load(PhpcsOptions.Settings.TABWIDTH, this.lkp));
+        if ((Integer)PhpcsOptions.load(PhpcsOptions.Settings.TABWIDTH, lookup) > -1) {
+            cmd.append(" --tab-width=").append((Integer)PhpcsOptions.load(PhpcsOptions.Settings.TABWIDTH, lookup));
         }
 
-        if ((Boolean)PhpcsOptions.load(PhpcsOptions.Settings.WARNINGS, this.lkp) == true) {
+        if ((Boolean)PhpcsOptions.load(PhpcsOptions.Settings.WARNINGS, lookup) == true) {
             cmd.append(" -w");
         } else {
             cmd.append(" -n");
@@ -82,11 +79,11 @@ public class Phpcs extends GenericExecute {
         epb.addArgument("--report=xml");
         epb.addArgument(file.getPath());
          */
-        PhpcsXMLParser parser = new PhpcsXMLParser(this.lkp);
+        PhpcsXMLParser parser = new PhpcsXMLParser(lookup);
         if (!iAmAlive()) {
             return this.setAndReturnCurrent(file);
         }
-        GenericOutputReader[] reader = GenericProcess.run(cmd.toString(), "", null, this.lkp);
+        GenericOutputReader[] reader = GenericProcess.run(cmd.toString(), "", null, lookup);
         if (!iAmAlive()) {
             return this.setAndReturnCurrent(file);
         }
@@ -96,7 +93,7 @@ public class Phpcs extends GenericExecute {
         }
         ViolationRegistry.getInstance().setPhpcs(file, res);
 
-        if ((Boolean)PhpcsOptions.load(PhpcsOptions.Settings.EXTRAS, this.lkp) && cstandard != null) {
+        if ((Boolean)PhpcsOptions.load(PhpcsOptions.Settings.EXTRAS, lookup) && cstandard != null) {
             cstandard.delete();
         }
 

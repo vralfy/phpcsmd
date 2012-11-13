@@ -11,20 +11,16 @@ import org.openide.util.Lookup;
  * @author nspecht
  */
 public class GenericPhpcpdParser {
-    private Lookup lkp;
-
-    public GenericPhpcpdParser(Lookup lkp) {
-        this.lkp = lkp;
-    }
 
     protected void add(
             String fo,
+            Lookup lkp,
             List<GenericViolation> cpdErrors,
             List<GenericViolation> cpdNoTask,
             String f1, int s1, int e1,
             String f2, int s2, int e2) {
-        if (!GenericHelper.isDesirableFile(new File(f1), this.lkp)
-            || !GenericHelper.isDesirableFile(new File(f2), this.lkp)
+        if (!GenericHelper.isDesirableFile(new File(f1), lkp)
+            || !GenericHelper.isDesirableFile(new File(f2), lkp)
         ) {
             return;
         }

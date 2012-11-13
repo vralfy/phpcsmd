@@ -14,11 +14,6 @@ import org.openide.util.Lookup;
  */
 public class Phpmd extends GenericExecute {
     private boolean _enabled = true;
-    private Lookup lkp;
-
-    public Phpmd(Lookup lkp) {
-        this.lkp = lkp;
-    }
 
     @Override
     public boolean isEnabled() {
@@ -27,12 +22,13 @@ public class Phpmd extends GenericExecute {
 
     @Override
     protected GenericResult run(FileObject file, boolean annotations) {
-        if ((Boolean)PhpmdOptions.load(PhpmdOptions.Settings.ACTIVATED, this.lkp) == false) {
+        Lookup lookup = GenericHelper.getFileLookup(file);
+        if ((Boolean)PhpmdOptions.load(PhpmdOptions.Settings.ACTIVATED, lookup) == false) {
             return this.setAndReturnCurrent(file);
         }
 
-        if (!GenericHelper.isDesirableFile(new File((String)PhpmdOptions.load(PhpmdOptions.Settings.SCRIPT, this.lkp)), this.lkp)
-                || !GenericHelper.isDesirableFile(file, this.lkp)) {
+        if (!GenericHelper.isDesirableFile(new File((String)PhpmdOptions.load(PhpmdOptions.Settings.SCRIPT, lookup)), lookup)
+                || !GenericHelper.isDesirableFile(file)) {
             return this.setAndReturnDefault(file);
         }
 
@@ -44,15 +40,15 @@ public class Phpmd extends GenericExecute {
             return this.setAndReturnCurrent(file);
         }
 
-        StringBuilder cmd = new StringBuilder((String)PhpmdOptions.load(PhpmdOptions.Settings.SCRIPT, this.lkp));
+        StringBuilder cmd = new StringBuilder((String)PhpmdOptions.load(PhpmdOptions.Settings.SCRIPT, lookup));
         cmd.append(" ").append(GenericHelper.escapePath(file));
         cmd.append(" ").append("xml");
-        cmd.append(" ").append((String)PhpmdOptions.load(PhpmdOptions.Settings.RULES, this.lkp));
+        cmd.append(" ").append((String)PhpmdOptions.load(PhpmdOptions.Settings.RULES, lookup));
 
-        this.appendArgument(cmd, "--suffixes", (String)PhpmdOptions.load(PhpmdOptions.Settings.SUFFIXES, this.lkp));
-        this.appendArgument(cmd, "--exclude", (String)PhpmdOptions.load(PhpmdOptions.Settings.EXCLUDE, this.lkp));
-        this.appendArgument(cmd, "--minimumpriority", (String)PhpmdOptions.load(PhpmdOptions.Settings.MINPRIORITY, this.lkp));
-        if ((Boolean)PhpmdOptions.load(PhpmdOptions.Settings.STRICT, this.lkp) == true) {
+        this.appendArgument(cmd, "--suffixes", (String)PhpmdOptions.load(PhpmdOptions.Settings.SUFFIXES, lookup));
+        this.appendArgument(cmd, "--exclude", (String)PhpmdOptions.load(PhpmdOptions.Settings.EXCLUDE, lookup));
+        this.appendArgument(cmd, "--minimumpriority", (String)PhpmdOptions.load(PhpmdOptions.Settings.MINPRIORITY, lookup));
+        if ((Boolean)PhpmdOptions.load(PhpmdOptions.Settings.STRICT, lookup) == true) {
             cmd.append(" --strict");
         }
         Logger.getInstance().logPre(cmd.toString(), "pmd command");
@@ -61,7 +57,7 @@ public class Phpmd extends GenericExecute {
         if (!iAmAlive()) {
             return this.setAndReturnCurrent(file);
         }
-        GenericOutputReader[] reader = GenericProcess.run(cmd.toString(), "", null, this.lkp);
+        GenericOutputReader[] reader = GenericProcess.run(cmd.toString(), "", null, lookup);
         if (!iAmAlive()) {
             return this.setAndReturnCurrent(file);
         }

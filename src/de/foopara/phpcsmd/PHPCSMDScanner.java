@@ -1,5 +1,6 @@
 package de.foopara.phpcsmd;
 
+import de.foopara.phpcsmd.generics.GenericHelper;
 import de.foopara.phpcsmd.ui.reports.ScanReportTopComponent;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -38,7 +39,7 @@ public final class PHPCSMDScanner implements ActionListener {
         if (fo.isFolder()) {
             ScanReportTopComponent form = new ScanReportTopComponent();
             form.setFileObject(fo);
-            form.setLookup(fo.getLookup());
+            form.setLookup(GenericHelper.getFileLookup(fo));
             form.open();
         }
     }

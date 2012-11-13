@@ -1,6 +1,5 @@
 package de.foopara.phpcsmd.ui.reports;
 
-import de.foopara.phpcsmd.debug.Logger;
 import de.foopara.phpcsmd.exec.pdepend.PdependResult;
 import de.foopara.phpcsmd.exec.pdepend.PdependTypes;
 import de.foopara.phpcsmd.generics.GenericHelper;
@@ -13,9 +12,6 @@ import org.openide.awt.ActionID;
 import org.openide.awt.ActionReference;
 import org.openide.filesystems.FileObject;
 import org.openide.filesystems.FileUtil;
-import org.openide.loaders.DataObject;
-import org.openide.loaders.DataObjectNotFoundException;
-import org.openide.util.Exceptions;
 import org.openide.util.Lookup;
 import org.openide.util.NbBundle.Messages;
 import org.openide.windows.TopComponent;
@@ -191,7 +187,7 @@ public final class PdependReportTopComponent extends GenericTopComponent {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         this.jButton1.setEnabled(false);
 
-        PdependThread t = new PdependThread(this.lkp);
+        PdependThread t = new PdependThread();
         t.setFileObject(this.fileObject);
         t.setTopComponent(this);
         t.start();
@@ -357,19 +353,14 @@ public final class PdependReportTopComponent extends GenericTopComponent {
 
     private void openFile(String filename) {
         if (filename == null) return;
-        try {
-            FileObject fo = FileUtil.toFileObject(new File(filename));
-            if (!GenericHelper.isDesirableFile(fo, this.lkp)) {
-                return;
-            }
-            DataObject dob = DataObject.find(fo);
-            Openable oc = dob.getLookup().lookup(Openable.class);
-            if (oc != null) {
-                oc.open();
-            }
-        } catch (DataObjectNotFoundException ex) {
-            Logger.getInstance().log(ex);
-            Exceptions.printStackTrace(ex);
+        FileObject fo = FileUtil.toFileObject(new File(filename));
+        if (!GenericHelper.isDesirableFile(fo)) {
+            return;
+        }
+
+        Openable oc = GenericHelper.getFileLookup(fo).lookup(Openable.class);
+        if (oc != null) {
+            oc.open();
         }
     }
 

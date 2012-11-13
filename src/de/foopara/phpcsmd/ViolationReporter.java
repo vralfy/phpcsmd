@@ -1,6 +1,7 @@
 package de.foopara.phpcsmd;
 
 import de.foopara.phpcsmd.generics.GenericExecute;
+import de.foopara.phpcsmd.generics.GenericHelper;
 import de.foopara.phpcsmd.option.GeneralOptions;
 import java.io.File;
 import java.util.HashSet;
@@ -61,17 +62,18 @@ public class ViolationReporter extends PushTaskScanner {
         if (fileList.size() > 0) {
             for (FileObject file : fileList) {
                 ViolationRegistry.getInstance().setCallback(file, clbck);
-                clbck.setTasks(file, scan(file, this.scope.getLookup()));
+                clbck.setTasks(file, scan(file));
             }
         } else {
             clbck.setTasks(this.getList());
         }
     }
 
-    public List<? extends Task> scan(FileObject fo, Lookup lkp) {
-         if ((Boolean)GeneralOptions.load(GeneralOptions.Settings.UPDATEONSAVE, fo.getLookup())) {
-            GenericExecute.executeQATools(fo, fo.getLookup());
-         }
+    public List<? extends Task> scan(FileObject fo) {
+        Lookup lookup = GenericHelper.getFileLookup(fo);
+        if ((Boolean)GeneralOptions.load(GeneralOptions.Settings.UPDATEONSAVE, lookup)) {
+           GenericExecute.executeQATools(fo);
+        }
          return ViolationRegistry.getInstance().getTaskList(fo);
     }
 

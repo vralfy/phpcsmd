@@ -16,10 +16,6 @@ import org.openide.util.Lookup;
 public class Phpcpd extends GenericExecute {
     private boolean _enabled = true;
 
-    public Phpcpd(Lookup lkp) {
-       this.lkp = lkp;
-   }
-
     @Override
     public boolean isEnabled() {
         return this._enabled;
@@ -27,12 +23,13 @@ public class Phpcpd extends GenericExecute {
 
     @Override
     protected GenericResult run(FileObject file, boolean annotations) {
+        Lookup lookup = GenericHelper.getFileLookup(file);
         boolean run = false;
-        if ((Boolean)PhpcpdOptions.load(PhpcpdOptions.Settings.ACTIVATED, this.lkp)) {
+        if ((Boolean)PhpcpdOptions.load(PhpcpdOptions.Settings.ACTIVATED, lookup)) {
             run = true;
         }
 
-        if ((Boolean)PhpcpdOptions.load(PhpcpdOptions.Settings.ACTIVATEDFOLDER, this.lkp) &&
+        if ((Boolean)PhpcpdOptions.load(PhpcpdOptions.Settings.ACTIVATEDFOLDER, lookup) &&
                 (ViolationRegistry.getInstance().getPhpcpdDependency(file).size() > 0
                 || ViolationRegistry.getInstance().getPhpcpd(file).getSum() > 0)
         ) {
@@ -42,8 +39,8 @@ public class Phpcpd extends GenericExecute {
             return this.setAndReturnCurrent(file);
         }
 
-        if (!GenericHelper.isDesirableFile(new File((String)PhpcpdOptions.load(PhpcpdOptions.Settings.SCRIPT, this.lkp)), this.lkp)
-                || !GenericHelper.isDesirableFile(file, this.lkp)) {
+        if (!GenericHelper.isDesirableFile(new File((String)PhpcpdOptions.load(PhpcpdOptions.Settings.SCRIPT, lookup)), lookup)
+                || !GenericHelper.isDesirableFile(file)) {
             return this.setAndReturnDefault(file);
         }
 
@@ -52,7 +49,7 @@ public class Phpcpd extends GenericExecute {
         if (!iAmAlive()) return this.setAndReturnCurrent(file);
 
 
-        StringBuilder cmd = this.getGenericCommand();
+        StringBuilder cmd = this.getGenericCommand(lookup);
         cmd.append(" ").append(GenericHelper.getPhpcpdDistractor());
         cmd.append(" ").append(GenericHelper.escapePath(file));
 
@@ -63,9 +60,9 @@ public class Phpcpd extends GenericExecute {
         }
         Logger.getInstance().logPre(cmd.toString(), "php-cpd command");
 
-        PhpcpdParser parser = new PhpcpdParser(this.lkp);
+        PhpcpdParser parser = new PhpcpdParser();
         if (!iAmAlive()) return this.setAndReturnCurrent(file);
-        GenericOutputReader[] reader = GenericProcess.run(cmd.toString(), "", null, this.lkp);
+        GenericOutputReader[] reader = GenericProcess.run(cmd.toString(), "", null, lookup);
         if (!iAmAlive()) return this.setAndReturnCurrent(file);
 
         //ViolationRegistry.getInstance().flushPhpcpdDependency(file);
@@ -76,7 +73,8 @@ public class Phpcpd extends GenericExecute {
     }
 
     public HashMap<String, PhpcpdResult> runFolder(FileObject folder, boolean annotations) {
-        if ((Boolean)PhpcpdOptions.load(PhpcpdOptions.Settings.ACTIVATEDFOLDER, this.lkp) == false) {
+        Lookup lookup = GenericHelper.getFileLookup(folder);
+        if ((Boolean)PhpcpdOptions.load(PhpcpdOptions.Settings.ACTIVATEDFOLDER, lookup) == false) {
             return new HashMap<String, PhpcpdResult>();
         }
 
@@ -84,27 +82,27 @@ public class Phpcpd extends GenericExecute {
 
         if (!iAmAlive()) return new HashMap<String, PhpcpdResult>();
 
-        StringBuilder cmd = this.getGenericCommand();
+        StringBuilder cmd = this.getGenericCommand(lookup);
         cmd.append(" ").append(GenericHelper.getPhpcpdDistractor());
         cmd.append(" ").append(GenericHelper.escapePath(folder));
         Logger.getInstance().logPre(cmd.toString(), "php-cpd command (folder scan)");
 
-        PhpcpdFolderParser parser = new PhpcpdFolderParser(this.lkp);
+        PhpcpdFolderParser parser = new PhpcpdFolderParser();
         if (!iAmAlive()) return new HashMap<String, PhpcpdResult>();
-        GenericOutputReader[] reader = GenericProcess.run(cmd.toString(), "", null, this.lkp);
+        GenericOutputReader[] reader = GenericProcess.run(cmd.toString(), "", null, lookup);
         if (!iAmAlive()) return new HashMap<String, PhpcpdResult>();
         HashMap<String, PhpcpdResult> res = parser.parse(reader[0], folder);
         if (!iAmAlive()) return new HashMap<String, PhpcpdResult>();
-        ViolationRegistry.getInstance().setPhpcpdFolder(res, this.lkp);
+        ViolationRegistry.getInstance().setPhpcpdFolder(res);
         return res;
     }
 
-    private StringBuilder getGenericCommand() {
-        StringBuilder cmd = new StringBuilder((String)PhpcpdOptions.load(PhpcpdOptions.Settings.SCRIPT, this.lkp));
-        this.appendArgument(cmd, "--min-lines ", "" + (Integer)PhpcpdOptions.load(PhpcpdOptions.Settings.MINLINES, this.lkp));
-        this.appendArgument(cmd, "--min-tokens ", "" + (Integer)PhpcpdOptions.load(PhpcpdOptions.Settings.MINTOKENS, this.lkp));
-        this.appendArgument(cmd, "--suffixes ", (String)PhpcpdOptions.load(PhpcpdOptions.Settings.SUFFIXES, this.lkp));
-        this.appendArgument(cmd, "--exclude ", (String)PhpcpdOptions.load(PhpcpdOptions.Settings.EXCLUDE, this.lkp));
+    private StringBuilder getGenericCommand(Lookup lookup) {
+        StringBuilder cmd = new StringBuilder((String)PhpcpdOptions.load(PhpcpdOptions.Settings.SCRIPT, lookup));
+        this.appendArgument(cmd, "--min-lines ", "" + (Integer)PhpcpdOptions.load(PhpcpdOptions.Settings.MINLINES, lookup));
+        this.appendArgument(cmd, "--min-tokens ", "" + (Integer)PhpcpdOptions.load(PhpcpdOptions.Settings.MINTOKENS, lookup));
+        this.appendArgument(cmd, "--suffixes ", (String)PhpcpdOptions.load(PhpcpdOptions.Settings.SUFFIXES, lookup));
+        this.appendArgument(cmd, "--exclude ", (String)PhpcpdOptions.load(PhpcpdOptions.Settings.EXCLUDE, lookup));
         return cmd;
     }
 

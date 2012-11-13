@@ -2,6 +2,7 @@ package de.foopara.phpcsmd;
 
 import de.foopara.phpcsmd.exec.phpcpd.PhpcpdResult;
 import de.foopara.phpcsmd.generics.GenericAnnotationBuilder;
+import de.foopara.phpcsmd.generics.GenericHelper;
 import de.foopara.phpcsmd.generics.GenericResult;
 import de.foopara.phpcsmd.generics.GenericViolation;
 import java.io.File;
@@ -13,7 +14,6 @@ import org.netbeans.spi.tasklist.PushTaskScanner.Callback;
 import org.netbeans.spi.tasklist.Task;
 import org.openide.filesystems.FileObject;
 import org.openide.filesystems.FileUtil;
-import org.openide.util.Lookup;
 
 /**
  *
@@ -60,12 +60,12 @@ public class ViolationRegistry {
         return this.get(fo, this.phpcpd);
     }
 
-    public void setPhpcpdFolder(HashMap<String, PhpcpdResult> list, Lookup lkp) {
+    public void setPhpcpdFolder(HashMap<String, PhpcpdResult> list) {
         for (String key : list.keySet()) {
             FileObject fo = FileUtil.toFileObject(new File(key));
             if (fo!=null) {
                 this.put(fo, list.get(key), this.phpcpd);
-                GenericAnnotationBuilder.updateAnnotations(fo, lkp);
+                GenericAnnotationBuilder.updateAnnotations(fo);
             }
         }
     }

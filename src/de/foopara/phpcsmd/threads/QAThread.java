@@ -86,7 +86,7 @@ public class QAThread extends Thread {
 
     public void qarun() {
         try {
-            if (!GenericHelper.isDesirableFile(this.fo, this.lkp) || GenericHelper.isSymlink(FileUtil.toFile(this.fo))) {
+            if (!GenericHelper.isDesirableFile(this.fo) || GenericHelper.isSymlink(FileUtil.toFile(this.fo))) {
                 return;
             }
 
@@ -100,21 +100,21 @@ public class QAThread extends Thread {
 
             QAThread.instances.add(this);
             if (!this.interupted && this.enablePhpcs) {
-                new Phpcs(this.lkp).execute(this.fo);
+                new Phpcs().execute(this.fo);
             }
             if (!this.interupted && this.enablePhpmd) {
-                new Phpmd(this.lkp).execute(this.fo);
+                new Phpmd().execute(this.fo);
             }
             if (!this.interupted && this.enablePhpcpd) {
-                new Phpcpd(this.lkp).execute(this.fo);
+                new Phpcpd().execute(this.fo);
             }
 
 
             if (!this.interupted) {
-                GenericAnnotationBuilder.updateAnnotations(this.fo, this.lkp);
+                GenericAnnotationBuilder.updateAnnotations(this.fo);
             }
             if (!this.interupted) {
-                GenericNotification.displayNotification(this.fo, this.lkp);
+                GenericNotification.displayNotification(this.fo);
             }
             if (!this.interupted) {
                 ViolationRegistry.getInstance().reprintTasks(this.fo);
