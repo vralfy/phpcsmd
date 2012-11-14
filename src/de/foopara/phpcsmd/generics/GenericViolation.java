@@ -1,5 +1,6 @@
 package de.foopara.phpcsmd.generics;
 
+import de.foopara.phpcsmd.debug.Logger;
 import java.util.ArrayList;
 import org.openide.text.Annotation;
 
@@ -67,10 +68,33 @@ public class GenericViolation extends Annotation {
         return child;
     }
 
+    public void detachMe() {
+        try {
+            super.detach();
+        } catch (IllegalStateException ex) {
+            Logger.getInstance().log(ex);
+        } catch (Exception ex) {
+            Logger.getInstance().log(ex);
+        }
+    }
+
     public GenericViolation detachChildren() {
         for (int i=0; i<this.children.size();i++) {
-            this.children.get(i).detach();
-            this.children.get(i).detachChildren();
+            try {
+                this.children.get(i).detachMe();
+            } catch (IllegalStateException ex) {
+                Logger.getInstance().log(ex);
+            } catch (Exception ex) {
+                Logger.getInstance().log(ex);
+            }
+
+            try {
+                this.children.get(i).detachChildren();
+            } catch (IllegalStateException ex) {
+                Logger.getInstance().log(ex);
+            } catch (Exception ex) {
+                Logger.getInstance().log(ex);
+            }
         }
         this.children.clear();
         return this;

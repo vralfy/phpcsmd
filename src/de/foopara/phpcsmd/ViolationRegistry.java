@@ -131,17 +131,17 @@ public class ViolationRegistry {
             GenericResult oldres = list.get(fo.getPath());
             for (int i = 0; i < oldres.getWarnings().size(); i++) {
                 GenericViolation v = oldres.getWarnings().get(i);
-                v.detach();
+                v.detachMe();
                 v.detachChildren();
             }
             for (int i = 0; i < oldres.getErrors().size(); i++) {
                 GenericViolation v = oldres.getErrors().get(i);
-                v.detach();
+                v.detachMe();
                 v.detachChildren();
             }
             for (int i = 0; i < oldres.getNoTask().size(); i++) {
                 GenericViolation v = oldres.getNoTask().get(i);
-                v.detach();
+                v.detachMe();
                 v.detachChildren();
             }
             oldres.getWarnings().clear();
