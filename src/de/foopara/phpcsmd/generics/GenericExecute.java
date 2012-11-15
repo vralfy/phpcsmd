@@ -34,7 +34,9 @@ abstract public class GenericExecute {
     }
 
     protected boolean iAmAlive() {
-        if (this.qaThread == null) return true;
+        if (this.qaThread == null) {
+            return true;
+        }
         return !this.qaThread.isInterupted();
     }
 

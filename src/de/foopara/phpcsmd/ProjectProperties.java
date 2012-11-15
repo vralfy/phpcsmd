@@ -24,7 +24,7 @@ public class ProjectProperties implements ProjectCustomizer.CompositeCategoryPro
 
     @Override
     public Category createCategory(Lookup context) {
-        ResourceBundle bundle = NbBundle.getBundle(PHPCSMD.class);
+        //ResourceBundle bundle = NbBundle.getBundle(PHPCSMD.class);
         return  ProjectCustomizer.Category.create("phpcsmd", "Phpcsmd", null);
     }
 

@@ -45,7 +45,7 @@ public class GenericProcess {
     }
 
     public static GenericOutputReader[] run(String cmd, String outputFile, GenericTopComponent topComponent, Lookup lkp) {
-        if (outputFile == "" || outputFile == null) {
+        if (outputFile.compareTo("") == 0 || outputFile == null) {
             return GenericProcess.run(cmd, new File[] {}, topComponent, lkp);
         }
         return GenericProcess.run(cmd, new File[] {new File(outputFile)}, topComponent, lkp);
@@ -76,7 +76,7 @@ public class GenericProcess {
                         topComponent.setCommandOutput(tmp.toString());
                     }
                 }
-                while((c = err.read()) != -1) {} //Ich muss das auslesen, damit der Prozess wartet
+                while((err.read()) != -1) {} //Ich muss das auslesen, damit der Prozess wartet
 
                 child.waitFor();
                 child.exitValue();

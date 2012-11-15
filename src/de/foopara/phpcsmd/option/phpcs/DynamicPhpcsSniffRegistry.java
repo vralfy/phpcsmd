@@ -3,7 +3,7 @@ package de.foopara.phpcsmd.option.phpcs;
 public class DynamicPhpcsSniffRegistry extends GenericPhpcsSniffRegistry {
 
     public DynamicPhpcsSniffRegistry() {
-        PhpcsKeys keys = null;
+        PhpcsKeys keys;
         keys = new PhpcsKeys();
         keys.addKey("Found");
         this.add(new PhpcsSniff("Generic.Classes.DuplicateClassName", null, null, keys));

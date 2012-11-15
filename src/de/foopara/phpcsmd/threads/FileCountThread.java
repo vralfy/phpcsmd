@@ -17,7 +17,6 @@ import org.openide.util.Lookup;
 public class FileCountThread extends Thread {
 
     private FileObject fo = null;
-    private boolean interupted = false;
     private ScanReportTopComponent component = null;
     private Lookup lkp;
 

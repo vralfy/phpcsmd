@@ -27,7 +27,9 @@ public class PdependResult {
     }
 
     public void addFile(PdependTypes.PdependFile file) {
-        if (file.name != null && file.name.length() > 2) this._files.add(file);
+        if (file.name != null && file.name.length() > 2) {
+            this._files.add(file);
+        }
     }
 
     public HashSet<PdependTypes.PdependFile> getFiles() {
@@ -35,11 +37,13 @@ public class PdependResult {
     }
 
     public PdependTypes.PdependPackage getPackageInstanceByName(String name) {
-        if (name == null) try {
-            throw new Exception();
-        } catch (Exception ex) {
-            Logger.getInstance().log(ex);
-            Exceptions.printStackTrace(ex);
+        if (name == null) {
+            try {
+                throw new Exception();
+            } catch (Exception ex) {
+                Logger.getInstance().log(ex);
+                Exceptions.printStackTrace(ex);
+            }
         }
         for(PdependTypes.PdependPackage p: this._packages) {
             if (p.name.compareTo(name) == 0) {

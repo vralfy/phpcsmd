@@ -150,7 +150,7 @@ public class GenericHelper {
             try {
                 ret = fo.getLookup();
             } catch (NoSuchMethodError ex) {
-                Logger.getInstance().log(new Exception("NoSuchMethodError: FileObject.getLookup()"));
+                Logger.getInstance().log("NoSuchMethodError: " + ex.getMessage());
             } catch (Exception ex) {
                 Logger.getInstance().log(ex);
             }

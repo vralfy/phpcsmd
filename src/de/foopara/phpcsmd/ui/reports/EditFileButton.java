@@ -1,6 +1,5 @@
 package de.foopara.phpcsmd.ui.reports;
 
-import de.foopara.phpcsmd.debug.Logger;
 import de.foopara.phpcsmd.generics.GenericHelper;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -9,9 +8,6 @@ import javax.swing.JButton;
 import org.netbeans.api.actions.Openable;
 import org.openide.filesystems.FileObject;
 import org.openide.filesystems.FileUtil;
-import org.openide.loaders.DataObject;
-import org.openide.loaders.DataObjectNotFoundException;
-import org.openide.util.Exceptions;
 import org.openide.util.Lookup;
 
 /**

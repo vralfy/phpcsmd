@@ -1,6 +1,5 @@
 package de.foopara.phpcsmd.ui.phpcs;
 
-import de.foopara.phpcsmd.debug.Logger;
 import de.foopara.phpcsmd.exec.phpcs.Phpcs;
 import de.foopara.phpcsmd.generics.GenericOptionsPanel;
 import de.foopara.phpcsmd.option.PhpcsOptions;
@@ -8,12 +7,8 @@ import de.foopara.phpcsmd.option.phpcs.GenericPhpcsSniffRegistry;
 import de.foopara.phpcsmd.option.phpcs.PhpcsSniff;
 import java.awt.Dimension;
 import java.awt.Toolkit;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.HashMap;
 import javax.swing.DefaultComboBoxModel;
-import org.openide.util.Exceptions;
 
 /**
  *

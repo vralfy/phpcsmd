@@ -4,7 +4,6 @@ import de.foopara.phpcsmd.debug.Logger;
 import de.foopara.phpcsmd.generics.GenericOptionsPanel;
 import de.foopara.phpcsmd.option.GeneralOptions;
 import java.awt.Color;
-import org.openide.util.Lookup;
 
 /**
  *

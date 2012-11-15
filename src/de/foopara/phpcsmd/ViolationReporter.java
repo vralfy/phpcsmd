@@ -19,11 +19,7 @@ import org.openide.util.Lookup;
  */
 public class ViolationReporter extends PushTaskScanner {
 
-    private static ViolationReporter INSTANCE;
-
     private TaskScanningScope scope;
-
-    private Callback callback;
 
     public ViolationReporter() {
         super(
@@ -31,14 +27,12 @@ public class ViolationReporter extends PushTaskScanner {
                 "PHP Checkstyle and MessDetector Violations",
                 null
         );
-        ViolationReporter.INSTANCE = this;
     }
 
 
     @Override
     public synchronized void setScope(TaskScanningScope tss, Callback clbck) {
         this.scope = tss;
-        this.callback = clbck;
 
         if (clbck == null) {
             return;

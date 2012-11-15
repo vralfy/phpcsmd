@@ -1,7 +1,6 @@
 package de.foopara.phpcsmd;
 
 import de.foopara.phpcsmd.generics.GenericExecute;
-import de.foopara.phpcsmd.generics.GenericHelper;
 import javax.swing.JMenuItem;
 import org.netbeans.api.project.Project;
 import org.openide.awt.ActionID;
