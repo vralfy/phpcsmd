@@ -135,6 +135,8 @@ public class MainPanel extends GenericOptionsPanel {
                 && this.generalOptionsPanel1.hasValidValues()
                 && this.phpcsPanel1.hasValidValues()
                 && this.phpmdPanel1.hasValidValues()
+                && this.phpcpdPanel1.hasValidValues()
+                && this.pdependPanel1.hasValidValues()
                 ;
     }
 }
