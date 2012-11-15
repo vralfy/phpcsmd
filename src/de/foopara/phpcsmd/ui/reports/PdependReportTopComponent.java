@@ -286,7 +286,7 @@ public final class PdependReportTopComponent extends GenericTopComponent {
     }
 
     void readProperties(java.util.Properties p) {
-        //String version = p.getProperty("version");
+        String version = p.getProperty("version");
         // read your settings according to their version
     }
 
