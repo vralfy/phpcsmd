@@ -48,6 +48,7 @@ public class PhpmdXMLParser {
                 violations.add(
                         new GenericViolation(message, start, end)
                         .setAnnotationType("phpmd-" + annotationType)
+                        .setGroup("phpmd-violation")
                         .setMultiline(false));
             }
         } catch (SAXException ex) {

@@ -13,9 +13,11 @@ public class GenericViolation extends Annotation {
     protected int _beginLine = 0;
     protected int _endLine = 0;
     protected String _annotationType = "generic";
+    protected String _group = "generic";
     protected boolean multiline = true;
 
     protected String typePrefix = "de-foopara-phpcsmd-annotation-";
+    protected String groupPrefix = "de-foopara-phpcsmd-group-";
 
     ArrayList<GenericViolation> children = new ArrayList<GenericViolation>();
 
@@ -33,7 +35,7 @@ public class GenericViolation extends Annotation {
 
     @Override
     public String getShortDescription() {
-        return this._message;
+        return this.getTaskGroup() + " " + this._message;
     }
 
     public int getBeginLine() {
@@ -53,7 +55,7 @@ public class GenericViolation extends Annotation {
     }
 
     public String getTaskGroup() {
-        return "Error";
+        return this.groupPrefix + "phpcs-violation"; //this._group;
     }
 
     public GenericViolation setAnnotationType(String annotationType) {
@@ -61,9 +63,16 @@ public class GenericViolation extends Annotation {
         return this;
     }
 
+    public GenericViolation setGroup(String group) {
+        this._group = group;
+        return this;
+    }
+
     public GenericViolation getViolationForLine(int line) {
         if (line == this._beginLine) return this;
-        GenericViolation child = new GenericViolation(this._message, line).setAnnotationType(this._annotationType);
+        GenericViolation child = new GenericViolation(this._message, line)
+                .setAnnotationType(this._annotationType)
+                .setGroup(this._group);
         this.children.add(child);
         return child;
     }

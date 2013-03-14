@@ -76,7 +76,9 @@ public class PhpcsXMLParser {
                         && PhpcsOptions.getSniff(sniff.shortName)
                         && sniff.annotationType != null
                     ) {
-                        GenericViolation violation = new GenericViolation(message, lineNum).setAnnotationType("phpcs-" + sniff.annotationType);
+                        GenericViolation violation = new GenericViolation(message, lineNum)
+                                .setAnnotationType("phpcs-" + sniff.annotationType)
+                                .setGroup("phpcs-violation");
                         if (PhpcsOptions.getSniffTask(sniff.shortName)) {
                             normalList.add(violation);
                         } else {
@@ -88,7 +90,10 @@ public class PhpcsXMLParser {
             }
 
             if (addNormal) {
-                normalList.add(new GenericViolation(message, lineNum).setAnnotationType("phpcs-" + annotation));
+                normalList.add(new GenericViolation(message, lineNum)
+                        .setAnnotationType("phpcs-" + annotation)
+                        .setGroup("phpcs-violation")
+                );
             }
         }
     }

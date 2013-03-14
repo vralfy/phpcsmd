@@ -15,15 +15,15 @@
             <file name="de-foopara-phpcsmd-annotation-phpcs-warning.xml" url="nbresloc:/de/foopara/phpcsmd/resources/phpcs/warning.xml"/>
             <file name="de-foopara-phpcsmd-annotation-phpcs-error.xml" url="nbresloc:/de/foopara/phpcsmd/resources/phpcs/error.xml"/>
 
-            <file name="de-foopara-phpcsmd-annotation-phpcs-comment.xml"     url="nbresloc:/de/foopara/phpcsmd/resources/phpcs/comment.xml"/>
-            <file name="de-foopara-phpcsmd-annotation-phpcs-complex.xml"     url="nbresloc:/de/foopara/phpcsmd/resources/phpcs/complex.xml"/>
-            <file name="de-foopara-phpcsmd-annotation-phpcs-forbidden.xml"   url="nbresloc:/de/foopara/phpcsmd/resources/phpcs/forbidden.xml"/>
+            <file name="de-foopara-phpcsmd-annotation-phpcs-comment.xml" url="nbresloc:/de/foopara/phpcsmd/resources/phpcs/comment.xml"/>
+            <file name="de-foopara-phpcsmd-annotation-phpcs-complex.xml" url="nbresloc:/de/foopara/phpcsmd/resources/phpcs/complex.xml"/>
+            <file name="de-foopara-phpcsmd-annotation-phpcs-forbidden.xml" url="nbresloc:/de/foopara/phpcsmd/resources/phpcs/forbidden.xml"/>
             <file name="de-foopara-phpcsmd-annotation-phpcs-unreachable.xml" url="nbresloc:/de/foopara/phpcsmd/resources/phpcs/unreachable.xml"/>
 
             <!-- phpmd -->
-            <file name="de-foopara-phpcsmd-annotation-phpmd-complex.xml"   url="nbresloc:/de/foopara/phpcsmd/resources/phpmd/complex.xml"/>
+            <file name="de-foopara-phpcsmd-annotation-phpmd-complex.xml" url="nbresloc:/de/foopara/phpcsmd/resources/phpmd/complex.xml"/>
             <file name="de-foopara-phpcsmd-annotation-phpmd-violation.xml" url="nbresloc:/de/foopara/phpcsmd/resources/phpmd/violation.xml"/>
-            
+
             <!-- phpcpd -->
             <file name="de-foopara-phpcsmd-annotation-phpcpd-violation.xml" url="nbresloc:/de/foopara/phpcsmd/resources/phpcpd/violation.xml"/>
         </folder>
@@ -45,6 +45,49 @@
             <file name="ViolationReporter.instance">
                 <attr name="instanceOf" stringvalue="org.netbeans.spi.tasklist.PushTaskScanner"/>
                 <attr name="instanceClass" stringvalue="de.foopara.phpcsmd.ViolationReporter"/>
+            </file>
+        </folder>
+        <folder name="Groups">
+            <file name="phpcsmdgroupgeneric.instance">
+                <attr name="instanceCreate" methodvalue="org.netbeans.spi.tasklist.Task.createGroup"/>
+                <attr name="localizingBundle" stringvalue="de.foopara.phpcsmd.resources.Bundle"/>
+                <attr name="groupName" stringvalue="de-foopara-phpcsmd-group-generic"/>
+                <attr name="diplayNameKey" stringvalue="LABL_generic_group"/>
+                <attr name="descriptionKey" stringvalue="HINT_generic_group"/>
+                <attr name="iconKey" stringvalue="ICON_generic_group"/>
+                <attr name="position" intvalue="60"/>
+            </file>
+            <!-- PHPCS GROUPS -->
+            <file name="phpcsmdgroupphpcs.instance">
+                <attr name="instanceCreate" methodvalue="org.netbeans.spi.tasklist.Task.createGroup"/>
+                <attr name="localizingBundle" stringvalue="de.foopara.phpcsmd.resources.Bundle"/>
+                <attr name="groupName" stringvalue="de-foopara-phpcsmd-group-phpcs-violation"/>
+                <attr name="diplayNameKey" stringvalue="LABL_phpcs_violation_group"/>
+                <attr name="descriptionKey" stringvalue="HINT_phpcs_violation_group"/>
+                <attr name="iconKey" stringvalue="ICON_phpcs_violation_group"/>
+                <attr name="position" intvalue="60"/>
+            </file>
+
+            <!-- PHPMD GROUPS -->
+            <file name="phpcsmdgroupphpmd.instance">
+                <attr name="instanceCreate" methodvalue="org.netbeans.spi.tasklist.Task.createGroup"/>
+                <attr name="localizingBundle" stringvalue="de.foopara.phpcsmd.resources.Bundle"/>
+                <attr name="groupName" stringvalue="de-foopara-phpcsmd-group-phpmd-violation"/>
+                <attr name="diplayNameKey" stringvalue="LABL_phpmd_violation_group"/>
+                <attr name="descriptionKey" stringvalue="HINT_phpmd_violation_group"/>
+                <attr name="iconKey" stringvalue="ICON_phpmd_violation_group"/>
+                <attr name="position" intvalue="62"/>
+            </file>
+
+            <!-- PHPCPD GROUPS -->
+            <file name="phpcsmdgroupphpcpd.instance">
+                <attr name="instanceCreate" methodvalue="org.netbeans.spi.tasklist.Task.createGroup"/>
+                <attr name="localizingBundle" stringvalue="de.foopara.phpcsmd.resources.Bundle"/>
+                <attr name="groupName" stringvalue="de-foopara-phpcsmd-group-phpcpd-violation"/>
+                <attr name="diplayNameKey" stringvalue="LABL_phpcpd_violation_group"/>
+                <attr name="descriptionKey" stringvalue="HINT_phpcpd_violation_group"/>
+                <attr name="iconKey" stringvalue="ICON_phpcpd_violation_group"/>
+                <attr name="position" intvalue="63"/>
             </file>
         </folder>
     </folder>

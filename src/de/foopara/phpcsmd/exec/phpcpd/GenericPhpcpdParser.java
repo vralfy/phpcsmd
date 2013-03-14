@@ -46,7 +46,7 @@ public class GenericPhpcpdParser {
         }
         if (fo.compareTo(f1) == 0) {
             cpdErrors.add(new GenericViolation("Duplicated Sourcecode" + fpath + ": " + (s2+1) + "-" + (e2+1), s1, e1)
-                    .setAnnotationType("phpcpd-violation"));
+                    .setAnnotationType("phpcpd-violation").setGroup("phpcpd-violation"));
         }
 
         if (f1.compareTo(f2) != 0) {
@@ -54,7 +54,7 @@ public class GenericPhpcpdParser {
         }
         if (cpdNoTask != null && fo.compareTo(f2) == 0) {
             cpdNoTask.add(new GenericViolation("Duplicated Sourcecode" + fpath + ": " + (s1+1) + "-" + (e1+1), s2, e2)
-                    .setAnnotationType("phpcpd-violation"));
+                    .setAnnotationType("phpcpd-violation").setGroup("phpcpd-violation"));
         }
     }
 }
