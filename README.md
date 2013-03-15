@@ -44,7 +44,7 @@ Tips
    '''NOTE''': files with violations will be rescanned on save (if activated) until all phpcpd violations have been eliminated.
 
 
-TODO
+TODO 
 ====
 
 The following features are planed to be implemented. Since phpcsmd is available
