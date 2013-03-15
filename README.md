@@ -21,6 +21,29 @@ Installation
 
 -----------------------
 
+Usage
+=====
+
+ * Open Tools->Options->PHP->PHPCSMD to configure the plugin
+ * Open "Action Items" by pressing Ctrl + 6 and leave them open
+ * You can scan files and folders by right clicking on the file/folder or source code and choose "Check for violations" or "Scan with Pdepend"
+ * Right click on the PHP-Project and choose Properties -> PHPCSMD to set project specific settings
+
+Tips
+====
+
+ * enable "try threading analysis" to prevent Netbeans from freezing during scan
+ * enable "update on save" to rescan the file each time you save
+ * enter "\.(svn|git)" (or any other regex) to prevent this files/folders from being scanned
+ * if the "Action items" tab is open (Ctrl + 6) PHPCSMD will scan the file after Netbeans opened it
+ * first configure the path to phpcs, click "show standards" and choose your favorite standard
+   you can also enter a path to standard in the "--standard" option if your favorite standard is not installed in pear
+ * enable "Use tabs to organize PdependReport" and "Create JDepend statistics" to get a better view on the metrics
+ * Deactivate "Create JDepend statics" if you don't care about package abstraction/instability to increase the pdepend performance
+ * activate PHPCPD folder scan to detect duplicated source code between your source files
+   '''NOTE''': files with violations will be rescanned on save (if activated) until all phpcpd violations have been eliminated.
+
+
 TODO
 ====
 
@@ -33,3 +56,5 @@ via github.org, feel free to contribute new features and bugfixes.
    * have to check this fix under linux
  * Mark annotations in the left errorstripe
  * make phpcsmd scan the current file even if action items are not opened
+ * add icons in the file navigation to indicate violations
+ * make phpmd use different ruleset.xml
