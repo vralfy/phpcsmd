@@ -35,7 +35,7 @@ public class GenericViolation extends Annotation {
 
     @Override
     public String getShortDescription() {
-        return this.getTaskGroup() + " " + this._message;
+        return this._message;
     }
 
     public int getBeginLine() {
@@ -55,7 +55,7 @@ public class GenericViolation extends Annotation {
     }
 
     public String getTaskGroup() {
-        return this.groupPrefix + "phpcs-violation"; //this._group;
+        return this.groupPrefix + this._group;
     }
 
     public GenericViolation setAnnotationType(String annotationType) {

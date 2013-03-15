@@ -11,6 +11,8 @@ import de.foopara.phpcsmd.ui.reports.ScanReportTopComponent;
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
+import org.netbeans.api.progress.ProgressHandle;
+import org.netbeans.api.progress.ProgressHandleFactory;
 import org.openide.filesystems.FileObject;
 import org.openide.filesystems.FileUtil;
 import org.openide.util.Exceptions;
@@ -83,6 +85,11 @@ public class RescanThread extends Thread {
         if (fc < 0) {
             fc = 0;
         }
+        ProgressHandle handle = null;
+        if (firstRun) {
+            handle = ProgressHandleFactory.createHandle("phpcsmd folder scan", null, null);
+            handle.start();
+        }
         for (FileObject f2 : f.getChildren()) {
             try {
                 if (GenericHelper.isDesirableFile(f2) && !GenericHelper.isSymlink(FileUtil.toFile(f2))) {
@@ -122,6 +129,10 @@ public class RescanThread extends Thread {
                     this.component.addElementToTable(tmp);
                 }
             }
+        }
+
+        if (handle != null) {
+            handle.finish();
         }
         return fc;
     }

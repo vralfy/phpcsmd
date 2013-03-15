@@ -48,7 +48,8 @@ public class Logger {
                 .replaceAll("[^A-Za-z0-9\\.\\n\\r\\w\\\\\\/\\!\\$%\\(\\)=\\?\"'<>-]", "&otimes;")
                 .replaceAll("<", "&lt;")
                 .replaceAll(">", "&gt;")
-                .replaceAll("\n", "<br />");
+                .replaceAll("\n", "<br />")
+                ;
         this.log("<pre style=\"border:#444444 1px solid;padding:5px;\">" + str + "</pre>", caption);
     }
 

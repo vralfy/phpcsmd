@@ -14,6 +14,8 @@ import de.foopara.phpcsmd.option.PhpcsOptions;
 import de.foopara.phpcsmd.option.PhpmdOptions;
 import java.io.IOException;
 import java.util.ArrayList;
+import org.netbeans.api.progress.ProgressHandle;
+import org.netbeans.api.progress.ProgressHandleFactory;
 import org.openide.filesystems.FileObject;
 import org.openide.filesystems.FileUtil;
 import org.openide.util.Exceptions;
@@ -25,7 +27,8 @@ import org.openide.util.Lookup;
  */
 public class QAThread extends Thread {
 
-    private static ArrayList<QAThread> instances = new ArrayList<QAThread>();
+    private static final ArrayList<QAThread> instances = new ArrayList<QAThread>();
+    private static final String logCaption = "phpcsmd thread";
     private FileObject fo = null;
     private boolean interupted = false;
     private boolean poke = true;
@@ -85,6 +88,14 @@ public class QAThread extends Thread {
     }
 
     public void qarun() {
+        ProgressHandle handle = ProgressHandleFactory.createHandle("phpcsmd", null, null);
+        int tasks = 4
+                + (this.enablePhpcs ? 1 : 0)
+                + (this.enablePhpmd ? 1 : 0)
+                + (this.enablePhpcpd ? 1 : 0);
+        int currentTask = 0;
+        Logger.getInstance().logPre("task count: " + tasks, "Starting phpcsmd thread");
+        handle.start(tasks);
         try {
             if (!GenericHelper.isDesirableFile(this.fo) || GenericHelper.isSymlink(FileUtil.toFile(this.fo))) {
                 return;
@@ -100,35 +111,57 @@ public class QAThread extends Thread {
 
             QAThread.instances.add(this);
             if (!this.interupted && this.enablePhpcs) {
+                currentTask++;
+                Logger.getInstance().logPre("task: " + currentTask + " of " + tasks, QAThread.logCaption);
+                handle.progress("running phpcs", currentTask);
                 new Phpcs().execute(this.fo);
             }
             if (!this.interupted && this.enablePhpmd) {
+                currentTask++;
+                Logger.getInstance().logPre("task: " + currentTask + " of " + tasks, QAThread.logCaption);
+                handle.progress("running phpmd", currentTask);
                 new Phpmd().execute(this.fo);
             }
             if (!this.interupted && this.enablePhpcpd) {
+                currentTask++;
+                Logger.getInstance().logPre("task: " + currentTask + " of " + tasks, QAThread.logCaption);
+                handle.progress("running phpcpd", currentTask);
                 new Phpcpd().execute(this.fo);
             }
 
-
             if (!this.interupted) {
+                currentTask++;
+                Logger.getInstance().logPre("task: " + currentTask + " of " + tasks, QAThread.logCaption);
+                handle.progress("updating annotations", currentTask);
                 GenericAnnotationBuilder.updateAnnotations(this.fo);
             }
             if (!this.interupted) {
+                currentTask++;
+                Logger.getInstance().logPre("task: " + currentTask + " of " + tasks, QAThread.logCaption);
+                handle.progress("display notification", currentTask);
                 GenericNotification.displayNotification(this.fo);
             }
             if (!this.interupted) {
+                currentTask++;
+                Logger.getInstance().logPre("task: " + currentTask + " of " + tasks, QAThread.logCaption);
+                handle.progress("updating action items", currentTask);
                 ViolationRegistry.getInstance().reprintTasks(this.fo);
             }
 
             if (!this.interupted && this.poke) {
+                currentTask++;
+                Logger.getInstance().logPre("task: " + currentTask + " of " + tasks, QAThread.logCaption);
+                handle.progress("updating related scan reports", currentTask);
                 GenericPokeRegistry.getInstance().poke(this.fo);
             }
 
             QAThread.instances.remove(this);
+            Logger.getInstance().logPre("finished successful",  QAThread.logCaption);
         } catch (IOException ex) {
             Logger.getInstance().log(ex);
             Exceptions.printStackTrace(ex);
         }
+        handle.finish();
     }
 
     public void interupt() {
