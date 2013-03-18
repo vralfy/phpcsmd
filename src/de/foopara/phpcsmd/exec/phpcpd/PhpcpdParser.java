@@ -43,39 +43,14 @@ public class PhpcpdParser extends GenericPhpcpdParser {
                 return new PhpcpdResult(null, null, null);
             }
             for (int i=2; i < sections.length - 2; i++) {
-                if (!sections[i].contains("duplicated lines out of")
-                    && !sections[i].contains("Time: ")
-                    && !sections[i].contains("Memory: ")
-                    && !sections[i].contains(",")
-                    && sections[i].contains("\n")
-                    && sections[i].contains(":")
-//                    && sections[i].matches(".*:[0-9]+-[0-9]+$")
-                    && sections[i].contains("-")
-                ) {
-                    String[] lines = sections[i].split("\n");
+                if (this.isValidPhpcpdSection(sections[i])) {
+                    PhpcpdLine line = new PhpcpdLine(sections[i]);
 
-                    String[] info1 = lines[0].trim().split(":");
-                    StringBuilder f1 = new StringBuilder(info1[0].replaceFirst("-", "").trim());
-                    for (int sectionCounter = 1; sectionCounter < info1.length - 1; sectionCounter++) {
-                        f1.append(":").append(info1[sectionCounter]);
-                    }
-                    String[] cpdLines1 = info1[info1.length - 1].split("-");
+                    this.add(FileUtil.toFile(fo).getPath(), lookup, cpdErrors, cpdNoTask,
+                            line.file1, line.start1, line.end1, line.file2, line.start2, line.end2);
 
-                    String[] info2 = lines[1].trim().split(":");
-                    StringBuilder f2 = new StringBuilder(info2[0].trim());
-                    for (int sectionCounter = 1; sectionCounter < info2.length - 1; sectionCounter++) {
-                        f2.append(":").append(info1[sectionCounter]);
-                    }
-                    String[] cpdLines2 = info2[info2.length - 1].split("-");
-
-                    int start1 = Integer.parseInt(cpdLines1[0]);
-                    int start2 = Integer.parseInt(cpdLines2[0]);
-                    int end1 = Integer.parseInt(cpdLines1[1]);
-                    int end2 = Integer.parseInt(cpdLines2[1]);
-                    this.add(FileUtil.toFile(fo).getPath(), lookup, cpdErrors, cpdNoTask, f1.toString(), start1, end1, f2.toString(), start2, end2);
-
-                    if (updateDependencies && f1.toString().compareTo(f2.toString()) != 0) {
-                        ViolationRegistry.getInstance().addPhpcpdDependency(FileUtil.toFileObject(new File(f1.toString())), FileUtil.toFileObject(new File(f2.toString())));
+                    if (updateDependencies && line.file1.compareTo(line.file2) != 0) {
+                        ViolationRegistry.getInstance().addPhpcpdDependency(FileUtil.toFileObject(new File(line.file1)), FileUtil.toFileObject(new File(line.file2)));
                     }
                 } else {
                     Logger.getInstance().logPre(sections[i], "malformed cpd violation");

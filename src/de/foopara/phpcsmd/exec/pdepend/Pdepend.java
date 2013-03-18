@@ -75,7 +75,10 @@ public class Pdepend {
 
         for (File f : tmpFiles) {
             if (f.exists()) {
-                f.delete();
+                boolean delete = f.delete();
+                if (!delete) {
+                    Logger.getInstance().logPre("failed to delete " + f.getAbsolutePath(), "pdepend");
+                }
             }
         }
 

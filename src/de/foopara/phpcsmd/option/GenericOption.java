@@ -15,13 +15,13 @@ import java.util.Properties;
 import java.util.ResourceBundle;
 import java.util.prefs.Preferences;
 import org.netbeans.api.project.FileOwnerQuery;
-import org.openide.util.Lookup;
-import org.openide.util.NbBundle;
-import org.openide.util.NbPreferences;
 import org.netbeans.api.project.Project;
 import org.openide.filesystems.FileObject;
 import org.openide.filesystems.FileUtil;
 import org.openide.loaders.DataObject;
+import org.openide.util.Lookup;
+import org.openide.util.NbBundle;
+import org.openide.util.NbPreferences;
 /**
  *
  * @author nspecht
@@ -127,7 +127,10 @@ abstract public class GenericOption
         File config = new File(FileUtil.toFile(fo), "nbproject/phpcsmd.properties");
         if (!config.exists()) {
             try {
-                config.createNewFile();
+                boolean created = config.createNewFile();
+                if (!created) {
+                    Logger.getInstance().logPre("failed to create custom settings file in " + config.getAbsolutePath(), "phpcsmd");
+                }
             } catch (IOException ex) {
                 Logger.getInstance().log(ex);
             }

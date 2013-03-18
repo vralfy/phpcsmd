@@ -77,6 +77,9 @@ public class CustomStandard {
     }
 
     public void delete() {
-        this._ruleset.delete();
+        boolean delete = this._ruleset.delete();
+        if (!delete) {
+            Logger.getInstance().logPre("failed to delete " + this._ruleset.getAbsolutePath(), "phpcs");
+        }
     }
 }

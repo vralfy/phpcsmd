@@ -45,7 +45,7 @@ public class GenericProcess {
     }
 
     public static GenericOutputReader[] run(String cmd, String outputFile, GenericTopComponent topComponent, Lookup lkp) {
-        if (outputFile.compareTo("") == 0 || outputFile == null) {
+        if (outputFile == null || outputFile.compareTo("") == 0) {
             return GenericProcess.run(cmd, new File[] {}, topComponent, lkp);
         }
         return GenericProcess.run(cmd, new File[] {new File(outputFile)}, topComponent, lkp);

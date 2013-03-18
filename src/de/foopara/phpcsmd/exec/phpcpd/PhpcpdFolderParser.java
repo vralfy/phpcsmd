@@ -45,48 +45,33 @@ public class PhpcpdFolderParser extends GenericPhpcpdParser {
             ArrayList<FileObject> allreadyFlushedDependencies = new ArrayList<FileObject>();
 
             for (int i=2; i < sections.length - 2; i++) {
-                if (!sections[i].contains("duplicated lines out of")
-                    && !sections[i].contains("Time: ")
-                    && !sections[i].contains("Memory: ")
-                    && !sections[i].contains(",")
-                    && sections[i].contains("\n")
-                    && sections[i].contains(":")
-                    && sections[i].contains("-")
-                ) {
-                    String[] lines = sections[i].split("\n");
-
-                    String[] info1 = lines[0].trim().split(":");
-                    String f1 = info1[0].replaceFirst("-", "").trim();
-                    String[] cpdLines1 = info1[info1.length - 1].split("-");
-
-                    String[] info2 = lines[1].trim().split(":");
-                    String f2 = info2[0].trim();
-                    String[] cpdLines2 = info2[info2.length - 1].split("-");
-                    int start1 = Integer.parseInt(cpdLines1[0]);
-                    int start2 = Integer.parseInt(cpdLines2[0]);
-                    int end1 = Integer.parseInt(cpdLines1[1]);
-                    int end2 = Integer.parseInt(cpdLines2[1]);
-
-                    if (!cpdErrors.containsKey(f1)) {
-                        cpdErrors.put(f1, new ArrayList<GenericViolation>());
+                if (this.isValidPhpcpdSection(sections[i])) {
+                    PhpcpdLine line = new PhpcpdLine(sections[i]);
+                    Logger.getInstance().logPre(line.toString(), "phpcpd");
+                    if (!cpdErrors.containsKey(line.file1)) {
+                        cpdErrors.put(line.file1, new ArrayList<GenericViolation>());
                     }
-                    if (!cpdErrors.containsKey(f2)) {
-                        cpdErrors.put(f2, new ArrayList<GenericViolation>());
+                    if (!cpdErrors.containsKey(line.file2)) {
+                        cpdErrors.put(line.file2, new ArrayList<GenericViolation>());
                     }
-                    if (!cpdNoTask.containsKey(f1)) {
-                        cpdNoTask.put(f1, new ArrayList<GenericViolation>());
+                    if (!cpdNoTask.containsKey(line.file1)) {
+                        cpdNoTask.put(line.file1, new ArrayList<GenericViolation>());
                     }
-                    if (!cpdNoTask.containsKey(f2)) {
-                        cpdNoTask.put(f2, new ArrayList<GenericViolation>());
+                    if (!cpdNoTask.containsKey(line.file2)) {
+                        cpdNoTask.put(line.file2, new ArrayList<GenericViolation>());
                     }
 
-                    this.add(f1, lookup, cpdErrors.get(f1), cpdNoTask.get(f1), f1, start1, end1, f2, start2, end2);
-                    if (f1.compareTo(f2) != 0) {
-                        this.add(f2, lookup, cpdErrors.get(f2), cpdNoTask.get(f2), f1, start1, end1, f2, start2, end2);
+                    this.add(line.file1, lookup, cpdErrors.get(line.file1), cpdNoTask.get(line.file1),
+                            line.file1, line.start1, line.end1,
+                            line.file2, line.start2, line.end2);
+                    if (line.file1.compareTo(line.file2) != 0) {
+                        this.add(line.file2, lookup, cpdErrors.get(line.file2), cpdNoTask.get(line.file2),
+                                line.file1, line.start1, line.end1,
+                                line.file2, line.start2, line.end2);
                     }
 
-                    FileObject tmpf1 = FileUtil.toFileObject(new File(f1));
-                    FileObject tmpf2 = FileUtil.toFileObject(new File(f2));
+                    FileObject tmpf1 = FileUtil.toFileObject(new File(line.file1));
+                    FileObject tmpf2 = FileUtil.toFileObject(new File(line.file2));
                     if (tmpf1 != null && tmpf2 != null && tmpf1.getPath().compareTo(tmpf2.getPath()) != 0) {
                         if (!allreadyFlushedDependencies.contains(tmpf1)) {
                             ViolationRegistry.getInstance().flushPhpcpdDependency(tmpf1);

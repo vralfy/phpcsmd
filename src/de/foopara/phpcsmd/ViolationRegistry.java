@@ -18,7 +18,8 @@ import org.openide.filesystems.FileUtil;
  *
  * @author nspecht
  */
-public class ViolationRegistry {
+public class ViolationRegistry
+{
 
     private static ViolationRegistry instance = null;
 
@@ -62,7 +63,7 @@ public class ViolationRegistry {
     public void setPhpcpdFolder(HashMap<String, PhpcpdResult> list) {
         for (String key : list.keySet()) {
             FileObject fo = FileUtil.toFileObject(new File(key));
-            if (fo!=null) {
+            if (fo != null) {
                 this.put(fo, list.get(key), this.phpcpd);
                 GenericAnnotationBuilder.updateAnnotations(fo);
             }
@@ -85,11 +86,11 @@ public class ViolationRegistry {
     }
 
     public List<FileObject> getPhpcpdDependency(FileObject f) {
-         List<FileObject> ret = this.phpcpdDependencies.get(f.getPath());
-         if (ret == null) {
-             ret = new ArrayList<FileObject>();
-         }
-         return ret;
+        List<FileObject> ret = this.phpcpdDependencies.get(f.getPath());
+        if (ret == null) {
+            ret = new ArrayList<FileObject>();
+        }
+        return ret;
     }
 
     public void flushPhpcpdDependency(FileObject f) {
@@ -109,10 +110,9 @@ public class ViolationRegistry {
     }
 
     public Integer getViolationsCount(FileObject fo) {
-        return this.get(fo, this.phpcs).getSum() +
-                this.get(fo, this.phpmd).getSum() +
-                this.get(fo, this.phpcpd).getSum()
-                ;
+        return this.get(fo, this.phpcs).getSum()
+                + this.get(fo, this.phpmd).getSum()
+                + this.get(fo, this.phpcpd).getSum();
     }
 
     private void put(FileObject fo, GenericResult res, LinkedHashMap<String, GenericResult> list) {
@@ -223,21 +223,21 @@ public class ViolationRegistry {
 
         if (registry.containsKey(fo.getPath())) {
             for (GenericViolation res : registry.get(fo.getPath()).getWarnings()) {
-                dst.add(
-                        Task.create(
-                            fo,
-                            res.getTaskGroup(),
-                            res.getShortDescription(),
-                            res.getBeginLine() + 1));
+                Task task = Task.create(
+                        fo,
+                        res.getTaskGroup(),
+                        res.getShortDescription(),
+                        res.getBeginLine() + 1);
+                dst.add(task);
             }
 
             for (GenericViolation res : registry.get(fo.getPath()).getErrors()) {
-                dst.add(
-                        Task.create(
-                            fo,
-                            res.getTaskGroup(),
-                            res.getShortDescription(),
-                            res.getBeginLine() + 1));
+                Task task = Task.create(
+                        fo,
+                        res.getTaskGroup(),
+                        res.getShortDescription(),
+                        res.getBeginLine() + 1);
+                dst.add(task);
             }
         }
     }

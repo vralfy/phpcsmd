@@ -12,8 +12,8 @@ import javax.swing.JPanel;
  */
 public class JdependGraph extends JPanel {
 
-    final private int offsetLeft   = 40;
-    final private int offsetTop    = 20;
+    private int offsetLeft   = 40;
+    private int offsetTop    = 20;
 
     private int offsetRight  = 40;
     private int offsetBottom = 40;
@@ -23,7 +23,7 @@ public class JdependGraph extends JPanel {
 
     private HashSet<PdependTypes.PdependPackage> packages = new HashSet<PdependTypes.PdependPackage>();
 
-    private class PackageSummary {
+    private static class PackageSummary {
         public float A;
         public float I;
         public float D;

@@ -12,6 +12,61 @@ import org.openide.util.Lookup;
  */
 public class GenericPhpcpdParser {
 
+    public static class PhpcpdLine {
+        public String file1;
+        public int start1;
+        public int end1;
+        public String file2;
+        public int start2;
+        public int end2;
+
+        public PhpcpdLine(String section) {
+            String[] lines = section.split("\n");
+
+            String[] info1 = lines[0].trim().split(":");
+            StringBuilder f1 = new StringBuilder(info1[0].replaceFirst("-", "").trim());
+            for (int sectionCounter = 1; sectionCounter < info1.length - 1; sectionCounter++) {
+                f1.append(":").append(info1[sectionCounter]);
+            }
+            String[] cpdLines1 = info1[info1.length - 1].split("-");
+
+            String[] info2 = lines[1].trim().split(":");
+            StringBuilder f2 = new StringBuilder(info2[0].trim());
+            for (int sectionCounter = 1; sectionCounter < info2.length - 1; sectionCounter++) {
+                f2.append(":").append(info2[sectionCounter]);
+            }
+            String[] cpdLines2 = info2[info2.length - 1].split("-");
+
+            this.file1 = f1.toString();
+            this.file2 = f2.toString();
+
+            this.start1 = Integer.parseInt(cpdLines1[0]);
+            this.start2 = Integer.parseInt(cpdLines2[0]);
+            this.end1 = Integer.parseInt(cpdLines1[1]);
+            this.end2 = Integer.parseInt(cpdLines2[1]);
+        }
+
+        @Override
+        public String toString() {
+            return this.file1 + " " + this.start1 + ":" + this.end1 + "\n" +
+                    this.file2 + " " + this.start2 + ":" + this.end2 + "\n";
+        }
+    }
+
+    protected boolean isValidPhpcpdSection(String section) {
+        if (!section.contains("duplicated lines out of")
+            && !section.contains("Time: ")
+            && !section.contains("Memory: ")
+            && !section.contains(",")
+            && section.contains("\n")
+            && section.contains(":")
+            && section.contains("-")
+        ) {
+            return true;
+        }
+        return false;
+    }
+
     protected void add(
             String fo,
             Lookup lkp,

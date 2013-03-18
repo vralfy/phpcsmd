@@ -22,7 +22,7 @@ abstract public class GenericPhpcsSniffRegistry {
         return GenericPhpcsSniffRegistry.instance;
     }
 
-    public class SniffClass {
+    public static class SniffClass {
         LinkedHashMap<String, PhpcsSniff> sniffs = new LinkedHashMap<String, PhpcsSniff>();
 
         public void addSniff(String name, PhpcsSniff sniff) {
@@ -46,7 +46,7 @@ abstract public class GenericPhpcsSniffRegistry {
         }
     }
 
-    public class SniffStandard {
+    public static class SniffStandard {
         LinkedHashMap<String, GenericPhpcsSniffRegistry.SniffClass> classes = new LinkedHashMap<String, GenericPhpcsSniffRegistry.SniffClass>();
 
         public SniffClass getSniffClass(String name) {

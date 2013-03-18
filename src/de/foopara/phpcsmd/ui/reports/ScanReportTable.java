@@ -78,11 +78,11 @@ public class ScanReportTable extends GenericTable {
         GenericResult phpmd = ViolationRegistry.getInstance().getPhpmd(fo);
         GenericResult phpcpd = ViolationRegistry.getInstance().getPhpcpd(fo);
 
-        if (!(phpcs.getSum() + phpmd.getSum() + phpcpd.getSum() > 0)) return;
-
         if (phpcs == null)  phpcs  = new GenericResult(null, null, null);
         if (phpmd == null)  phpmd  = new GenericResult(null, null, null);
         if (phpcpd == null) phpcpd = new GenericResult(null, null, null);
+
+        if (!(phpcs.getSum() + phpmd.getSum() + phpcpd.getSum() > 0)) return;
 
         this.model.addRow(new Object[]{
                     printedName,

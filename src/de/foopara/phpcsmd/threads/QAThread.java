@@ -89,13 +89,6 @@ public class QAThread extends Thread {
 
     public void qarun() {
         ProgressHandle handle = ProgressHandleFactory.createHandle("phpcsmd", null, null);
-        int tasks = 4
-                + (this.enablePhpcs ? 1 : 0)
-                + (this.enablePhpmd ? 1 : 0)
-                + (this.enablePhpcpd ? 1 : 0);
-        int currentTask = 0;
-        Logger.getInstance().logPre("task count: " + tasks, "Starting phpcsmd thread");
-        handle.start(tasks);
         try {
             if (!GenericHelper.isDesirableFile(this.fo) || GenericHelper.isSymlink(FileUtil.toFile(this.fo))) {
                 return;
@@ -108,6 +101,14 @@ public class QAThread extends Thread {
                 while (QAThread.instances.lastIndexOf(this) > 0) {
                 }
             }
+
+            int tasks = 4
+                    + (this.enablePhpcs ? 1 : 0)
+                    + (this.enablePhpmd ? 1 : 0)
+                    + (this.enablePhpcpd ? 1 : 0);
+            int currentTask = 0;
+            handle.start(tasks);
+            Logger.getInstance().logPre("task count: " + tasks, "Starting phpcsmd thread");
 
             QAThread.instances.add(this);
             if (!this.interupted && this.enablePhpcs) {

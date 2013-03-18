@@ -3,8 +3,10 @@
           "-//NetBeans//DTD annotation type 1.0//EN"
           "http://www.netbeans.org/dtds/annotation-type-1_0.dtd">
 <type name="de-foopara-phpcsmd-annotation-phpcpd-violation"
-      visible="true"
-      glyph="nbresloc:/de/foopara/phpcsmd/resources/phpcpd/violation.png"
-      highlight="#00FFFF"
       type="line"
+      visible="true"
+      browsable="true"
+      highlight="#00FFFF"
+      custom_sidebar_color="#00FFFF"
+      glyph="nbresloc:/de/foopara/phpcsmd/resources/phpcpd/violation.png"
 />

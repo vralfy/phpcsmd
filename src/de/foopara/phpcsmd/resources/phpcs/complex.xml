@@ -3,8 +3,10 @@
           "-//NetBeans//DTD annotation type 1.0//EN"
           "http://www.netbeans.org/dtds/annotation-type-1_0.dtd">
 <type name="de-foopara-phpcsmd-annotation-phpcs-complex"
-      visible="true"
-      glyph="nbresloc:/de/foopara/phpcsmd/resources/phpcs/complex.png"
-      highlight="#2CB7B3"
       type="line"
+      visible="true"
+      browsable="true"
+      highlight="#2CB7B3"
+      custom_sidebar_color="#2CB7B3"
+      glyph="nbresloc:/de/foopara/phpcsmd/resources/phpcs/complex.png"
 />

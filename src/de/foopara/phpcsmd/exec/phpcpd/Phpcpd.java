@@ -66,7 +66,7 @@ public class Phpcpd extends GenericExecute {
         if (!iAmAlive()) return this.setAndReturnCurrent(file);
 
         //ViolationRegistry.getInstance().flushPhpcpdDependency(file);
-        PhpcpdResult res = parser.parse(reader[0], updateDependencies && false, file);
+        PhpcpdResult res = parser.parse(reader[0], updateDependencies, file);
         if (!iAmAlive()) return this.setAndReturnCurrent(file);
         ViolationRegistry.getInstance().setPhpcpd(file, res);
         return res;

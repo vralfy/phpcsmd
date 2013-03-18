@@ -15,7 +15,7 @@ public class PdependTreeNode extends DefaultMutableTreeNode {
         super(o);
     }
 
-    protected class NodeComparator implements Comparator<PdependTreeNode> {
+    protected static class NodeComparator implements Comparator<PdependTreeNode> {
         @Override
         public int compare(PdependTreeNode o1, PdependTreeNode o2) {
             if (o1 == null || o1.toString() == null) {return -1;}

@@ -3,8 +3,10 @@
           "-//NetBeans//DTD annotation type 1.0//EN"
           "http://www.netbeans.org/dtds/annotation-type-1_0.dtd">
 <type name="de-foopara-phpcsmd-annotation-phpcs-unreachable"
-      visible="true"
-      glyph="nbresloc:/de/foopara/phpcsmd/resources/phpcs/unreachable.png"
-      highlight="#CCCCCC"
       type="line"
+      visible="true"
+      browsable="true"
+      highlight="#CCCCCC"
+      custom_sidebar_color="#CCCCCC"
+      glyph="nbresloc:/de/foopara/phpcsmd/resources/phpcs/unreachable.png"
 />
