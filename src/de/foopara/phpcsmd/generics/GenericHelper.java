@@ -11,11 +11,8 @@ import org.openide.loaders.DataObject;
 import org.openide.loaders.DataObjectNotFoundException;
 import org.openide.util.Lookup;
 
-/**
- *
- * @author n.specht
- */
-public class GenericHelper {
+public class GenericHelper
+{
 
     private static File phpcpdDistractor = null;
 
@@ -35,16 +32,28 @@ public class GenericHelper {
     }
 
     public static boolean isDesirableFile(File file, boolean filter, Lookup lkp) {
-        if (file == null) return false;
+        if (file == null) {
+            return false;
+        }
 
-        if (!file.exists())  return false;
-        if (!file.canRead()) return false;
-        if (!file.isFile())  return false;
+        if (!file.exists()) {
+            return false;
+        }
+        if (!file.canRead()) {
+            return false;
+        }
+        if (!file.isFile()) {
+            return false;
+        }
 
-        if (filter && GenericHelper.shouldBeIgnored(file, lkp)) return false;
+        if (filter && GenericHelper.shouldBeIgnored(file, lkp)) {
+            return false;
+        }
 
         File parent = new File(file.getParent());
-        if (!GenericHelper.isDesirableFolder(parent, filter, lkp)) return false;
+        if (!GenericHelper.isDesirableFolder(parent, filter, lkp)) {
+            return false;
+        }
 
         return true;
     }
@@ -54,7 +63,9 @@ public class GenericHelper {
     }
 
     public static boolean isDesirableFolder(FileObject fileObject, boolean filter) {
-        if (fileObject == null) return false;
+        if (fileObject == null) {
+            return false;
+        }
         return GenericHelper.isDesirableFolder(FileUtil.toFile(fileObject), filter, GenericHelper.getFileLookup(fileObject));
     }
 
@@ -63,13 +74,23 @@ public class GenericHelper {
     }
 
     public static boolean isDesirableFolder(File file, boolean filter, Lookup lkp) {
-        if (file == null) return false;
+        if (file == null) {
+            return false;
+        }
 
-        if (!file.exists())      return false;
-        if (!file.canRead())     return false;
-        if (!file.isDirectory()) return false;
+        if (!file.exists()) {
+            return false;
+        }
+        if (!file.canRead()) {
+            return false;
+        }
+        if (!file.isDirectory()) {
+            return false;
+        }
 
-        if (filter && GenericHelper.shouldBeIgnored(file, lkp)) return false;
+        if (filter && GenericHelper.shouldBeIgnored(file, lkp)) {
+            return false;
+        }
 
         return true;
     }
@@ -77,8 +98,10 @@ public class GenericHelper {
     public static String implode(String glue, String[] arr) {
         StringBuilder tmp = new StringBuilder();
         int pos = 0;
-        for(int i=0; i < arr.length; i++) {
-            if (pos > 0) tmp.append(glue);
+        for (int i = 0; i < arr.length; i++) {
+            if (pos > 0) {
+                tmp.append(glue);
+            }
             if (arr[i].trim().length() > 0) {
                 tmp.append(arr[i]);
                 pos++;
@@ -88,12 +111,16 @@ public class GenericHelper {
     }
 
     private static boolean shouldBeIgnored(FileObject fileObject) {
-        if (fileObject == null) return true;
+        if (fileObject == null) {
+            return true;
+        }
         return GenericHelper.shouldBeIgnored(FileUtil.toFile(fileObject), GenericHelper.getFileLookup(fileObject));
     }
 
     private static boolean shouldBeIgnored(File file, Lookup lkp) {
-        if (file == null) return true;
+        if (file == null) {
+            return true;
+        }
 
         String pattern = (String)GeneralOptions.load(GeneralOptions.Settings.IGNORE, lkp);
         if (pattern.trim().length() > 0) {
@@ -158,4 +185,5 @@ public class GenericHelper {
 
         return ret;
     }
+
 }

@@ -11,12 +11,8 @@ import java.util.HashSet;
 import org.openide.filesystems.FileObject;
 import org.openide.util.Lookup;
 
-/**
- *
- * @author n.specht
- */
-public class Pdepend {
-
+public class Pdepend
+{
 
     private boolean _enabled = true;
 
@@ -30,13 +26,12 @@ public class Pdepend {
         Lookup lkp = GenericHelper.getFileLookup(file);
 
         if (!GenericHelper.isDesirableFile(new File((String)PdependOptions.load(PdependOptions.Settings.SCRIPT, lkp)), lkp)
-            || (!GenericHelper.isDesirableFile(file)
-            && !GenericHelper.isDesirableFolder(file))
-        ) {
+                || (!GenericHelper.isDesirableFile(file)
+                && !GenericHelper.isDesirableFolder(file))) {
             return this.setAndReturnDefault();
         }
 
-        if(this.isEnabled() == false) {
+        if (this.isEnabled() == false) {
             return this.setAndReturnDefault();
         }
 
@@ -49,8 +44,7 @@ public class Pdepend {
         this.appendArgument(cmd, "--ignore=", "" + (String)PdependOptions.load(PdependOptions.Settings.IGNORES, lkp));
         this.appendArgument(cmd, "-d ", GenericHelper.implode(
                 " -d ",
-                ((String)PdependOptions.load(PdependOptions.Settings.INIOVERWRITE, lkp)).split(";")
-            ));
+                ((String)PdependOptions.load(PdependOptions.Settings.INIOVERWRITE, lkp)).split(";")));
 
         File summary = new File(System.getProperty("java.io.tmpdir"), "phpcsmd_pdepend_" + file.hashCode() + ".xml");
         this.appendArgument(cmd, "--summary-xml=", summary.getAbsolutePath());
@@ -68,7 +62,7 @@ public class Pdepend {
 
         Object[] tmpFilesArray = tmpFiles.toArray();
         File[] outputFiles = new File[tmpFilesArray.length];
-        for (int i=0;i<tmpFilesArray.length;i++) {
+        for (int i = 0; i < tmpFilesArray.length; i++) {
             outputFiles[i] = (File)tmpFilesArray[i];
         }
         GenericOutputReader[] reader = GenericProcess.run(cmd.toString(), outputFiles, this.component, lkp);
@@ -99,4 +93,5 @@ public class Pdepend {
             b.append(" ").append(key).append(value);
         }
     }
+
 }

@@ -18,7 +18,9 @@ import org.openide.util.Lookup;
  *
  * @author nspecht
  */
-public class GenericProcess {
+public class GenericProcess
+{
+
     public static GenericOutputReader run(ExternalProcessBuilder builder) {
         GenericOutputReader output = new GenericOutputReader();
 
@@ -46,9 +48,9 @@ public class GenericProcess {
 
     public static GenericOutputReader[] run(String cmd, String outputFile, GenericTopComponent topComponent, Lookup lkp) {
         if (outputFile == null || outputFile.compareTo("") == 0) {
-            return GenericProcess.run(cmd, new File[] {}, topComponent, lkp);
+            return GenericProcess.run(cmd, new File[]{}, topComponent, lkp);
         }
-        return GenericProcess.run(cmd, new File[] {new File(outputFile)}, topComponent, lkp);
+        return GenericProcess.run(cmd, new File[]{new File(outputFile)}, topComponent, lkp);
 
     }
 
@@ -63,20 +65,21 @@ public class GenericProcess {
             InputStream in = child.getInputStream();
             int c;
             if (outputFiles == null) {
-                while((c = in.read()) != -1) {
+                while ((c = in.read()) != -1) {
                     tmp.append((char)c);
                 }
                 return new GenericOutputReader[]{new GenericOutputReader(tmp)};
             } else {
                 InputStream err = child.getErrorStream();
 
-                while((c = in.read()) != -1) {
+                while ((c = in.read()) != -1) {
                     if (topComponent != null) {
                         tmp.append((char)c);
                         topComponent.setCommandOutput(tmp.toString());
                     }
                 }
-                while((err.read()) != -1) {} //Ich muss das auslesen, damit der Prozess wartet
+                while ((err.read()) != -1) {
+                } //Ich muss das auslesen, damit der Prozess wartet
 
                 child.waitFor();
                 child.exitValue();
@@ -86,7 +89,7 @@ public class GenericProcess {
                     if (GenericHelper.isDesirableFile(outputFile, false, lkp)) {
                         tmp = new StringBuilder();
                         FileInputStream fis = new FileInputStream(outputFile);
-                        while((c = fis.read()) != -1) {
+                        while ((c = fis.read()) != -1) {
                             tmp.append((char)c);
                         }
                         reader.add(new GenericOutputReader(tmp));
@@ -95,7 +98,7 @@ public class GenericProcess {
 
                 Object[] tmpReader = reader.toArray();
                 GenericOutputReader[] res = new GenericOutputReader[tmpReader.length];
-                for (int i=0;i<tmpReader.length;i++) {
+                for (int i = 0; i < tmpReader.length; i++) {
                     res[i] = (GenericOutputReader)tmpReader[i];
                 }
 
@@ -110,4 +113,5 @@ public class GenericProcess {
         }
         return new GenericOutputReader[]{};
     }
+
 }

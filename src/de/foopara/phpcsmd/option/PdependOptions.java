@@ -3,19 +3,20 @@ package de.foopara.phpcsmd.option;
 import java.util.EnumMap;
 import org.openide.util.Lookup;
 
-/**
- *
- * @author n.specht
- */
-public class PdependOptions {
+public class PdependOptions
+{
 
     public static final String _PREFIX = "phpcsmd.pdepend.";
 
-   public enum Settings {
+    public enum Settings
+    {
+
         SCRIPT, EXCLUDE, SUFFIXES, IGNORES, INIOVERWRITE, USETABS, JDEPEND
+
     }
 
     private static final EnumMap<PdependOptions.Settings, String> keys = new EnumMap<PdependOptions.Settings, String>(PdependOptions.Settings.class);
+
     static {
         keys.put(PdependOptions.Settings.SCRIPT, "script");
         keys.put(PdependOptions.Settings.EXCLUDE, "exclude");
@@ -28,12 +29,14 @@ public class PdependOptions {
     }
 
     private static final EnumMap<PdependOptions.Settings, GenericOption.SettingTypes> types = new EnumMap<PdependOptions.Settings, GenericOption.SettingTypes>(PdependOptions.Settings.class);
+
     static {
         types.put(PdependOptions.Settings.USETABS, GenericOption.SettingTypes.BOOLEAN);
         types.put(PdependOptions.Settings.JDEPEND, GenericOption.SettingTypes.BOOLEAN);
     }
 
     private static final EnumMap<PdependOptions.Settings, String> defaults = new EnumMap<PdependOptions.Settings, String>(PdependOptions.Settings.class);
+
     static {
         defaults.put(PdependOptions.Settings.SCRIPT, "/usr/bin/pdepend");
         defaults.put(PdependOptions.Settings.EXCLUDE, "");
@@ -65,7 +68,7 @@ public class PdependOptions {
             defaultVal = PdependOptions.defaults.get(key);
         }
 
-        String val = GenericOption.loadModul(_PREFIX +keys.get(key), defaultVal);
+        String val = GenericOption.loadModul(_PREFIX + keys.get(key), defaultVal);
 
         if (!types.containsKey(key)) {
             return val;
@@ -97,4 +100,5 @@ public class PdependOptions {
     public static Boolean isOverwritten(PdependOptions.Settings key, Lookup lkp) {
         return GenericOption.isInProject(_PREFIX + keys.get(key), lkp);
     }
+
 }

@@ -8,9 +8,11 @@ import java.util.List;
  *
  * @author nspecht
  */
-public class PhpcpdResult extends GenericResult {
+public class PhpcpdResult extends GenericResult
+{
 
     public PhpcpdResult(List<GenericViolation> warnings, List<GenericViolation> errors, List<GenericViolation> noTask) {
-        super(warnings,errors,noTask);
+        super(warnings, errors, noTask);
     }
+
 }

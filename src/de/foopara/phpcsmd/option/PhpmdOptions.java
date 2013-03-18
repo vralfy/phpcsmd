@@ -1,21 +1,21 @@
 package de.foopara.phpcsmd.option;
 
-import java.util.EnumMap;
 import de.foopara.phpcsmd.option.GenericOption.SettingTypes;
+import java.util.EnumMap;
 import org.openide.util.Lookup;
-/**
- *
- * @author n.specht
- */
-public class PhpmdOptions {
+
+public class PhpmdOptions
+{
 
     public static final String _PREFIX = "phpcsmd.phpmd.";
 
-    public enum Settings {
+    public enum Settings
+    {
         ACTIVATED, SCRIPT, RULES, EXCLUDE, SUFFIXES, MINPRIORITY, STRICT
     }
 
     private static final EnumMap<Settings, String> keys = new EnumMap<Settings, String>(Settings.class);
+
     static {
         keys.put(Settings.ACTIVATED, "activated");
         keys.put(Settings.SCRIPT, "script");
@@ -27,12 +27,14 @@ public class PhpmdOptions {
     }
 
     private static final EnumMap<Settings, SettingTypes> types = new EnumMap<Settings, SettingTypes>(Settings.class);
+
     static {
         types.put(Settings.ACTIVATED, SettingTypes.BOOLEAN);
         types.put(Settings.STRICT, SettingTypes.BOOLEAN);
     }
 
     private static final EnumMap<Settings, String> defaults = new EnumMap<Settings, String>(Settings.class);
+
     static {
         defaults.put(Settings.ACTIVATED, "false");
         defaults.put(Settings.SCRIPT, "/usr/bin/phpmd");
@@ -64,7 +66,7 @@ public class PhpmdOptions {
             defaultVal = PhpmdOptions.defaults.get(key);
         }
 
-        String val = GenericOption.loadModul(_PREFIX +keys.get(key), defaultVal);
+        String val = GenericOption.loadModul(_PREFIX + keys.get(key), defaultVal);
 
         if (!types.containsKey(key)) {
             return val;
@@ -96,4 +98,5 @@ public class PhpmdOptions {
     public static Boolean isOverwritten(PhpmdOptions.Settings key, Lookup lkp) {
         return GenericOption.isInProject(_PREFIX + keys.get(key), lkp);
     }
+
 }

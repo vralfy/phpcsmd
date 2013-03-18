@@ -10,14 +10,22 @@ import org.openide.util.Lookup;
  *
  * @author nspecht
  */
-public class GenericPhpcpdParser {
+public class GenericPhpcpdParser
+{
 
-    public static class PhpcpdLine {
+    public static class PhpcpdLine
+    {
+
         public String file1;
+
         public int start1;
+
         public int end1;
+
         public String file2;
+
         public int start2;
+
         public int end2;
 
         public PhpcpdLine(String section) {
@@ -48,20 +56,20 @@ public class GenericPhpcpdParser {
 
         @Override
         public String toString() {
-            return this.file1 + " " + this.start1 + ":" + this.end1 + "\n" +
-                    this.file2 + " " + this.start2 + ":" + this.end2 + "\n";
+            return this.file1 + " " + this.start1 + ":" + this.end1 + "\n"
+                    + this.file2 + " " + this.start2 + ":" + this.end2 + "\n";
         }
+
     }
 
     protected boolean isValidPhpcpdSection(String section) {
         if (!section.contains("duplicated lines out of")
-            && !section.contains("Time: ")
-            && !section.contains("Memory: ")
-            && !section.contains(",")
-            && section.contains("\n")
-            && section.contains(":")
-            && section.contains("-")
-        ) {
+                && !section.contains("Time: ")
+                && !section.contains("Memory: ")
+                && !section.contains(",")
+                && section.contains("\n")
+                && section.contains(":")
+                && section.contains("-")) {
             return true;
         }
         return false;
@@ -75,13 +83,11 @@ public class GenericPhpcpdParser {
             String f1, int s1, int e1,
             String f2, int s2, int e2) {
         if (!GenericHelper.isDesirableFile(new File(f1), lkp)
-            || !GenericHelper.isDesirableFile(new File(f2), lkp)
-        ) {
+                || !GenericHelper.isDesirableFile(new File(f2), lkp)) {
             return;
         }
         if ((f1.compareTo(f2) != 0 && f2.compareTo(fo) == 0)
-            || (f1.compareTo(f2) == 0 && s1 > s2)
-        ) {
+                || (f1.compareTo(f2) == 0 && s1 > s2)) {
             String tf = f1;
             int ts = s1;
             int te = e1;
@@ -100,7 +106,7 @@ public class GenericPhpcpdParser {
             fpath = " " + f2;
         }
         if (fo.compareTo(f1) == 0) {
-            cpdErrors.add(new GenericViolation("Duplicated Sourcecode" + fpath + ": " + (s2+1) + "-" + (e2+1), s1, e1)
+            cpdErrors.add(new GenericViolation("Duplicated Sourcecode" + fpath + ": " + (s2 + 1) + "-" + (e2 + 1), s1, e1)
                     .setAnnotationType("phpcpd-violation").setGroup("phpcpd-violation"));
         }
 
@@ -108,8 +114,9 @@ public class GenericPhpcpdParser {
             fpath = " " + f1;
         }
         if (cpdNoTask != null && fo.compareTo(f2) == 0) {
-            cpdNoTask.add(new GenericViolation("Duplicated Sourcecode" + fpath + ": " + (s1+1) + "-" + (e1+1), s2, e2)
+            cpdNoTask.add(new GenericViolation("Duplicated Sourcecode" + fpath + ": " + (s1 + 1) + "-" + (e1 + 1), s2, e2)
                     .setAnnotationType("phpcpd-violation").setGroup("phpcpd-violation"));
         }
     }
+
 }

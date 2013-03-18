@@ -21,7 +21,8 @@ import org.openide.util.NbBundle.Messages;
     @ActionReference(path = "UI/ToolActions/PHP", position = 877)
 })
 @Messages("CTL_PHPdependScanner=Scan with Pdepend")
-public final class PdependScanner implements ActionListener {
+public final class PdependScanner implements ActionListener
+{
 
     private final DataObject context;
 
@@ -43,4 +44,5 @@ public final class PdependScanner implements ActionListener {
             form.open();
         }
     }
+
 }

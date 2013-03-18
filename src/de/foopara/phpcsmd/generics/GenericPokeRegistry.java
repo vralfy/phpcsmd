@@ -4,14 +4,15 @@ import de.foopara.phpcsmd.ui.reports.ScanReportTopComponent;
 import java.util.HashSet;
 import org.openide.filesystems.FileObject;
 
-/**
- *
- * @author n.specht
- */
-public class GenericPokeRegistry {
+public class GenericPokeRegistry
+{
+
     private static GenericPokeRegistry instance = null;
+
     public static GenericPokeRegistry getInstance() {
-        if (GenericPokeRegistry.instance == null) GenericPokeRegistry.instance = new GenericPokeRegistry();
+        if (GenericPokeRegistry.instance == null) {
+            GenericPokeRegistry.instance = new GenericPokeRegistry();
+        }
         return GenericPokeRegistry.instance;
     }
 

@@ -7,11 +7,8 @@ package de.foopara.phpcsmd.ui;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-/**
- *
- * @author n.specht
- */
-public class PropertyPanelOkAction implements ActionListener {
+public class PropertyPanelOkAction implements ActionListener
+{
 
     PropertyPanel panel = null;
 

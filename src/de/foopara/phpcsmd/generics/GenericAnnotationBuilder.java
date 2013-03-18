@@ -15,7 +15,8 @@ import org.openide.util.Exceptions;
  *
  * @author nspecht
  */
-public class GenericAnnotationBuilder {
+public class GenericAnnotationBuilder
+{
 
     public static void updateAnnotations(FileObject fo) {
         GenericAnnotationBuilder.run(fo, ViolationRegistry.getInstance().getPhpcs(fo));
@@ -36,16 +37,13 @@ public class GenericAnnotationBuilder {
 
             GenericAnnotationBuilder.annotateList(
                     res.getWarnings(),
-                    cookie
-            );
+                    cookie);
             GenericAnnotationBuilder.annotateList(
                     res.getErrors(),
-                    cookie
-            );
+                    cookie);
             GenericAnnotationBuilder.annotateList(
                     res.getNoTask(),
-                    cookie
-            );
+                    cookie);
         } catch (DataObjectNotFoundException ex) {
             Logger.getInstance().log(ex);
             Exceptions.printStackTrace(ex);
@@ -72,4 +70,5 @@ public class GenericAnnotationBuilder {
             }
         }
     }
+
 }

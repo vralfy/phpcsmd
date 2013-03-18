@@ -9,15 +9,21 @@ import org.openide.filesystems.FileObject;
  *
  * @author nspecht
  */
-public class ScanReportTable extends GenericTable {
+public class ScanReportTable extends GenericTable
+{
 
     private FileObject rootDir = null;
 
     private Integer phpcs_errors = 0;
+
     private Integer phpcs_warnings = 0;
+
     private Integer phpmd_errors = 0;
+
     private Integer phpmd_warnings = 0;
+
     private Integer phpcpd_errors = 0;
+
     private Integer phpcpd_warnings = 0;
 
     public ScanReportTable() {
@@ -40,7 +46,7 @@ public class ScanReportTable extends GenericTable {
         this.finishTableSettings();
 
         this.sorter.setComparator(0, new GenericTable.FilepathComparator());
-        for (int i = 1; i <=4; i++) {
+        for (int i = 1; i <= 4; i++) {
             this.sorter.setComparator(i, new GenericTable.IntegerComparator());
         }
     }
@@ -62,7 +68,9 @@ public class ScanReportTable extends GenericTable {
 
     public void addElement(FileObject fo) {
 
-        if (!fo.getPath().startsWith(this.rootDir.getPath())) return;
+        if (!fo.getPath().startsWith(this.rootDir.getPath())) {
+            return;
+        }
 
         String printedName = fo.getPath().replaceFirst(this.rootDir.getPath(), "");
         boolean doubleEntry = false;
@@ -78,19 +86,27 @@ public class ScanReportTable extends GenericTable {
         GenericResult phpmd = ViolationRegistry.getInstance().getPhpmd(fo);
         GenericResult phpcpd = ViolationRegistry.getInstance().getPhpcpd(fo);
 
-        if (phpcs == null)  phpcs  = new GenericResult(null, null, null);
-        if (phpmd == null)  phpmd  = new GenericResult(null, null, null);
-        if (phpcpd == null) phpcpd = new GenericResult(null, null, null);
+        if (phpcs == null) {
+            phpcs = new GenericResult(null, null, null);
+        }
+        if (phpmd == null) {
+            phpmd = new GenericResult(null, null, null);
+        }
+        if (phpcpd == null) {
+            phpcpd = new GenericResult(null, null, null);
+        }
 
-        if (!(phpcs.getSum() + phpmd.getSum() + phpcpd.getSum() > 0)) return;
+        if (!(phpcs.getSum() + phpmd.getSum() + phpcpd.getSum() > 0)) {
+            return;
+        }
 
         this.model.addRow(new Object[]{
-                    printedName,
-                    phpcs.getErrors().size(),
-                    phpcs.getWarnings().size(),
-                    phpmd.getErrors().size() + phpmd.getWarnings().size(),
-                    phpcpd.getErrors().size() + phpcpd.getWarnings().size()
-                });
+            printedName,
+            phpcs.getErrors().size(),
+            phpcs.getWarnings().size(),
+            phpmd.getErrors().size() + phpmd.getWarnings().size(),
+            phpcpd.getErrors().size() + phpcpd.getWarnings().size()
+        });
         if (!doubleEntry) {
             this.phpcs_errors += phpcs.getErrors().size();
             this.phpcs_warnings += phpcs.getWarnings().size();
@@ -102,17 +118,19 @@ public class ScanReportTable extends GenericTable {
     }
 
     public void poke(FileObject fo) {
-        if (!fo.getPath().startsWith(this.rootDir.getPath())) return;
+        if (!fo.getPath().startsWith(this.rootDir.getPath())) {
+            return;
+        }
         String subpath = fo.getPath().replaceFirst(this.rootDir.getPath(), "");
         boolean foundEntry = false;
-        for(int i=0;i<this.model.getRowCount();i++) {
+        for (int i = 0; i < this.model.getRowCount(); i++) {
             if (subpath.compareTo((String)this.model.getValueAt(i, 0)) == 0) {
                 foundEntry = true;
-                this.phpcs_errors   -= (Integer)this.model.getValueAt(i, 1);
+                this.phpcs_errors -= (Integer)this.model.getValueAt(i, 1);
                 this.phpcs_warnings -= (Integer)this.model.getValueAt(i, 2);
-                this.phpmd_errors   -= (Integer)this.model.getValueAt(i, 3);
+                this.phpmd_errors -= (Integer)this.model.getValueAt(i, 3);
 //                this.phpmd_warnings -= 0;
-                this.phpcpd_errors  -= (Integer)this.model.getValueAt(i, 4);
+                this.phpcpd_errors -= (Integer)this.model.getValueAt(i, 4);
 //                this.phpcpd_warnings -= 0;
                 if (ViolationRegistry.getInstance().getViolationsCount(fo) > 0) {
                     //CASE: Immer noch violations
@@ -172,9 +190,9 @@ public class ScanReportTable extends GenericTable {
     }
 
     public Integer getViolationCount() {
-        return this.getPhpcsErrorsCount() + this.getPhpcsWarningsCount() +
-                this.getPhpmdErrorsCount() + this.getPhpmdWarningsCount() +
-                this.getPhpcpdErrorsCount() + this.getPhpcpdWarningsCount()
-                ;
+        return this.getPhpcsErrorsCount() + this.getPhpcsWarningsCount()
+                + this.getPhpmdErrorsCount() + this.getPhpmdWarningsCount()
+                + this.getPhpcpdErrorsCount() + this.getPhpcpdWarningsCount();
     }
+
 }

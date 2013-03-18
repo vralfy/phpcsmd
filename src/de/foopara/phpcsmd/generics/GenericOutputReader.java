@@ -11,7 +11,8 @@ import org.netbeans.api.extexecution.input.InputProcessor;
  *
  * @author nspecht
  */
-public class GenericOutputReader implements InputProcessor, ExecutionDescriptor.InputProcessorFactory {
+public class GenericOutputReader implements InputProcessor, ExecutionDescriptor.InputProcessorFactory
+{
 
     private StringBuilder output = new StringBuilder();
 
@@ -21,7 +22,6 @@ public class GenericOutputReader implements InputProcessor, ExecutionDescriptor.
     }
 
     public GenericOutputReader() {
-
     }
 
     @Override

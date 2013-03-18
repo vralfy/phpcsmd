@@ -13,7 +13,9 @@ import org.openide.util.Lookup;
  *
  * @author nspecht
  */
-public class Phpcs extends GenericExecute {
+public class Phpcs extends GenericExecute
+{
+
     private boolean _enabled = true;
 
     @Override
@@ -33,7 +35,7 @@ public class Phpcs extends GenericExecute {
             return this.setAndReturnDefault(file);
         }
 
-        if(this.isEnabled() == false) {
+        if (this.isEnabled() == false) {
             return this.setAndReturnCurrent(file);
         }
 
@@ -44,8 +46,7 @@ public class Phpcs extends GenericExecute {
         CustomStandard cstandard = null;
         StringBuilder cmd = new StringBuilder((String)PhpcsOptions.load(PhpcsOptions.Settings.SCRIPT, lookup));
         if ((Boolean)PhpcsOptions.load(PhpcsOptions.Settings.EXTRAS, lookup) == true
-            || ((String)PhpcsOptions.load(PhpcsOptions.Settings.STANDARD, lookup)).trim().length() == 0
-        ) {
+                || ((String)PhpcsOptions.load(PhpcsOptions.Settings.STANDARD, lookup)).trim().length() == 0) {
             cstandard = new CustomStandard(lookup);
             this.appendArgument(cmd, "--standard=", cstandard.toString());
         } else {
@@ -69,15 +70,14 @@ public class Phpcs extends GenericExecute {
         cmd.append(" --report=xml");
 
         cmd.append(" ").append(GenericHelper.escapePath(file));
-        Logger.getInstance().logPre(cmd.toString(),"phpcs command");
+        Logger.getInstance().logPre(cmd.toString(), "phpcs command");
 
         /*
-        ExternalProcessBuilder epb = new ExternalProcessBuilder(PhpcsOptions.getScript());
-        epb.workingDirectory(root);
-        epb.addArgument("--standard=" + PhpcsOptions.getStandard());
-        //epb.addArgument("...");
-        epb.addArgument("--report=xml");
-        epb.addArgument(file.getPath());
+         * ExternalProcessBuilder epb = new
+         * ExternalProcessBuilder(PhpcsOptions.getScript());
+         * epb.workingDirectory(root); epb.addArgument("--standard=" +
+         * PhpcsOptions.getStandard()); //epb.addArgument("...");
+         * epb.addArgument("--report=xml"); epb.addArgument(file.getPath());
          */
         PhpcsXMLParser parser = new PhpcsXMLParser(lookup);
         if (!iAmAlive()) {
@@ -127,7 +127,7 @@ public class Phpcs extends GenericExecute {
             StringBuilder tmp = new StringBuilder();
             int c;
             while ((c = in.read()) != -1) {
-                tmp.append((char) c);
+                tmp.append((char)c);
             }
             String installed[] = tmp.toString()
                     .replaceFirst("The installed.*are ", "")
@@ -140,4 +140,5 @@ public class Phpcs extends GenericExecute {
 
         return null;
     }
+
 }

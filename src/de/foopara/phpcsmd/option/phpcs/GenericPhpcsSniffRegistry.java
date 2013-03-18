@@ -12,9 +12,11 @@ import java.util.LinkedHashMap;
  *
  * @author nspecht
  */
-abstract public class GenericPhpcsSniffRegistry {
+abstract public class GenericPhpcsSniffRegistry
+{
 
     private static GenericPhpcsSniffRegistry instance = null;
+
     public static GenericPhpcsSniffRegistry getInstance() {
         if (GenericPhpcsSniffRegistry.instance == null) {
             GenericPhpcsSniffRegistry.instance = new DynamicPhpcsSniffRegistry();
@@ -22,7 +24,9 @@ abstract public class GenericPhpcsSniffRegistry {
         return GenericPhpcsSniffRegistry.instance;
     }
 
-    public static class SniffClass {
+    public static class SniffClass
+    {
+
         LinkedHashMap<String, PhpcsSniff> sniffs = new LinkedHashMap<String, PhpcsSniff>();
 
         public void addSniff(String name, PhpcsSniff sniff) {
@@ -44,9 +48,12 @@ abstract public class GenericPhpcsSniffRegistry {
         public int getSize() {
             return this.sniffs.size();
         }
+
     }
 
-    public static class SniffStandard {
+    public static class SniffStandard
+    {
+
         LinkedHashMap<String, GenericPhpcsSniffRegistry.SniffClass> classes = new LinkedHashMap<String, GenericPhpcsSniffRegistry.SniffClass>();
 
         public SniffClass getSniffClass(String name) {
@@ -71,8 +78,8 @@ abstract public class GenericPhpcsSniffRegistry {
         public GenericPhpcsSniffRegistry.SniffClass getClass(String name) {
             return this.classes.get(name);
         }
-    }
 
+    }
 
     LinkedHashMap<String, GenericPhpcsSniffRegistry.SniffStandard> standards = new LinkedHashMap<String, GenericPhpcsSniffRegistry.SniffStandard>();
 
@@ -100,4 +107,5 @@ abstract public class GenericPhpcsSniffRegistry {
     public GenericPhpcsSniffRegistry.SniffStandard getStandard(String name) {
         return this.standards.get(name);
     }
+
 }

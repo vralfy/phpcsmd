@@ -21,16 +21,17 @@ import org.openide.filesystems.FileUtil;
 import org.openide.util.Exceptions;
 import org.openide.util.Lookup;
 
-/**
- *
- * @author n.specht
- */
-public class QAThread extends Thread {
+public class QAThread extends Thread
+{
 
     private static final ArrayList<QAThread> instances = new ArrayList<QAThread>();
+
     private static final String logCaption = "phpcsmd thread";
+
     private FileObject fo = null;
+
     private boolean interupted = false;
+
     private boolean poke = true;
 
     private boolean enablePhpcs = false;
@@ -46,7 +47,7 @@ public class QAThread extends Thread {
         this.lkp = lkp;
         this.enablePhpcs = (Boolean)PhpcsOptions.load(PhpcsOptions.Settings.ACTIVATED, this.lkp);
         this.enablePhpmd = (Boolean)PhpmdOptions.load(PhpmdOptions.Settings.ACTIVATED, this.lkp);
-        this.enablePhpcpd =(Boolean)PhpcpdOptions.load(PhpcpdOptions.Settings.ACTIVATED, this.lkp) || (Boolean)PhpcpdOptions.load(PhpcpdOptions.Settings.ACTIVATEDFOLDER, this.lkp);
+        this.enablePhpcpd = (Boolean)PhpcpdOptions.load(PhpcpdOptions.Settings.ACTIVATED, this.lkp) || (Boolean)PhpcpdOptions.load(PhpcpdOptions.Settings.ACTIVATEDFOLDER, this.lkp);
     }
 
     public void enablePhpcs(boolean enable) {
@@ -56,6 +57,7 @@ public class QAThread extends Thread {
     public void enablePhpmd(boolean enable) {
         this.enablePhpmd = enable;
     }
+
     public void enablePhpcpd(boolean enable) {
         this.enablePhpcpd = enable;
     }
@@ -157,7 +159,7 @@ public class QAThread extends Thread {
             }
 
             QAThread.instances.remove(this);
-            Logger.getInstance().logPre("finished successful",  QAThread.logCaption);
+            Logger.getInstance().logPre("finished successful", QAThread.logCaption);
         } catch (IOException ex) {
             Logger.getInstance().log(ex);
             Exceptions.printStackTrace(ex);
@@ -172,4 +174,5 @@ public class QAThread extends Thread {
     public boolean isInterupted() {
         return this.interupted;
     }
+
 }

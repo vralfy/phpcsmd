@@ -12,7 +12,8 @@ import org.openide.filesystems.FileRenameEvent;
  *
  * @author nspecht
  */
-public class GenericFileListener implements FileChangeListener {
+public class GenericFileListener implements FileChangeListener
+{
 
     @Override
     public void fileChanged(FileEvent fe) {
@@ -51,4 +52,5 @@ public class GenericFileListener implements FileChangeListener {
             GenericExecute.executeQATools(fae.getFile());
         }
     }
+
 }

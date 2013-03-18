@@ -31,9 +31,13 @@ public class ViolationRegistry
     }
 
     LinkedHashMap<String, GenericResult> phpcs = new LinkedHashMap<String, GenericResult>();
+
     LinkedHashMap<String, GenericResult> phpmd = new LinkedHashMap<String, GenericResult>();
+
     LinkedHashMap<String, GenericResult> phpcpd = new LinkedHashMap<String, GenericResult>();
+
     LinkedHashMap<String, Callback> callbacks = new LinkedHashMap<String, Callback>();
+
     LinkedHashMap<String, List<FileObject>> phpcpdDependencies = new LinkedHashMap<String, List<FileObject>>();
 
     public void setPhpcs(FileObject fo, GenericResult res) {
@@ -260,4 +264,5 @@ public class ViolationRegistry
         this.flushPhpcpdDependency(fo);
         this.phpcpdDependencies.remove(fo.getPath());
     }
+
 }

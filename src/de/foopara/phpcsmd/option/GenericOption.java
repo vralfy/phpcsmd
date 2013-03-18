@@ -22,14 +22,19 @@ import org.openide.loaders.DataObject;
 import org.openide.util.Lookup;
 import org.openide.util.NbBundle;
 import org.openide.util.NbPreferences;
+
 /**
  *
  * @author nspecht
  */
 abstract public class GenericOption
 {
-    public static enum SettingTypes {
+
+    public static enum SettingTypes
+    {
+
         BOOLEAN, INTEGER, STRING
+
     }
 
     protected static Preferences _modul() {
@@ -153,7 +158,7 @@ abstract public class GenericOption
 
     public static Object castValue(String val, SettingTypes type) {
         switch (type) {
-            case BOOLEAN :
+            case BOOLEAN:
                 return val.compareTo("true") == 0;
             case INTEGER:
                 return Integer.parseInt(val);
@@ -163,7 +168,7 @@ abstract public class GenericOption
 
     public static String castValueToString(Object val, SettingTypes type) {
         switch (type) {
-            case BOOLEAN :
+            case BOOLEAN:
                 if ((Boolean)val == true) {
                     return "true";
                 } else {
@@ -174,4 +179,5 @@ abstract public class GenericOption
         }
         return (String)val;
     }
+
 }

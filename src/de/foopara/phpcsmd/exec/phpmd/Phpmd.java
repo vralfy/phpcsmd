@@ -12,7 +12,9 @@ import org.openide.util.Lookup;
  *
  * @author nspecht
  */
-public class Phpmd extends GenericExecute {
+public class Phpmd extends GenericExecute
+{
+
     private boolean _enabled = true;
 
     @Override
@@ -32,7 +34,7 @@ public class Phpmd extends GenericExecute {
             return this.setAndReturnDefault(file);
         }
 
-        if(this.isEnabled() == false) {
+        if (this.isEnabled() == false) {
             return this.setAndReturnCurrent(file);
         }
 
@@ -84,4 +86,5 @@ public class Phpmd extends GenericExecute {
     private GenericResult setAndReturnCurrent(FileObject file) {
         return ViolationRegistry.getInstance().getPhpmd(file);
     }
+
 }

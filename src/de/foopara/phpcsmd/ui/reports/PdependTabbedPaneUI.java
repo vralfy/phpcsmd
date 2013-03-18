@@ -8,13 +8,11 @@ import de.foopara.phpcsmd.option.PdependOptions;
 import javax.swing.plaf.basic.BasicTabbedPaneUI;
 import org.openide.util.Lookup;
 
-/**
- *
- * @author n.specht
- */
-public class PdependTabbedPaneUI extends BasicTabbedPaneUI {
+public class PdependTabbedPaneUI extends BasicTabbedPaneUI
+{
 
     private int useTabs = -1;
+
     private Lookup lkp;
 
     public PdependTabbedPaneUI(Lookup lkp) {
@@ -29,7 +27,7 @@ public class PdependTabbedPaneUI extends BasicTabbedPaneUI {
     @Override
     protected int calculateTabAreaHeight(int tabPlacement, int horizRunCount, int maxTabHeight) {
         if (this.useTabs == -1) {
-            this.useTabs = (Boolean) PdependOptions.load(PdependOptions.Settings.USETABS, this.lkp) ? 1 : 0;
+            this.useTabs = (Boolean)PdependOptions.load(PdependOptions.Settings.USETABS, this.lkp) ? 1 : 0;
         }
 
         if (this.useTabs > 0) {
@@ -37,4 +35,5 @@ public class PdependTabbedPaneUI extends BasicTabbedPaneUI {
         }
         return 0;
     }
+
 }

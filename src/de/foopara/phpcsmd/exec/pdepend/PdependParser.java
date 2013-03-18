@@ -20,12 +20,13 @@ import org.xml.sax.SAXParseException;
  *
  * @author nspecht
  */
-public class PdependParser {
+public class PdependParser
+{
 
     public PdependResult parse(GenericOutputReader[] readers) {
         PdependResult res = new PdependResult();
 
-        for(GenericOutputReader r : readers) {
+        for (GenericOutputReader r : readers) {
             try {
                 DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
                 DocumentBuilder builder = factory.newDocumentBuilder();
@@ -46,8 +47,8 @@ public class PdependParser {
             } catch (SAXException ex) {
                 Logger.getInstance().log(ex);
             } catch (Exception ex) {
-            Logger.getInstance().log(ex);
-        }
+                Logger.getInstance().log(ex);
+            }
         }
 
         return res;
@@ -74,7 +75,7 @@ public class PdependParser {
         if (node.getAttributes() == null) {
             return;
         }
-        for(int i=0; i<node.getAttributes().getLength(); i++) {
+        for (int i = 0; i < node.getAttributes().getLength(); i++) {
             Node n = node.getAttributes().item(i);
             this.fillValues(n, n.getTextContent().trim(), o);
         }
@@ -88,7 +89,7 @@ public class PdependParser {
             return;
         }
 
-        for(int i=0; i<node.getChildNodes().getLength(); i++) {
+        for (int i = 0; i < node.getChildNodes().getLength(); i++) {
             Node n = node.getChildNodes().item(i);
             if (n.getNodeName().compareTo("#text") != 0) {
                 this.fillValues(n, n.getTextContent().trim(), o);
@@ -191,7 +192,7 @@ public class PdependParser {
 
     private void parseJDepend(Document document, PdependResult res) {
         NodeList root = document.getElementsByTagName("PDepend").item(0).getChildNodes();
-        for(int i=0;i<root.getLength();i++) {
+        for (int i = 0; i < root.getLength(); i++) {
             if (root.item(i).getNodeName().compareTo("Packages") == 0) {
                 this.parseJDependPackages(root.item(i).getChildNodes(), res);
             }
@@ -199,31 +200,28 @@ public class PdependParser {
     }
 
     private void parseJDependPackages(NodeList nl, PdependResult res) {
-        for(int packId=0;packId<nl.getLength();packId++) {
+        for (int packId = 0; packId < nl.getLength(); packId++) {
             if (nl.item(packId).getNodeName().compareTo("#text") != 0) {
                 String name = nl.item(packId).getAttributes().getNamedItem("name").getNodeValue();
                 PdependTypes.PdependPackage _package = res.getPackageInstanceByName(name);
 
-                for(int section=0;section<nl.item(packId).getChildNodes().getLength();section++) {
+                for (int section = 0; section < nl.item(packId).getChildNodes().getLength(); section++) {
                     Node node = nl.item(packId).getChildNodes().item(section);
                     if (node.getNodeName().compareTo("#text") != 0) {
                         if (node.getNodeName().compareTo("Stats") == 0) {
                             this.fillValuesByChilds(
                                     node,
-                                    _package
-                                    );
+                                    _package);
                         } else if (node.getNodeName().compareTo("DependsUpon") == 0) {
                             this.parseJDependPackageDependencies(
                                     node.getChildNodes(),
                                     _package.getDepends(),
-                                    res
-                            );
-                        }else if (node.getNodeName().compareTo("UsedBy") == 0) {
+                                    res);
+                        } else if (node.getNodeName().compareTo("UsedBy") == 0) {
                             this.parseJDependPackageDependencies(
                                     node.getChildNodes(),
                                     _package.getUsedBy(),
-                                    res
-                                    );
+                                    res);
                         }
                     }
                 }
@@ -232,7 +230,7 @@ public class PdependParser {
     }
 
     private void parseJDependPackageDependencies(NodeList nl, HashSet<PdependTypes.PdependPackage> list, PdependResult res) {
-        for(int dep=0;dep<nl.getLength();dep++) {
+        for (int dep = 0; dep < nl.getLength(); dep++) {
             if (nl.item(dep).getNodeName().compareTo("#text") != 0) {
                 String name = nl.item(dep).getTextContent().trim();
                 PdependTypes.PdependPackage p = res.getPackageInstanceByName(name);
@@ -242,4 +240,5 @@ public class PdependParser {
             }
         }
     }
+
 }

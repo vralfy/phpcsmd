@@ -10,11 +10,9 @@ import org.openide.filesystems.FileObject;
 import org.openide.filesystems.FileUtil;
 import org.openide.util.Lookup;
 
-/**
- *
- * @author n.specht
- */
-public class EditFileButton extends JButton {
+public class EditFileButton extends JButton
+{
+
     public String _filename = null;
 
     public Lookup lkp;
@@ -23,11 +21,13 @@ public class EditFileButton extends JButton {
         super();
         this.lkp = lkp;
         this.setText("Edit File");
-        this.addActionListener(new ActionListener() {
+        this.addActionListener(new ActionListener()
+        {
             @Override
             public void actionPerformed(ActionEvent ae) {
                 openFile();
             }
+
         });
     }
 
@@ -36,7 +36,9 @@ public class EditFileButton extends JButton {
     }
 
     private void openFile() {
-        if (this._filename == null) return;
+        if (this._filename == null) {
+            return;
+        }
         FileObject fo = FileUtil.toFileObject(new File(this._filename));
         if (!GenericHelper.isDesirableFile(fo)) {
             return;
@@ -46,4 +48,5 @@ public class EditFileButton extends JButton {
             oc.open();
         }
     }
+
 }

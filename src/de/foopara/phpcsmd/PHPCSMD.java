@@ -22,7 +22,8 @@ import org.openide.util.actions.CookieAction;
     @ActionReference(path = "Loaders/text/x-php5/Actions", position = 875)
 })
 @NbBundle.Messages("CTL_PHPCSMD=Check for violations in file")
-public class PHPCSMD extends CookieAction {
+public class PHPCSMD extends CookieAction
+{
 
     @Override
     protected int mode() {
@@ -36,7 +37,7 @@ public class PHPCSMD extends CookieAction {
 
     @Override
     protected void performAction(Node[] nodes) {
-        if(nodes.length != 1) {
+        if (nodes.length != 1) {
             return;
         }
         FileObject fo = getFileObject(nodes[0]);
@@ -66,25 +67,21 @@ public class PHPCSMD extends CookieAction {
     }
 
     @Override
-    public JMenuItem getPopupPresenter()
-    {
+    public JMenuItem getPopupPresenter() {
         return this.setEnabledForExistingBinary(super.getPopupPresenter());
     }
 
     @Override
-    public JMenuItem getMenuPresenter()
-    {
+    public JMenuItem getMenuPresenter() {
         return this.setEnabledForExistingBinary(super.getMenuPresenter());
     }
 
-    protected JMenuItem setEnabledForExistingBinary(JMenuItem item)
-    {
+    protected JMenuItem setEnabledForExistingBinary(JMenuItem item) {
         item.setEnabled(true);
         return item;
     }
 
-    private FileObject getFileObject(Node node)
-    {
+    private FileObject getFileObject(Node node) {
         assert node != null;
 
         FileObject fileObj = node.getLookup().lookup(FileObject.class);
@@ -101,4 +98,5 @@ public class PHPCSMD extends CookieAction {
         }
         return null;
     }
+
 }

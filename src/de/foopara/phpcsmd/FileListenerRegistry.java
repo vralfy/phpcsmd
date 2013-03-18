@@ -4,12 +4,11 @@ import de.foopara.phpcsmd.generics.GenericFileListener;
 import java.util.LinkedHashMap;
 import org.openide.filesystems.FileObject;
 
-/**
- *
- * @author n.specht
- */
-public class FileListenerRegistry {
+public class FileListenerRegistry
+{
+
     private static FileListenerRegistry instance = null;
+
     public static FileListenerRegistry getInstance() {
         if (FileListenerRegistry.instance == null) {
             FileListenerRegistry.instance = new FileListenerRegistry();
@@ -42,4 +41,5 @@ public class FileListenerRegistry {
     public void removeListener(String fo) {
         this._registry.remove(fo);
     }
+
 }

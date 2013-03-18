@@ -10,14 +10,13 @@ import org.openide.filesystems.FileUtil;
 import org.openide.util.Exceptions;
 import org.openide.util.Lookup;
 
-/**
- *
- * @author n.specht
- */
-public class FileCountThread extends Thread {
+public class FileCountThread extends Thread
+{
 
     private FileObject fo = null;
+
     private ScanReportTopComponent component = null;
+
     private Lookup lkp;
 
     public FileCountThread(Lookup lkp) {
@@ -32,10 +31,10 @@ public class FileCountThread extends Thread {
         this.component = c;
     }
 
-        /*
-         * Nur damit Netbeans die Klappe hällt
-         */
-        @Override
+    /*
+     * Nur damit Netbeans die Klappe hällt
+     */
+    @Override
     public void run() {
         this.count();
     }
@@ -62,4 +61,5 @@ public class FileCountThread extends Thread {
         }
         return fc;
     }
+
 }

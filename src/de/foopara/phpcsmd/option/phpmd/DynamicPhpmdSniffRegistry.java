@@ -1,6 +1,8 @@
 package de.foopara.phpcsmd.option.phpmd;
 
-public class DynamicPhpmdSniffRegistry extends GenericPhpmdSniffRegistry {
+public class DynamicPhpmdSniffRegistry extends GenericPhpmdSniffRegistry
+{
+
     public DynamicPhpmdSniffRegistry() {
         this.add("codesize");
         this.add(new PhpmdSniff("CyclomaticComplexity", "Complexity is determined by the number of decision points in a method plus one for the method entry.  The decision points are 'if', 'while', 'for', and 'case labels'.  Generally, 1-4 is low complexity, 5-7 indicates moderate complexity, 8-10 is high complexity, and 11+ is very high complexity.", "complex"));
@@ -38,4 +40,6 @@ public class DynamicPhpmdSniffRegistry extends GenericPhpmdSniffRegistry {
         this.add(new PhpmdSniff("NumberOfChildren", "A class with an excessive number of children is an indicator for an unbalanced class hierarchy. You should consider to refactor this class hierarchy.", "complex"));
         this.add(new PhpmdSniff("DepthOfInheritance", "A class with many parents is an indicator for an unbalanced and wrong class hierarchy. You should consider to refactor this class hierarchy.", "complex"));
         this.add(new PhpmdSniff("CouplingBetweenObjects", "A class with to many dependencies has negative impacts on several quality aspects of a class. This includes quality criterias like stability, maintainability and understandability", "complex"));
-}}
+    }
+
+}

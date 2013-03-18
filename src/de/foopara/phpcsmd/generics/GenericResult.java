@@ -7,11 +7,14 @@ import java.util.List;
  *
  * @author nspecht
  */
-public class GenericResult {
+public class GenericResult
+{
 
     protected List<GenericViolation> warnings = null;
-    protected List<GenericViolation> errors   = null;
-    protected List<GenericViolation> noTask   = null;
+
+    protected List<GenericViolation> errors = null;
+
+    protected List<GenericViolation> noTask = null;
 
     public GenericResult(List<GenericViolation> warnings, List<GenericViolation> errors, List<GenericViolation> noTask) {
         if (warnings == null) {
@@ -55,4 +58,5 @@ public class GenericResult {
     public int getSum() {
         return this.errors.size() + this.warnings.size();
     }
+
 }

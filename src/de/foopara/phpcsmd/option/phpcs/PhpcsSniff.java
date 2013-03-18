@@ -10,12 +10,17 @@ import java.util.LinkedHashMap;
  *
  * @author nspecht
  */
-public class PhpcsSniff {
+public class PhpcsSniff
+{
 
     public String name = "";
+
     public String description = null;
+
     public String annotationType = null;
+
     public String shortName = "";
+
     public PhpcsKeys keys = null;
 
     public PhpcsSniff(String name, String description, String annotationType, PhpcsKeys keys) {
@@ -23,7 +28,7 @@ public class PhpcsSniff {
         this.description = description;
         this.shortName = name.replace(".", "").toLowerCase();
         this.annotationType = annotationType;
-        this.keys  = keys;
+        this.keys = keys;
     }
 
     public String getDescription() {
@@ -46,4 +51,5 @@ public class PhpcsSniff {
         }
         return this.keys.getKeys();
     }
+
 }

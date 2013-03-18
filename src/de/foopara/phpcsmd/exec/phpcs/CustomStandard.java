@@ -10,12 +10,11 @@ import java.io.IOException;
 import org.openide.util.Exceptions;
 import org.openide.util.Lookup;
 
-/**
- *
- * @author n.specht
- */
-public class CustomStandard {
+public class CustomStandard
+{
+
     private File _ruleset;
+
     private Lookup lkp;
 
     public CustomStandard() {
@@ -25,7 +24,7 @@ public class CustomStandard {
     public CustomStandard(Lookup lkp) {
         try {
             this.lkp = lkp;
-            this._ruleset = File.createTempFile("phpcsmdCustom",".xml");
+            this._ruleset = File.createTempFile("phpcsmdCustom", ".xml");
             StringBuilder content = new StringBuilder();
             content.append("<?xml version=\"1.0\"?>\n");
             content.append("<ruleset name=\"PhpcsmdCustom\">\n");
@@ -44,7 +43,7 @@ public class CustomStandard {
                 if (PhpcsOptions.getSniff(sniff.shortName)) {
                     content.append("\t<rule ref=\"").append(sniff.name).append("\" />\n");
                     if (sniff.getKeyCount() > 1) {
-                        for(String sniffKey : sniff.getKeys().keySet()) {
+                        for (String sniffKey : sniff.getKeys().keySet()) {
                             if (PhpcsOptions.getSniff(sniffKey)) {
                                 content.append("\t<rule ref=\"")
                                         .append(sniff.name)
@@ -82,4 +81,5 @@ public class CustomStandard {
             Logger.getInstance().logPre("failed to delete " + this._ruleset.getAbsolutePath(), "phpcs");
         }
     }
+
 }

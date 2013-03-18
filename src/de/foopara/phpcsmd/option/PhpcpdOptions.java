@@ -3,19 +3,18 @@ package de.foopara.phpcsmd.option;
 import java.util.EnumMap;
 import org.openide.util.Lookup;
 
-/**
- *
- * @author n.specht
- */
-public class PhpcpdOptions {
+public class PhpcpdOptions
+{
 
     public static final String _PREFIX = "phpcsmd.phpcpd.";
 
-    public enum Settings {
+    public enum Settings
+    {
         ACTIVATED, ACTIVATEDFOLDER, SCRIPT, MINLINES, MINTOKENS, EXCLUDE, SUFFIXES
     }
 
     private static final EnumMap<PhpcpdOptions.Settings, String> keys = new EnumMap<PhpcpdOptions.Settings, String>(PhpcpdOptions.Settings.class);
+
     static {
         keys.put(PhpcpdOptions.Settings.ACTIVATED, "activated");
         keys.put(PhpcpdOptions.Settings.ACTIVATEDFOLDER, "activatedFolder");
@@ -28,6 +27,7 @@ public class PhpcpdOptions {
     }
 
     private static final EnumMap<PhpcpdOptions.Settings, GenericOption.SettingTypes> types = new EnumMap<PhpcpdOptions.Settings, GenericOption.SettingTypes>(PhpcpdOptions.Settings.class);
+
     static {
         types.put(PhpcpdOptions.Settings.ACTIVATED, GenericOption.SettingTypes.BOOLEAN);
         types.put(PhpcpdOptions.Settings.ACTIVATEDFOLDER, GenericOption.SettingTypes.BOOLEAN);
@@ -36,6 +36,7 @@ public class PhpcpdOptions {
     }
 
     private static final EnumMap<PhpcpdOptions.Settings, String> defaults = new EnumMap<PhpcpdOptions.Settings, String>(PhpcpdOptions.Settings.class);
+
     static {
         defaults.put(PhpcpdOptions.Settings.ACTIVATED, "false");
         defaults.put(PhpcpdOptions.Settings.ACTIVATEDFOLDER, "false");
@@ -67,7 +68,7 @@ public class PhpcpdOptions {
             defaultVal = PhpcpdOptions.defaults.get(key);
         }
 
-        String val = GenericOption.loadModul(_PREFIX +keys.get(key), defaultVal);
+        String val = GenericOption.loadModul(_PREFIX + keys.get(key), defaultVal);
 
         if (!types.containsKey(key)) {
             return val;
@@ -99,4 +100,5 @@ public class PhpcpdOptions {
     public static Boolean isOverwritten(PhpcpdOptions.Settings key, Lookup lkp) {
         return GenericOption.isInProject(_PREFIX + keys.get(key), lkp);
     }
+
 }

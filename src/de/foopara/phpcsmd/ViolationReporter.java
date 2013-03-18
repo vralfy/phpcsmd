@@ -17,7 +17,8 @@ import org.openide.util.Lookup;
  *
  * @author nspecht
  */
-public class ViolationReporter extends PushTaskScanner {
+public class ViolationReporter extends PushTaskScanner
+{
 
     private TaskScanningScope scope;
 
@@ -25,10 +26,8 @@ public class ViolationReporter extends PushTaskScanner {
         super(
                 "PHP Violations",
                 "PHP Checkstyle and MessDetector Violations",
-                null
-        );
+                null);
     }
-
 
     @Override
     public synchronized void setScope(TaskScanningScope tss, Callback clbck) {
@@ -66,12 +65,13 @@ public class ViolationReporter extends PushTaskScanner {
     public List<? extends Task> scan(FileObject fo) {
         Lookup lookup = GenericHelper.getFileLookup(fo);
         if ((Boolean)GeneralOptions.load(GeneralOptions.Settings.UPDATEONSAVE, lookup)) {
-           GenericExecute.executeQATools(fo);
+            GenericExecute.executeQATools(fo);
         }
-         return ViolationRegistry.getInstance().getTaskList(fo);
+        return ViolationRegistry.getInstance().getTaskList(fo);
     }
 
     public List<? extends Task> getList() {
         return ViolationRegistry.getInstance().getTaskList(null);
     }
+
 }

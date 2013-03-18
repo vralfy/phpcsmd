@@ -18,14 +18,13 @@ import org.openide.filesystems.FileUtil;
 import org.openide.util.Exceptions;
 import org.openide.util.Lookup;
 
-/**
- *
- * @author n.specht
- */
-public class RescanThread extends Thread {
+public class RescanThread extends Thread
+{
 
     private FileObject fo = null;
+
     private ScanReportTopComponent component = null;
+
     private boolean retrieveValuesFromRegistry = false;
 
     private boolean enablePhpcs = false;
@@ -51,6 +50,7 @@ public class RescanThread extends Thread {
     public void enablePhpmd(boolean enable) {
         this.enablePhpmd = enable;
     }
+
     public void enablePhpcpd(boolean enable) {
         this.enablePhpcpd = enable;
     }
@@ -117,10 +117,9 @@ public class RescanThread extends Thread {
             }
         }
         if (GenericHelper.isDesirableFolder(f)
-            && firstRun
-            && (Boolean)PhpcpdOptions.load(PhpcpdOptions.Settings.ACTIVATEDFOLDER, this.lkp)
-            && this.enablePhpcpd
-        ) {
+                && firstRun
+                && (Boolean)PhpcpdOptions.load(PhpcpdOptions.Settings.ACTIVATEDFOLDER, this.lkp)
+                && this.enablePhpcpd) {
             Phpcpd cpdTask = new Phpcpd();
             HashMap<String, PhpcpdResult> res = cpdTask.runFolder(f, true);
             for (String path : res.keySet()) {
@@ -136,4 +135,5 @@ public class RescanThread extends Thread {
         }
         return fc;
     }
+
 }

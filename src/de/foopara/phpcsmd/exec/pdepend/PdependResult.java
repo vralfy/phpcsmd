@@ -4,14 +4,15 @@ import de.foopara.phpcsmd.debug.Logger;
 import java.util.HashSet;
 import org.openide.util.Exceptions;
 
-/**
- *
- * @author n.specht
- */
-public class PdependResult {
+public class PdependResult
+{
+
     private PdependTypes.PdependMetrics _metrics = null;
+
     private HashSet<PdependTypes.PdependFile> _files = new HashSet<PdependTypes.PdependFile>();
+
     private HashSet<PdependTypes.PdependPackage> _packages = new HashSet<PdependTypes.PdependPackage>();
+
     private HashSet<PdependTypes.PdependFunction> _functions = new HashSet<PdependTypes.PdependFunction>();
 
     public PdependResult() {
@@ -45,7 +46,7 @@ public class PdependResult {
                 Exceptions.printStackTrace(ex);
             }
         }
-        for(PdependTypes.PdependPackage p: this._packages) {
+        for (PdependTypes.PdependPackage p : this._packages) {
             if (p.name.compareTo(name) == 0) {
                 return p;
             }
@@ -72,4 +73,5 @@ public class PdependResult {
     public HashSet<PdependTypes.PdependFunction> getFunctions() {
         return this._functions;
     }
+
 }

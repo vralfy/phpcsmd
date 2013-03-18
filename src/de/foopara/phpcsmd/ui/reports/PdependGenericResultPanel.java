@@ -16,12 +16,17 @@ import org.openide.util.Lookup;
  *
  * @author nspecht
  */
-public class PdependGenericResultPanel extends JPanel {
+public class PdependGenericResultPanel extends JPanel
+{
 
     JTabbedPane tabContainer;
+
     HashMap<String, JPanel> tabs = new HashMap<String, JPanel>();
+
     HashMap<String, JComponent> elements = new HashMap<String, JComponent>();
+
     PdependTabbedPaneUI btpui = null;
+
     protected EditFileButton editorButton = null;
 
     protected PdependResult pdependResult;
@@ -80,7 +85,7 @@ public class PdependGenericResultPanel extends JPanel {
         if (this.elements.containsKey(name)) {
             JComponent comp = this.elements.get(name);
             if (comp.getClass().getCanonicalName().endsWith("JProgressBar")) {
-                JProgressBar tmp = ((JProgressBar) comp);
+                JProgressBar tmp = ((JProgressBar)comp);
 
                 int v = 0;
                 if (value.getClass().getCanonicalName().compareTo("java.lang.Integer") == 0) {
@@ -94,7 +99,7 @@ public class PdependGenericResultPanel extends JPanel {
                 tmp.setStringPainted(true);
                 tmp.setString(tmp.getValue() + "/" + tmp.getMaximum());
             } else {
-                ((JLabel) comp).setText("" + value);
+                ((JLabel)comp).setText("" + value);
             }
 
         } else {
@@ -102,7 +107,7 @@ public class PdependGenericResultPanel extends JPanel {
                 this.addSeparator("OTHERSEP", "Other", "Other");
             }
             this.addLabel(name, "", "Other");
-            JLabel comp = (JLabel) this.elements.get(name);
+            JLabel comp = (JLabel)this.elements.get(name);
             comp.setText("" + value);
         }
         return false;
@@ -156,7 +161,7 @@ public class PdependGenericResultPanel extends JPanel {
         int x = 0;
         if (caption != null) {
             compwith = 2;
-            x=1;
+            x = 1;
             JLabel cap = new JLabel("<html><body><b>" + caption + "</b></body></html>");
             gridBagConstraints = new java.awt.GridBagConstraints();
             gridBagConstraints.insets = new java.awt.Insets(0, 0, 2, 2);
@@ -264,4 +269,5 @@ public class PdependGenericResultPanel extends JPanel {
 
         this.elements.put(name, ret);
     }
+
 }

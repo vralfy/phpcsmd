@@ -21,7 +21,8 @@ import org.openide.util.NbBundle.Messages;
     @ActionReference(path = "UI/ToolActions/PHP", position = 876)
 })
 @Messages("CTL_PHPCSMDScanner=Scan for violations")
-public final class PHPCSMDScanner implements ActionListener {
+public final class PHPCSMDScanner implements ActionListener
+{
 
     private final DataObject context;
 
@@ -43,4 +44,5 @@ public final class PHPCSMDScanner implements ActionListener {
             form.open();
         }
     }
+
 }

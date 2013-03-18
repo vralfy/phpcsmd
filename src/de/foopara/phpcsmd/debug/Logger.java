@@ -6,7 +6,8 @@ import de.foopara.phpcsmd.option.GeneralOptions;
  *
  * @author nspecht
  */
-public class Logger {
+public class Logger
+{
 
     private static Logger instance = null;
 
@@ -37,7 +38,7 @@ public class Logger {
     public void log(Exception ex) {
         StringBuilder exStr = new StringBuilder();
 //        exStr.append(ex.getMessage()).append("\n");
-        for(StackTraceElement element : ex.getStackTrace()) {
+        for (StackTraceElement element : ex.getStackTrace()) {
             exStr.append(element.toString()).append("\n");
         }
         this.log("<pre style=\"padding:5px\">" + exStr.toString() + "</pre>", "Exception:<br />" + ex.getMessage());
@@ -48,8 +49,7 @@ public class Logger {
                 .replaceAll("[^A-Za-z0-9\\.\\n\\r\\w\\\\\\/\\!\\$%\\(\\)=\\?\"'<>-]", "&otimes;")
                 .replaceAll("<", "&lt;")
                 .replaceAll(">", "&gt;")
-                .replaceAll("\n", "<br />")
-                ;
+                .replaceAll("\n", "<br />");
         this.log("<pre style=\"border:#444444 1px solid;padding:5px;\">" + str + "</pre>", caption);
     }
 
@@ -57,17 +57,17 @@ public class Logger {
     public String toString() {
         StringBuilder ret = new StringBuilder();
         ret.append("<html>")
-            .append("<body style=\"font-size:10px\">")
-            .append("<table cellspacing=\"0\" cellpadding=\"1\">")
-            .append(this.buff.toString())
-            .append("</table>")
-            .append("</body>")
-            .append("</html>")
-                ;
+                .append("<body style=\"font-size:10px\">")
+                .append("<table cellspacing=\"0\" cellpadding=\"1\">")
+                .append(this.buff.toString())
+                .append("</table>")
+                .append("</body>")
+                .append("</html>");
         return ret.toString();
     }
 
     public void clear() {
         this.buff = new StringBuilder();
     }
+
 }

@@ -9,11 +9,9 @@ import org.openide.awt.Notification;
 import org.openide.awt.NotificationDisplayer;
 import org.openide.filesystems.FileObject;
 
-/**
- *
- * @author n.specht
- */
-public class GenericNotification {
+public class GenericNotification
+{
+
     private static Notification notify = null;
 
     public static void displayNotification(FileObject fo) {
@@ -21,7 +19,9 @@ public class GenericNotification {
             GenericNotification.notify.clear();
         }
 
-        if ((Boolean)GeneralOptions.load(GeneralOptions.Settings.NOTIFY, GenericHelper.getFileLookup(fo)) == false) return;
+        if ((Boolean)GeneralOptions.load(GeneralOptions.Settings.NOTIFY, GenericHelper.getFileLookup(fo)) == false) {
+            return;
+        }
 
         GenericResult phpcs = ViolationRegistry.getInstance().getPhpcs(fo);
         GenericResult phpmd = ViolationRegistry.getInstance().getPhpmd(fo);
@@ -81,4 +81,5 @@ public class GenericNotification {
             }
         }
     }
+
 }

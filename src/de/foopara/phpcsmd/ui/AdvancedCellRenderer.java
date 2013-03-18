@@ -8,7 +8,8 @@ import javax.swing.table.DefaultTableCellRenderer;
  *
  * @author nspecht
  */
-public class AdvancedCellRenderer extends DefaultTableCellRenderer {
+public class AdvancedCellRenderer extends DefaultTableCellRenderer
+{
 
     private JTable table;
 
@@ -31,8 +32,9 @@ public class AdvancedCellRenderer extends DefaultTableCellRenderer {
 
     @Override
     public void setValue(Object value) {
-        if (value instanceof Integer) this.renderInteger((Integer)value);
-        else {
+        if (value instanceof Integer) {
+            this.renderInteger((Integer)value);
+        } else {
             setIcon(null);
             super.setValue(value);
         }
@@ -42,9 +44,10 @@ public class AdvancedCellRenderer extends DefaultTableCellRenderer {
         String font = value.toString();
 
         if (value > 0) {
-            font = "<b style=\"color:#FF0000:\">"+font+"</b>";
+            font = "<b style=\"color:#FF0000:\">" + font + "</b>";
         }
-        setText("<html><body>"+font+"</body></html>");
+        setText("<html><body>" + font + "</body></html>");
         setIcon(null);
     }
+
 }

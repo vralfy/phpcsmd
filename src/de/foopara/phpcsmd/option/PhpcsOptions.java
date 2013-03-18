@@ -3,20 +3,19 @@ package de.foopara.phpcsmd.option;
 import java.util.EnumMap;
 import org.openide.util.Lookup;
 
-/**
- *
- * @author n.specht
- */
-public class PhpcsOptions {
+public class PhpcsOptions
+{
 
     public static final String _PREFIX = "phpcsmd.phpcs.";
 
-    public enum Settings {
+    public enum Settings
+    {
         ACTIVATED, SCRIPT, STANDARD, SNIFFS, IGNORES, EXTENSIONS, TABWIDTH, INIOVERWRITE,
         WARNINGS, EXTRAS, XSNIFF, XSNIFFTASK
     }
 
     private static final EnumMap<PhpcsOptions.Settings, String> keys = new EnumMap<PhpcsOptions.Settings, String>(PhpcsOptions.Settings.class);
+
     static {
         keys.put(PhpcsOptions.Settings.ACTIVATED, "activated");
         keys.put(PhpcsOptions.Settings.SCRIPT, "script");
@@ -33,6 +32,7 @@ public class PhpcsOptions {
     }
 
     private static final EnumMap<PhpcsOptions.Settings, GenericOption.SettingTypes> types = new EnumMap<PhpcsOptions.Settings, GenericOption.SettingTypes>(PhpcsOptions.Settings.class);
+
     static {
         types.put(PhpcsOptions.Settings.ACTIVATED, GenericOption.SettingTypes.BOOLEAN);
         types.put(PhpcsOptions.Settings.TABWIDTH, GenericOption.SettingTypes.INTEGER);
@@ -43,6 +43,7 @@ public class PhpcsOptions {
     }
 
     private static final EnumMap<PhpcsOptions.Settings, String> defaults = new EnumMap<PhpcsOptions.Settings, String>(PhpcsOptions.Settings.class);
+
     static {
         defaults.put(PhpcsOptions.Settings.ACTIVATED, "false");
         defaults.put(PhpcsOptions.Settings.SCRIPT, "/usr/bin/phpcs");
@@ -79,7 +80,7 @@ public class PhpcsOptions {
             defaultVal = PhpcsOptions.defaults.get(key);
         }
 
-        String val = GenericOption.loadModul(_PREFIX +keys.get(key), defaultVal);
+        String val = GenericOption.loadModul(_PREFIX + keys.get(key), defaultVal);
 
         if (!types.containsKey(key)) {
             return val;
@@ -137,4 +138,5 @@ public class PhpcsOptions {
                 _PREFIX + keys.get(Settings.XSNIFFTASK) + name,
                 GenericOption.castValueToString(opt, types.get(Settings.XSNIFFTASK)));
     }
+
 }

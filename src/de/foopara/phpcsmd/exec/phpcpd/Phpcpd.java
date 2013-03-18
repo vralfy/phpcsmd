@@ -13,7 +13,9 @@ import org.openide.util.Lookup;
  *
  * @author nspecht
  */
-public class Phpcpd extends GenericExecute {
+public class Phpcpd extends GenericExecute
+{
+
     private boolean _enabled = true;
 
     @Override
@@ -29,10 +31,9 @@ public class Phpcpd extends GenericExecute {
             run = true;
         }
 
-        if ((Boolean)PhpcpdOptions.load(PhpcpdOptions.Settings.ACTIVATEDFOLDER, lookup) &&
-                (ViolationRegistry.getInstance().getPhpcpdDependency(file).size() > 0
-                || ViolationRegistry.getInstance().getPhpcpd(file).getSum() > 0)
-        ) {
+        if ((Boolean)PhpcpdOptions.load(PhpcpdOptions.Settings.ACTIVATEDFOLDER, lookup)
+                && (ViolationRegistry.getInstance().getPhpcpdDependency(file).size() > 0
+                || ViolationRegistry.getInstance().getPhpcpd(file).getSum() > 0)) {
             run = true;
         }
         if (!run) {
@@ -44,9 +45,13 @@ public class Phpcpd extends GenericExecute {
             return this.setAndReturnDefault(file);
         }
 
-        if (this.isEnabled() == false) return this.setAndReturnCurrent(file);
+        if (this.isEnabled() == false) {
+            return this.setAndReturnCurrent(file);
+        }
 
-        if (!iAmAlive()) return this.setAndReturnCurrent(file);
+        if (!iAmAlive()) {
+            return this.setAndReturnCurrent(file);
+        }
 
 
         StringBuilder cmd = this.getGenericCommand(lookup);
@@ -61,13 +66,19 @@ public class Phpcpd extends GenericExecute {
         Logger.getInstance().logPre(cmd.toString(), "php-cpd command");
 
         PhpcpdParser parser = new PhpcpdParser();
-        if (!iAmAlive()) return this.setAndReturnCurrent(file);
+        if (!iAmAlive()) {
+            return this.setAndReturnCurrent(file);
+        }
         GenericOutputReader[] reader = GenericProcess.run(cmd.toString(), "", null, lookup);
-        if (!iAmAlive()) return this.setAndReturnCurrent(file);
+        if (!iAmAlive()) {
+            return this.setAndReturnCurrent(file);
+        }
 
         //ViolationRegistry.getInstance().flushPhpcpdDependency(file);
         PhpcpdResult res = parser.parse(reader[0], updateDependencies, file);
-        if (!iAmAlive()) return this.setAndReturnCurrent(file);
+        if (!iAmAlive()) {
+            return this.setAndReturnCurrent(file);
+        }
         ViolationRegistry.getInstance().setPhpcpd(file, res);
         return res;
     }
@@ -78,9 +89,13 @@ public class Phpcpd extends GenericExecute {
             return new HashMap<String, PhpcpdResult>();
         }
 
-        if(this.isEnabled() == false) return new HashMap<String, PhpcpdResult>();
+        if (this.isEnabled() == false) {
+            return new HashMap<String, PhpcpdResult>();
+        }
 
-        if (!iAmAlive()) return new HashMap<String, PhpcpdResult>();
+        if (!iAmAlive()) {
+            return new HashMap<String, PhpcpdResult>();
+        }
 
         StringBuilder cmd = this.getGenericCommand(lookup);
         cmd.append(" ").append(GenericHelper.getPhpcpdDistractor());
@@ -88,11 +103,17 @@ public class Phpcpd extends GenericExecute {
         Logger.getInstance().logPre(cmd.toString(), "php-cpd command (folder scan)");
 
         PhpcpdFolderParser parser = new PhpcpdFolderParser();
-        if (!iAmAlive()) return new HashMap<String, PhpcpdResult>();
+        if (!iAmAlive()) {
+            return new HashMap<String, PhpcpdResult>();
+        }
         GenericOutputReader[] reader = GenericProcess.run(cmd.toString(), "", null, lookup);
-        if (!iAmAlive()) return new HashMap<String, PhpcpdResult>();
+        if (!iAmAlive()) {
+            return new HashMap<String, PhpcpdResult>();
+        }
         HashMap<String, PhpcpdResult> res = parser.parse(reader[0], folder);
-        if (!iAmAlive()) return new HashMap<String, PhpcpdResult>();
+        if (!iAmAlive()) {
+            return new HashMap<String, PhpcpdResult>();
+        }
         ViolationRegistry.getInstance().setPhpcpdFolder(res);
         return res;
     }
@@ -121,4 +142,5 @@ public class Phpcpd extends GenericExecute {
     private GenericResult setAndReturnCurrent(FileObject file) {
         return ViolationRegistry.getInstance().getPhpcpd(file);
     }
+
 }

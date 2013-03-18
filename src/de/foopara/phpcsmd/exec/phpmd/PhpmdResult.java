@@ -8,11 +8,11 @@ import java.util.List;
  *
  * @author nspecht
  */
-public class PhpmdResult extends GenericResult {
+public class PhpmdResult extends GenericResult
+{
 
     public PhpmdResult(List<GenericViolation> warnings, List<GenericViolation> errors, List<GenericViolation> noTask) {
-        super(warnings,errors,noTask);
+        super(warnings, errors, noTask);
     }
-
 
 }

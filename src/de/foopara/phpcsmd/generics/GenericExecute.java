@@ -9,11 +9,13 @@ import org.openide.util.Lookup;
  *
  * @author nspecht
  */
-abstract public class GenericExecute {
+abstract public class GenericExecute
+{
 
     protected QAThread qaThread = null;
 
     public abstract boolean isEnabled();
+
     protected abstract GenericResult run(FileObject file, boolean annotations);
 
     protected GenericResult run(FileObject file) {
@@ -50,4 +52,5 @@ abstract public class GenericExecute {
             qaThread.qarun();
         }
     }
+
 }

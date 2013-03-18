@@ -8,13 +8,11 @@ import org.netbeans.api.progress.ProgressHandle;
 import org.netbeans.api.progress.ProgressHandleFactory;
 import org.openide.filesystems.FileObject;
 
-/**
- *
- * @author n.specht
- */
-public class PdependThread extends Thread {
+public class PdependThread extends Thread
+{
 
     private FileObject fo = null;
+
     private PdependReportTopComponent component = null;
 
     public void setFileObject(FileObject fo) {
@@ -24,7 +22,6 @@ public class PdependThread extends Thread {
     public void setTopComponent(PdependReportTopComponent c) {
         this.component = c;
     }
-
 
     /*
      * Nur damit Netbeans die Klappe hällt
@@ -43,4 +40,5 @@ public class PdependThread extends Thread {
         }
         handle.finish();
     }
+
 }

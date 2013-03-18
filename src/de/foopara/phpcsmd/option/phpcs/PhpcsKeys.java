@@ -2,7 +2,9 @@ package de.foopara.phpcsmd.option.phpcs;
 
 import java.util.LinkedHashMap;
 
-public class PhpcsKeys {
+public class PhpcsKeys
+{
+
     protected LinkedHashMap<String, String> keys = new LinkedHashMap<String, String>();
 
     public void addKey(String name) {
@@ -17,4 +19,5 @@ public class PhpcsKeys {
     public LinkedHashMap<String, String> getKeys() {
         return keys;
     }
+
 }

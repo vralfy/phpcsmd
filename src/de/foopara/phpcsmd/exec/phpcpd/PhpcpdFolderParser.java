@@ -20,7 +20,8 @@ import org.openide.util.Lookup;
  *
  * @author nspecht
  */
-public class PhpcpdFolderParser extends GenericPhpcpdParser {
+public class PhpcpdFolderParser extends GenericPhpcpdParser
+{
 
     public HashMap<String, PhpcpdResult> parse(GenericOutputReader reader, FileObject containingFolder) {
         HashMap<String, List<GenericViolation>> cpdErrors = new HashMap<String, List<GenericViolation>>();
@@ -44,7 +45,7 @@ public class PhpcpdFolderParser extends GenericPhpcpdParser {
 
             ArrayList<FileObject> allreadyFlushedDependencies = new ArrayList<FileObject>();
 
-            for (int i=2; i < sections.length - 2; i++) {
+            for (int i = 2; i < sections.length - 2; i++) {
                 if (this.isValidPhpcpdSection(sections[i])) {
                     PhpcpdLine line = new PhpcpdLine(sections[i]);
                     Logger.getInstance().logPre(line.toString(), "phpcpd");
@@ -96,4 +97,5 @@ public class PhpcpdFolderParser extends GenericPhpcpdParser {
         }
         return ret;
     }
+
 }

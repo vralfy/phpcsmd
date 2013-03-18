@@ -11,9 +11,11 @@ import org.openide.util.Lookup;
  *
  * @author nspecht
  */
-public class PanelController extends OptionsPanelController {
+public class PanelController extends OptionsPanelController
+{
 
     private boolean changed = false;
+
     private final PropertyChangeSupport pcs = new PropertyChangeSupport(this);
 
     @Override

@@ -3,19 +3,20 @@ package de.foopara.phpcsmd.option;
 import java.util.EnumMap;
 import org.openide.util.Lookup;
 
-/**
- *
- * @author n.specht
- */
-public class GeneralOptions {
+public class GeneralOptions
+{
 
     public static final String _PREFIX = "phpcsmd.general.";
 
-    public enum Settings {
+    public enum Settings
+    {
+
         THREADED, UPDATEONSAVE, NOTIFY, IGNORE, DEBUGLOG, TIMEOUT
+
     }
 
     private static final EnumMap<GeneralOptions.Settings, String> keys = new EnumMap<GeneralOptions.Settings, String>(GeneralOptions.Settings.class);
+
     static {
         keys.put(GeneralOptions.Settings.THREADED, "threaded");
         keys.put(GeneralOptions.Settings.UPDATEONSAVE, "updateonsave");
@@ -27,6 +28,7 @@ public class GeneralOptions {
     }
 
     private static final EnumMap<GeneralOptions.Settings, GenericOption.SettingTypes> types = new EnumMap<GeneralOptions.Settings, GenericOption.SettingTypes>(GeneralOptions.Settings.class);
+
     static {
         types.put(GeneralOptions.Settings.THREADED, GenericOption.SettingTypes.BOOLEAN);
         types.put(GeneralOptions.Settings.UPDATEONSAVE, GenericOption.SettingTypes.BOOLEAN);
@@ -36,6 +38,7 @@ public class GeneralOptions {
     }
 
     private static final EnumMap<GeneralOptions.Settings, String> defaults = new EnumMap<GeneralOptions.Settings, String>(GeneralOptions.Settings.class);
+
     static {
         defaults.put(GeneralOptions.Settings.THREADED, "false");
         defaults.put(GeneralOptions.Settings.UPDATEONSAVE, "false");
@@ -66,7 +69,7 @@ public class GeneralOptions {
             defaultVal = GeneralOptions.defaults.get(key);
         }
 
-        String val = GenericOption.loadModul(_PREFIX +keys.get(key), defaultVal);
+        String val = GenericOption.loadModul(_PREFIX + keys.get(key), defaultVal);
 
         if (!types.containsKey(key)) {
             return val;
@@ -99,4 +102,5 @@ public class GeneralOptions {
     public static Boolean isOverwritten(GeneralOptions.Settings key, Lookup lkp) {
         return GenericOption.isInProject(_PREFIX + keys.get(key), lkp);
     }
+
 }

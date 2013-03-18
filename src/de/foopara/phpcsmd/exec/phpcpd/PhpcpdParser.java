@@ -19,12 +19,13 @@ import org.openide.util.Lookup;
  *
  * @author nspecht
  */
-public class PhpcpdParser extends GenericPhpcpdParser {
+public class PhpcpdParser extends GenericPhpcpdParser
+{
 
     public PhpcpdResult parse(GenericOutputReader reader, boolean updateDependencies, FileObject fo) {
         List<GenericViolation> cpdErrors = new ArrayList<GenericViolation>();
         List<GenericViolation> cpdNoTask = new ArrayList<GenericViolation>();
-        Lookup lookup =  GenericHelper.getFileLookup(fo);
+        Lookup lookup = GenericHelper.getFileLookup(fo);
 
         try {
             char[] tmp = new char[1024];
@@ -42,7 +43,7 @@ public class PhpcpdParser extends GenericPhpcpdParser {
             if (!sections[1].trim().startsWith("Found ")) {
                 return new PhpcpdResult(null, null, null);
             }
-            for (int i=2; i < sections.length - 2; i++) {
+            for (int i = 2; i < sections.length - 2; i++) {
                 if (this.isValidPhpcpdSection(sections[i])) {
                     PhpcpdLine line = new PhpcpdLine(sections[i]);
 
@@ -64,6 +65,5 @@ public class PhpcpdParser extends GenericPhpcpdParser {
         }
         return new PhpcpdResult(null, cpdErrors, cpdNoTask);
     }
-
 
 }

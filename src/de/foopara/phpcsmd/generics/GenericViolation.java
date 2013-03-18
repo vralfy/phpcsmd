@@ -8,27 +8,35 @@ import org.openide.text.Annotation;
  *
  * @author nspecht
  */
-public class GenericViolation extends Annotation {
+public class GenericViolation extends Annotation
+{
+
     protected String _message = "";
+
     protected int _beginLine = 0;
+
     protected int _endLine = 0;
+
     protected String _annotationType = "generic";
+
     protected String _group = "generic";
+
     protected boolean multiline = true;
 
     protected String typePrefix = "de-foopara-phpcsmd-annotation-";
+
     protected String groupPrefix = "de-foopara-phpcsmd-group-";
 
     ArrayList<GenericViolation> children = new ArrayList<GenericViolation>();
 
     public GenericViolation(String msg, int line) {
-        this._message   = msg;
+        this._message = msg;
         this._beginLine = line;
-        this._endLine   = line;
+        this._endLine = line;
     }
 
     public GenericViolation(String msg, int begin, int end) {
-        this._message   = msg;
+        this._message = msg;
         this._beginLine = begin;
         this._endLine = end;
     }
@@ -69,7 +77,9 @@ public class GenericViolation extends Annotation {
     }
 
     public GenericViolation getViolationForLine(int line) {
-        if (line == this._beginLine) return this;
+        if (line == this._beginLine) {
+            return this;
+        }
         GenericViolation child = new GenericViolation(this._message, line)
                 .setAnnotationType(this._annotationType)
                 .setGroup(this._group);
@@ -88,7 +98,7 @@ public class GenericViolation extends Annotation {
     }
 
     public GenericViolation detachChildren() {
-        for (int i=0; i<this.children.size();i++) {
+        for (int i = 0; i < this.children.size(); i++) {
             try {
                 this.children.get(i).detachMe();
             } catch (IllegalStateException ex) {
@@ -113,4 +123,5 @@ public class GenericViolation extends Annotation {
         this.multiline = multiline;
         return this;
     }
+
 }

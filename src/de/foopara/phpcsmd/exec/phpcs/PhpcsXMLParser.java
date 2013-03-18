@@ -23,7 +23,8 @@ import org.xml.sax.SAXException;
  *
  * @author nspecht
  */
-public class PhpcsXMLParser {
+public class PhpcsXMLParser
+{
 
     private Lookup lkp;
 
@@ -73,9 +74,8 @@ public class PhpcsXMLParser {
             if ((Boolean)PhpcsOptions.load(PhpcsOptions.Settings.EXTRAS, this.lkp)) {
                 for (PhpcsSniff sniff : GenericPhpcsSniffRegistry.getInstance().getFlat()) {
                     if ((type.startsWith(sniff.name) || type.compareTo(sniff.name) == 0)
-                        && PhpcsOptions.getSniff(sniff.shortName)
-                        && sniff.annotationType != null
-                    ) {
+                            && PhpcsOptions.getSniff(sniff.shortName)
+                            && sniff.annotationType != null) {
                         GenericViolation violation = new GenericViolation(message, lineNum)
                                 .setAnnotationType("phpcs-" + sniff.annotationType)
                                 .setGroup("phpcs-violation");
@@ -92,9 +92,9 @@ public class PhpcsXMLParser {
             if (addNormal) {
                 normalList.add(new GenericViolation(message, lineNum)
                         .setAnnotationType("phpcs-" + annotation)
-                        .setGroup("phpcs-violation")
-                );
+                        .setGroup("phpcs-violation"));
             }
         }
     }
+
 }

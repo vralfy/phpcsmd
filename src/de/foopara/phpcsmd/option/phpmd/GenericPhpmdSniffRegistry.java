@@ -7,8 +7,11 @@ import java.util.LinkedHashMap;
  *
  * @author nspecht
  */
-abstract public class GenericPhpmdSniffRegistry {
+abstract public class GenericPhpmdSniffRegistry
+{
+
     private static GenericPhpmdSniffRegistry instance = null;
+
     public static GenericPhpmdSniffRegistry getInstance() {
         if (GenericPhpmdSniffRegistry.instance == null) {
             GenericPhpmdSniffRegistry.instance = new DynamicPhpmdSniffRegistry();
@@ -17,6 +20,7 @@ abstract public class GenericPhpmdSniffRegistry {
     }
 
     LinkedHashMap<String, PhpmdSniff> sniffs = new LinkedHashMap<String, PhpmdSniff>();
+
     HashSet<String> rulesets = new HashSet<String>();
 
     public void add(PhpmdSniff sniff) {
@@ -42,4 +46,5 @@ abstract public class GenericPhpmdSniffRegistry {
     public String[] getRulesets() {
         return this.rulesets.toArray(new String[0]);
     }
+
 }

@@ -20,7 +20,8 @@ import org.xml.sax.SAXException;
  *
  * @author nspecht
  */
-public class PhpmdXMLParser {
+public class PhpmdXMLParser
+{
 
     public PhpmdResult parse(GenericOutputReader reader) {
         List<GenericViolation> violations = new ArrayList<GenericViolation>();
@@ -41,8 +42,7 @@ public class PhpmdXMLParser {
 
                 String annotationType = "violation";
                 if (GenericPhpmdSniffRegistry.getInstance().get(sniffClass) != null
-                    && GenericPhpmdSniffRegistry.getInstance().get(sniffClass).annotationType != null
-                ) {
+                        && GenericPhpmdSniffRegistry.getInstance().get(sniffClass).annotationType != null) {
                     annotationType = GenericPhpmdSniffRegistry.getInstance().get(sniffClass).annotationType;
                 }
                 violations.add(
@@ -63,4 +63,5 @@ public class PhpmdXMLParser {
 
         return new PhpmdResult(null, violations, null);
     }
+
 }

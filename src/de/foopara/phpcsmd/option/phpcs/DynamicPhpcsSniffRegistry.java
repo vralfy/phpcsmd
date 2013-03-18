@@ -1,6 +1,7 @@
 package de.foopara.phpcsmd.option.phpcs;
 
-public class DynamicPhpcsSniffRegistry extends GenericPhpcsSniffRegistry {
+public class DynamicPhpcsSniffRegistry extends GenericPhpcsSniffRegistry
+{
 
     public DynamicPhpcsSniffRegistry() {
         PhpcsKeys keys;
@@ -1020,4 +1021,6 @@ public class DynamicPhpcsSniffRegistry extends GenericPhpcsSniffRegistry {
         keys.addKey("StringVarContainsNumbers");
         this.add(new PhpcsSniff("Zend.NamingConventions.ValidVariableName", null, null, keys));
 //      --------------------------------------
-}}
+    }
+
+}
