@@ -11,7 +11,7 @@ public class GeneralOptions
     public enum Settings
     {
 
-        THREADED, UPDATEONSAVE, NOTIFY, IGNORE, DEBUGLOG, TIMEOUT
+        THREADED, UPDATEONSAVE, NOTIFY, ERRORSTRIPE, IGNORE, DEBUGLOG, TIMEOUT
 
     }
 
@@ -21,6 +21,7 @@ public class GeneralOptions
         keys.put(GeneralOptions.Settings.THREADED, "threaded");
         keys.put(GeneralOptions.Settings.UPDATEONSAVE, "updateonsave");
         keys.put(GeneralOptions.Settings.NOTIFY, "notification");
+        keys.put(GeneralOptions.Settings.ERRORSTRIPE, "errorstripe");
         keys.put(GeneralOptions.Settings.IGNORE, "ignorepattern");
         keys.put(GeneralOptions.Settings.DEBUGLOG, "debuglog");
         keys.put(GeneralOptions.Settings.TIMEOUT, "timeout");
@@ -33,6 +34,7 @@ public class GeneralOptions
         types.put(GeneralOptions.Settings.THREADED, GenericOption.SettingTypes.BOOLEAN);
         types.put(GeneralOptions.Settings.UPDATEONSAVE, GenericOption.SettingTypes.BOOLEAN);
         types.put(GeneralOptions.Settings.NOTIFY, GenericOption.SettingTypes.BOOLEAN);
+        types.put(GeneralOptions.Settings.ERRORSTRIPE, GenericOption.SettingTypes.BOOLEAN);
         types.put(GeneralOptions.Settings.DEBUGLOG, GenericOption.SettingTypes.BOOLEAN);
         types.put(GeneralOptions.Settings.TIMEOUT, GenericOption.SettingTypes.INTEGER);
     }
@@ -43,6 +45,7 @@ public class GeneralOptions
         defaults.put(GeneralOptions.Settings.THREADED, "false");
         defaults.put(GeneralOptions.Settings.UPDATEONSAVE, "false");
         defaults.put(GeneralOptions.Settings.NOTIFY, "false");
+        defaults.put(GeneralOptions.Settings.ERRORSTRIPE, "false");
         defaults.put(GeneralOptions.Settings.IGNORE, "\\.(svn|git)|\\.(phtml|html|xml|txt|java|svg|png|jpg|gif)$");
         defaults.put(GeneralOptions.Settings.DEBUGLOG, "false");
         defaults.put(GeneralOptions.Settings.TIMEOUT, "5000");

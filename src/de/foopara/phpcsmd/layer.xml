@@ -11,21 +11,27 @@
 
     <folder name="Editors">
         <folder name="AnnotationTypes">
-            <!-- phpcs -->
-            <file name="de-foopara-phpcsmd-annotation-phpcs-warning.xml" url="nbresloc:/de/foopara/phpcsmd/resources/phpcs/warning.xml"/>
+            <!-- BEGIN GENERATED ANNOTATIONS -->
             <file name="de-foopara-phpcsmd-annotation-phpcs-error.xml" url="nbresloc:/de/foopara/phpcsmd/resources/phpcs/error.xml"/>
-
+            <file name="de-foopara-phpcsmd-annotation-phpcs-error-severity.xml" url="nbresloc:/de/foopara/phpcsmd/resources/phpcs/error-severity.xml"/>
+            <file name="de-foopara-phpcsmd-annotation-phpcs-warning.xml" url="nbresloc:/de/foopara/phpcsmd/resources/phpcs/warning.xml"/>
+            <file name="de-foopara-phpcsmd-annotation-phpcs-warning-severity.xml" url="nbresloc:/de/foopara/phpcsmd/resources/phpcs/warning-severity.xml"/>
             <file name="de-foopara-phpcsmd-annotation-phpcs-comment.xml" url="nbresloc:/de/foopara/phpcsmd/resources/phpcs/comment.xml"/>
+            <file name="de-foopara-phpcsmd-annotation-phpcs-comment-severity.xml" url="nbresloc:/de/foopara/phpcsmd/resources/phpcs/comment-severity.xml"/>
             <file name="de-foopara-phpcsmd-annotation-phpcs-complex.xml" url="nbresloc:/de/foopara/phpcsmd/resources/phpcs/complex.xml"/>
+            <file name="de-foopara-phpcsmd-annotation-phpcs-complex-severity.xml" url="nbresloc:/de/foopara/phpcsmd/resources/phpcs/complex-severity.xml"/>
             <file name="de-foopara-phpcsmd-annotation-phpcs-forbidden.xml" url="nbresloc:/de/foopara/phpcsmd/resources/phpcs/forbidden.xml"/>
+            <file name="de-foopara-phpcsmd-annotation-phpcs-forbidden-severity.xml" url="nbresloc:/de/foopara/phpcsmd/resources/phpcs/forbidden-severity.xml"/>
             <file name="de-foopara-phpcsmd-annotation-phpcs-unreachable.xml" url="nbresloc:/de/foopara/phpcsmd/resources/phpcs/unreachable.xml"/>
-
-            <!-- phpmd -->
-            <file name="de-foopara-phpcsmd-annotation-phpmd-complex.xml" url="nbresloc:/de/foopara/phpcsmd/resources/phpmd/complex.xml"/>
+            <file name="de-foopara-phpcsmd-annotation-phpcs-unreachable-severity.xml" url="nbresloc:/de/foopara/phpcsmd/resources/phpcs/unreachable-severity.xml"/>
             <file name="de-foopara-phpcsmd-annotation-phpmd-violation.xml" url="nbresloc:/de/foopara/phpcsmd/resources/phpmd/violation.xml"/>
-
-            <!-- phpcpd -->
+            <file name="de-foopara-phpcsmd-annotation-phpmd-violation-severity.xml" url="nbresloc:/de/foopara/phpcsmd/resources/phpmd/violation-severity.xml"/>
+            <file name="de-foopara-phpcsmd-annotation-phpmd-complex.xml" url="nbresloc:/de/foopara/phpcsmd/resources/phpmd/complex.xml"/>
+            <file name="de-foopara-phpcsmd-annotation-phpmd-complex-severity.xml" url="nbresloc:/de/foopara/phpcsmd/resources/phpmd/complex-severity.xml"/>
             <file name="de-foopara-phpcsmd-annotation-phpcpd-violation.xml" url="nbresloc:/de/foopara/phpcsmd/resources/phpcpd/violation.xml"/>
+            <file name="de-foopara-phpcsmd-annotation-phpcpd-violation-severity.xml" url="nbresloc:/de/foopara/phpcsmd/resources/phpcpd/violation-severity.xml"/>
+            <!-- END GENERATED ANNOTATIONS -->
+            
         </folder>
     </folder>
 

@@ -37,6 +37,7 @@ public class GeneralOptionsPanel extends GenericOptionsPanel
         optDebug = new javax.swing.JCheckBox();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
+        optErrorStripe = new javax.swing.JCheckBox();
 
         setLayout(new java.awt.GridBagLayout());
 
@@ -86,7 +87,7 @@ public class GeneralOptionsPanel extends GenericOptionsPanel
         optIgnorePattern.setText(org.openide.util.NbBundle.getMessage(GeneralOptionsPanel.class, "GeneralOptionsPanel.optIgnorePattern.text")); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 5;
+        gridBagConstraints.gridy = 9;
         gridBagConstraints.gridwidth = 3;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.weightx = 1.0;
@@ -96,7 +97,7 @@ public class GeneralOptionsPanel extends GenericOptionsPanel
         jLabel2.setText(org.openide.util.NbBundle.getMessage(GeneralOptionsPanel.class, "GeneralOptionsPanel.jLabel2.text")); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 5;
+        gridBagConstraints.gridy = 9;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
         gridBagConstraints.insets = new java.awt.Insets(0, 0, 2, 2);
         add(jLabel2, gridBagConstraints);
@@ -104,7 +105,7 @@ public class GeneralOptionsPanel extends GenericOptionsPanel
         jLabel3.setText(org.openide.util.NbBundle.getMessage(GeneralOptionsPanel.class, "GeneralOptionsPanel.jLabel3.text")); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 10;
+        gridBagConstraints.gridy = 11;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
         gridBagConstraints.insets = new java.awt.Insets(0, 0, 2, 2);
         add(jLabel3, gridBagConstraints);
@@ -112,7 +113,7 @@ public class GeneralOptionsPanel extends GenericOptionsPanel
         optTimeout.setModel(new javax.swing.SpinnerNumberModel(Integer.valueOf(1), Integer.valueOf(1), null, Integer.valueOf(1)));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 10;
+        gridBagConstraints.gridy = 11;
         gridBagConstraints.gridwidth = 3;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.weightx = 1.0;
@@ -122,7 +123,7 @@ public class GeneralOptionsPanel extends GenericOptionsPanel
         optDebug.setText(org.openide.util.NbBundle.getMessage(GeneralOptionsPanel.class, "GeneralOptionsPanel.optDebug.text")); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 6;
+        gridBagConstraints.gridy = 10;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.weightx = 1.0;
         add(optDebug, gridBagConstraints);
@@ -135,7 +136,7 @@ public class GeneralOptionsPanel extends GenericOptionsPanel
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
-        gridBagConstraints.gridy = 6;
+        gridBagConstraints.gridy = 10;
         add(jButton1, gridBagConstraints);
 
         jButton2.setLabel(org.openide.util.NbBundle.getMessage(GeneralOptionsPanel.class, "GeneralOptionsPanel.jButton2.label")); // NOI18N
@@ -146,8 +147,16 @@ public class GeneralOptionsPanel extends GenericOptionsPanel
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 3;
-        gridBagConstraints.gridy = 6;
+        gridBagConstraints.gridy = 10;
         add(jButton2, gridBagConstraints);
+
+        optErrorStripe.setText(org.openide.util.NbBundle.getMessage(GeneralOptionsPanel.class, "GeneralOptionsPanel.optErrorStripe.text")); // NOI18N
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 5;
+        gridBagConstraints.gridwidth = 3;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        add(optErrorStripe, gridBagConstraints);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -182,6 +191,7 @@ public class GeneralOptionsPanel extends GenericOptionsPanel
     private javax.swing.JLabel jLabel3;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JCheckBox optDebug;
+    private javax.swing.JCheckBox optErrorStripe;
     private javax.swing.JTextField optIgnorePattern;
     private javax.swing.JCheckBox optNotify;
     private javax.swing.JCheckBox optThread;
@@ -196,6 +206,7 @@ public class GeneralOptionsPanel extends GenericOptionsPanel
         this.optThread.setSelected((Boolean)GeneralOptions.loadOriginal(GeneralOptions.Settings.THREADED));
         this.optUpdateOnSave.setSelected((Boolean)GeneralOptions.loadOriginal(GeneralOptions.Settings.UPDATEONSAVE));
         this.optNotify.setSelected((Boolean)GeneralOptions.loadOriginal(GeneralOptions.Settings.NOTIFY));
+        this.optErrorStripe.setSelected((Boolean)GeneralOptions.loadOriginal(GeneralOptions.Settings.ERRORSTRIPE));
         this.optIgnorePattern.setText((String)GeneralOptions.loadOriginal(GeneralOptions.Settings.IGNORE));
         this.optDebug.setSelected((Boolean)GeneralOptions.loadOriginal(GeneralOptions.Settings.DEBUGLOG));
         this.optTimeout.setValue((Integer)GeneralOptions.loadOriginal(GeneralOptions.Settings.TIMEOUT));
@@ -206,6 +217,7 @@ public class GeneralOptionsPanel extends GenericOptionsPanel
         GeneralOptions.set(GeneralOptions.Settings.THREADED, this.optThread.isSelected());
         GeneralOptions.set(GeneralOptions.Settings.UPDATEONSAVE, this.optUpdateOnSave.isSelected());
         GeneralOptions.set(GeneralOptions.Settings.NOTIFY, this.optNotify.isSelected());
+        GeneralOptions.set(GeneralOptions.Settings.ERRORSTRIPE, this.optErrorStripe.isSelected());
         GeneralOptions.set(GeneralOptions.Settings.IGNORE, this.optIgnorePattern.getText());
         GeneralOptions.set(GeneralOptions.Settings.DEBUGLOG, this.optDebug.isSelected());
         GeneralOptions.set(GeneralOptions.Settings.TIMEOUT, (Integer)this.optTimeout.getValue());

@@ -1,6 +1,7 @@
 package de.foopara.phpcsmd.generics;
 
 import de.foopara.phpcsmd.debug.Logger;
+import de.foopara.phpcsmd.option.GeneralOptions;
 import java.util.ArrayList;
 import org.openide.text.Annotation;
 
@@ -59,7 +60,8 @@ public class GenericViolation extends Annotation
 
     @Override
     public String getAnnotationType() {
-        return this.typePrefix + this._annotationType;
+        return this.typePrefix + this._annotationType +
+                ((Boolean)GeneralOptions.loadOriginal(GeneralOptions.Settings.ERRORSTRIPE) == true ? "-severity" : "");
     }
 
     public String getTaskGroup() {
