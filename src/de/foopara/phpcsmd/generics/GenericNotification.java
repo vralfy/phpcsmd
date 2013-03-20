@@ -12,7 +12,7 @@ import org.openide.filesystems.FileObject;
 public class GenericNotification
 {
 
-    private static Notification notify = null;
+    private static volatile Notification notify = null;
 
     public static void displayNotification(FileObject fo) {
         if (GenericNotification.notify != null) {

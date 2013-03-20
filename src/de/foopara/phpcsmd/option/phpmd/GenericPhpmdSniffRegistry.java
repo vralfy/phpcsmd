@@ -10,7 +10,7 @@ import java.util.LinkedHashMap;
 abstract public class GenericPhpmdSniffRegistry
 {
 
-    private static GenericPhpmdSniffRegistry instance = null;
+    private static volatile GenericPhpmdSniffRegistry instance = null;
 
     public static GenericPhpmdSniffRegistry getInstance() {
         if (GenericPhpmdSniffRegistry.instance == null) {
@@ -44,7 +44,7 @@ abstract public class GenericPhpmdSniffRegistry
     }
 
     public String[] getRulesets() {
-        return this.rulesets.toArray(new String[0]);
+        return this.rulesets.toArray(new String[this.rulesets.size()]);
     }
 
 }

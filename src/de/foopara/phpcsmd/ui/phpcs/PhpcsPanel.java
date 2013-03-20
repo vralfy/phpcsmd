@@ -258,7 +258,7 @@ public class PhpcsPanel extends GenericOptionsPanel
         this._clearInstalledStandards();
 
         String installed[] = Phpcs.getStandards(optScript.getText());
-        if (installed != null) {
+        if (installed != null && installed.length > 0) {
             for (String standard : installed) {
                 ((DefaultComboBoxModel)this.jComboBox1.getModel()).addElement(standard);
             }
@@ -406,9 +406,9 @@ public class PhpcsPanel extends GenericOptionsPanel
                 for (PhpcsSniff sniff : GenericPhpcsSniffRegistry.getInstance().getStandard(standardStr).getClass(classStr).getSniffs()) {
                     java.awt.Image img;
                     if (sniff.annotationType != null) {
-                        img = Toolkit.getDefaultToolkit().getImage(getClass().getResource("/de/foopara/phpcsmd/resources/phpcs/" + sniff.annotationType + ".png"));
+                        img = Toolkit.getDefaultToolkit().getImage(PhpcsPanel.class.getResource("/de/foopara/phpcsmd/resources/phpcs/" + sniff.annotationType + ".png"));
                     } else {
-                        img = Toolkit.getDefaultToolkit().getImage(getClass().getResource("/de/foopara/phpcsmd/resources/phpcs/violation.jpg"));
+                        img = Toolkit.getDefaultToolkit().getImage(PhpcsPanel.class.getResource("/de/foopara/phpcsmd/resources/phpcs/violation.jpg"));
                     }
                     javax.swing.JLabel icon = new javax.swing.JLabel(new javax.swing.ImageIcon(img));
                     gridBagConstraints = new java.awt.GridBagConstraints();

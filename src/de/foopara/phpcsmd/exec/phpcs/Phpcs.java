@@ -120,7 +120,7 @@ public class Phpcs extends GenericExecute
         try {
             File script = new File(executable);
             if (!script.exists() || !script.canExecute() || !script.isFile()) {
-                return null;
+                return new String[0];
             }
             Process child = Runtime.getRuntime().exec(executable + " -i");
             InputStream in = child.getInputStream();
@@ -138,7 +138,7 @@ public class Phpcs extends GenericExecute
             Logger.getInstance().log(e);
         }
 
-        return null;
+        return new String[0];
     }
 
 }

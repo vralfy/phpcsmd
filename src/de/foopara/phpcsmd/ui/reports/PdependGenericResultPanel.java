@@ -82,7 +82,11 @@ public class PdependGenericResultPanel extends JPanel
     }
 
     private boolean setComponent(String name, Object value) {
-        if (this.elements.containsKey(name)) {
+        if (name != null && name.compareTo("serialVersionUID") == 0) {
+            return false;
+        }
+        
+        if (name != null && this.elements.containsKey(name)) {
             JComponent comp = this.elements.get(name);
             if (comp.getClass().getCanonicalName().endsWith("JProgressBar")) {
                 JProgressBar tmp = ((JProgressBar)comp);

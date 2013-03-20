@@ -7,7 +7,7 @@ import org.openide.filesystems.FileObject;
 public class FileListenerRegistry
 {
 
-    private static FileListenerRegistry instance = null;
+    private static volatile FileListenerRegistry instance = null;
 
     public static FileListenerRegistry getInstance() {
         if (FileListenerRegistry.instance == null) {

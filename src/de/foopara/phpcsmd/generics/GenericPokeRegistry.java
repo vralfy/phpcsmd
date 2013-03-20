@@ -7,7 +7,7 @@ import org.openide.filesystems.FileObject;
 public class GenericPokeRegistry
 {
 
-    private static GenericPokeRegistry instance = null;
+    private static volatile GenericPokeRegistry instance = null;
 
     public static GenericPokeRegistry getInstance() {
         if (GenericPokeRegistry.instance == null) {

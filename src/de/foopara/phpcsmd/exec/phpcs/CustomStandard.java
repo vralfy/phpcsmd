@@ -7,7 +7,6 @@ import de.foopara.phpcsmd.option.phpcs.PhpcsSniff;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import org.openide.util.Exceptions;
 import org.openide.util.Lookup;
 
 public class CustomStandard
@@ -22,6 +21,7 @@ public class CustomStandard
     }
 
     public CustomStandard(Lookup lkp) {
+        FileWriter f = null;
         try {
             this.lkp = lkp;
             this._ruleset = File.createTempFile("phpcsmdCustom", ".xml");
@@ -60,13 +60,19 @@ public class CustomStandard
 
             content.append("</ruleset>");
 
-            FileWriter f = new FileWriter(this._ruleset);
+            f = new FileWriter(this._ruleset);
             f.write(content.toString());
             f.flush();
-            f.close();
         } catch (IOException ex) {
             Logger.getInstance().log(ex);
-            Exceptions.printStackTrace(ex);
+        } finally {
+            if (f != null) {
+                try {
+                    f.close();
+                } catch (IOException ex) {
+                    Logger.getInstance().log(ex);
+                }
+            }
         }
     }
 

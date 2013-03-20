@@ -293,7 +293,7 @@ public class PhpcsPropertyPanel extends GenericOptionsPanel
         this._clearInstalledStandards();
 
         String[] installed = Phpcs.getStandards((String)PhpcsOptions.load(PhpcsOptions.Settings.SCRIPT, this.lkp));
-        if (installed != null) {
+        if (installed != null && installed.length > 0) {
             for (String standard : installed) {
                 ((DefaultComboBoxModel)this.cmbStandard.getModel()).addElement(standard);
             }

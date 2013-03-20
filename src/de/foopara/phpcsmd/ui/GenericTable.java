@@ -1,5 +1,6 @@
 package de.foopara.phpcsmd.ui;
 
+import java.io.Serializable;
 import java.util.Comparator;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
@@ -12,14 +13,20 @@ import javax.swing.table.TableRowSorter;
 public class GenericTable extends JTable
 {
 
-    protected AdvancedCellRenderer acr = null;
-
-    protected TableRowSorter<DefaultTableModel> sorter = null;
-
-    protected DefaultTableModel model = null;
-
-    public static class IntegerComparator implements Comparator<Integer>
+    public static class GenericTableModel extends DefaultTableModel
     {
+        public static final long serialVersionUID = 1L;
+
+        @Override
+        public boolean isCellEditable(int a, int b) {
+            return false;
+        }
+
+    }
+
+    public static class IntegerComparator implements Comparator<Integer>, Serializable
+    {
+        public static final long serialVersionUID = 1L;
 
         @Override
         public int compare(Integer o1, Integer o2) {
@@ -33,8 +40,9 @@ public class GenericTable extends JTable
 
     }
 
-    public static class StringComparator implements Comparator<String>
+    public static class StringComparator implements Comparator<String>, Serializable
     {
+        public static final long serialVersionUID = 1L;
 
         @Override
         public int compare(String o1, String o2) {
@@ -43,8 +51,9 @@ public class GenericTable extends JTable
 
     }
 
-    public static class FilepathComparator implements Comparator<String>
+    public static class FilepathComparator implements Comparator<String>, Serializable
     {
+        public static final long serialVersionUID = 1L;
 
         @Override
         public int compare(String o1, String o2) {
@@ -72,23 +81,22 @@ public class GenericTable extends JTable
 
     }
 
+    protected AdvancedCellRenderer acr = null;
+
+    protected TableRowSorter<GenericTableModel> sorter = null;
+
+    protected GenericTableModel model = null;
+
     public GenericTable() {
         super();
         this.acr = AdvancedCellRenderer.setCellRenderer(this);
 
-        this.model = new DefaultTableModel()
-        {
-            @Override
-            public boolean isCellEditable(int a, int b) {
-                return false;
-            }
-
-        };
+        this.model = new GenericTableModel();
         this.setModel(this.model);
     }
 
     protected void finishTableSettings() {
-        this.sorter = new TableRowSorter<DefaultTableModel>(this.model);
+        this.sorter = new TableRowSorter<GenericTableModel>(this.model);
         this.sorter.setModel(this.model);
 
         this.setRowSorter(this.sorter);

@@ -15,7 +15,7 @@ import java.util.LinkedHashMap;
 abstract public class GenericPhpcsSniffRegistry
 {
 
-    private static GenericPhpcsSniffRegistry instance = null;
+    private static volatile GenericPhpcsSniffRegistry instance = null;
 
     public static GenericPhpcsSniffRegistry getInstance() {
         if (GenericPhpcsSniffRegistry.instance == null) {

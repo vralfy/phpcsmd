@@ -21,7 +21,7 @@ import org.openide.filesystems.FileUtil;
 public class ViolationRegistry
 {
 
-    private static ViolationRegistry instance = null;
+    private static volatile ViolationRegistry instance = null;
 
     public static ViolationRegistry getInstance() {
         if (ViolationRegistry.instance == null) {

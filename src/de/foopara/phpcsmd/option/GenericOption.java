@@ -64,55 +64,125 @@ abstract public class GenericOption
         }
 
         Properties p = new Properties();
+        FileInputStream fis = null;
         try {
-            p.load(new FileInputStream(config));
+            fis = new FileInputStream(config);
+            p.load(fis);
         } catch (FileNotFoundException ex) {
             Logger.getInstance().log(ex);
         } catch (IOException ex) {
             Logger.getInstance().log(ex);
+        } finally {
+            if (fis != null) {
+                try {
+                    fis.close();
+                } catch (IOException ex) {
+                    Logger.getInstance().log(ex);
+                }
+            }
         }
         return p.getProperty(id, def);
     }
 
     protected static void setProject(String id, String value, Lookup lkp) {
+        FileOutputStream fos = null;
+        FileInputStream fis = null;
+        Properties p = new Properties();
         try {
             File config = GenericOption.getProjectProperties(lkp);
             if (config != null) {
-                Properties p = new Properties();
-                p.load(new FileInputStream(config));
+                fos = new FileOutputStream(config);
+                fis = new FileInputStream(config);
+                p.load(fis);
                 p.setProperty(id, value);
-                p.store(new FileOutputStream(config), "Phpcsmd options");
             }
         } catch (IOException ex) {
             Logger.getInstance().log(ex);
+        } finally {
+            try {
+                if (fos != null) {
+                    p.store(fos, "Phpcsmd options");
+                }
+            } catch (IOException ex) {
+                Logger.getInstance().log(ex);
+            }
+            if (fos != null) {
+                try {
+                    fos.close();
+                } catch (IOException ex) {
+                    Logger.getInstance().log(ex);
+                }
+            }
+            if (fis != null) {
+                try {
+                    fis.close();
+                } catch (IOException ex) {
+                    Logger.getInstance().log(ex);
+                }
+            }
         }
     }
 
     protected static void flushProject(String id, Lookup lkp) {
+        FileInputStream fis = null;
+        FileOutputStream fos = null;
+        Properties p = new Properties();
         try {
             File config = GenericOption.getProjectProperties(lkp);
             if (config != null) {
-                Properties p = new Properties();
-                p.load(new FileInputStream(config));
+                fis = new FileInputStream(config);
+                fos = new FileOutputStream(config);
+                p.load(fis);
                 p.remove(id);
-                p.store(new FileOutputStream(config), "Phpcsmd options");
             }
         } catch (IOException ex) {
             Logger.getInstance().log(ex);
+        } finally {
+            try {
+                if (fos != null) {
+                    p.store(fos, "Phpcsmd options");
+                }
+            } catch (IOException ex) {
+                Logger.getInstance().log(ex);
+            }
+            if (fis != null) {
+                try {
+                    fis.close();
+                } catch (IOException ex) {
+                    Logger.getInstance().log(ex);
+                }
+            }
+            if (fos != null) {
+                try {
+                    fos.close();
+                } catch (IOException ex) {
+                    Logger.getInstance().log(ex);
+                }
+            }
         }
     }
 
     protected static Boolean isInProject(String id, Lookup lkp) {
         Boolean ret = false;
+        FileInputStream fis = null;
         try {
             File config = GenericOption.getProjectProperties(lkp);
             if (config != null) {
                 Properties p = new Properties();
-                p.load(new FileInputStream(config));
+                fis = new FileInputStream(config);
+                p.load(fis);
                 ret = p.containsKey(id);
             }
         } catch (IOException ex) {
             Logger.getInstance().log(ex);
+        } finally {
+            if (fis != null) {
+                try {
+                    fis.close();
+                } catch (IOException ex) {
+                    Logger.getInstance().log(ex);
+                }
+            }
         }
         return ret;
     }

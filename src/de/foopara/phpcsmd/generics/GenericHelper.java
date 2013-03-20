@@ -14,7 +14,7 @@ import org.openide.util.Lookup;
 public class GenericHelper
 {
 
-    private static File phpcpdDistractor = null;
+    private static volatile File phpcpdDistractor = null;
 
     public static boolean isDesirableFile(FileObject fileObject) {
         return GenericHelper.isDesirableFile(fileObject, true);

@@ -59,6 +59,7 @@ public class GenericProcess
             outputFiles = null;
         }
 
+        FileInputStream fis = null;
         try {
             Process child = Runtime.getRuntime().exec(cmd);
             StringBuilder tmp = new StringBuilder();
@@ -88,11 +89,12 @@ public class GenericProcess
                 for (File outputFile : outputFiles) {
                     if (GenericHelper.isDesirableFile(outputFile, false, lkp)) {
                         tmp = new StringBuilder();
-                        FileInputStream fis = new FileInputStream(outputFile);
+                        fis = new FileInputStream(outputFile);
                         while ((c = fis.read()) != -1) {
                             tmp.append((char)c);
                         }
                         reader.add(new GenericOutputReader(tmp));
+                        fis.close();
                     }
                 }
 
@@ -110,6 +112,14 @@ public class GenericProcess
         } catch (IOException ex) {
             Logger.getInstance().log(ex);
             Exceptions.printStackTrace(ex);
+        } finally {
+            if (fis != null) {
+                try {
+                    fis.close();
+                } catch (IOException ex) {
+                    Logger.getInstance().log(ex);
+                }
+            }
         }
         return new GenericOutputReader[]{};
     }

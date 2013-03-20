@@ -9,7 +9,7 @@ import de.foopara.phpcsmd.option.GeneralOptions;
 public class Logger
 {
 
-    private static Logger instance = null;
+    private static volatile Logger instance = null;
 
     public static Logger getInstance() {
         if (Logger.instance == null) {

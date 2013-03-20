@@ -1,5 +1,6 @@
 package de.foopara.phpcsmd.exec.pdepend;
 
+import java.io.Serializable;
 import java.util.HashSet;
 
 public class PdependTypes
@@ -15,54 +16,55 @@ public class PdependTypes
 
     }
 
-    static public class PdependMetrics extends PdependTypes.PdependType
+    static public class PdependMetrics extends PdependTypes.PdependType implements Serializable
     {
+        public static final long serialVersionUID = 1L;
 
-        public String generated;//Creation time
+        public String generated = ""; //Creation time
 
-        public String pdepend;  //Pdepend version
+        public String pdepend = "";   //Pdepend version
 
-        public float ahh;       //Average Hierarchy Height
+        public float ahh = 0f;        //Average Hierarchy Height
 
-        public float andc;      //Average Number of Derived Classes
+        public float andc = 0f;       //Average Number of Derived Classes
 
-        public int calls;       //Number of Method or Function Calls
+        public int calls = 0;         //Number of Method or Function Calls
 
-        public int ccn;         //Cyclomatic Complexity Number
+        public int ccn = 0;           //Cyclomatic Complexity Number
 
-        public int ccn2;        //Extended Cyclomatic Complexity Number
+        public int ccn2 = 0;          //Extended Cyclomatic Complexity Number
 
-        public int cloc;        //Comment Lines fo Code
+        public int cloc = 0;          //Comment Lines fo Code
 
-        public int clsa;        //Number of Abstract Classes
+        public int clsa = 0;          //Number of Abstract Classes
 
-        public int clsc;        //Number of Concrete Classes
+        public int clsc = 0;          //Number of Concrete Classes
 
-        public int eloc;        //Executable Lines of Code
+        public int eloc = 0;          //Executable Lines of Code
 
-        public int fanout;      //Number of Fanouts
+        public int fanout = 0;        //Number of Fanouts
 
-        public int leafs;       //Number of Leaf (final) Classes
+        public int leafs = 0;         //Number of Leaf (final) Classes
 
-        public int lloc;        //Logical Lines Of Code
+        public int lloc = 0;          //Logical Lines Of Code
 
-        public int loc;         //Lines Of Code
+        public int loc = 0;           //Lines Of Code
 
-        public int maxDIT;      //Max Depth of Inheritance Tree
+        public int maxDIT = 0;        //Max Depth of Inheritance Tree
 
-        public int ncloc;       //Non Comment Lines Of Code
+        public int ncloc = 0;         //Non Comment Lines Of Code
 
-        public int noc;         //Number Of Classes
+        public int noc = 0;           //Number Of Classes
 
-        public int nof;         //Number Of Functions
+        public int nof = 0;           //Number Of Functions
 
-        public int noi;         //Number Of Interfaces
+        public int noi = 0;           //Number Of Interfaces
 
-        public int nom;         //Number Of Methods
+        public int nom = 0;           //Number Of Methods
 
-        public int nop;         //Number of Packages
+        public int nop = 0;           //Number of Packages
 
-        public int roots;       //Number of Root Classes
+        public int roots = 0;         //Number of Root Classes
 
         @Override
         public String toString() {
@@ -71,20 +73,21 @@ public class PdependTypes
 
     }
 
-    static public class PdependFile extends PdependTypes.PdependType
+    static public class PdependFile extends PdependTypes.PdependType implements Serializable
     {
+        public static final long serialVersionUID = 1L;
+        
+        public String name = "";     //Filepath
 
-        public String name;     //Filepath
+        public int cloc = 0;        //Comment Lines fo Code
 
-        public int cloc;        //Comment Lines fo Code
+        public int eloc = 0;        //Executable Lines of Code
 
-        public int eloc;        //Executable Lines of Code
+        public int lloc = 0;        //Logical Lines Of Code
 
-        public int lloc;        //Logical Lines Of Code
+        public int loc = 0;         //Lines Of Code
 
-        public int loc;         //Lines Of Code
-
-        public int ncloc;       //Non Comment Lines Of Code
+        public int ncloc = 0;       //Non Comment Lines Of Code
 
         private String _filter = null;
 
@@ -105,46 +108,48 @@ public class PdependTypes
 
     }
 
-    static public class PdependPackage extends PdependTypes.PdependType
+    static public class PdependPackage extends PdependTypes.PdependType implements Serializable
     {
+        public static final long serialVersionUID = 1L;
+
         //summary
 
-        public String name;     //Packagename
+        public String name = "";     //Packagename
 
-        public float cr;        //Code Rank
+        public float cr = 0f;        //Code Rank
 
-        public int noc;         //Number Of Classes
+        public int noc = 0;          //Number Of Classes
 
-        public int nof;         //Number Of Functions
+        public int nof = 0;          //Number Of Functions
 
-        public int noi;         //Number Of Interfaces
+        public int noi = 0;          //Number Of Interfaces
 
-        public int nom;         //Number Of Methods
+        public int nom = 0;          //Number Of Methods
 
-        public float rcr;       //Reverse Code Rank
+        public float rcr = 0f;       //Reverse Code Rank
 
-        private HashSet<PdependClass> classes = new HashSet<PdependClass>();
+        private final HashSet<PdependClass> classes = new HashSet<PdependClass>();
 
         //jdepend
-        public int TotalClasses;
+        public int TotalClasses = 0;
 
-        public int ConcreteClasses;
+        public int ConcreteClasses = 0;
 
-        public int AbstractClasses;
+        public int AbstractClasses = 0;
 
-        public int Ca;  //Afferent Couplings
+        public int Ca = 0;           //Afferent Couplings
 
-        public int Ce;  //Efferent Couplings
+        public int Ce = 0;           //Efferent Couplings
 
-        public float A; //Abstractnes
+        public float A = 0f;         //Abstractnes
 
-        public float I; //Instability
+        public float I = 0f;         //Instability
 
-        public float D; //Distance
+        public float D = 0f;         //Distance
 
-        private HashSet<PdependPackage> dependsUpon = new HashSet<PdependPackage>();
+        private final HashSet<PdependPackage> dependsUpon = new HashSet<PdependPackage>();
 
-        private HashSet<PdependPackage> usedBy = new HashSet<PdependPackage>();
+        private final HashSet<PdependPackage> usedBy = new HashSet<PdependPackage>();
 
         public void addClass(PdependClass c) {
             this.classes.add(c);
@@ -177,60 +182,61 @@ public class PdependTypes
 
     }
 
-    static public class PdependClass extends PdependTypes.PdependType
+    static public class PdependClass extends PdependTypes.PdependType implements Serializable
     {
+        public static final long serialVersionUID = 1L;
 
-        public String name;     //Classname
+        public String name = "";     //Classname
 
-        public int ca;          //Afferent Coupling
+        public int ca = 0;           //Afferent Coupling
 
-        public int cbo;         //Coupling Between Objects
+        public int cbo = 0;          //Coupling Between Objects
 
-        public int ce;          //Efferent Coupling
+        public int ce = 0;           //Efferent Coupling
 
-        public int cis;         //Class Interface Size
+        public int cis = 0;          //Class Interface Size
 
-        public int cloc;        //Comment Lines fo Code
+        public int cloc = 0;         //Comment Lines fo Code
 
-        public float cr;        //Code Rank
+        public float cr = 0f;        //Code Rank
 
-        public int csz;         //Class Size
+        public int csz = 0;          //Class Size
 
-        public int dit;         //Depth of Inheritance Tree
+        public int dit = 0;          //Depth of Inheritance Tree
 
-        public int eloc;        //Executable Lines of Code
+        public int eloc = 0;         //Executable Lines of Code
 
-        public int impl;        //-------------------------------------------------------
+        public int impl = 0;         //-------------------------------------------------------
 
-        public int lloc;        //Logical Lines Of Code
+        public int lloc = 0;         //Logical Lines Of Code
 
-        public int loc;         //Lines Of Code
+        public int loc = 0;          //Lines Of Code
 
-        public int ncloc;       //Non Comment Lines Of Code
+        public int ncloc = 0;        //Non Comment Lines Of Code
 
-        public int noam;        //Number Of Added Methods
+        public int noam = 0;         //Number Of Added Methods
 
-        public int nocc;        //Number Of Child Classes
+        public int nocc = 0;         //Number Of Child Classes
 
-        public int nom;         //Number Of Methods
+        public int nom = 0;          //Number Of Methods
 
-        public int noom;        //Number Of Overwritten Methods
+        public int noom = 0;         //Number Of Overwritten Methods
 
-        public int npm;         //Number of Public Methods
+        public int npm = 0;          //Number of Public Methods
 
-        public float rcr;       //Reverse Code Rank
+        public float rcr = 0f;       //Reverse Code Rank
 
-        public int vars;        //Properties
+        public int vars = 0;         //Properties
 
-        public int varsi;       //Inherited Properties
+        public int varsi = 0;        //Inherited Properties
 
-        public int varsnp;      //Non Private Properties
+        public int varsnp = 0;       //Non Private Properties
 
-        public int wmc;         //Weighted Method Count
+        public int wmc = 0;          //Weighted Method Count
 
-        public int wmci;        //Inherited Weighted Method Count
+        public int wmci = 0;         //Inherited Weighted Method Count
 
-        public int wmcnp;       //Non Private Weighted Method Count
+        public int wmcnp = 0;        //Non Private Weighted Method Count
 
         private HashSet<PdependMethod> methods = new HashSet<PdependMethod>();
 
@@ -263,8 +269,9 @@ public class PdependTypes
 
     }
 
-    static public class PdependMethod extends PdependTypes.PdependType
+    static public class PdependMethod extends PdependTypes.PdependType implements Serializable
     {
+        public static final long serialVersionUID = 1L;
 
         public String name;     //Methodname
 
@@ -301,8 +308,9 @@ public class PdependTypes
 
     }
 
-    static public class PdependFunction extends PdependTypes.PdependType
+    static public class PdependFunction extends PdependTypes.PdependType implements Serializable
     {
+        public static final long serialVersionUID = 1L;
 
         public String name;     //Functionname
 

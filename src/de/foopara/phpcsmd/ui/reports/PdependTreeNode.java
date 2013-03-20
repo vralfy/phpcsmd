@@ -1,5 +1,6 @@
 package de.foopara.phpcsmd.ui.reports;
 
+import java.io.Serializable;
 import java.util.Collections;
 import java.util.Comparator;
 import javax.swing.tree.DefaultMutableTreeNode;
@@ -12,8 +13,9 @@ public class PdependTreeNode extends DefaultMutableTreeNode
         super(o);
     }
 
-    protected static class NodeComparator implements Comparator<PdependTreeNode>
+    protected static class NodeComparator implements Comparator<PdependTreeNode>, Serializable
     {
+        public static final long serialVersionUID = 1L;
 
         @Override
         public int compare(PdependTreeNode o1, PdependTreeNode o2) {

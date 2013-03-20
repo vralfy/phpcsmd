@@ -1,11 +1,13 @@
 package de.foopara.phpcsmd.exec.pdepend;
 
 import de.foopara.phpcsmd.debug.Logger;
+import java.io.Serializable;
 import java.util.HashSet;
 import org.openide.util.Exceptions;
 
-public class PdependResult
+public class PdependResult implements Serializable
 {
+    public static final long serialVersionUID = 1L;
 
     private PdependTypes.PdependMetrics _metrics = null;
 
