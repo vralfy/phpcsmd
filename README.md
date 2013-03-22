@@ -44,7 +44,7 @@ Tips
    '''NOTE''': files with violations will be rescanned on save (if activated) until all phpcpd violations have been eliminated.
 
 
-TODO 
+TODO
 ====
 
 The following features are planed to be implemented. Since phpcsmd is available
@@ -54,7 +54,7 @@ via github.org, feel free to contribute new features and bugfixes.
  * (done) Group violations in action items tab
  * (done) missing phpcpd violations under windows
    * have to check this fix under linux
- * Mark annotations in the left errorstripe
+ * (done) Mark annotations in the left errorstripe
  * make phpcsmd scan the current file even if action items are not opened
  * add icons in the file navigation to indicate violations
  * make phpmd use different ruleset.xml
