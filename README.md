@@ -42,7 +42,7 @@ Tips
  * Deactivate "Create JDepend statics" if you don't care about package abstraction/instability to increase the pdepend performance
  * activate PHPCPD folder scan to detect duplicated source code between your source files
    '''NOTE''': files with violations will be rescanned on save (if activated) until all phpcpd violations have been eliminated.
-
+ 
 
 TODO
 ====
