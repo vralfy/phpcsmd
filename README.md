@@ -55,6 +55,7 @@ via github.org, feel free to contribute new features and bugfixes.
  * (done) missing phpcpd violations under windows
    * have to check this fix under linux
  * (done) Mark annotations in the left errorstripe
+ * (done) detail view over all phpcs/phpmd/phpcpd violations in ScanReport
  * make phpcsmd scan the current file even if action items are not opened
  * add icons in the file navigation to indicate violations
  * make phpmd use different ruleset.xml

@@ -1,9 +1,15 @@
 package de.foopara.phpcsmd.ui.reports;
 
 import de.foopara.phpcsmd.ViolationRegistry;
+import de.foopara.phpcsmd.generics.GenericHelper;
 import de.foopara.phpcsmd.generics.GenericResult;
 import de.foopara.phpcsmd.ui.GenericTable;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.io.File;
+import org.netbeans.api.actions.Openable;
 import org.openide.filesystems.FileObject;
+import org.openide.filesystems.FileUtil;
 
 /**
  *
@@ -49,6 +55,17 @@ public class ScanReportTable extends GenericTable
         for (int i = 1; i <= 4; i++) {
             this.sorter.setComparator(i, new GenericTable.IntegerComparator());
         }
+
+        this.addMouseListener(new MouseAdapter()
+        {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (e.getClickCount() > 1) {
+                    openSelectedFile();
+                }
+            }
+
+        });
     }
 
     @Override
@@ -105,8 +122,9 @@ public class ScanReportTable extends GenericTable
             phpcs.getErrors().size(),
             phpcs.getWarnings().size(),
             phpmd.getErrors().size() + phpmd.getWarnings().size(),
-            phpcpd.getErrors().size() + phpcpd.getWarnings().size()
+            phpcpd.getErrors().size() + phpcpd.getWarnings().size(),
         });
+
         if (!doubleEntry) {
             this.phpcs_errors += phpcs.getErrors().size();
             this.phpcs_warnings += phpcs.getWarnings().size();
@@ -123,7 +141,7 @@ public class ScanReportTable extends GenericTable
         }
         String subpath = fo.getPath().replaceFirst(this.rootDir.getPath(), "");
         boolean foundEntry = false;
-        for (int i = 0; i < this.model.getRowCount(); i++) {
+        for (int i = this.model.getRowCount() - 1; i >= 0 ; i--) {
             if (subpath.compareTo((String)this.model.getValueAt(i, 0)) == 0) {
                 foundEntry = true;
                 this.phpcs_errors -= (Integer)this.model.getValueAt(i, 1);
@@ -195,4 +213,17 @@ public class ScanReportTable extends GenericTable
                 + this.getPhpcpdErrorsCount() + this.getPhpcpdWarningsCount();
     }
 
+    public void openSelectedFile() {
+        String path = (String)this.getValueAt(this.getSelectedRow(), 0);
+        FileObject fo = FileUtil.toFileObject(new File(this.rootDir.getPath(), path));
+        if (!GenericHelper.isDesirableFile(fo)) {
+            return;
+        }
+
+        Openable oc = GenericHelper.getFileLookup(fo).lookup(Openable.class);
+        if (oc != null) {
+            oc.open();
+        }
+
+    }
 }

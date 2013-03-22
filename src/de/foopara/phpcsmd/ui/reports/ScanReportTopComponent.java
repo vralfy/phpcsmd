@@ -1,6 +1,5 @@
 package de.foopara.phpcsmd.ui.reports;
 
-import de.foopara.phpcsmd.generics.GenericHelper;
 import de.foopara.phpcsmd.generics.GenericPokeRegistry;
 import de.foopara.phpcsmd.generics.GenericTopComponent;
 import de.foopara.phpcsmd.option.PhpcpdOptions;
@@ -8,15 +7,10 @@ import de.foopara.phpcsmd.option.PhpcsOptions;
 import de.foopara.phpcsmd.option.PhpmdOptions;
 import de.foopara.phpcsmd.threads.FileCountThread;
 import de.foopara.phpcsmd.threads.RescanThread;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.io.File;
-import org.netbeans.api.actions.Openable;
 import org.netbeans.api.settings.ConvertAsProperties;
 import org.openide.awt.ActionID;
 import org.openide.awt.ActionReference;
 import org.openide.filesystems.FileObject;
-import org.openide.filesystems.FileUtil;
 import org.openide.util.NbBundle.Messages;
 import org.openide.windows.TopComponent;
 
@@ -49,16 +43,6 @@ public final class ScanReportTopComponent extends GenericTopComponent
         initComponents();
         setName(Bundle.CTL_ScanReportTopComponent());
         setToolTipText(Bundle.HINT_ScanReportTopComponent());
-        this.scanReportTable1.addMouseListener(new MouseAdapter()
-        {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                if (e.getClickCount() > 1) {
-                    openSelectedFile();
-                }
-            }
-
-        });
     }
 
     /**
@@ -73,14 +57,21 @@ public final class ScanReportTopComponent extends GenericTopComponent
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        scanReportTable1 = new de.foopara.phpcsmd.ui.reports.ScanReportTable();
         jLabel3 = new javax.swing.JLabel();
         jProgressBar1 = new javax.swing.JProgressBar();
         optFullRescan = new javax.swing.JCheckBox();
         enablePhpcs = new javax.swing.JCheckBox();
         enablePhpmd = new javax.swing.JCheckBox();
         enablePhpcpd = new javax.swing.JCheckBox();
+        jTabbedPane1 = new javax.swing.JTabbedPane();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        scanReportTable1 = new de.foopara.phpcsmd.ui.reports.ScanReportTable();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        detailTablePhpcs = new de.foopara.phpcsmd.ui.reports.ScanReportDetailTable();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        detailTablePhpmd = new de.foopara.phpcsmd.ui.reports.ScanReportDetailTable();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        detailTablePhpcpd = new de.foopara.phpcsmd.ui.reports.ScanReportDetailTable();
 
         setLayout(new java.awt.GridBagLayout());
 
@@ -112,18 +103,6 @@ public final class ScanReportTopComponent extends GenericTopComponent
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.insets = new java.awt.Insets(1, 1, 2, 2);
         add(jButton1, gridBagConstraints);
-
-        jScrollPane1.setViewportView(scanReportTable1);
-
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 1;
-        gridBagConstraints.gridwidth = 5;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.weightx = 1.0;
-        gridBagConstraints.weighty = 1.0;
-        gridBagConstraints.insets = new java.awt.Insets(1, 1, 1, 1);
-        add(jScrollPane1, gridBagConstraints);
 
         jLabel3.setFont(new java.awt.Font("DejaVu Sans", 0, 10)); // NOI18N
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
@@ -201,6 +180,36 @@ public final class ScanReportTopComponent extends GenericTopComponent
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.insets = new java.awt.Insets(1, 1, 2, 2);
         add(enablePhpcpd, gridBagConstraints);
+
+        jTabbedPane1.setTabPlacement(javax.swing.JTabbedPane.BOTTOM);
+
+        jScrollPane1.setViewportView(scanReportTable1);
+
+        jTabbedPane1.addTab(org.openide.util.NbBundle.getMessage(ScanReportTopComponent.class, "ScanReportTopComponent.jScrollPane1.TabConstraints.tabTitle"), jScrollPane1); // NOI18N
+
+        this.detailTablePhpcs.setType(ScanReportDetailTable.ReportType.PHPCS);
+        jScrollPane2.setViewportView(detailTablePhpcs);
+
+        jTabbedPane1.addTab(org.openide.util.NbBundle.getMessage(ScanReportTopComponent.class, "ScanReportTopComponent.jScrollPane2.TabConstraints.tabTitle"), jScrollPane2); // NOI18N
+
+        this.detailTablePhpmd.setType(ScanReportDetailTable.ReportType.PHPMD);
+        jScrollPane3.setViewportView(detailTablePhpmd);
+
+        jTabbedPane1.addTab(org.openide.util.NbBundle.getMessage(ScanReportTopComponent.class, "ScanReportTopComponent.jScrollPane3.TabConstraints.tabTitle"), jScrollPane3); // NOI18N
+
+        this.detailTablePhpcpd.setType(ScanReportDetailTable.ReportType.PHPCPD);
+        jScrollPane4.setViewportView(detailTablePhpcpd);
+
+        jTabbedPane1.addTab(org.openide.util.NbBundle.getMessage(ScanReportTopComponent.class, "ScanReportTopComponent.jScrollPane4.TabConstraints.tabTitle"), jScrollPane4); // NOI18N
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridwidth = 5;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.weighty = 1.0;
+        add(jTabbedPane1, gridBagConstraints);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -220,6 +229,9 @@ public final class ScanReportTopComponent extends GenericTopComponent
         t2.enablePhpcpd(this.enablePhpcpd.isSelected());
 
         this.scanReportTable1.flushElements();
+        this.detailTablePhpcs.flushElements();
+        this.detailTablePhpmd.flushElements();
+        this.detailTablePhpcpd.flushElements();
         this.jProgressBar1.setVisible(true);
         this.jButton1.setEnabled(false);
         this.optFullRescan.setEnabled(false);
@@ -245,6 +257,9 @@ public final class ScanReportTopComponent extends GenericTopComponent
     }//GEN-LAST:event_optFullRescanActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private de.foopara.phpcsmd.ui.reports.ScanReportDetailTable detailTablePhpcpd;
+    private de.foopara.phpcsmd.ui.reports.ScanReportDetailTable detailTablePhpcs;
+    private de.foopara.phpcsmd.ui.reports.ScanReportDetailTable detailTablePhpmd;
     private javax.swing.JCheckBox enablePhpcpd;
     private javax.swing.JCheckBox enablePhpcs;
     private javax.swing.JCheckBox enablePhpmd;
@@ -254,6 +269,10 @@ public final class ScanReportTopComponent extends GenericTopComponent
     private javax.swing.JLabel jLabel3;
     private javax.swing.JProgressBar jProgressBar1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JCheckBox optFullRescan;
     private de.foopara.phpcsmd.ui.reports.ScanReportTable scanReportTable1;
     // End of variables declaration//GEN-END:variables
@@ -322,6 +341,9 @@ public final class ScanReportTopComponent extends GenericTopComponent
         this.fileObject = fo;
         this.jLabel2.setText(this.fileObject.getPath());
         this.scanReportTable1.setRootDirectory(fo);
+        this.detailTablePhpcs.setRootDirectory(fo);
+        this.detailTablePhpmd.setRootDirectory(fo);
+        this.detailTablePhpcpd.setRootDirectory(fo);
         this.setDisplayName("ScanReport: " + fo.getName());
     }
 
@@ -338,26 +360,17 @@ public final class ScanReportTopComponent extends GenericTopComponent
 
     public void addElementToTable(FileObject fo) {
         this.scanReportTable1.addElement(fo);
+        this.detailTablePhpcs.addElement(fo);
+        this.detailTablePhpmd.addElement(fo);
+        this.detailTablePhpcpd.addElement(fo);
     }
 
     public void poke(FileObject fo) {
         this.scanReportTable1.poke(fo);
+        this.detailTablePhpcs.poke(fo);
+        this.detailTablePhpmd.poke(fo);
+        this.detailTablePhpcpd.poke(fo);
         this.printSummary();
-    }
-
-    public void openSelectedFile() {
-        String path = (String)this.scanReportTable1.getValueAt(this.scanReportTable1.getSelectedRow(), 0);
-        path = this.fileObject.getPath() + path;
-        FileObject fo = FileUtil.toFileObject(new File(path));
-        if (!GenericHelper.isDesirableFile(fo)) {
-            return;
-        }
-
-        Openable oc = GenericHelper.getFileLookup(fo).lookup(Openable.class);
-        if (oc != null) {
-            oc.open();
-        }
-
     }
 
     private void printSummary() {
