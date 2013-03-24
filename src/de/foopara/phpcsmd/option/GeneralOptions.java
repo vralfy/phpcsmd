@@ -1,5 +1,6 @@
 package de.foopara.phpcsmd.option;
 
+import de.foopara.phpcsmd.debug.Logger;
 import java.util.EnumMap;
 import org.openide.util.Lookup;
 
@@ -11,7 +12,7 @@ public class GeneralOptions
     public enum Settings
     {
 
-        THREADED, UPDATEONSAVE, NOTIFY, ERRORSTRIPE, IGNORE, DEBUGLOG, TIMEOUT
+        THREADED, UPDATEONSAVE, NOTIFY, ERRORSTRIPE, IGNORE, DEBUGLOG, MINSEVERITY, TIMEOUT
 
     }
 
@@ -24,6 +25,7 @@ public class GeneralOptions
         keys.put(GeneralOptions.Settings.ERRORSTRIPE, "errorstripe");
         keys.put(GeneralOptions.Settings.IGNORE, "ignorepattern");
         keys.put(GeneralOptions.Settings.DEBUGLOG, "debuglog");
+        keys.put(GeneralOptions.Settings.MINSEVERITY, "minseverity");
         keys.put(GeneralOptions.Settings.TIMEOUT, "timeout");
 
     }
@@ -36,6 +38,7 @@ public class GeneralOptions
         types.put(GeneralOptions.Settings.NOTIFY, GenericOption.SettingTypes.BOOLEAN);
         types.put(GeneralOptions.Settings.ERRORSTRIPE, GenericOption.SettingTypes.BOOLEAN);
         types.put(GeneralOptions.Settings.DEBUGLOG, GenericOption.SettingTypes.BOOLEAN);
+        types.put(GeneralOptions.Settings.MINSEVERITY, GenericOption.SettingTypes.INTEGER);
         types.put(GeneralOptions.Settings.TIMEOUT, GenericOption.SettingTypes.INTEGER);
     }
 
@@ -46,8 +49,9 @@ public class GeneralOptions
         defaults.put(GeneralOptions.Settings.UPDATEONSAVE, "false");
         defaults.put(GeneralOptions.Settings.NOTIFY, "false");
         defaults.put(GeneralOptions.Settings.ERRORSTRIPE, "false");
-        defaults.put(GeneralOptions.Settings.IGNORE, "\\.(svn|git)|\\.(phtml|html|xml|txt|java|svg|png|jpg|gif)$");
+        defaults.put(GeneralOptions.Settings.IGNORE, "\\.(svn|git)|\\.(phtml|html|js|css|xml|txt|java|svg|png|jpg|gif)$");
         defaults.put(GeneralOptions.Settings.DEBUGLOG, "false");
+        defaults.put(GeneralOptions.Settings.MINSEVERITY, "" + Logger.Severity.EXCEPTION.ordinal());
         defaults.put(GeneralOptions.Settings.TIMEOUT, "5000");
     }
 

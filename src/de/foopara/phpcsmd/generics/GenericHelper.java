@@ -166,6 +166,23 @@ public class GenericHelper
     }
 
     public static Lookup getFileLookup(FileObject fo) {
+        try {
+            if (fo == null
+                || !fo.isData()
+                || fo.isVirtual()
+                || fo.getLookup() == null
+                || !GenericHelper.isDesirableFile(FileUtil.toFile(fo), true, fo.getLookup())
+            ) {
+                return null;
+            }
+        } catch (Exception ex) {
+            if (ex instanceof IOException) {
+                Logger.getInstance().log(ex, Logger.Severity.USELESS);
+            } else {
+                Logger.getInstance().log(ex);
+            }
+        }
+
         Lookup ret = null;
         try {
             ret = DataObject.find(fo).getLookup();

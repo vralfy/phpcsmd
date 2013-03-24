@@ -9,6 +9,12 @@ import de.foopara.phpcsmd.option.GeneralOptions;
 public class Logger
 {
 
+
+    public enum Severity {
+        USELESS, INFO, WARNING, ERROR, EXCEPTION
+    }
+
+
     private static volatile Logger instance = null;
 
     public static Logger getInstance() {
@@ -21,10 +27,18 @@ public class Logger
     protected StringBuilder buff = new StringBuilder();
 
     public void log(String str) {
-        this.log(str, null);
+        this.log(str, null, Severity.INFO);
     }
 
     public void log(String str, String caption) {
+        this.log(str, caption, Severity.INFO);
+    }
+
+    public void log(String str, String caption, Severity severity) {
+        if (severity.ordinal() < (Integer)GeneralOptions.loadOriginal(GeneralOptions.Settings.MINSEVERITY)) {
+            return;
+        }
+
         if ((Boolean)GeneralOptions.loadOriginal(GeneralOptions.Settings.DEBUGLOG) == true) {
             this.buff.append("<tr>");
             if (caption != null) {
@@ -35,22 +49,43 @@ public class Logger
         }
     }
 
-    public void log(Exception ex) {
+    public void log(Error ex) {
+        this.log(ex, Severity.ERROR);
+    }
+
+    public void log(Error ex, Severity severity) {
         StringBuilder exStr = new StringBuilder();
 //        exStr.append(ex.getMessage()).append("\n");
         for (StackTraceElement element : ex.getStackTrace()) {
             exStr.append(element.toString()).append("\n");
         }
-        this.log("<pre style=\"padding:5px\">" + exStr.toString() + "</pre>", "Exception:<br />" + ex.getMessage());
+        this.log("<pre style=\"padding:5px\">" + exStr.toString() + "</pre>", "Error:<br />" + ex.getMessage(), severity);
+    }
+
+    public void log(Exception ex) {
+        this.log(ex, Severity.EXCEPTION);
+    }
+
+    public void log(Exception ex, Severity severity) {
+        StringBuilder exStr = new StringBuilder();
+//        exStr.append(ex.getMessage()).append("\n");
+        for (StackTraceElement element : ex.getStackTrace()) {
+            exStr.append(element.toString()).append("\n");
+        }
+        this.log("<pre style=\"padding:5px\">" + exStr.toString() + "</pre>", "Exception:<br />" + ex.getMessage(), severity);
     }
 
     public void logPre(String str, String caption) {
+        this.logPre(str, caption, Severity.INFO);
+    }
+
+    public void logPre(String str, String caption, Severity severity) {
         str = str
                 .replaceAll("[^A-Za-z0-9\\.\\n\\r\\w\\\\\\/\\!\\$%\\(\\)=\\?\"'<>-]", "&otimes;")
                 .replaceAll("<", "&lt;")
                 .replaceAll(">", "&gt;")
                 .replaceAll("\n", "<br />");
-        this.log("<pre style=\"border:#444444 1px solid;padding:5px;\">" + str + "</pre>", caption);
+        this.log("<pre style=\"border:#444444 1px solid;padding:5px;\">" + str + "</pre>", caption, severity);
     }
 
     @Override

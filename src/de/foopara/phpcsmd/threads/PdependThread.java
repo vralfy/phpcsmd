@@ -32,6 +32,8 @@ public class PdependThread extends Thread
         try {
             handle = ProgressHandleFactory.createHandle("phpcsmd pdepend scan", null, null);
             handle.start();
+        } catch (NoClassDefFoundError e) {
+            Logger.getInstance().log(e);
         } catch (Exception ex){
             Logger.getInstance().log(ex);
         }

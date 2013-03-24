@@ -59,6 +59,10 @@ public class GenericAnnotationBuilder
     }
 
     private static void annotateLine(GenericViolation v, LineCookie cookie) {
+        if (cookie == null || cookie.getLineSet().getLines() == null) {
+            return;
+        }
+
         Integer maxLine = Math.min(cookie.getLineSet().getLines().size() - 1, v.getEndLine());
         for (int i = v.getBeginLine(); i <= maxLine; i++) {
             try {

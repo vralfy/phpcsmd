@@ -189,12 +189,14 @@ abstract public class GenericOption
 
     protected static File getProjectProperties(Lookup lkp) {
         if (lkp == null) {
-            Logger.getInstance().log(new Exception("Lookup is null."));
+            // OK it's null, take it like a man and move on
+            Logger.getInstance().log(new Exception("Lookup is null."), Logger.Severity.USELESS);
             return null;
         }
         Project project = GenericOption.getProjectFromLookup(lkp);
         if (project == null) {
-            Logger.getInstance().log(new Exception("Project was not found in lookup."));
+            // You aren't able to find the project lookup? That's sad!
+            Logger.getInstance().log(new Exception("Project was not found in lookup."), Logger.Severity.USELESS);
             return null;
         }
         FileObject fo = project.getProjectDirectory();

@@ -93,8 +93,10 @@ public class QAThread extends Thread
         ProgressHandle handle = null;
         try {
             handle = ProgressHandleFactory.createHandle("phpcsmd", null, null);
+        } catch (NoClassDefFoundError e) {
+            Logger.getInstance().log(e);
         } catch (Exception ex) {
-
+            Logger.getInstance().log(ex);
         }
 
         try {

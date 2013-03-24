@@ -87,8 +87,14 @@ public class RescanThread extends Thread
         }
         ProgressHandle handle = null;
         if (firstRun) {
-            handle = ProgressHandleFactory.createHandle("phpcsmd folder scan", null, null);
-            handle.start();
+            try {
+                handle = ProgressHandleFactory.createHandle("phpcsmd folder scan", null, null);
+                handle.start();
+            } catch (NoClassDefFoundError e) {
+                Logger.getInstance().log(e);
+            } catch (Exception e) {
+                Logger.getInstance().log(e);
+            }
         }
         for (FileObject f2 : f.getChildren()) {
             try {

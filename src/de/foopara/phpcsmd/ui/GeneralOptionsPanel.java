@@ -38,6 +38,7 @@ public class GeneralOptionsPanel extends GenericOptionsPanel
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         optErrorStripe = new javax.swing.JCheckBox();
+        optSeverity = new javax.swing.JComboBox();
 
         setLayout(new java.awt.GridBagLayout());
 
@@ -48,7 +49,7 @@ public class GeneralOptionsPanel extends GenericOptionsPanel
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 1;
-        gridBagConstraints.gridwidth = 4;
+        gridBagConstraints.gridwidth = 5;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.insets = new java.awt.Insets(0, 0, 2, 2);
@@ -58,7 +59,7 @@ public class GeneralOptionsPanel extends GenericOptionsPanel
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 2;
-        gridBagConstraints.gridwidth = 3;
+        gridBagConstraints.gridwidth = 4;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.insets = new java.awt.Insets(0, 0, 2, 2);
@@ -68,7 +69,7 @@ public class GeneralOptionsPanel extends GenericOptionsPanel
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 3;
-        gridBagConstraints.gridwidth = 3;
+        gridBagConstraints.gridwidth = 4;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.insets = new java.awt.Insets(0, 0, 2, 2);
@@ -78,7 +79,7 @@ public class GeneralOptionsPanel extends GenericOptionsPanel
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 4;
-        gridBagConstraints.gridwidth = 3;
+        gridBagConstraints.gridwidth = 4;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.insets = new java.awt.Insets(0, 0, 2, 2);
@@ -88,7 +89,7 @@ public class GeneralOptionsPanel extends GenericOptionsPanel
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 9;
-        gridBagConstraints.gridwidth = 3;
+        gridBagConstraints.gridwidth = 4;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.insets = new java.awt.Insets(0, 0, 2, 2);
@@ -105,7 +106,7 @@ public class GeneralOptionsPanel extends GenericOptionsPanel
         jLabel3.setText(org.openide.util.NbBundle.getMessage(GeneralOptionsPanel.class, "GeneralOptionsPanel.jLabel3.text")); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 11;
+        gridBagConstraints.gridy = 100;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
         gridBagConstraints.insets = new java.awt.Insets(0, 0, 2, 2);
         add(jLabel3, gridBagConstraints);
@@ -113,14 +114,19 @@ public class GeneralOptionsPanel extends GenericOptionsPanel
         optTimeout.setModel(new javax.swing.SpinnerNumberModel(Integer.valueOf(1), Integer.valueOf(1), null, Integer.valueOf(1)));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 11;
-        gridBagConstraints.gridwidth = 3;
+        gridBagConstraints.gridy = 100;
+        gridBagConstraints.gridwidth = 4;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.insets = new java.awt.Insets(0, 0, 2, 2);
         add(optTimeout, gridBagConstraints);
 
         optDebug.setText(org.openide.util.NbBundle.getMessage(GeneralOptionsPanel.class, "GeneralOptionsPanel.optDebug.text")); // NOI18N
+        optDebug.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                optDebugActionPerformed(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 10;
@@ -135,7 +141,7 @@ public class GeneralOptionsPanel extends GenericOptionsPanel
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridx = 3;
         gridBagConstraints.gridy = 10;
         add(jButton1, gridBagConstraints);
 
@@ -146,7 +152,7 @@ public class GeneralOptionsPanel extends GenericOptionsPanel
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 3;
+        gridBagConstraints.gridx = 4;
         gridBagConstraints.gridy = 10;
         add(jButton2, gridBagConstraints);
 
@@ -154,9 +160,14 @@ public class GeneralOptionsPanel extends GenericOptionsPanel
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 5;
-        gridBagConstraints.gridwidth = 3;
+        gridBagConstraints.gridwidth = 4;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         add(optErrorStripe, gridBagConstraints);
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 10;
+        add(optSeverity, gridBagConstraints);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -183,6 +194,10 @@ public class GeneralOptionsPanel extends GenericOptionsPanel
         Logger.getInstance().clear();
     }//GEN-LAST:event_jButton2ActionPerformed
 
+    private void optDebugActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_optDebugActionPerformed
+        this.optSeverity.setEnabled(this.optDebug.isSelected());
+    }//GEN-LAST:event_optDebugActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
@@ -194,6 +209,7 @@ public class GeneralOptionsPanel extends GenericOptionsPanel
     private javax.swing.JCheckBox optErrorStripe;
     private javax.swing.JTextField optIgnorePattern;
     private javax.swing.JCheckBox optNotify;
+    private javax.swing.JComboBox optSeverity;
     private javax.swing.JCheckBox optThread;
     private javax.swing.JSpinner optTimeout;
     private javax.swing.JCheckBox optUpdateOnSave;
@@ -201,6 +217,11 @@ public class GeneralOptionsPanel extends GenericOptionsPanel
 
     @Override
     public void load() {
+        this.optSeverity.removeAllItems();
+        for(Logger.Severity s : Logger.Severity.values()) {
+            this.optSeverity.addItem(s.ordinal() + " - " + s.toString());
+        }
+
         this.optTimeout.setVisible(false);
         this.jLabel3.setVisible(false);
         this.optThread.setSelected((Boolean)GeneralOptions.loadOriginal(GeneralOptions.Settings.THREADED));
@@ -209,7 +230,10 @@ public class GeneralOptionsPanel extends GenericOptionsPanel
         this.optErrorStripe.setSelected((Boolean)GeneralOptions.loadOriginal(GeneralOptions.Settings.ERRORSTRIPE));
         this.optIgnorePattern.setText((String)GeneralOptions.loadOriginal(GeneralOptions.Settings.IGNORE));
         this.optDebug.setSelected((Boolean)GeneralOptions.loadOriginal(GeneralOptions.Settings.DEBUGLOG));
+        this.optSeverity.setSelectedIndex((Integer)GeneralOptions.loadOriginal(GeneralOptions.Settings.MINSEVERITY));
         this.optTimeout.setValue((Integer)GeneralOptions.loadOriginal(GeneralOptions.Settings.TIMEOUT));
+
+        this.optDebugActionPerformed(null);
     }
 
     @Override
@@ -220,6 +244,7 @@ public class GeneralOptionsPanel extends GenericOptionsPanel
         GeneralOptions.set(GeneralOptions.Settings.ERRORSTRIPE, this.optErrorStripe.isSelected());
         GeneralOptions.set(GeneralOptions.Settings.IGNORE, this.optIgnorePattern.getText());
         GeneralOptions.set(GeneralOptions.Settings.DEBUGLOG, this.optDebug.isSelected());
+        GeneralOptions.set(GeneralOptions.Settings.MINSEVERITY, this.optSeverity.getSelectedIndex());
         GeneralOptions.set(GeneralOptions.Settings.TIMEOUT, (Integer)this.optTimeout.getValue());
     }
 
