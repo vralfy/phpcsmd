@@ -334,6 +334,8 @@ public final class ScanReportTopComponent extends GenericTopComponent
         this.enablePhpcs.setVisible(true);
         this.enablePhpmd.setVisible(true);
         this.enablePhpcpd.setVisible(true);
+        
+        this.optFullRescanActionPerformed(null);
         this.printSummary();
     }
 
