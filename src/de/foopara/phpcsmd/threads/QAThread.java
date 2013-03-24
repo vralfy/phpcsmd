@@ -90,7 +90,13 @@ public class QAThread extends Thread
     }
 
     public void qarun() {
-        ProgressHandle handle = ProgressHandleFactory.createHandle("phpcsmd", null, null);
+        ProgressHandle handle = null;
+        try {
+            handle = ProgressHandleFactory.createHandle("phpcsmd", null, null);
+        } catch (Exception ex) {
+
+        }
+
         try {
             if (!GenericHelper.isDesirableFile(this.fo) || GenericHelper.isSymlink(FileUtil.toFile(this.fo))) {
                 return;
@@ -109,52 +115,68 @@ public class QAThread extends Thread
                     + (this.enablePhpmd ? 1 : 0)
                     + (this.enablePhpcpd ? 1 : 0);
             int currentTask = 0;
-            handle.start(tasks);
+            if (handle != null) {
+                handle.start(tasks);
+            }
             Logger.getInstance().logPre("task count: " + tasks, "Starting phpcsmd thread");
 
             QAThread.instances.add(this);
             if (!this.interupted && this.enablePhpcs) {
                 currentTask++;
                 Logger.getInstance().logPre("task: " + currentTask + " of " + tasks, QAThread.logCaption);
-                handle.progress("running phpcs", currentTask);
+                if (handle != null) {
+                    handle.progress("running phpcs", currentTask);
+                }
                 new Phpcs().execute(this.fo);
             }
             if (!this.interupted && this.enablePhpmd) {
                 currentTask++;
                 Logger.getInstance().logPre("task: " + currentTask + " of " + tasks, QAThread.logCaption);
-                handle.progress("running phpmd", currentTask);
+                if (handle != null) {
+                    handle.progress("running phpmd", currentTask);
+                }
                 new Phpmd().execute(this.fo);
             }
             if (!this.interupted && this.enablePhpcpd) {
                 currentTask++;
                 Logger.getInstance().logPre("task: " + currentTask + " of " + tasks, QAThread.logCaption);
-                handle.progress("running phpcpd", currentTask);
+                if (handle != null) {
+                    handle.progress("running phpcpd", currentTask);
+                }
                 new Phpcpd().execute(this.fo);
             }
 
             if (!this.interupted) {
                 currentTask++;
                 Logger.getInstance().logPre("task: " + currentTask + " of " + tasks, QAThread.logCaption);
-                handle.progress("updating annotations", currentTask);
+                if (handle != null) {
+                    handle.progress("updating annotations", currentTask);
+                }
                 GenericAnnotationBuilder.updateAnnotations(this.fo);
             }
             if (!this.interupted) {
                 currentTask++;
                 Logger.getInstance().logPre("task: " + currentTask + " of " + tasks, QAThread.logCaption);
-                handle.progress("display notification", currentTask);
+                if (handle != null) {
+                    handle.progress("display notification", currentTask);
+                }
                 GenericNotification.displayNotification(this.fo);
             }
             if (!this.interupted) {
                 currentTask++;
                 Logger.getInstance().logPre("task: " + currentTask + " of " + tasks, QAThread.logCaption);
-                handle.progress("updating action items", currentTask);
+                if (handle != null) {
+                    handle.progress("updating action items", currentTask);
+                }
                 ViolationRegistry.getInstance().reprintTasks(this.fo);
             }
 
             if (!this.interupted && this.poke) {
                 currentTask++;
                 Logger.getInstance().logPre("task: " + currentTask + " of " + tasks, QAThread.logCaption);
-                handle.progress("updating related scan reports", currentTask);
+                if (handle != null) {
+                    handle.progress("updating related scan reports", currentTask);
+                }
                 GenericPokeRegistry.getInstance().poke(this.fo);
             }
 
@@ -164,7 +186,10 @@ public class QAThread extends Thread
             Logger.getInstance().log(ex);
             Exceptions.printStackTrace(ex);
         }
-        handle.finish();
+
+        if (handle != null) {
+            handle.finish();
+        }
     }
 
     public void interupt() {

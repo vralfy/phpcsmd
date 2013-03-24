@@ -28,8 +28,14 @@ public class PdependThread extends Thread
      */
     @Override
     public void run() {
-        ProgressHandle handle = ProgressHandleFactory.createHandle("phpcsmd pdepend scan", null, null);
-        handle.start();
+        ProgressHandle handle = null;
+        try {
+            handle = ProgressHandleFactory.createHandle("phpcsmd pdepend scan", null, null);
+            handle.start();
+        } catch (Exception ex){
+            Logger.getInstance().log(ex);
+        }
+
         try {
             Pdepend pdepend = new Pdepend();
             pdepend.setTopComponent(this.component);
@@ -38,7 +44,10 @@ public class PdependThread extends Thread
         } catch (Exception e) {
             Logger.getInstance().log(e);
         }
-        handle.finish();
+
+        if (handle != null) {
+            handle.finish();
+        }
     }
 
 }
