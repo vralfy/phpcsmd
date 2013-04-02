@@ -170,9 +170,12 @@ public class GenericHelper
             if (fo == null
                 || !fo.isData()
                 || fo.isVirtual()
-                || fo.getLookup() == null
-                || !GenericHelper.isDesirableFile(FileUtil.toFile(fo), true, fo.getLookup())
+                || DataObject.find(fo).getLookup() == null
+                || !GenericHelper.isDesirableFile(FileUtil.toFile(fo), true, DataObject.find(fo).getLookup())
             ) {
+                if (fo != null) {
+                    Logger.getInstance().logPre("Can not find lookup for " + fo.getName(), null);
+                }
                 return null;
             }
         } catch (Exception ex) {

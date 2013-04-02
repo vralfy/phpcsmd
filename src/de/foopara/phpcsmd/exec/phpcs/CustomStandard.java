@@ -68,6 +68,7 @@ public class CustomStandard
         } finally {
             if (f != null) {
                 try {
+                    f.flush();
                     f.close();
                 } catch (IOException ex) {
                     Logger.getInstance().log(ex);

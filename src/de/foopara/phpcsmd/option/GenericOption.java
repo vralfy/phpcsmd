@@ -81,7 +81,11 @@ abstract public class GenericOption
                 }
             }
         }
-        return p.getProperty(id, def);
+        String ret = p.getProperty(id, def);
+//        if (ret.trim().length() == 0) {
+//            return def;
+//        }
+        return ret;
     }
 
     protected static void setProject(String id, String value, Lookup lkp) {
@@ -91,31 +95,29 @@ abstract public class GenericOption
         try {
             File config = GenericOption.getProjectProperties(lkp);
             if (config != null) {
-                fos = new FileOutputStream(config);
                 fis = new FileInputStream(config);
                 p.load(fis);
+                fis.close();
+                fis = null;
+
                 p.setProperty(id, value);
+                fos = new FileOutputStream(config);
+                p.store(fos, "Phpcsmd options");
             }
         } catch (IOException ex) {
             Logger.getInstance().log(ex);
         } finally {
-            try {
-                if (fos != null) {
-                    p.store(fos, "Phpcsmd options");
-                }
-            } catch (IOException ex) {
-                Logger.getInstance().log(ex);
-            }
-            if (fos != null) {
+            if (fis != null) {
                 try {
-                    fos.close();
+                    fis.close();
                 } catch (IOException ex) {
                     Logger.getInstance().log(ex);
                 }
             }
-            if (fis != null) {
+            if (fos != null) {
                 try {
-                    fis.close();
+                    fos.flush();
+                    fos.close();
                 } catch (IOException ex) {
                     Logger.getInstance().log(ex);
                 }
@@ -131,20 +133,17 @@ abstract public class GenericOption
             File config = GenericOption.getProjectProperties(lkp);
             if (config != null) {
                 fis = new FileInputStream(config);
-                fos = new FileOutputStream(config);
                 p.load(fis);
+                fis.close();
+                fis = null;
+
                 p.remove(id);
+                fos = new FileOutputStream(config);
+                p.store(fos, "Phpcsmd options");
             }
         } catch (IOException ex) {
             Logger.getInstance().log(ex);
         } finally {
-            try {
-                if (fos != null) {
-                    p.store(fos, "Phpcsmd options");
-                }
-            } catch (IOException ex) {
-                Logger.getInstance().log(ex);
-            }
             if (fis != null) {
                 try {
                     fis.close();
@@ -154,6 +153,7 @@ abstract public class GenericOption
             }
             if (fos != null) {
                 try {
+                    fos.flush();
                     fos.close();
                 } catch (IOException ex) {
                     Logger.getInstance().log(ex);
@@ -171,7 +171,9 @@ abstract public class GenericOption
                 Properties p = new Properties();
                 fis = new FileInputStream(config);
                 p.load(fis);
-                ret = p.containsKey(id);
+                if (p.containsKey(id)) {
+                    ret = true;
+                }
             }
         } catch (IOException ex) {
             Logger.getInstance().log(ex);
@@ -201,12 +203,18 @@ abstract public class GenericOption
         }
         FileObject fo = project.getProjectDirectory();
 
-        File config = new File(FileUtil.toFile(fo), "nbproject/phpcsmd.properties");
+        File config = new File(FileUtil.toFile(fo), "nbproject/private/phpcsmd.xml");
         if (!config.exists()) {
             try {
+                if (!config.getParentFile().exists()) {
+                    config.getParentFile().mkdirs();
+                }
                 boolean created = config.createNewFile();
                 if (!created) {
                     Logger.getInstance().logPre("failed to create custom settings file in " + config.getAbsolutePath(), "phpcsmd");
+                } else {
+                    config.setReadable(true);
+                    config.setWritable(true);
                 }
             } catch (IOException ex) {
                 Logger.getInstance().log(ex);

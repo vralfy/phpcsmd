@@ -12,7 +12,7 @@ public class GeneralOptions
     public enum Settings
     {
 
-        THREADED, UPDATEONSAVE, NOTIFY, ERRORSTRIPE, IGNORE, DEBUGLOG, MINSEVERITY, TIMEOUT
+        THREADED, CHECKONOPEN, UPDATEONSAVE, NOTIFY, ERRORSTRIPE, IGNORE, DEBUGLOG, MINSEVERITY, TIMEOUT
 
     }
 
@@ -20,6 +20,7 @@ public class GeneralOptions
 
     static {
         keys.put(GeneralOptions.Settings.THREADED, "threaded");
+        keys.put(GeneralOptions.Settings.CHECKONOPEN, "checkonopen");
         keys.put(GeneralOptions.Settings.UPDATEONSAVE, "updateonsave");
         keys.put(GeneralOptions.Settings.NOTIFY, "notification");
         keys.put(GeneralOptions.Settings.ERRORSTRIPE, "errorstripe");
@@ -34,6 +35,7 @@ public class GeneralOptions
 
     static {
         types.put(GeneralOptions.Settings.THREADED, GenericOption.SettingTypes.BOOLEAN);
+        types.put(GeneralOptions.Settings.CHECKONOPEN, GenericOption.SettingTypes.BOOLEAN);
         types.put(GeneralOptions.Settings.UPDATEONSAVE, GenericOption.SettingTypes.BOOLEAN);
         types.put(GeneralOptions.Settings.NOTIFY, GenericOption.SettingTypes.BOOLEAN);
         types.put(GeneralOptions.Settings.ERRORSTRIPE, GenericOption.SettingTypes.BOOLEAN);
@@ -46,6 +48,7 @@ public class GeneralOptions
 
     static {
         defaults.put(GeneralOptions.Settings.THREADED, "false");
+        defaults.put(GeneralOptions.Settings.CHECKONOPEN, "false");
         defaults.put(GeneralOptions.Settings.UPDATEONSAVE, "false");
         defaults.put(GeneralOptions.Settings.NOTIFY, "false");
         defaults.put(GeneralOptions.Settings.ERRORSTRIPE, "false");
