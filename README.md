@@ -56,5 +56,6 @@ via github.org, feel free to contribute new features and bugfixes.
  * (done) Mark annotations in the left errorstripe
  * (done) detail view over all phpcs/phpmd/phpcpd violations in ScanReport
  * (done) make phpcsmd scan the current file even if action items are not opened
+ * (done) indicate whether entered qa script exists/is valid or not
  * add icons in the file navigation to indicate violations
  * make phpmd use different ruleset.xml

@@ -36,6 +36,7 @@ public class PdependPanel extends GenericOptionsPanel
         optIniOverwrite = new javax.swing.JTextField();
         optUseTabs = new javax.swing.JCheckBox();
         optJdepend = new javax.swing.JCheckBox();
+        jButton1 = new javax.swing.JButton();
 
         setLayout(new java.awt.GridBagLayout());
 
@@ -48,10 +49,14 @@ public class PdependPanel extends GenericOptionsPanel
         add(jLabel1, gridBagConstraints);
 
         optScript.setText(org.openide.util.NbBundle.getMessage(PdependPanel.class, "PdependPanel.optScript.text")); // NOI18N
+        optScript.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                optScriptKeyReleased(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 1;
-        gridBagConstraints.gridwidth = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.insets = new java.awt.Insets(0, 0, 2, 2);
@@ -87,6 +92,7 @@ public class PdependPanel extends GenericOptionsPanel
         gridBagConstraints.gridy = 2;
         gridBagConstraints.gridwidth = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.weightx = 1.0;
         gridBagConstraints.insets = new java.awt.Insets(0, 0, 2, 2);
         add(optSuffix, gridBagConstraints);
 
@@ -96,6 +102,7 @@ public class PdependPanel extends GenericOptionsPanel
         gridBagConstraints.gridy = 3;
         gridBagConstraints.gridwidth = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.weightx = 1.0;
         gridBagConstraints.insets = new java.awt.Insets(0, 0, 2, 2);
         add(optExclude, gridBagConstraints);
 
@@ -105,6 +112,7 @@ public class PdependPanel extends GenericOptionsPanel
         gridBagConstraints.gridy = 4;
         gridBagConstraints.gridwidth = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.weightx = 1.0;
         gridBagConstraints.insets = new java.awt.Insets(0, 0, 2, 2);
         add(optIgnore, gridBagConstraints);
 
@@ -130,6 +138,7 @@ public class PdependPanel extends GenericOptionsPanel
         gridBagConstraints.gridy = 5;
         gridBagConstraints.gridwidth = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.weightx = 1.0;
         gridBagConstraints.insets = new java.awt.Insets(0, 0, 2, 2);
         add(optIniOverwrite, gridBagConstraints);
 
@@ -137,7 +146,9 @@ public class PdependPanel extends GenericOptionsPanel
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 6;
+        gridBagConstraints.gridwidth = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.weightx = 1.0;
         gridBagConstraints.insets = new java.awt.Insets(0, 0, 2, 2);
         add(optUseTabs, gridBagConstraints);
 
@@ -145,11 +156,36 @@ public class PdependPanel extends GenericOptionsPanel
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 7;
+        gridBagConstraints.gridwidth = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.weightx = 1.0;
         gridBagConstraints.insets = new java.awt.Insets(0, 0, 2, 2);
         add(optJdepend, gridBagConstraints);
+
+        jButton1.setText(org.openide.util.NbBundle.getMessage(PdependPanel.class, "PdependPanel.jButton1.text")); // NOI18N
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.insets = new java.awt.Insets(0, 0, 2, 2);
+        add(jButton1, gridBagConstraints);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        this.chooseScriptFile(this.optScript);
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void optScriptKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_optScriptKeyReleased
+        this.hasValidValues();
+    }//GEN-LAST:event_optScriptKeyReleased
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -174,6 +210,7 @@ public class PdependPanel extends GenericOptionsPanel
         this.optIniOverwrite.setText((String)PdependOptions.loadOriginal(PdependOptions.Settings.INIOVERWRITE));
         this.optUseTabs.setSelected((Boolean)PdependOptions.loadOriginal(PdependOptions.Settings.USETABS));
         this.optJdepend.setSelected((Boolean)PdependOptions.loadOriginal(PdependOptions.Settings.JDEPEND));
+        this.hasValidValues();
     }
 
     @Override
@@ -189,7 +226,9 @@ public class PdependPanel extends GenericOptionsPanel
 
     @Override
     public boolean hasValidValues() {
-        return true;
+        boolean ret = true;
+        ret = ret & this.textfieldContainsExistingFile(this.optScript);
+        return ret;
     }
 
 }
