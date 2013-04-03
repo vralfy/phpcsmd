@@ -242,8 +242,9 @@ abstract public class GenericOption
                 return val.compareTo("true") == 0;
             case INTEGER:
                 return Integer.parseInt(val);
+            default:
+                return val.toString();
         }
-        return val;
     }
 
     public static String castValueToString(Object val, SettingTypes type) {
@@ -256,8 +257,9 @@ abstract public class GenericOption
                 }
             case INTEGER:
                 return "" + ((Integer)val);
+            default:
+                return val.toString();
         }
-        return (String)val;
     }
 
 }
