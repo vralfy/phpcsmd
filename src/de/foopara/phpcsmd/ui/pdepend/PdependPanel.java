@@ -228,7 +228,7 @@ public class PdependPanel extends GenericOptionsPanel
     public boolean hasValidValues() {
         boolean ret = true;
         ret = ret & this.textfieldContainsExistingFile(this.optScript);
-        return ret;
+        return true;
     }
 
 }

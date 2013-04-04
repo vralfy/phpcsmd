@@ -215,7 +215,8 @@ public class PhpcpdPanel extends GenericOptionsPanel
     @Override
     public boolean hasValidValues() {
         boolean ret = true;
-        ret = ret & this.textfieldContainsExistingFile(this.optScript);
+        ret = ret & (!(this.optActiveSingle.isSelected() || this.optActiveFolder.isSelected())
+                     || this.textfieldContainsExistingFile(this.optScript));
         return ret;
     }
 
