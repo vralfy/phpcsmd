@@ -22,14 +22,13 @@ public abstract class GenericOptionsPanel extends javax.swing.JPanel
     protected boolean textfieldContainsExistingFile(JTextField field) {
         boolean ret = true;
         File script = new File(field.getText());
+        field.setOpaque(true);
         if (script.exists()) {
             UIDefaults defaults = javax.swing.UIManager.getDefaults();
-            field.setOpaque(defaults.getBoolean("TextField.opaque"));
-            field.setForeground(defaults.getColor("TextField.selectionForeground"));
-            field.setBackground(defaults.getColor("TextField.selectionBackground"));
+            field.setForeground(defaults.getColor("TextField.foreground"));
+            field.setBackground(defaults.getColor("TextField.background"));
             ret = false;
         } else {
-            field.setOpaque(true);
             field.setForeground(Color.white);
             field.setBackground(Color.red);
         }
