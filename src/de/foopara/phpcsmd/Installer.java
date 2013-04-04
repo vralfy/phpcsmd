@@ -4,6 +4,7 @@
  */
 package de.foopara.phpcsmd;
 
+import de.foopara.phpcsmd.debug.Logger;
 import de.foopara.phpcsmd.generics.GenericExecute;
 import de.foopara.phpcsmd.generics.GenericHelper;
 import de.foopara.phpcsmd.option.GeneralOptions;
@@ -24,42 +25,59 @@ import org.openide.windows.WindowManager;
  * @see http://wiki.netbeans.org/DevFaqModulesDeclarativeVsProgrammatic
  * @author nspecht
  */
-public class Installer extends ModuleInstall {
+public class Installer extends ModuleInstall
+{
 
     @Override
     public void restored() {
         WindowManager.getDefault().invokeWhenUIReady(new OpenListenerInstaller());
     }
 
-    private class OpenListenerInstaller implements Runnable {
+    private class OpenListenerInstaller implements Runnable
+    {
+
         @Override
         public void run() {
-            WindowManager.getDefault().getRegistry().addPropertyChangeListener(new PropertyChangeListener() {
+            WindowManager.getDefault().getRegistry().addPropertyChangeListener(new PropertyChangeListener()
+            {
                 @Override
                 public void propertyChange(PropertyChangeEvent evt) {
                     if (evt.getPropertyName().equals("opened")) {
-                        HashSet<TopComponent> newHashSet = (HashSet<TopComponent>) evt.getNewValue();
-                        HashSet<TopComponent> oldHashSet = (HashSet<TopComponent>) evt.getOldValue();
+                        HashSet<TopComponent> newHashSet = (HashSet<TopComponent>)evt.getNewValue();
+                        HashSet<TopComponent> oldHashSet = (HashSet<TopComponent>)evt.getOldValue();
                         for (Iterator<TopComponent> it = newHashSet.iterator(); it.hasNext();) {
                             TopComponent topComponent = it.next();
                             if (!oldHashSet.contains(topComponent)) {
-                                DataObject dObj = topComponent.getLookup().lookup(DataObject.class);
-                                if (dObj != null) {
-                                    FileObject file = dObj.getPrimaryFile();
-                                    if (file != null && GenericHelper.isDesirableFile(file)) {
-
-                                        Lookup lookup = GenericHelper.getFileLookup(file);
-                                        if ((Boolean)GeneralOptions.load(GeneralOptions.Settings.CHECKONOPEN, lookup)) {
-                                            GenericExecute.executeQATools(file);
-                                        }
-
-                                    }
-                                }
+                                Installer.onOpenTopComponent(topComponent);
                             }
                         }
                     }
                 }
+
             });
+
+            //Get list of current opened TopComponents on start up and check them
+            for (TopComponent t : TopComponent.getRegistry().getOpened()) {
+                Installer.onOpenTopComponent(t);
+            }
+        }
+
+    }
+
+    public static void onOpenTopComponent(TopComponent topComponent) {
+        DataObject dObj = topComponent.getLookup().lookup(DataObject.class);
+        if (dObj != null) {
+            FileObject file = dObj.getPrimaryFile();
+            if (file != null && GenericHelper.isDesirableFile(file)) {
+                Logger.getInstance().logPre(file.getPath() + " touched", "onOpenTopComponent");
+
+                Lookup lookup = GenericHelper.getFileLookup(file);
+                if ((Boolean)GeneralOptions.load(GeneralOptions.Settings.CHECKONOPEN, lookup)) {
+                    Logger.getInstance().logPre("scanning " + file.getPath(), "onOpenTopComponent");
+                    GenericExecute.executeQATools(file);
+                }
+
+            }
         }
     }
 
