@@ -82,7 +82,7 @@ public class Logger
     public void logPre(String str, String caption, Severity severity) {
         str = str
                 .replaceAll(" ", "&nbsp;")
-                .replaceAll("[^A-Za-z0-9\\.\\n\\r\\w\\\\\\/\\!\\$%&:,;\\(\\)=\\?\"'<>-\\*]", "&otimes;")
+                .replaceAll("[^A-Za-z0-9\\.\\n\\r\\w\\\\\\/\\!\\$%&:,;\\(\\)=\\?\"'<>\\*-]", "&otimes;")
                 .replaceAll("<", "&lt;")
                 .replaceAll(">", "&gt;")
                 .replaceAll("\n", "<br />");
