@@ -29,8 +29,8 @@ public abstract class GenericOptionsPanel extends javax.swing.JPanel
             field.setBackground(defaults.getColor("TextField.background"));
             ret = false;
         } else {
-            field.setForeground(Color.white);
-            field.setBackground(Color.red);
+            field.setForeground(Color.RED);
+            field.setBackground(Color.YELLOW);
         }
 
         return ret;
