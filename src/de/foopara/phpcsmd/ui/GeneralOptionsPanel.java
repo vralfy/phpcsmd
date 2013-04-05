@@ -4,6 +4,7 @@ import de.foopara.phpcsmd.debug.Logger;
 import de.foopara.phpcsmd.generics.GenericOptionsPanel;
 import de.foopara.phpcsmd.option.GeneralOptions;
 import java.awt.Color;
+import javax.swing.ButtonGroup;
 
 public class GeneralOptionsPanel extends GenericOptionsPanel
 {
@@ -13,6 +14,9 @@ public class GeneralOptionsPanel extends GenericOptionsPanel
      */
     public GeneralOptionsPanel() {
         initComponents();
+        ButtonGroup group = new ButtonGroup();
+        group.add(this.optRegexInclude);
+        group.add(this.optRegexExclude);
     }
 
     /**
@@ -31,7 +35,6 @@ public class GeneralOptionsPanel extends GenericOptionsPanel
         optUpdateOnSave = new javax.swing.JCheckBox();
         optNotify = new javax.swing.JCheckBox();
         optIgnorePattern = new javax.swing.JTextField();
-        jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         optTimeout = new javax.swing.JSpinner();
         optDebug = new javax.swing.JCheckBox();
@@ -40,6 +43,9 @@ public class GeneralOptionsPanel extends GenericOptionsPanel
         optErrorStripe = new javax.swing.JCheckBox();
         optSeverity = new javax.swing.JComboBox();
         optCheckOpen = new javax.swing.JCheckBox();
+        optIncludePattern = new javax.swing.JTextField();
+        optRegexInclude = new javax.swing.JRadioButton();
+        optRegexExclude = new javax.swing.JRadioButton();
 
         setLayout(new java.awt.GridBagLayout());
 
@@ -89,25 +95,18 @@ public class GeneralOptionsPanel extends GenericOptionsPanel
         optIgnorePattern.setText(org.openide.util.NbBundle.getMessage(GeneralOptionsPanel.class, "GeneralOptionsPanel.optIgnorePattern.text")); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 80;
+        gridBagConstraints.gridy = 81;
         gridBagConstraints.gridwidth = 4;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.insets = new java.awt.Insets(0, 0, 2, 2);
         add(optIgnorePattern, gridBagConstraints);
 
-        jLabel2.setText(org.openide.util.NbBundle.getMessage(GeneralOptionsPanel.class, "GeneralOptionsPanel.jLabel2.text")); // NOI18N
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 80;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
-        gridBagConstraints.insets = new java.awt.Insets(0, 0, 2, 2);
-        add(jLabel2, gridBagConstraints);
-
         jLabel3.setText(org.openide.util.NbBundle.getMessage(GeneralOptionsPanel.class, "GeneralOptionsPanel.jLabel3.text")); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 100;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
         gridBagConstraints.insets = new java.awt.Insets(0, 0, 2, 2);
         add(jLabel3, gridBagConstraints);
@@ -178,6 +177,42 @@ public class GeneralOptionsPanel extends GenericOptionsPanel
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.weightx = 1.0;
         add(optCheckOpen, gridBagConstraints);
+
+        optIncludePattern.setText(org.openide.util.NbBundle.getMessage(GeneralOptionsPanel.class, "GeneralOptionsPanel.optIncludePattern.text")); // NOI18N
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 80;
+        gridBagConstraints.gridwidth = 4;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(0, 0, 2, 2);
+        add(optIncludePattern, gridBagConstraints);
+
+        optRegexInclude.setText(org.openide.util.NbBundle.getMessage(GeneralOptionsPanel.class, "GeneralOptionsPanel.optRegexInclude.text")); // NOI18N
+        optRegexInclude.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                optRegexActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 80;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.insets = new java.awt.Insets(0, 0, 2, 2);
+        add(optRegexInclude, gridBagConstraints);
+
+        optRegexExclude.setText(org.openide.util.NbBundle.getMessage(GeneralOptionsPanel.class, "GeneralOptionsPanel.optRegexExclude.text")); // NOI18N
+        optRegexExclude.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                optRegexActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 81;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.insets = new java.awt.Insets(0, 0, 2, 2);
+        add(optRegexExclude, gridBagConstraints);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -208,18 +243,30 @@ public class GeneralOptionsPanel extends GenericOptionsPanel
         this.optSeverity.setEnabled(this.optDebug.isSelected());
     }//GEN-LAST:event_optDebugActionPerformed
 
+    private void optRegexActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_optRegexActionPerformed
+        if (this.optRegexInclude.isSelected()) {
+            this.optIncludePattern.setEnabled(true);
+            this.optIgnorePattern.setEnabled(false);
+        } else {
+            this.optIncludePattern.setEnabled(false);
+            this.optIgnorePattern.setEnabled(true);
+        }
+    }//GEN-LAST:event_optRegexActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JCheckBox optCheckOpen;
     private javax.swing.JCheckBox optDebug;
     private javax.swing.JCheckBox optErrorStripe;
     private javax.swing.JTextField optIgnorePattern;
+    private javax.swing.JTextField optIncludePattern;
     private javax.swing.JCheckBox optNotify;
+    private javax.swing.JRadioButton optRegexExclude;
+    private javax.swing.JRadioButton optRegexInclude;
     private javax.swing.JComboBox optSeverity;
     private javax.swing.JCheckBox optThread;
     private javax.swing.JSpinner optTimeout;
@@ -240,12 +287,15 @@ public class GeneralOptionsPanel extends GenericOptionsPanel
         this.optUpdateOnSave.setSelected((Boolean)GeneralOptions.loadOriginal(GeneralOptions.Settings.UPDATEONSAVE));
         this.optNotify.setSelected((Boolean)GeneralOptions.loadOriginal(GeneralOptions.Settings.NOTIFY));
         this.optErrorStripe.setSelected((Boolean)GeneralOptions.loadOriginal(GeneralOptions.Settings.ERRORSTRIPE));
+        this.optRegexInclude.setSelected((Boolean)GeneralOptions.loadOriginal(GeneralOptions.Settings.INCLUDESTRATEGY));
+        this.optRegexExclude.setSelected(!(Boolean)GeneralOptions.loadOriginal(GeneralOptions.Settings.INCLUDESTRATEGY));
+        this.optIncludePattern.setText((String)GeneralOptions.loadOriginal(GeneralOptions.Settings.INCLUDE));
         this.optIgnorePattern.setText((String)GeneralOptions.loadOriginal(GeneralOptions.Settings.IGNORE));
         this.optDebug.setSelected((Boolean)GeneralOptions.loadOriginal(GeneralOptions.Settings.DEBUGLOG));
         this.optSeverity.setSelectedIndex((Integer)GeneralOptions.loadOriginal(GeneralOptions.Settings.MINSEVERITY));
         this.optTimeout.setValue((Integer)GeneralOptions.loadOriginal(GeneralOptions.Settings.TIMEOUT));
-
         this.optDebugActionPerformed(null);
+        this.optRegexActionPerformed(null);
     }
 
     @Override
@@ -255,6 +305,8 @@ public class GeneralOptionsPanel extends GenericOptionsPanel
         GeneralOptions.set(GeneralOptions.Settings.UPDATEONSAVE, this.optUpdateOnSave.isSelected());
         GeneralOptions.set(GeneralOptions.Settings.NOTIFY, this.optNotify.isSelected());
         GeneralOptions.set(GeneralOptions.Settings.ERRORSTRIPE, this.optErrorStripe.isSelected());
+        GeneralOptions.set(GeneralOptions.Settings.INCLUDESTRATEGY, this.optRegexInclude.isSelected());
+        GeneralOptions.set(GeneralOptions.Settings.INCLUDE, this.optIncludePattern.getText());
         GeneralOptions.set(GeneralOptions.Settings.IGNORE, this.optIgnorePattern.getText());
         GeneralOptions.set(GeneralOptions.Settings.DEBUGLOG, this.optDebug.isSelected());
         GeneralOptions.set(GeneralOptions.Settings.MINSEVERITY, this.optSeverity.getSelectedIndex());

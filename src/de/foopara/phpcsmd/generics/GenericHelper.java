@@ -24,14 +24,14 @@ public class GenericHelper
         if (fileObject == null) {
             return false;
         }
-        return GenericHelper.isDesirableFile(FileUtil.toFile(fileObject), filter, GenericHelper.getFileLookup(fileObject));
+        return GenericHelper.isDesirableFile(FileUtil.toFile(fileObject), GenericHelper.getFileLookup(fileObject), filter);
     }
 
     public static boolean isDesirableFile(File file, Lookup lkp) {
-        return GenericHelper.isDesirableFile(file, true, lkp);
+        return GenericHelper.isDesirableFile(file, lkp, true);
     }
 
-    public static boolean isDesirableFile(File file, boolean filter, Lookup lkp) {
+    public static boolean isDesirableFile(File file, Lookup lkp, boolean filter) {
         if (file == null) {
             return false;
         }
@@ -122,13 +122,27 @@ public class GenericHelper
             return true;
         }
 
-        String pattern = (String)GeneralOptions.load(GeneralOptions.Settings.IGNORE, lkp);
+        boolean retMatched;
+        String pattern;
+
+        if ((Boolean)GeneralOptions.load(GeneralOptions.Settings.INCLUDESTRATEGY, lkp)) {
+            if (file.isDirectory()) {
+                return false; // folders can never match the regex to they have to be parsed
+            }
+            retMatched = false;
+            pattern = (String)GeneralOptions.load(GeneralOptions.Settings.INCLUDE, lkp);
+        } else {
+            retMatched = true;
+            pattern = (String)GeneralOptions.load(GeneralOptions.Settings.IGNORE, lkp);
+        }
+
         if (pattern.trim().length() > 0) {
             if (Pattern.matches(".*(" + pattern + ").*", file.getAbsolutePath())) {
-                return true;
+                return retMatched;
             }
         }
-        return false;
+
+        return !retMatched;
     }
 
     public static String getPhpcpdDistractor() {
@@ -171,7 +185,7 @@ public class GenericHelper
                 || !fo.isData()
                 || fo.isVirtual()
                 || DataObject.find(fo).getLookup() == null
-                || !GenericHelper.isDesirableFile(FileUtil.toFile(fo), true, DataObject.find(fo).getLookup())
+                || !GenericHelper.isDesirableFile(FileUtil.toFile(fo), DataObject.find(fo).getLookup(), true)
             ) {
                 if (fo != null) {
                     Logger.getInstance().logPre("Can not find lookup for " + fo.getName(), null);

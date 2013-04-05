@@ -29,7 +29,7 @@ public class Phpmd extends GenericExecute
             return this.setAndReturnCurrent(file);
         }
 
-        if (!GenericHelper.isDesirableFile(new File((String)PhpmdOptions.load(PhpmdOptions.Settings.SCRIPT, lookup)), lookup)
+        if (!GenericHelper.isDesirableFile(new File((String)PhpmdOptions.load(PhpmdOptions.Settings.SCRIPT, lookup)), lookup, false)
                 || !GenericHelper.isDesirableFile(file)) {
             return this.setAndReturnDefault(file);
         }

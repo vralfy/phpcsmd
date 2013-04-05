@@ -40,7 +40,7 @@ public class Phpcpd extends GenericExecute
             return this.setAndReturnCurrent(file);
         }
 
-        if (!GenericHelper.isDesirableFile(new File((String)PhpcpdOptions.load(PhpcpdOptions.Settings.SCRIPT, lookup)), lookup)
+        if (!GenericHelper.isDesirableFile(new File((String)PhpcpdOptions.load(PhpcpdOptions.Settings.SCRIPT, lookup)), lookup, false)
                 || !GenericHelper.isDesirableFile(file)) {
             return this.setAndReturnDefault(file);
         }

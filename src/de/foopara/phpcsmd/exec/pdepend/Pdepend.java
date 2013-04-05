@@ -25,7 +25,7 @@ public class Pdepend
     public PdependResult run(FileObject file) {
         Lookup lkp = GenericHelper.getFileLookup(file);
 
-        if (!GenericHelper.isDesirableFile(new File((String)PdependOptions.load(PdependOptions.Settings.SCRIPT, lkp)), lkp)
+        if (!GenericHelper.isDesirableFile(new File((String)PdependOptions.load(PdependOptions.Settings.SCRIPT, lkp)), lkp, false)
                 || (!GenericHelper.isDesirableFile(file)
                 && !GenericHelper.isDesirableFolder(file))) {
             return this.setAndReturnDefault();

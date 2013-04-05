@@ -66,6 +66,7 @@ public class PhpmdPanel extends GenericOptionsPanel
         jLabel1.setText(org.openide.util.NbBundle.getMessage(PhpmdPanel.class, "PhpmdPanel.jLabel1.text")); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridy = 1;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
         gridBagConstraints.insets = new java.awt.Insets(0, 0, 2, 2);
         add(jLabel1, gridBagConstraints);
@@ -87,6 +88,7 @@ public class PhpmdPanel extends GenericOptionsPanel
         jLabel2.setText(org.openide.util.NbBundle.getMessage(PhpmdPanel.class, "PhpmdPanel.jLabel2.text")); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridy = 100;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
         gridBagConstraints.insets = new java.awt.Insets(0, 0, 2, 2);
         add(jLabel2, gridBagConstraints);
