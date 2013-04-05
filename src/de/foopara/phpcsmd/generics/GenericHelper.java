@@ -127,7 +127,7 @@ public class GenericHelper
 
         if ((Boolean)GeneralOptions.load(GeneralOptions.Settings.INCLUDESTRATEGY, lkp)) {
             if (file.isDirectory()) {
-                return false; // folders can never match the regex to they have to be parsed
+                return false; // folders can never match the regex so they have to be parsed
             }
             retMatched = false;
             pattern = (String)GeneralOptions.load(GeneralOptions.Settings.INCLUDE, lkp);
@@ -185,7 +185,7 @@ public class GenericHelper
                 || !fo.isData()
                 || fo.isVirtual()
                 || DataObject.find(fo).getLookup() == null
-                || !GenericHelper.isDesirableFile(FileUtil.toFile(fo), DataObject.find(fo).getLookup(), true)
+                || !GenericHelper.isDesirableFile(FileUtil.toFile(fo), DataObject.find(fo).getLookup(), false)
             ) {
                 if (fo != null) {
                     Logger.getInstance().logPre("Can not find lookup for " + fo.getName(), null);
