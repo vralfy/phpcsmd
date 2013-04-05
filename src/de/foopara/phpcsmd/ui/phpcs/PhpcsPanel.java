@@ -18,6 +18,7 @@ public class PhpcsPanel extends GenericOptionsPanel
 {
 
     private static PhpcsPanel instance = null;
+    private javax.swing.JPanel standardPanel;
 
     private HashMap<String, javax.swing.JCheckBox> sniffOpts = new HashMap<String, javax.swing.JCheckBox>();
 
@@ -237,6 +238,11 @@ public class PhpcsPanel extends GenericOptionsPanel
         add(optTabwidth, gridBagConstraints);
 
         optXtra.setText(org.openide.util.NbBundle.getMessage(PhpcsPanel.class, "PhpcsPanel.optXtra.text")); // NOI18N
+        optXtra.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                optXtraActionPerformed(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridy = 300;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
@@ -307,6 +313,10 @@ public class PhpcsPanel extends GenericOptionsPanel
         this.hasValidValues();
     }//GEN-LAST:event_optScriptKeyReleased
 
+    private void optXtraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_optXtraActionPerformed
+        this.standardPanel.setVisible(this.optXtra.isSelected());
+    }//GEN-LAST:event_optXtraActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
@@ -355,6 +365,7 @@ public class PhpcsPanel extends GenericOptionsPanel
         }
 
         this.hasValidValues();
+        this.optXtraActionPerformed(null);
     }
 
     @Override
@@ -394,12 +405,12 @@ public class PhpcsPanel extends GenericOptionsPanel
         gridBagConstraints.weighty = 1.0;
         gridBagConstraints.insets = new java.awt.Insets(0, 0, 0, 0);
 
-        javax.swing.JPanel standardPanel = new javax.swing.JPanel();
-        standardPanel.setLayout(new java.awt.GridBagLayout());
-        standardPanel.add(standardTab, gridBagConstraints);
-        standardPanel.setMinimumSize(new Dimension(-1, 200));
-        standardPanel.setMaximumSize(new Dimension(-1, 400));
-        standardPanel.setPreferredSize(new Dimension(-1, 400));
+        this.standardPanel = new javax.swing.JPanel();
+        this.standardPanel.setLayout(new java.awt.GridBagLayout());
+        this.standardPanel.add(standardTab, gridBagConstraints);
+        this.standardPanel.setMinimumSize(new Dimension(-1, 200));
+        this.standardPanel.setMaximumSize(new Dimension(-1, 400));
+        this.standardPanel.setPreferredSize(new Dimension(-1, 400));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 301;
@@ -407,7 +418,7 @@ public class PhpcsPanel extends GenericOptionsPanel
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.insets = new java.awt.Insets(0, 0, 2, 2);
-        add(standardPanel, gridBagConstraints);
+        add(this.standardPanel, gridBagConstraints);
 
 
         for (String standardStr : GenericPhpcsSniffRegistry.getInstance().getStandards()) {
