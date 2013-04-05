@@ -43,19 +43,7 @@ Tips
    '''NOTE''': files with violations will be rescanned on save (if activated) until all phpcpd violations have been eliminated.
 
 
-TODO
-====
+Thank you
+=========
 
-The following features are planed to be implemented. Since phpcsmd is available
-via github.org, feel free to contribute new features and bugfixes.
-
- * (done) Progressbar showing current scan progress
- * (done) Group violations in action items tab
- * (done) missing phpcpd violations under windows
-   * have to check this fix under linux
- * (done) Mark annotations in the left errorstripe
- * (done) detail view over all phpcs/phpmd/phpcpd violations in ScanReport
- * (done) make phpcsmd scan the current file even if action items are not opened
- * (done) indicate whether entered qa script exists/is valid or not
- * add icons in the file navigation to indicate violations
- * make phpmd use different ruleset.xml
+I would like to thank Hugo Fonseca for his suggestions, bug reports and inspirations.
