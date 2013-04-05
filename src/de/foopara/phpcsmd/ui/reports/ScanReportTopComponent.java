@@ -133,6 +133,7 @@ public final class ScanReportTopComponent extends GenericTopComponent
 
         optFullRescan.setSelected(true);
         org.openide.awt.Mnemonics.setLocalizedText(optFullRescan, org.openide.util.NbBundle.getMessage(ScanReportTopComponent.class, "ScanReportTopComponent.optFullRescan.text")); // NOI18N
+        optFullRescan.setToolTipText(org.openide.util.NbBundle.getMessage(ScanReportTopComponent.class, "ScanReportTopComponent.optFullRescan.toolTipText")); // NOI18N
         optFullRescan.setMaximumSize(new java.awt.Dimension(80, 35));
         optFullRescan.setMinimumSize(new java.awt.Dimension(80, 35));
         optFullRescan.setPreferredSize(new java.awt.Dimension(80, 35));
@@ -250,9 +251,9 @@ public final class ScanReportTopComponent extends GenericTopComponent
 
     private void optFullRescanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_optFullRescanActionPerformed
         if (this.optFullRescan.isSelected()) {
-            this.jButton1.setText("Rescan");
+            this.jButton1.setText("Rescan files");
         } else {
-            this.jButton1.setText("Refresh");
+            this.jButton1.setText("Refresh table");
         }
     }//GEN-LAST:event_optFullRescanActionPerformed
 
@@ -288,7 +289,7 @@ public final class ScanReportTopComponent extends GenericTopComponent
         this.setRescanDone();
 
         this.optFullRescan.setSelected(true);
-        this.jButton1.setText("Rescan");
+        this.optFullRescanActionPerformed(null);
         this.enablePhpcs.setVisible(true);
         this.enablePhpmd.setVisible(true);
         this.enablePhpcpd.setVisible(true);
@@ -334,7 +335,7 @@ public final class ScanReportTopComponent extends GenericTopComponent
         this.enablePhpcs.setVisible(true);
         this.enablePhpmd.setVisible(true);
         this.enablePhpcpd.setVisible(true);
-        
+
         this.optFullRescanActionPerformed(null);
         this.printSummary();
     }
