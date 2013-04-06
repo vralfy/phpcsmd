@@ -40,6 +40,8 @@ public class QAThread extends Thread
 
     private boolean enablePhpcpd = false;
 
+    private boolean enableNotification = true;
+
     private Lookup lkp;
 
     public QAThread(Lookup lkp) {
@@ -62,6 +64,10 @@ public class QAThread extends Thread
         this.enablePhpcpd = enable;
     }
 
+    public void enableNotification(boolean enable) {
+        this.enableNotification = enable;
+    }
+
     public void setFileObject(FileObject fo) {
         this.fo = fo;
     }
@@ -73,7 +79,6 @@ public class QAThread extends Thread
     public boolean isThreadFor(FileObject fo) {
         return fo.getPath().compareTo(fo.getPath()) == 0;
     }
-
 
     /*
      * Nur damit Netbeans die Klappe hällt
@@ -106,7 +111,7 @@ public class QAThread extends Thread
 
             for (QAThread t : QAThread.instances) {
                 if (t.isThreadFor(this.fo)) {
-                    t.interupt();
+                    t.interuptWork();
                 }
                 while (QAThread.instances.lastIndexOf(this) > 0) {
                 }
@@ -162,7 +167,9 @@ public class QAThread extends Thread
                 if (handle != null) {
                     handle.progress("display notification", currentTask);
                 }
-                GenericNotification.displayNotification(this.fo);
+                if (this.enableNotification) {
+                    GenericNotification.displayNotification(this.fo);
+                }
             }
             if (!this.interupted) {
                 currentTask++;
@@ -194,7 +201,7 @@ public class QAThread extends Thread
         }
     }
 
-    public void interupt() {
+    public void interuptWork() {
         this.interupted = true;
     }
 

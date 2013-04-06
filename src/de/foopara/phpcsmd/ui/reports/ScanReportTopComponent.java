@@ -38,6 +38,9 @@ public final class ScanReportTopComponent extends GenericTopComponent
 {
 
     private FileObject fileObject;
+    RescanThread rescanThread;
+    FileCountThread fileCountThread;
+
 
     public ScanReportTopComponent() {
         initComponents();
@@ -72,6 +75,8 @@ public final class ScanReportTopComponent extends GenericTopComponent
         detailTablePhpmd = new de.foopara.phpcsmd.ui.reports.ScanReportDetailTable();
         jScrollPane4 = new javax.swing.JScrollPane();
         detailTablePhpcpd = new de.foopara.phpcsmd.ui.reports.ScanReportDetailTable();
+        jButton2 = new javax.swing.JButton();
+        jPanel1 = new javax.swing.JPanel();
 
         setLayout(new java.awt.GridBagLayout());
 
@@ -86,8 +91,9 @@ public final class ScanReportTopComponent extends GenericTopComponent
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 0;
-        gridBagConstraints.gridwidth = 4;
+        gridBagConstraints.gridwidth = 6;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.weightx = 1.0;
         gridBagConstraints.insets = new java.awt.Insets(1, 1, 1, 1);
         add(jLabel2, gridBagConstraints);
 
@@ -111,7 +117,7 @@ public final class ScanReportTopComponent extends GenericTopComponent
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 2;
-        gridBagConstraints.gridwidth = 5;
+        gridBagConstraints.gridwidth = 7;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.insets = new java.awt.Insets(2, 2, 2, 10);
@@ -126,8 +132,9 @@ public final class ScanReportTopComponent extends GenericTopComponent
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 4;
-        gridBagConstraints.gridwidth = 5;
+        gridBagConstraints.gridwidth = 6;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.weightx = 1.0;
         gridBagConstraints.insets = new java.awt.Insets(1, 1, 2, 2);
         add(jProgressBar1, gridBagConstraints);
 
@@ -178,7 +185,6 @@ public final class ScanReportTopComponent extends GenericTopComponent
         gridBagConstraints.gridx = 4;
         gridBagConstraints.gridy = 3;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.weightx = 1.0;
         gridBagConstraints.insets = new java.awt.Insets(1, 1, 2, 2);
         add(enablePhpcpd, gridBagConstraints);
 
@@ -206,34 +212,54 @@ public final class ScanReportTopComponent extends GenericTopComponent
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 1;
-        gridBagConstraints.gridwidth = 5;
+        gridBagConstraints.gridwidth = 7;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.weighty = 1.0;
         add(jTabbedPane1, gridBagConstraints);
+
+        org.openide.awt.Mnemonics.setLocalizedText(jButton2, org.openide.util.NbBundle.getMessage(ScanReportTopComponent.class, "ScanReportTopComponent.jButton2.text")); // NOI18N
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 6;
+        gridBagConstraints.gridy = 4;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        add(jButton2, gridBagConstraints);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 5;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.weightx = 1.0;
+        add(jPanel1, gridBagConstraints);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         this.jProgressBar1.setValue(0);
         this.jProgressBar1.setMaximum(1);
 
-        FileCountThread t1 = new FileCountThread(this.lkp);
-        t1.setFileObject(this.fileObject);
-        t1.setTopComponent(this);
+        this.fileCountThread = new FileCountThread(this.lkp);
+        this.fileCountThread.setFileObject(this.fileObject);
+        this.fileCountThread.setTopComponent(this);
 
-        RescanThread t2 = new RescanThread(this.lkp);
-        t2.setFileObject(this.fileObject);
-        t2.setTopComponent(this);
-        t2.setRetrieveValuesFromRegistry(!this.optFullRescan.isSelected());
-        t2.enablePhpcs(this.enablePhpcs.isSelected());
-        t2.enablePhpmd(this.enablePhpmd.isSelected());
-        t2.enablePhpcpd(this.enablePhpcpd.isSelected());
+        this.rescanThread = new RescanThread(this.lkp);
+        this.rescanThread.setFileObject(this.fileObject);
+        this.rescanThread.setTopComponent(this);
+        this.rescanThread.setRetrieveValuesFromRegistry(!this.optFullRescan.isSelected());
+        this.rescanThread.enablePhpcs(this.enablePhpcs.isSelected());
+        this.rescanThread.enablePhpmd(this.enablePhpmd.isSelected());
+        this.rescanThread.enablePhpcpd(this.enablePhpcpd.isSelected());
 
         this.scanReportTable1.flushElements();
         this.detailTablePhpcs.flushElements();
         this.detailTablePhpmd.flushElements();
         this.detailTablePhpcpd.flushElements();
         this.jProgressBar1.setVisible(true);
+        this.jButton2.setVisible(true);
+
         this.jButton1.setEnabled(false);
         this.optFullRescan.setEnabled(false);
         this.enablePhpcs.setEnabled(false);
@@ -245,8 +271,9 @@ public final class ScanReportTopComponent extends GenericTopComponent
         this.enablePhpmd.setVisible(false);
         this.enablePhpcpd.setVisible(false);
 
-        t1.start();
-        t2.start();
+        this.fileCountThread.start();
+        this.rescanThread.start();
+
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void optFullRescanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_optFullRescanActionPerformed
@@ -257,6 +284,16 @@ public final class ScanReportTopComponent extends GenericTopComponent
         }
     }//GEN-LAST:event_optFullRescanActionPerformed
 
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        if (this.fileCountThread != null) {
+            this.fileCountThread.interuptWork();
+        }
+
+        if (this.rescanThread != null) {
+            this.rescanThread.interuptWork();
+        }
+    }//GEN-LAST:event_jButton2ActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private de.foopara.phpcsmd.ui.reports.ScanReportDetailTable detailTablePhpcpd;
     private de.foopara.phpcsmd.ui.reports.ScanReportDetailTable detailTablePhpcs;
@@ -265,9 +302,11 @@ public final class ScanReportTopComponent extends GenericTopComponent
     private javax.swing.JCheckBox enablePhpcs;
     private javax.swing.JCheckBox enablePhpmd;
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JProgressBar jProgressBar1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
@@ -322,6 +361,7 @@ public final class ScanReportTopComponent extends GenericTopComponent
 
     public void setRescanDone() {
         this.jProgressBar1.setVisible(false);
+        this.jButton2.setVisible(false);
         this.optFullRescan.setSelected(false);
         this.jLabel3.setVisible(false);
 

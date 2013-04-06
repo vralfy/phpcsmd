@@ -35,6 +35,8 @@ public class RescanThread extends Thread
 
     private Lookup lkp;
 
+    private boolean interupted = false;
+
     public RescanThread(Lookup lkp) {
         super();
         this.lkp = lkp;
@@ -96,12 +98,21 @@ public class RescanThread extends Thread
                 Logger.getInstance().log(e);
             }
         }
+
+        if (this.doInterupt(handle)) {
+            return fc;
+        }
+
         for (FileObject f2 : f.getChildren()) {
+            if (this.doInterupt(handle)) {
+                return fc;
+            }
             try {
                 if (GenericHelper.isDesirableFile(f2) && !GenericHelper.isSymlink(FileUtil.toFile(f2))) {
                     fc += 1;
                     if (!this.retrieveValuesFromRegistry) {
                         QAThread qa = new QAThread(this.lkp);
+                        qa.enableNotification(false);
                         qa.enablePhpcs(this.enablePhpcs);
                         qa.enablePhpmd(this.enablePhpmd);
                         qa.enablePhpcpd(this.enablePhpcpd);
@@ -122,6 +133,11 @@ public class RescanThread extends Thread
                 Exceptions.printStackTrace(ex);
             }
         }
+
+        if (this.doInterupt(handle)) {
+            return fc;
+        }
+
         if (GenericHelper.isDesirableFolder(f)
                 && firstRun
                 && (Boolean)PhpcpdOptions.load(PhpcpdOptions.Settings.ACTIVATEDFOLDER, this.lkp)
@@ -142,4 +158,15 @@ public class RescanThread extends Thread
         return fc;
     }
 
+    public void interuptWork() {
+        this.interupted = true;
+    }
+
+    private boolean doInterupt(ProgressHandle handle) {
+        if (this.interupted && handle != null) {
+            handle.finish();
+        }
+
+        return this.interupted;
+    }
 }

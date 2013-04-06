@@ -110,7 +110,9 @@ public class ViolationRegistry
         if (clbk == null) {
             return;
         }
-        this.callbacks.put(fo.getPath(), clbk);
+        if (!this.callbacks.containsKey(fo.getPath())) {
+            this.callbacks.put(fo.getPath(), clbk);
+        }
     }
 
     public Integer getViolationsCount(FileObject fo) {
@@ -170,10 +172,17 @@ public class ViolationRegistry
         }
         Callback clbk = this.callbacks.get(fo.getPath());
         if (clbk == null) {
-            return;
+            clbk = fo.getLookup().lookup(Callback.class);
+            if (clbk == null) {
+                return;
+            } else {
+                this.callbacks.put(fo.getPath(), clbk);
+            }
         }
+//        clbk.started();
         clbk.clearAllTasks();
         clbk.setTasks(fo, this.getTaskList(fo));
+//        clbk.finished();
     }
 
     public ArrayList<Task> getTaskList(FileObject fo) {

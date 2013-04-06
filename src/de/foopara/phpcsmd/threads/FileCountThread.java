@@ -19,6 +19,8 @@ public class FileCountThread extends Thread
 
     private Lookup lkp;
 
+    private boolean interupted = false;
+
     public FileCountThread(Lookup lkp) {
         this.lkp = lkp;
     }
@@ -47,6 +49,9 @@ public class FileCountThread extends Thread
 
     private int count(File f, int fc) {
         for (File f2 : f.listFiles()) {
+            if (this.interupted) {
+                return fc;
+            }
             try {
                 if (GenericHelper.isDesirableFile(f2, this.lkp) && !GenericHelper.isSymlink(f2)) {
                     fc += 1;
@@ -62,4 +67,7 @@ public class FileCountThread extends Thread
         return fc;
     }
 
+    public void interuptWork() {
+        this.interupted = true;
+    }
 }
