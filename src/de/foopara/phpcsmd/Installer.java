@@ -5,6 +5,7 @@
 package de.foopara.phpcsmd;
 
 import de.foopara.phpcsmd.debug.Logger;
+import de.foopara.phpcsmd.generics.GenericAnnotationBuilder;
 import de.foopara.phpcsmd.generics.GenericExecute;
 import de.foopara.phpcsmd.generics.GenericHelper;
 import de.foopara.phpcsmd.option.GeneralOptions;
@@ -42,40 +43,48 @@ public class Installer extends ModuleInstall
             {
                 @Override
                 public void propertyChange(PropertyChangeEvent evt) {
-                    if (evt.getPropertyName().equals("opened")) {
+                    if (evt.getPropertyName().equals("opened")
+                    ) {
                         HashSet<TopComponent> newHashSet = (HashSet<TopComponent>)evt.getNewValue();
                         HashSet<TopComponent> oldHashSet = (HashSet<TopComponent>)evt.getOldValue();
                         for (Iterator<TopComponent> it = newHashSet.iterator(); it.hasNext();) {
                             TopComponent topComponent = it.next();
                             if (!oldHashSet.contains(topComponent)) {
-                                Installer.onOpenTopComponent(topComponent);
+                                Installer.onOpenTopComponent(topComponent, true);
                             }
                         }
+
+                    } else if (evt.getPropertyName().equals("activated")) {
+                        TopComponent topComponent = (TopComponent)evt.getNewValue();
+                        Installer.onOpenTopComponent(topComponent, false);
+                    } else {
+//                        System.out.println(evt.getPropertyName());
                     }
                 }
-
             });
-
-            //Get list of current opened TopComponents on start up and check them
-            for (TopComponent t : TopComponent.getRegistry().getOpened()) {
-                Installer.onOpenTopComponent(t);
-            }
         }
 
     }
 
-    public static void onOpenTopComponent(TopComponent topComponent) {
+    public static void onOpenTopComponent(TopComponent topComponent, boolean force) {
         DataObject dObj = topComponent.getLookup().lookup(DataObject.class);
         if (dObj != null) {
             FileObject file = dObj.getPrimaryFile();
             if (file != null && GenericHelper.isDesirableFile(file)) {
-                Logger.getInstance().logPre(file.getPath() + " touched", "onOpenTopComponent");
 
                 Lookup lookup = GenericHelper.getFileLookup(file);
-                if ((Boolean)GeneralOptions.load(GeneralOptions.Settings.CHECKONOPEN, lookup)) {
+                boolean performScan;
+                performScan = (Boolean)GeneralOptions.load(GeneralOptions.Settings.CHECKONOPEN, lookup);
+                if (performScan) {
+                    performScan = !ViolationRegistry.getInstance().fileWasScanned(file);
+                    performScan = performScan || force;
+                }
+
+                if (performScan) {
                     Logger.getInstance().logPre("scanning " + file.getPath(), "onOpenTopComponent");
                     GenericExecute.executeQATools(file);
                 }
+                GenericAnnotationBuilder.updateAnnotations(file);
 
             }
         }

@@ -7,9 +7,8 @@ import java.util.List;
 import org.openide.cookies.LineCookie;
 import org.openide.filesystems.FileObject;
 import org.openide.loaders.DataObject;
-import org.openide.loaders.DataObjectNotFoundException;
 import org.openide.text.Line;
-import org.openide.util.Exceptions;
+import org.openide.util.Lookup;
 
 /**
  *
@@ -31,8 +30,10 @@ public class GenericAnnotationBuilder
 
         FileListenerRegistry.getListener(fo);
 
-        try {
-            DataObject oData = DataObject.find(fo);
+//        try {
+            Lookup lkp = GenericHelper.getFileLookup(fo);
+            DataObject oData = lkp.lookup(DataObject.class);
+//            DataObject oData = DataObject.find(fo);
             LineCookie cookie = oData.getCookie(LineCookie.class);
 
             GenericAnnotationBuilder.annotateList(
@@ -44,10 +45,10 @@ public class GenericAnnotationBuilder
             GenericAnnotationBuilder.annotateList(
                     res.getNoTask(),
                     cookie);
-        } catch (DataObjectNotFoundException ex) {
-            Logger.getInstance().log(ex);
-            Exceptions.printStackTrace(ex);
-        }
+//        } catch (DataObjectNotFoundException ex) {
+//            Logger.getInstance().log(ex);
+//            Exceptions.printStackTrace(ex);
+//        }
     }
 
     private static void annotateList(List<GenericViolation> list, LineCookie cookie) {
@@ -59,7 +60,7 @@ public class GenericAnnotationBuilder
     }
 
     private static void annotateLine(GenericViolation v, LineCookie cookie) {
-        if (cookie == null || cookie.getLineSet().getLines() == null) {
+        if (cookie == null || cookie.getLineSet().getLines() == null || cookie.getLineSet().getLines().size() < 1) {
             return;
         }
 

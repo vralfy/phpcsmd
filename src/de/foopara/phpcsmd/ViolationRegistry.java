@@ -255,6 +255,13 @@ public class ViolationRegistry
         }
     }
 
+    public boolean fileWasScanned(FileObject fo) {
+        return this.callbacks.containsKey(fo.getPath())
+                || this.phpcs.containsKey(fo.getPath())
+                || this.phpmd.containsKey(fo.getPath())
+                || this.phpcpd.containsKey(fo.getPath());
+    }
+
     public void removeFile(FileObject fo) {
         if (fo == null) {
             return;
