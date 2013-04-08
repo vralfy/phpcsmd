@@ -17,7 +17,7 @@ public class GeneralOptions
         ERRORSTRIPE     ("errorstripe",     GenericOption.SettingTypes.BOOLEAN, "false"),
         INCLUDESTRATEGY ("includestrategy", GenericOption.SettingTypes.BOOLEAN, "false"),
         INCLUDE         ("includepattern",  GenericOption.SettingTypes.STRING,  "(?!.*\\.(svn|git))(\\.(php|css|js|php3|php4|php5))$"),
-        IGNORE          ("ignorepattern",   GenericOption.SettingTypes.STRING,  "\\.(svn|git)|\\.(phtml|html|xml|js|css|xml|txt|java|svg|png|jpg|gif|doc|pdf)$"),
+        IGNORE          ("ignorepattern",   GenericOption.SettingTypes.STRING,  "\\.(svn|git)|\\.(phtml|html|xml|js|css|xml|txt|java|svg|sql|png|jpg|gif|doc|pdf|odt)$"),
         DEBUGLOG        ("debuglog",        GenericOption.SettingTypes.BOOLEAN, "false"),
         MINSEVERITY     ("minseverity",     GenericOption.SettingTypes.INTEGER, "" + Logger.Severity.EXCEPTION.ordinal()),
         TIMEOUT         ("timeout",         GenericOption.SettingTypes.INTEGER, "5000"),
