@@ -4,7 +4,12 @@ import de.foopara.phpcsmd.debug.Logger;
 import de.foopara.phpcsmd.generics.GenericOptionsPanel;
 import de.foopara.phpcsmd.option.GeneralOptions;
 import java.awt.Color;
+import java.awt.Dialog;
+import java.awt.Window;
+import java.awt.event.HierarchyEvent;
+import java.awt.event.HierarchyListener;
 import javax.swing.ButtonGroup;
+import javax.swing.SwingUtilities;
 
 public class GeneralOptionsPanel extends GenericOptionsPanel
 {
@@ -217,11 +222,11 @@ public class GeneralOptionsPanel extends GenericOptionsPanel
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         javax.swing.JScrollPane scroll = new javax.swing.JScrollPane();
-        javax.swing.JTextPane area = new javax.swing.JTextPane();
+        final javax.swing.JTextPane area = new javax.swing.JTextPane();
 
         scroll.setViewportView(area);
         scroll.setPreferredSize(new java.awt.Dimension(800, 300));
-        scroll.setMaximumSize(new java.awt.Dimension(800, 300));
+//        scroll.setMaximumSize(new java.awt.Dimension(800, 300));
 
         area.setEditable(false);
         area.setBackground(Color.white);
@@ -229,8 +234,21 @@ public class GeneralOptionsPanel extends GenericOptionsPanel
         area.setSelectionColor(Color.blue);
         area.setEditorKit(new javax.swing.text.html.HTMLEditorKit());
         area.setText(Logger.getInstance().toString());
+        area.addHierarchyListener(new HierarchyListener() {
+            @Override
+            public void hierarchyChanged(HierarchyEvent e) {
+                Window w = SwingUtilities.getWindowAncestor(area);
+                if (w instanceof Dialog) {
+                    Dialog d = (Dialog)w;
+                    if (!d.isResizable()) {
+                        d.setResizable(true);
+                    }
+                }
+            }
+        });
+
         javax.swing.JOptionPane.showMessageDialog(
-                null,
+                this,
                 scroll, "phpcsmd debug log",
                 javax.swing.JOptionPane.ERROR_MESSAGE + javax.swing.JOptionPane.OK_OPTION);
     }//GEN-LAST:event_jButton1ActionPerformed
