@@ -98,6 +98,9 @@ public final class ScanReportTopComponent extends GenericTopComponent
         add(jLabel2, gridBagConstraints);
 
         org.openide.awt.Mnemonics.setLocalizedText(jButton1, org.openide.util.NbBundle.getMessage(ScanReportTopComponent.class, "ScanReportTopComponent.jButton1.text")); // NOI18N
+        jButton1.setMaximumSize(new java.awt.Dimension(150, 28));
+        jButton1.setMinimumSize(new java.awt.Dimension(150, 28));
+        jButton1.setPreferredSize(new java.awt.Dimension(150, 28));
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
