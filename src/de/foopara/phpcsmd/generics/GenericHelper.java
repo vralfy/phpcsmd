@@ -33,25 +33,31 @@ public class GenericHelper
 
     public static boolean isDesirableFile(File file, Lookup lkp, boolean filter) {
         if (file == null) {
+            Logger.getInstance().log("is not desired (null)", "", Logger.Severity.USELESS);
             return false;
         }
 
         if (!file.exists()) {
+            Logger.getInstance().log(file.getAbsolutePath() + " is not desired (does not exist)", "", Logger.Severity.USELESS);
             return false;
         }
         if (!file.canRead()) {
+            Logger.getInstance().log(file.getAbsolutePath() + " is not desired (can't read)", "", Logger.Severity.USELESS);
             return false;
         }
         if (!file.isFile()) {
+            Logger.getInstance().log(file.getAbsolutePath() + " is not desired (not a file)", "", Logger.Severity.USELESS);
             return false;
         }
 
         if (filter && GenericHelper.shouldBeIgnored(file, lkp)) {
+            Logger.getInstance().log(file.getAbsolutePath() + " is not desired (on ignore list)", "", Logger.Severity.USELESS);
             return false;
         }
 
         File parent = new File(file.getParent());
         if (!GenericHelper.isDesirableFolder(parent, filter, lkp)) {
+            Logger.getInstance().log(file.getAbsolutePath() + " is not desired (parent folder is not desired)", "", Logger.Severity.USELESS);
             return false;
         }
 

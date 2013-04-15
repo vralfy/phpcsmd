@@ -76,7 +76,7 @@ public final class ScanReportTopComponent extends GenericTopComponent
         jScrollPane4 = new javax.swing.JScrollPane();
         detailTablePhpcpd = new de.foopara.phpcsmd.ui.reports.ScanReportDetailTable();
         jButton2 = new javax.swing.JButton();
-        jPanel1 = new javax.swing.JPanel();
+        jLabel4 = new javax.swing.JLabel();
 
         setLayout(new java.awt.GridBagLayout());
 
@@ -232,12 +232,14 @@ public final class ScanReportTopComponent extends GenericTopComponent
         gridBagConstraints.gridy = 4;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         add(jButton2, gridBagConstraints);
+
+        org.openide.awt.Mnemonics.setLocalizedText(jLabel4, org.openide.util.NbBundle.getMessage(ScanReportTopComponent.class, "ScanReportTopComponent.jLabel4.text")); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 5;
         gridBagConstraints.gridy = 3;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.weightx = 1.0;
-        add(jPanel1, gridBagConstraints);
+        add(jLabel4, gridBagConstraints);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -262,6 +264,7 @@ public final class ScanReportTopComponent extends GenericTopComponent
         this.detailTablePhpcpd.flushElements();
         this.jProgressBar1.setVisible(true);
         this.jButton2.setVisible(true);
+        this.jLabel4.setVisible(true);
 
         this.jButton1.setEnabled(false);
         this.optFullRescan.setEnabled(false);
@@ -309,7 +312,7 @@ public final class ScanReportTopComponent extends GenericTopComponent
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JPanel jPanel1;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JProgressBar jProgressBar1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
@@ -367,6 +370,7 @@ public final class ScanReportTopComponent extends GenericTopComponent
         this.jButton2.setVisible(false);
         this.optFullRescan.setSelected(false);
         this.jLabel3.setVisible(false);
+        this.jLabel4.setVisible(false);
 
         this.jButton1.setEnabled(true);
         this.optFullRescan.setEnabled(true);
@@ -445,6 +449,10 @@ public final class ScanReportTopComponent extends GenericTopComponent
                 buf.append("<font style=\"color:#cccc00\">").append(warnings).append("</font>");
             }
         }
+    }
+
+    public void setCurrentScannedFile(FileObject fo) {
+        this.jLabel4.setText(fo.getPath().replaceFirst(this.fileObject.getPath(), ""));
     }
 
     @Override

@@ -119,6 +119,7 @@ public class RescanThread extends Thread
                         if ((Boolean)PhpcpdOptions.load(PhpcpdOptions.Settings.ACTIVATEDFOLDER, this.lkp)) {
                             qa.enablePhpcpd(false);
                         }
+                        this.component.setCurrentScannedFile(f2);
                         qa.setFileObject(f2);
                         qa.setPoking(false);
                         qa.run();
