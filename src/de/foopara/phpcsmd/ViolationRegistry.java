@@ -85,8 +85,17 @@ public class ViolationRegistry
             this.phpcpdDependencies.put(p2, new ArrayList<FileObject>());
         }
 
-        this.phpcpdDependencies.get(p1).add(FileUtil.toFileObject(new File(p2)));
-        this.phpcpdDependencies.get(p2).add(FileUtil.toFileObject(new File(p1)));
+        FileObject file1 = FileUtil.toFileObject(new File(p1));
+        FileObject file2 = FileUtil.toFileObject(new File(p2));
+        List<FileObject> l1 = this.phpcpdDependencies.get(p1);
+        List<FileObject> l2 = this.phpcpdDependencies.get(p2);
+
+        if (l1 != null && !l1.contains(file2)) {
+            l1.add(file2);
+        }
+        if (l2 != null && !l2.contains(file1)) {
+            l2.add(file1);
+        }
     }
 
     public List<FileObject> getPhpcpdDependency(FileObject f) {
