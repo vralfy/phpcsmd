@@ -51,6 +51,7 @@ public class GeneralOptionsPanel extends GenericOptionsPanel
         optIncludePattern = new javax.swing.JTextField();
         optRegexInclude = new javax.swing.JRadioButton();
         optRegexExclude = new javax.swing.JRadioButton();
+        optScanNonPhp = new javax.swing.JCheckBox();
 
         setLayout(new java.awt.GridBagLayout());
 
@@ -218,6 +219,14 @@ public class GeneralOptionsPanel extends GenericOptionsPanel
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.insets = new java.awt.Insets(0, 0, 2, 2);
         add(optRegexExclude, gridBagConstraints);
+
+        optScanNonPhp.setText(org.openide.util.NbBundle.getMessage(GeneralOptionsPanel.class, "GeneralOptionsPanel.optScanNonPhp.text")); // NOI18N
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 7;
+        gridBagConstraints.gridwidth = 4;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        add(optScanNonPhp, gridBagConstraints);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -285,6 +294,7 @@ public class GeneralOptionsPanel extends GenericOptionsPanel
     private javax.swing.JCheckBox optNotify;
     private javax.swing.JRadioButton optRegexExclude;
     private javax.swing.JRadioButton optRegexInclude;
+    private javax.swing.JCheckBox optScanNonPhp;
     private javax.swing.JComboBox optSeverity;
     private javax.swing.JCheckBox optThread;
     private javax.swing.JSpinner optTimeout;
@@ -305,6 +315,7 @@ public class GeneralOptionsPanel extends GenericOptionsPanel
         this.optUpdateOnSave.setSelected((Boolean)GeneralOptions.loadOriginal(GeneralOptions.Settings.UPDATEONSAVE));
         this.optNotify.setSelected((Boolean)GeneralOptions.loadOriginal(GeneralOptions.Settings.NOTIFY));
         this.optErrorStripe.setSelected((Boolean)GeneralOptions.loadOriginal(GeneralOptions.Settings.ERRORSTRIPE));
+        this.optScanNonPhp.setSelected((Boolean)GeneralOptions.loadOriginal(GeneralOptions.Settings.SCANINNONPHP));
         this.optRegexInclude.setSelected((Boolean)GeneralOptions.loadOriginal(GeneralOptions.Settings.INCLUDESTRATEGY));
         this.optRegexExclude.setSelected(!(Boolean)GeneralOptions.loadOriginal(GeneralOptions.Settings.INCLUDESTRATEGY));
         this.optIncludePattern.setText((String)GeneralOptions.loadOriginal(GeneralOptions.Settings.INCLUDE));
@@ -323,6 +334,7 @@ public class GeneralOptionsPanel extends GenericOptionsPanel
         GeneralOptions.set(GeneralOptions.Settings.UPDATEONSAVE, this.optUpdateOnSave.isSelected());
         GeneralOptions.set(GeneralOptions.Settings.NOTIFY, this.optNotify.isSelected());
         GeneralOptions.set(GeneralOptions.Settings.ERRORSTRIPE, this.optErrorStripe.isSelected());
+        GeneralOptions.set(GeneralOptions.Settings.SCANINNONPHP, this.optScanNonPhp.isSelected());
         GeneralOptions.set(GeneralOptions.Settings.INCLUDESTRATEGY, this.optRegexInclude.isSelected());
         GeneralOptions.set(GeneralOptions.Settings.INCLUDE, this.optIncludePattern.getText());
         GeneralOptions.set(GeneralOptions.Settings.IGNORE, this.optIgnorePattern.getText());

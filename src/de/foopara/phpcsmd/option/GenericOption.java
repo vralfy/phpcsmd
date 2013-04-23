@@ -6,6 +6,7 @@ package de.foopara.phpcsmd.option;
 
 import de.foopara.phpcsmd.PHPCSMD;
 import de.foopara.phpcsmd.debug.Logger;
+import de.foopara.phpcsmd.generics.GenericHelper;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -14,11 +15,9 @@ import java.io.IOException;
 import java.util.Properties;
 import java.util.ResourceBundle;
 import java.util.prefs.Preferences;
-import org.netbeans.api.project.FileOwnerQuery;
 import org.netbeans.api.project.Project;
 import org.openide.filesystems.FileObject;
 import org.openide.filesystems.FileUtil;
-import org.openide.loaders.DataObject;
 import org.openide.util.Lookup;
 import org.openide.util.NbBundle;
 import org.openide.util.NbPreferences;
@@ -195,12 +194,13 @@ abstract public class GenericOption
             Logger.getInstance().log(new Exception("Lookup is null."), Logger.Severity.USELESS);
             return null;
         }
-        Project project = GenericOption.getProjectFromLookup(lkp);
+        Project project = GenericHelper.getProjectFromLookup(lkp);
         if (project == null) {
             // You aren't able to find the project lookup? That's sad!
             Logger.getInstance().log(new Exception("Project was not found in lookup."), Logger.Severity.USELESS);
             return null;
         }
+
         FileObject fo = project.getProjectDirectory();
 
         File config = new File(FileUtil.toFile(fo), "nbproject/private/phpcsmd.xml");
@@ -221,19 +221,6 @@ abstract public class GenericOption
             }
         }
         return config;
-    }
-
-    protected static Project getProjectFromLookup(Lookup lkp) {
-        Project ret = lkp.lookup(Project.class);
-        //Try getting it from Dataobject
-        if (ret == null) {
-            DataObject dataObject = lkp.lookup(DataObject.class);
-            if (dataObject != null) {
-                FileObject primary = dataObject.getPrimaryFile();
-                ret = FileOwnerQuery.getOwner(primary);
-            }
-        }
-        return ret;
     }
 
     public static Object castValue(String val, SettingTypes type) {

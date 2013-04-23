@@ -6,7 +6,6 @@ import de.foopara.phpcsmd.debug.Logger;
 import java.util.List;
 import org.openide.cookies.LineCookie;
 import org.openide.filesystems.FileObject;
-import org.openide.loaders.DataObject;
 import org.openide.text.Line;
 import org.openide.util.Lookup;
 
@@ -31,10 +30,13 @@ public class GenericAnnotationBuilder
         FileListenerRegistry.getListener(fo);
 
 //        try {
+//The new way
             Lookup lkp = GenericHelper.getFileLookup(fo);
-            DataObject oData = lkp.lookup(DataObject.class);
+            LineCookie cookie = lkp.lookup(LineCookie.class);
+//            DataObject oData = lkp.lookup(DataObject.class);
+//The old way
 //            DataObject oData = DataObject.find(fo);
-            LineCookie cookie = oData.getCookie(LineCookie.class);
+//            LineCookie cookie = oData.getLookup().lookup(LineCookie.class);
 
             GenericAnnotationBuilder.annotateList(
                     res.getWarnings(),
@@ -47,7 +49,26 @@ public class GenericAnnotationBuilder
                     cookie);
 //        } catch (DataObjectNotFoundException ex) {
 //            Logger.getInstance().log(ex);
-//            Exceptions.printStackTrace(ex);
+//        }
+
+// Try to modify the node icon
+//        try {
+//            DataObject dataObject = DataObject.find(fo);
+//            if (dataObject != null) {
+//                Node n = dataObject.getNodeDelegate();
+//                if (n != null) {
+//                    ImageIcon overlay = new ImageIcon(PHPCSMD.class.getResource("icon.png"));
+//                    if (overlay != null) {
+//                        Image original16 = n.getIcon(BeanInfo.ICON_COLOR_16x16);
+//                        Image original32 = n.getIcon(BeanInfo.ICON_COLOR_32x32);
+//                        original16.getGraphics().drawImage(overlay.getImage(), 0, 0, null);
+//                        original32.getGraphics().drawImage(overlay.getImage(), 0, 0, null);
+//                    }
+//                    n.setShortDescription("scanned");
+//                }
+//            }
+//        } catch (DataObjectNotFoundException ex) {
+//            Logger.getInstance().log(ex);
 //        }
     }
 

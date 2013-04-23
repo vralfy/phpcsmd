@@ -20,6 +20,7 @@ public class GeneralOptions
         IGNORE          ("ignorepattern",   GenericOption.SettingTypes.STRING,  "\\.(svn|git)|\\.(phtml|html|xml|js|css|xml|txt|java|svg|sql|png|jpg|gif|doc|pdf|odt)$"),
         DEBUGLOG        ("debuglog",        GenericOption.SettingTypes.BOOLEAN, "false"),
         MINSEVERITY     ("minseverity",     GenericOption.SettingTypes.INTEGER, "" + Logger.Severity.EXCEPTION.ordinal()),
+        SCANINNONPHP    ("scannonphp",      GenericOption.SettingTypes.BOOLEAN, "false"),
         TIMEOUT         ("timeout",         GenericOption.SettingTypes.INTEGER, "5000"),
         ;
 

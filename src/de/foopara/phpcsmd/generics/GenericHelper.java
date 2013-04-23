@@ -5,6 +5,8 @@ import de.foopara.phpcsmd.option.GeneralOptions;
 import java.io.File;
 import java.io.IOException;
 import java.util.regex.Pattern;
+import org.netbeans.api.project.FileOwnerQuery;
+import org.netbeans.api.project.Project;
 import org.openide.filesystems.FileObject;
 import org.openide.filesystems.FileUtil;
 import org.openide.loaders.DataObject;
@@ -94,6 +96,13 @@ public class GenericHelper
             return false;
         }
 
+        Project project = GenericHelper.getProjectFromLookup(lkp);
+        if ((project == null
+            || !project.getClass().getCanonicalName().endsWith("php.project.PhpProject"))
+            && (Boolean)GeneralOptions.loadOriginal(GeneralOptions.Settings.SCANINNONPHP) == false
+        ) {
+            return false;
+        }
         if (filter && GenericHelper.shouldBeIgnored(file, lkp)) {
             return false;
         }
@@ -185,6 +194,19 @@ public class GenericHelper
         return escapedFilename;
     }
 
+    public static Project getProjectFromLookup(Lookup lkp) {
+        Project ret = lkp.lookup(Project.class);
+        //Try getting it from Dataobject
+        if (ret == null) {
+            DataObject dataObject = lkp.lookup(DataObject.class);
+            if (dataObject != null) {
+                FileObject primary = dataObject.getPrimaryFile();
+                ret = FileOwnerQuery.getOwner(primary);
+            }
+        }
+        return ret;
+    }
+
     public static Lookup getFileLookup(FileObject fo) {
         try {
             if (fo == null
@@ -194,7 +216,7 @@ public class GenericHelper
                 || !GenericHelper.isDesirableFile(FileUtil.toFile(fo), DataObject.find(fo).getLookup(), false)
             ) {
                 if (fo != null) {
-                    Logger.getInstance().logPre("Can not find lookup for " + fo.getName(), null);
+                    Logger.getInstance().logPre("Can not find lookup for " + fo.getName(), "", Logger.Severity.USELESS);
                 }
                 return null;
             }
