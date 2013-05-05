@@ -96,14 +96,15 @@ public class GenericHelper
             return false;
         }
 
+        if (filter && GenericHelper.shouldBeIgnored(file, lkp)) {
+            return false;
+        }
+
         Project project = GenericHelper.getProjectFromLookup(lkp);
         if ((project == null
             || !project.getClass().getCanonicalName().endsWith("php.project.PhpProject"))
             && (Boolean)GeneralOptions.loadOriginal(GeneralOptions.Settings.SCANINNONPHP) == false
         ) {
-            return false;
-        }
-        if (filter && GenericHelper.shouldBeIgnored(file, lkp)) {
             return false;
         }
 
@@ -133,7 +134,7 @@ public class GenericHelper
     }
 
     private static boolean shouldBeIgnored(File file, Lookup lkp) {
-        if (file == null) {
+        if (file == null || lkp == null) {
             return true;
         }
 
@@ -152,7 +153,7 @@ public class GenericHelper
         }
 
         if (pattern.trim().length() > 0) {
-            if (Pattern.matches(".*(" + pattern + ").*", file.getAbsolutePath())) {
+            if (Pattern.matches(".*(" + pattern + ").*", file.getAbsolutePath().toLowerCase())) {
                 return retMatched;
             }
         }

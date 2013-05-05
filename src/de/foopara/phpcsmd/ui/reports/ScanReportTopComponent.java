@@ -1,5 +1,7 @@
 package de.foopara.phpcsmd.ui.reports;
 
+import de.foopara.phpcsmd.debug.Logger;
+import de.foopara.phpcsmd.generics.GenericHelper;
 import de.foopara.phpcsmd.generics.GenericPokeRegistry;
 import de.foopara.phpcsmd.generics.GenericTopComponent;
 import de.foopara.phpcsmd.option.PhpcpdOptions;
@@ -243,43 +245,46 @@ public final class ScanReportTopComponent extends GenericTopComponent
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        this.jProgressBar1.setValue(0);
-        this.jProgressBar1.setMaximum(1);
+        try {
+            this.jProgressBar1.setValue(0);
+            this.jProgressBar1.setMaximum(1);
 
-        this.fileCountThread = new FileCountThread(this.lkp);
-        this.fileCountThread.setFileObject(this.fileObject);
-        this.fileCountThread.setTopComponent(this);
+            this.fileCountThread = new FileCountThread(GenericHelper.getFileLookup(this.fileObject));
+            this.fileCountThread.setFileObject(this.fileObject);
+            this.fileCountThread.setTopComponent(this);
 
-        this.rescanThread = new RescanThread(this.lkp);
-        this.rescanThread.setFileObject(this.fileObject);
-        this.rescanThread.setTopComponent(this);
-        this.rescanThread.setRetrieveValuesFromRegistry(!this.optFullRescan.isSelected());
-        this.rescanThread.enablePhpcs(this.enablePhpcs.isSelected());
-        this.rescanThread.enablePhpmd(this.enablePhpmd.isSelected());
-        this.rescanThread.enablePhpcpd(this.enablePhpcpd.isSelected());
+            this.rescanThread = new RescanThread(GenericHelper.getFileLookup(this.fileObject));
+            this.rescanThread.setFileObject(this.fileObject);
+            this.rescanThread.setTopComponent(this);
+            this.rescanThread.setRetrieveValuesFromRegistry(!this.optFullRescan.isSelected());
+            this.rescanThread.enablePhpcs(this.enablePhpcs.isSelected());
+            this.rescanThread.enablePhpmd(this.enablePhpmd.isSelected());
+            this.rescanThread.enablePhpcpd(this.enablePhpcpd.isSelected());
 
-        this.scanReportTable1.flushElements();
-        this.detailTablePhpcs.flushElements();
-        this.detailTablePhpmd.flushElements();
-        this.detailTablePhpcpd.flushElements();
-        this.jProgressBar1.setVisible(true);
-        this.jButton2.setVisible(true);
-        this.jLabel4.setVisible(true);
+            this.scanReportTable1.flushElements();
+            this.detailTablePhpcs.flushElements();
+            this.detailTablePhpmd.flushElements();
+            this.detailTablePhpcpd.flushElements();
+            this.jProgressBar1.setVisible(true);
+            this.jButton2.setVisible(true);
+            this.jLabel4.setVisible(true);
 
-        this.jButton1.setEnabled(false);
-        this.optFullRescan.setEnabled(false);
-        this.enablePhpcs.setEnabled(false);
-        this.enablePhpmd.setEnabled(false);
-        this.enablePhpcpd.setEnabled(false);
-        this.jButton1.setVisible(false);
-        this.optFullRescan.setVisible(false);
-        this.enablePhpcs.setVisible(false);
-        this.enablePhpmd.setVisible(false);
-        this.enablePhpcpd.setVisible(false);
+            this.jButton1.setEnabled(false);
+            this.optFullRescan.setEnabled(false);
+            this.enablePhpcs.setEnabled(false);
+            this.enablePhpmd.setEnabled(false);
+            this.enablePhpcpd.setEnabled(false);
+            this.jButton1.setVisible(false);
+            this.optFullRescan.setVisible(false);
+            this.enablePhpcs.setVisible(false);
+            this.enablePhpmd.setVisible(false);
+            this.enablePhpcpd.setVisible(false);
 
-        this.fileCountThread.start();
-        this.rescanThread.start();
-
+            this.fileCountThread.start();
+            this.rescanThread.start();
+        } catch (Exception ex) {
+            Logger.getInstance().log(ex);
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void optFullRescanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_optFullRescanActionPerformed

@@ -106,6 +106,9 @@ public class QAThread extends Thread
 
         try {
             if (!GenericHelper.isDesirableFile(this.fo) || GenericHelper.isSymlink(FileUtil.toFile(this.fo))) {
+                if (handle != null) {
+                    handle.finish();
+                }
                 return;
             }
 
@@ -193,7 +196,7 @@ public class QAThread extends Thread
             Logger.getInstance().logPre("finished successful", QAThread.logCaption);
         } catch (IOException ex) {
             Logger.getInstance().log(ex);
-            Exceptions.printStackTrace(ex);
+            handle.finish();
         }
 
         if (handle != null) {

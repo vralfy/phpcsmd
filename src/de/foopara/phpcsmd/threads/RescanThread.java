@@ -37,6 +37,8 @@ public class RescanThread extends Thread
 
     private boolean interupted = false;
 
+    private ProgressHandle handle = null;
+
     public RescanThread(Lookup lkp) {
         super();
         this.lkp = lkp;
@@ -80,35 +82,51 @@ public class RescanThread extends Thread
     public void qarun() {
         this.count(this.fo, -1);
         this.component.setRescanDone();
+        Logger.getInstance().logPre("finished", "RescanThread", Logger.Severity.USELESS);
     }
 
     private int count(FileObject f, int fc) {
+        Logger.getInstance().logPre("starting " + f.getPath(), "RescanThread", Logger.Severity.USELESS);
         boolean firstRun = (fc == -1);
         if (fc < 0) {
             fc = 0;
         }
-        ProgressHandle handle = null;
+
         if (firstRun) {
             try {
-                handle = ProgressHandleFactory.createHandle("phpcsmd folder scan", null, null);
-                handle.start();
+                this.handle = ProgressHandleFactory.createHandle("phpcsmd folder scan", null, null);
+                this.handle.start();
             } catch (NoClassDefFoundError e) {
+                if (this.handle != null) {
+                    this.handle.finish();
+                }
                 Logger.getInstance().log(e);
             } catch (Exception e) {
+                if (this.handle != null) {
+                    this.handle.finish();
+                }
                 Logger.getInstance().log(e);
             }
         }
 
-        if (this.doInterupt(handle)) {
+        if (this.doInterupt(this.handle)) {
             return fc;
         }
 
         for (FileObject f2 : f.getChildren()) {
+            if (this.handle != null) {
+                this.handle.progress(f2.getPath());
+            }
+            Logger.getInstance().logPre(f2.getPath(), "RescanThread", Logger.Severity.USELESS);
             if (this.doInterupt(handle)) {
                 return fc;
             }
             try {
                 if (GenericHelper.isDesirableFile(f2) && !GenericHelper.isSymlink(FileUtil.toFile(f2))) {
+                    if (this.handle != null) {
+                        handle.progress("file scan: " + f2.getPath());
+                    }
+                    Logger.getInstance().logPre("file scan " + f2.getPath(), "RescanThread", Logger.Severity.USELESS);
                     fc += 1;
                     if (!this.retrieveValuesFromRegistry) {
                         QAThread qa = new QAThread(this.lkp);
@@ -126,25 +144,37 @@ public class RescanThread extends Thread
                     }
                     this.component.setScannedFilecount(fc);
                     this.component.addElementToTable(f2);
+                    Logger.getInstance().logPre("file scan " + f2.getPath() + " finished", "RescanThread", Logger.Severity.USELESS);
                 } else if (f2.isFolder() && !GenericHelper.isSymlink(FileUtil.toFile(f2))) {
+                    if (this.handle != null) {
+                        handle.progress("folder: " + f2.getPath());
+                    }
+                    Logger.getInstance().logPre("folder scan " + f2.getPath(), "RescanThread", Logger.Severity.USELESS);
                     fc = this.count(f2, fc);
+                    Logger.getInstance().logPre("folder scan " + f2.getPath() + " finished", "RescanThread", Logger.Severity.USELESS);
                 }
+
             } catch (IOException ex) {
                 Logger.getInstance().log(ex);
                 Exceptions.printStackTrace(ex);
             }
         }
-
         if (this.doInterupt(handle)) {
             return fc;
         }
+        Logger.getInstance().logPre("finished first part " + f.getPath(), "RescanThread", Logger.Severity.USELESS);
 
         if (GenericHelper.isDesirableFolder(f)
                 && firstRun
+                && this.enablePhpcpd
                 && (Boolean)PhpcpdOptions.load(PhpcpdOptions.Settings.ACTIVATEDFOLDER, this.lkp)
-                && this.enablePhpcpd) {
+                ) {
+            if (this.handle != null) {
+                this.handle.progress("phpcpd folder scan");
+            }
             Phpcpd cpdTask = new Phpcpd();
             HashMap<String, PhpcpdResult> res = cpdTask.runFolder(f, true);
+            Logger.getInstance().logPre("cpdTask " + f.getPath() + " finished", "RescanThread", Logger.Severity.USELESS);
             for (String path : res.keySet()) {
                 FileObject tmp = FileUtil.toFileObject(new File(path));
                 if (tmp != null) {
@@ -153,9 +183,10 @@ public class RescanThread extends Thread
             }
         }
 
-        if (handle != null) {
-            handle.finish();
+        if (this.handle != null) {
+            this.handle.finish();
         }
+        Logger.getInstance().logPre("finished " + f.getPath(), "RescanThread", Logger.Severity.USELESS);
         return fc;
     }
 
@@ -166,6 +197,7 @@ public class RescanThread extends Thread
     private boolean doInterupt(ProgressHandle handle) {
         if (this.interupted && handle != null) {
             handle.finish();
+            this.component.setRescanDone();
         }
 
         return this.interupted;

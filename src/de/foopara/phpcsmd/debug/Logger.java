@@ -42,9 +42,9 @@ public class Logger
         if ((Boolean)GeneralOptions.loadOriginal(GeneralOptions.Settings.DEBUGLOG) == true) {
             this.buff.append("<tr>");
             if (caption != null) {
-                this.buff.append("<td><b>").append(caption).append("</b></td>");
+                this.buff.append("<td style=\"vertical-align:top\"><b>").append(caption).append("</b></td>");
             }
-            this.buff.append("<td>").append(str).append("</td>");
+            this.buff.append("<td style=\"vertical-align:top\">").append(str).append("</td>");
             this.buff.append("</tr>");
         }
     }
