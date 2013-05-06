@@ -53,7 +53,7 @@ public class FileCountThread extends Thread
                 return fc;
             }
             try {
-                if (GenericHelper.isDesirableFile(f2, this.lkp) && !GenericHelper.isSymlink(f2)) {
+                if (GenericHelper.isDesirableFile(FileUtil.toFileObject(f2)) && !GenericHelper.isSymlink(f2)) {
                     fc += 1;
                     this.component.setMaximumFilecount(fc);
                 } else if (f2.isDirectory() && !GenericHelper.isSymlink(f2)) {

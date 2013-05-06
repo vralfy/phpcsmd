@@ -4,6 +4,7 @@ import de.foopara.phpcsmd.generics.GenericHelper;
 import de.foopara.phpcsmd.generics.GenericViolation;
 import java.io.File;
 import java.util.List;
+import org.openide.filesystems.FileUtil;
 import org.openide.util.Lookup;
 
 /**
@@ -82,8 +83,8 @@ public class GenericPhpcpdParser
             List<GenericViolation> cpdNoTask,
             String f1, int s1, int e1,
             String f2, int s2, int e2) {
-        if (!GenericHelper.isDesirableFile(new File(f1), lkp)
-                || !GenericHelper.isDesirableFile(new File(f2), lkp)) {
+        if (!GenericHelper.isDesirableFile(FileUtil.toFileObject(new File(f1)))
+                || !GenericHelper.isDesirableFile(FileUtil.toFileObject(new File(f2)))) {
             return;
         }
         if ((f1.compareTo(f2) != 0 && f2.compareTo(fo) == 0)

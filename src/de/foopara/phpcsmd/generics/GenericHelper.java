@@ -29,10 +29,6 @@ public class GenericHelper
         return GenericHelper.isDesirableFile(FileUtil.toFile(fileObject), GenericHelper.getFileLookup(fileObject), filter);
     }
 
-    public static boolean isDesirableFile(File file, Lookup lkp) {
-        return GenericHelper.isDesirableFile(file, lkp, true);
-    }
-
     public static boolean isDesirableFile(File file, Lookup lkp, boolean filter) {
         if (file == null) {
             Logger.getInstance().log("is not desired (null)", "", Logger.Severity.USELESS);
