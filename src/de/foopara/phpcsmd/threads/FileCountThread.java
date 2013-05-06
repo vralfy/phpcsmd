@@ -8,7 +8,6 @@ import java.io.IOException;
 import org.openide.filesystems.FileObject;
 import org.openide.filesystems.FileUtil;
 import org.openide.util.Exceptions;
-import org.openide.util.Lookup;
 
 public class FileCountThread extends Thread
 {
@@ -17,12 +16,9 @@ public class FileCountThread extends Thread
 
     private ScanReportTopComponent component = null;
 
-    private Lookup lkp;
-
     private boolean interupted = false;
 
-    public FileCountThread(Lookup lkp) {
-        this.lkp = lkp;
+    public FileCountThread() {
     }
 
     public void setFileObject(FileObject fo) {

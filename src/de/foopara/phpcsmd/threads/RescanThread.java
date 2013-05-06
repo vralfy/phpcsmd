@@ -33,18 +33,13 @@ public class RescanThread extends Thread
 
     private boolean enablePhpcpd = false;
 
-    private Lookup lkp;
-
     private boolean interupted = false;
 
     private ProgressHandle handle = null;
 
     public RescanThread(Lookup lkp) {
         super();
-        this.lkp = lkp;
-        this.enablePhpcs = (Boolean)PhpcsOptions.load(PhpcsOptions.Settings.ACTIVATED, this.lkp);
-        this.enablePhpmd = (Boolean)PhpmdOptions.load(PhpmdOptions.Settings.ACTIVATED, this.lkp);
-        this.enablePhpcpd = (Boolean)PhpcpdOptions.load(PhpcpdOptions.Settings.ACTIVATED, this.lkp) || (Boolean)PhpcpdOptions.load(PhpcpdOptions.Settings.ACTIVATEDFOLDER, this.lkp);
+
     }
 
     public void enablePhpcs(boolean enable) {
@@ -61,6 +56,10 @@ public class RescanThread extends Thread
 
     public void setFileObject(FileObject fo) {
         this.fo = fo;
+        Lookup lkp = GenericHelper.getFileLookup(fo);
+        this.enablePhpcs = (Boolean)PhpcsOptions.load(PhpcsOptions.Settings.ACTIVATED, lkp);
+        this.enablePhpmd = (Boolean)PhpmdOptions.load(PhpmdOptions.Settings.ACTIVATED, lkp);
+        this.enablePhpcpd = (Boolean)PhpcpdOptions.load(PhpcpdOptions.Settings.ACTIVATED, lkp) || (Boolean)PhpcpdOptions.load(PhpcpdOptions.Settings.ACTIVATEDFOLDER, lkp);
     }
 
     public void setTopComponent(ScanReportTopComponent c) {
@@ -117,41 +116,38 @@ public class RescanThread extends Thread
             if (this.handle != null) {
                 this.handle.progress(f2.getPath());
             }
-            Logger.getInstance().logPre(f2.getPath(), "RescanThread", Logger.Severity.USELESS);
+
             if (this.doInterupt(handle)) {
                 return fc;
             }
             try {
                 if (GenericHelper.isDesirableFile(f2) && !GenericHelper.isSymlink(FileUtil.toFile(f2))) {
                     if (this.handle != null) {
-                        handle.progress("file scan: " + f2.getPath());
+                        this.handle.progress("file scan: " + f2.getPath());
                     }
-                    Logger.getInstance().logPre("file scan " + f2.getPath(), "RescanThread", Logger.Severity.USELESS);
                     fc += 1;
                     if (!this.retrieveValuesFromRegistry) {
-                        QAThread qa = new QAThread(this.lkp);
+
+                        QAThread qa = new QAThread();
+                        qa.setFileObject(f2);
                         qa.enableNotification(false);
                         qa.enablePhpcs(this.enablePhpcs);
                         qa.enablePhpmd(this.enablePhpmd);
                         qa.enablePhpcpd(this.enablePhpcpd);
-                        if ((Boolean)PhpcpdOptions.load(PhpcpdOptions.Settings.ACTIVATEDFOLDER, this.lkp)) {
+                        if ((Boolean)PhpcpdOptions.load(PhpcpdOptions.Settings.ACTIVATEDFOLDER, GenericHelper.getFileLookup(f2))) {
                             qa.enablePhpcpd(false);
                         }
                         this.component.setCurrentScannedFile(f2);
-                        qa.setFileObject(f2);
                         qa.setPoking(false);
                         qa.run();
                     }
                     this.component.setScannedFilecount(fc);
                     this.component.addElementToTable(f2);
-                    Logger.getInstance().logPre("file scan " + f2.getPath() + " finished", "RescanThread", Logger.Severity.USELESS);
                 } else if (f2.isFolder() && !GenericHelper.isSymlink(FileUtil.toFile(f2))) {
                     if (this.handle != null) {
-                        handle.progress("folder: " + f2.getPath());
+                        this.handle.progress("folder: " + f2.getPath());
                     }
-                    Logger.getInstance().logPre("folder scan " + f2.getPath(), "RescanThread", Logger.Severity.USELESS);
                     fc = this.count(f2, fc);
-                    Logger.getInstance().logPre("folder scan " + f2.getPath() + " finished", "RescanThread", Logger.Severity.USELESS);
                 }
 
             } catch (IOException ex) {
@@ -159,22 +155,20 @@ public class RescanThread extends Thread
                 Exceptions.printStackTrace(ex);
             }
         }
-        if (this.doInterupt(handle)) {
+        if (this.doInterupt(this.handle)) {
             return fc;
         }
-        Logger.getInstance().logPre("finished first part " + f.getPath(), "RescanThread", Logger.Severity.USELESS);
 
         if (GenericHelper.isDesirableFolder(f)
                 && firstRun
                 && this.enablePhpcpd
-                && (Boolean)PhpcpdOptions.load(PhpcpdOptions.Settings.ACTIVATEDFOLDER, this.lkp)
+                && (Boolean)PhpcpdOptions.load(PhpcpdOptions.Settings.ACTIVATEDFOLDER, GenericHelper.getFileLookup(f))
                 ) {
             if (this.handle != null) {
                 this.handle.progress("phpcpd folder scan");
             }
             Phpcpd cpdTask = new Phpcpd();
             HashMap<String, PhpcpdResult> res = cpdTask.runFolder(f, true);
-            Logger.getInstance().logPre("cpdTask " + f.getPath() + " finished", "RescanThread", Logger.Severity.USELESS);
             for (String path : res.keySet()) {
                 FileObject tmp = FileUtil.toFileObject(new File(path));
                 if (tmp != null) {
@@ -186,7 +180,7 @@ public class RescanThread extends Thread
         if (this.handle != null) {
             this.handle.finish();
         }
-        Logger.getInstance().logPre("finished " + f.getPath(), "RescanThread", Logger.Severity.USELESS);
+
         return fc;
     }
 

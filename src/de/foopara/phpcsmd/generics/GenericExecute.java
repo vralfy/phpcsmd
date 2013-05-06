@@ -44,7 +44,7 @@ abstract public class GenericExecute
 
     public static void executeQATools(FileObject fo) {
         Lookup lkp = GenericHelper.getFileLookup(fo);
-        QAThread qaThread = new QAThread(lkp);
+        QAThread qaThread = new QAThread();
         qaThread.setFileObject(fo);
         if ((Boolean)GeneralOptions.load(GeneralOptions.Settings.THREADED, lkp)) {
             qaThread.start();

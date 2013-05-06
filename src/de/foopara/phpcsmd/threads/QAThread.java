@@ -18,7 +18,6 @@ import org.netbeans.api.progress.ProgressHandle;
 import org.netbeans.api.progress.ProgressHandleFactory;
 import org.openide.filesystems.FileObject;
 import org.openide.filesystems.FileUtil;
-import org.openide.util.Exceptions;
 import org.openide.util.Lookup;
 
 public class QAThread extends Thread
@@ -42,14 +41,8 @@ public class QAThread extends Thread
 
     private boolean enableNotification = true;
 
-    private Lookup lkp;
-
-    public QAThread(Lookup lkp) {
+    public QAThread() {
         super();
-        this.lkp = lkp;
-        this.enablePhpcs = (Boolean)PhpcsOptions.load(PhpcsOptions.Settings.ACTIVATED, this.lkp);
-        this.enablePhpmd = (Boolean)PhpmdOptions.load(PhpmdOptions.Settings.ACTIVATED, this.lkp);
-        this.enablePhpcpd = (Boolean)PhpcpdOptions.load(PhpcpdOptions.Settings.ACTIVATED, this.lkp) || (Boolean)PhpcpdOptions.load(PhpcpdOptions.Settings.ACTIVATEDFOLDER, this.lkp);
     }
 
     public void enablePhpcs(boolean enable) {
@@ -70,6 +63,10 @@ public class QAThread extends Thread
 
     public void setFileObject(FileObject fo) {
         this.fo = fo;
+        Lookup lkp = GenericHelper.getFileLookup(fo);
+        this.enablePhpcs = (Boolean)PhpcsOptions.load(PhpcsOptions.Settings.ACTIVATED, lkp);
+        this.enablePhpmd = (Boolean)PhpmdOptions.load(PhpmdOptions.Settings.ACTIVATED, lkp);
+        this.enablePhpcpd = (Boolean)PhpcpdOptions.load(PhpcpdOptions.Settings.ACTIVATED, lkp) || (Boolean)PhpcpdOptions.load(PhpcpdOptions.Settings.ACTIVATEDFOLDER, lkp);
     }
 
     public void setPoking(boolean poke) {
@@ -196,7 +193,6 @@ public class QAThread extends Thread
             Logger.getInstance().logPre("finished successful", QAThread.logCaption);
         } catch (IOException ex) {
             Logger.getInstance().log(ex);
-            handle.finish();
         }
 
         if (handle != null) {

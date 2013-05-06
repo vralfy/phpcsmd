@@ -249,7 +249,7 @@ public final class ScanReportTopComponent extends GenericTopComponent
             this.jProgressBar1.setValue(0);
             this.jProgressBar1.setMaximum(1);
 
-            this.fileCountThread = new FileCountThread(GenericHelper.getFileLookup(this.fileObject));
+            this.fileCountThread = new FileCountThread();
             this.fileCountThread.setFileObject(this.fileObject);
             this.fileCountThread.setTopComponent(this);
 

@@ -36,63 +36,20 @@ public class GenericHelper
         }
 
         if (!file.exists()) {
-            Logger.getInstance().log(file.getAbsolutePath() + " is not desired (does not exist)", "", Logger.Severity.USELESS);
+            Logger.getInstance().log(file.getAbsolutePath() + " is not desired (does not exist)", "desirableFile", Logger.Severity.USELESS);
             return false;
         }
         if (!file.canRead()) {
-            Logger.getInstance().log(file.getAbsolutePath() + " is not desired (can't read)", "", Logger.Severity.USELESS);
+            Logger.getInstance().log(file.getAbsolutePath() + " is not desired (can't read)", "desirableFile", Logger.Severity.USELESS);
             return false;
         }
         if (!file.isFile()) {
-            Logger.getInstance().log(file.getAbsolutePath() + " is not desired (not a file)", "", Logger.Severity.USELESS);
+            Logger.getInstance().log(file.getAbsolutePath() + " is not desired (not a file)", "desirableFile", Logger.Severity.USELESS);
             return false;
         }
 
-        if (filter && GenericHelper.shouldBeIgnored(file, lkp)) {
-            Logger.getInstance().log(file.getAbsolutePath() + " is not desired (on ignore list)", "", Logger.Severity.USELESS);
-            return false;
-        }
-
-        File parent = new File(file.getParent());
-        if (!GenericHelper.isDesirableFolder(parent, filter, lkp)) {
-            Logger.getInstance().log(file.getAbsolutePath() + " is not desired (parent folder is not desired)", "", Logger.Severity.USELESS);
-            return false;
-        }
-
-        return true;
-    }
-
-    public static boolean isDesirableFolder(FileObject fileObject) {
-        return GenericHelper.isDesirableFolder(fileObject, true);
-    }
-
-    public static boolean isDesirableFolder(FileObject fileObject, boolean filter) {
-        if (fileObject == null) {
-            return false;
-        }
-        return GenericHelper.isDesirableFolder(FileUtil.toFile(fileObject), filter, GenericHelper.getFileLookup(fileObject));
-    }
-
-    public static boolean isDesirableFolder(File file, Lookup lkp) {
-        return GenericHelper.isDesirableFolder(file, true, lkp);
-    }
-
-    public static boolean isDesirableFolder(File file, boolean filter, Lookup lkp) {
-        if (file == null) {
-            return false;
-        }
-
-        if (!file.exists()) {
-            return false;
-        }
-        if (!file.canRead()) {
-            return false;
-        }
-        if (!file.isDirectory()) {
-            return false;
-        }
-
-        if (filter && GenericHelper.shouldBeIgnored(file, lkp)) {
+        if (filter && GenericHelper.shouldBeIgnored(FileUtil.toFileObject(file))) {
+            Logger.getInstance().log(file.getAbsolutePath() + " is not desired (on ignore list)", "desirableFile", Logger.Severity.USELESS);
             return false;
         }
 
@@ -101,6 +58,53 @@ public class GenericHelper
             || !project.getClass().getCanonicalName().endsWith("php.project.PhpProject"))
             && (Boolean)GeneralOptions.loadOriginal(GeneralOptions.Settings.SCANINNONPHP) == false
         ) {
+            Logger.getInstance().log(file.getAbsolutePath() + " is not desired (non PHP project)", "desirableFile", Logger.Severity.USELESS);
+            return false;
+        }
+
+        File parent = new File(file.getParent());
+        if (!GenericHelper.isDesirableFolder(parent, lkp, filter)) {
+            Logger.getInstance().log(file.getAbsolutePath() + " is not desired (parent folder is not desired)", "desirableFile", Logger.Severity.USELESS);
+            return false;
+        }
+
+        return true;
+    }
+
+    public static boolean isDesirableFolder(FileObject fileObject) {
+        return GenericHelper.isDesirableFolder(FileUtil.toFile(fileObject), GenericHelper.getFileLookup(fileObject), true);
+    }
+
+    public static boolean isDesirableFolder(File file, Lookup lkp, boolean filter) {
+        if (file == null) {
+            Logger.getInstance().log("is not desired (null)", "desirableFolder", Logger.Severity.USELESS);
+            return false;
+        }
+
+        if (!file.exists()) {
+            Logger.getInstance().log(file.getAbsolutePath() + " is not desired (does not exist)", "desirableFolder", Logger.Severity.USELESS);
+            return false;
+        }
+        if (!file.canRead()) {
+            Logger.getInstance().log(file.getAbsolutePath() + " is not desired (is not readable)", "desirableFolder", Logger.Severity.USELESS);
+            return false;
+        }
+        if (!file.isDirectory()) {
+            Logger.getInstance().log(file.getAbsolutePath() + " is not desired (no such directory)", "desirableFolder", Logger.Severity.USELESS);
+            return false;
+        }
+
+        if (filter && GenericHelper.shouldBeIgnored(file, lkp)) {
+            Logger.getInstance().log(file.getAbsolutePath() + " is not desired (ignored)", "desirableFolder", Logger.Severity.USELESS);
+            return false;
+        }
+
+        Project project = GenericHelper.getProjectFromLookup(lkp);
+        if ((project == null
+            || !project.getClass().getCanonicalName().endsWith("php.project.PhpProject"))
+            && (Boolean)GeneralOptions.loadOriginal(GeneralOptions.Settings.SCANINNONPHP) == false
+        ) {
+            Logger.getInstance().log(file.getAbsolutePath() + " is not desired (non PHP project)", "desirable folder", Logger.Severity.USELESS);
             return false;
         }
 
@@ -150,6 +154,7 @@ public class GenericHelper
 
         if (pattern.trim().length() > 0) {
             if (Pattern.matches(".*(" + pattern + ").*", file.getAbsolutePath().toLowerCase())) {
+                Logger.getInstance().logPre(file.getAbsolutePath() + " matches " + pattern + " " + retMatched, "ignore", Logger.Severity.EXCEPTION);
                 return retMatched;
             }
         }
@@ -192,6 +197,10 @@ public class GenericHelper
     }
 
     public static Project getProjectFromLookup(Lookup lkp) {
+        if (lkp == null) {
+            return null;
+        }
+
         Project ret = lkp.lookup(Project.class);
         //Try getting it from Dataobject
         if (ret == null) {
@@ -207,13 +216,15 @@ public class GenericHelper
     public static Lookup getFileLookup(FileObject fo) {
         try {
             if (fo == null
-                || !fo.isData()
                 || fo.isVirtual()
                 || DataObject.find(fo).getLookup() == null
-                || !GenericHelper.isDesirableFile(FileUtil.toFile(fo), DataObject.find(fo).getLookup(), false)
+                || !(
+                    GenericHelper.isDesirableFile(FileUtil.toFile(fo), DataObject.find(fo).getLookup(), false)
+                    || GenericHelper.isDesirableFolder(FileUtil.toFile(fo), DataObject.find(fo).getLookup(), false)
+                    )
             ) {
                 if (fo != null) {
-                    Logger.getInstance().logPre("Can not find lookup for " + fo.getName(), "", Logger.Severity.USELESS);
+                    Logger.getInstance().logPre("Can not find lookup for " + fo.getPath(), "", Logger.Severity.USELESS);
                 }
                 return null;
             }
