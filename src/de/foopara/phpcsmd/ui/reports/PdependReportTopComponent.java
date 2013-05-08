@@ -1,11 +1,7 @@
 package de.foopara.phpcsmd.ui.reports;
 
-import de.foopara.phpcsmd.exec.pdepend.PdependResult;
-import de.foopara.phpcsmd.exec.pdepend.PdependTypes;
-import de.foopara.phpcsmd.generics.GenericHelper;
-import de.foopara.phpcsmd.generics.GenericTopComponent;
-import de.foopara.phpcsmd.threads.PdependThread;
 import java.io.File;
+
 import org.netbeans.api.actions.Openable;
 import org.netbeans.api.settings.ConvertAsProperties;
 import org.openide.awt.ActionID;
@@ -15,6 +11,12 @@ import org.openide.filesystems.FileUtil;
 import org.openide.util.Lookup;
 import org.openide.util.NbBundle.Messages;
 import org.openide.windows.TopComponent;
+
+import de.foopara.phpcsmd.exec.pdepend.PdependResult;
+import de.foopara.phpcsmd.exec.pdepend.PdependTypes;
+import de.foopara.phpcsmd.generics.GenericHelper;
+import de.foopara.phpcsmd.generics.GenericTopComponent;
+import de.foopara.phpcsmd.threads.PdependThread;
 
 /**
  * Top component which displays something.

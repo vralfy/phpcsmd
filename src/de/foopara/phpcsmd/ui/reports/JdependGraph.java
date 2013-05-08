@@ -1,10 +1,12 @@
 package de.foopara.phpcsmd.ui.reports;
 
-import de.foopara.phpcsmd.exec.pdepend.PdependTypes;
 import java.awt.*;
 import java.util.HashMap;
 import java.util.HashSet;
+
 import javax.swing.JPanel;
+
+import de.foopara.phpcsmd.exec.pdepend.PdependTypes;
 
 public class JdependGraph extends JPanel
 {

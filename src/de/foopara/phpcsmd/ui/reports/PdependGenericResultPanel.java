@@ -1,16 +1,19 @@
 package de.foopara.phpcsmd.ui.reports;
 
-import de.foopara.phpcsmd.debug.Logger;
-import de.foopara.phpcsmd.exec.pdepend.PdependResult;
-import de.foopara.phpcsmd.option.PdependOptions;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.LayoutManager;
 import java.lang.reflect.Field;
 import java.util.HashMap;
+
 import javax.swing.*;
+
 import org.openide.util.Exceptions;
 import org.openide.util.Lookup;
+
+import de.foopara.phpcsmd.debug.Logger;
+import de.foopara.phpcsmd.exec.pdepend.PdependResult;
+import de.foopara.phpcsmd.option.PdependOptions;
 
 /**
  *

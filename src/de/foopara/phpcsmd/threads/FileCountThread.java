@@ -1,13 +1,15 @@
 package de.foopara.phpcsmd.threads;
 
-import de.foopara.phpcsmd.debug.Logger;
-import de.foopara.phpcsmd.generics.GenericHelper;
-import de.foopara.phpcsmd.ui.reports.ScanReportTopComponent;
 import java.io.File;
 import java.io.IOException;
+
 import org.openide.filesystems.FileObject;
 import org.openide.filesystems.FileUtil;
 import org.openide.util.Exceptions;
+
+import de.foopara.phpcsmd.debug.Logger;
+import de.foopara.phpcsmd.generics.GenericHelper;
+import de.foopara.phpcsmd.ui.reports.ScanReportTopComponent;
 
 public class FileCountThread extends Thread
 {

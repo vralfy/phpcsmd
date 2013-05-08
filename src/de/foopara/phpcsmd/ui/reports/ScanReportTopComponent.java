@@ -1,5 +1,12 @@
 package de.foopara.phpcsmd.ui.reports;
 
+import org.netbeans.api.settings.ConvertAsProperties;
+import org.openide.awt.ActionID;
+import org.openide.awt.ActionReference;
+import org.openide.filesystems.FileObject;
+import org.openide.util.NbBundle.Messages;
+import org.openide.windows.TopComponent;
+
 import de.foopara.phpcsmd.debug.Logger;
 import de.foopara.phpcsmd.generics.GenericHelper;
 import de.foopara.phpcsmd.generics.GenericPokeRegistry;
@@ -9,12 +16,6 @@ import de.foopara.phpcsmd.option.PhpcsOptions;
 import de.foopara.phpcsmd.option.PhpmdOptions;
 import de.foopara.phpcsmd.threads.FileCountThread;
 import de.foopara.phpcsmd.threads.RescanThread;
-import org.netbeans.api.settings.ConvertAsProperties;
-import org.openide.awt.ActionID;
-import org.openide.awt.ActionReference;
-import org.openide.filesystems.FileObject;
-import org.openide.util.NbBundle.Messages;
-import org.openide.windows.TopComponent;
 
 /**
  * Top component which displays something.

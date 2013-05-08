@@ -1,12 +1,13 @@
 package de.foopara.phpcsmd.generics;
 
-import de.foopara.phpcsmd.FileListenerRegistry;
-import de.foopara.phpcsmd.ViolationRegistry;
-import de.foopara.phpcsmd.option.GeneralOptions;
 import org.openide.filesystems.FileAttributeEvent;
 import org.openide.filesystems.FileChangeListener;
 import org.openide.filesystems.FileEvent;
 import org.openide.filesystems.FileRenameEvent;
+
+import de.foopara.phpcsmd.FileListenerRegistry;
+import de.foopara.phpcsmd.ViolationRegistry;
+import de.foopara.phpcsmd.option.GeneralOptions;
 
 /**
  *

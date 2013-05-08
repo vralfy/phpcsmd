@@ -1,15 +1,17 @@
 package de.foopara.phpcsmd.ui;
 
-import de.foopara.phpcsmd.debug.Logger;
-import de.foopara.phpcsmd.generics.GenericOptionsPanel;
-import de.foopara.phpcsmd.option.GeneralOptions;
 import java.awt.Color;
 import java.awt.Dialog;
 import java.awt.Window;
 import java.awt.event.HierarchyEvent;
 import java.awt.event.HierarchyListener;
+
 import javax.swing.ButtonGroup;
 import javax.swing.SwingUtilities;
+
+import de.foopara.phpcsmd.debug.Logger;
+import de.foopara.phpcsmd.generics.GenericOptionsPanel;
+import de.foopara.phpcsmd.option.GeneralOptions;
 
 public class GeneralOptionsPanel extends GenericOptionsPanel
 {

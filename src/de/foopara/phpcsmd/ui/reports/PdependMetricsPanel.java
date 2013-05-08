@@ -1,9 +1,11 @@
 package de.foopara.phpcsmd.ui.reports;
 
+import javax.swing.JProgressBar;
+
+import org.openide.util.Lookup;
+
 import de.foopara.phpcsmd.exec.pdepend.PdependTypes;
 import de.foopara.phpcsmd.option.PdependOptions;
-import javax.swing.JProgressBar;
-import org.openide.util.Lookup;
 
 public class PdependMetricsPanel extends PdependGenericResultPanel
 {

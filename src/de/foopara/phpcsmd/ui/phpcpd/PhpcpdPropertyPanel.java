@@ -4,9 +4,10 @@
  */
 package de.foopara.phpcsmd.ui.phpcpd;
 
+import org.openide.util.Lookup;
+
 import de.foopara.phpcsmd.generics.GenericOptionsPanel;
 import de.foopara.phpcsmd.option.PhpcpdOptions;
-import org.openide.util.Lookup;
 
 public class PhpcpdPropertyPanel extends GenericOptionsPanel
 {

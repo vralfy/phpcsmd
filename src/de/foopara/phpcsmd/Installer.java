@@ -4,21 +4,23 @@
  */
 package de.foopara.phpcsmd;
 
-import de.foopara.phpcsmd.debug.Logger;
-import de.foopara.phpcsmd.generics.GenericAnnotationBuilder;
-import de.foopara.phpcsmd.generics.GenericExecute;
-import de.foopara.phpcsmd.generics.GenericHelper;
-import de.foopara.phpcsmd.option.GeneralOptions;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.HashSet;
 import java.util.Iterator;
+
 import org.openide.filesystems.FileObject;
 import org.openide.loaders.DataObject;
 import org.openide.modules.ModuleInstall;
 import org.openide.util.Lookup;
 import org.openide.windows.TopComponent;
 import org.openide.windows.WindowManager;
+
+import de.foopara.phpcsmd.debug.Logger;
+import de.foopara.phpcsmd.generics.GenericAnnotationBuilder;
+import de.foopara.phpcsmd.generics.GenericExecute;
+import de.foopara.phpcsmd.generics.GenericHelper;
+import de.foopara.phpcsmd.option.GeneralOptions;
 
 /**
  *

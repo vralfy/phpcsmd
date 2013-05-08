@@ -1,10 +1,9 @@
 package de.foopara.phpcsmd.generics;
 
-import de.foopara.phpcsmd.debug.Logger;
-import de.foopara.phpcsmd.option.GeneralOptions;
 import java.io.File;
 import java.io.IOException;
 import java.util.regex.Pattern;
+
 import org.netbeans.api.project.FileOwnerQuery;
 import org.netbeans.api.project.Project;
 import org.openide.filesystems.FileObject;
@@ -12,6 +11,9 @@ import org.openide.filesystems.FileUtil;
 import org.openide.loaders.DataObject;
 import org.openide.loaders.DataObjectNotFoundException;
 import org.openide.util.Lookup;
+
+import de.foopara.phpcsmd.debug.Logger;
+import de.foopara.phpcsmd.option.GeneralOptions;
 
 public class GenericHelper
 {

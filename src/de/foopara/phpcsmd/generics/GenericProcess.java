@@ -1,6 +1,5 @@
 package de.foopara.phpcsmd.generics;
 
-import de.foopara.phpcsmd.debug.Logger;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -8,11 +7,14 @@ import java.io.InputStream;
 import java.util.HashSet;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
+
 import org.netbeans.api.extexecution.ExecutionDescriptor;
 import org.netbeans.api.extexecution.ExecutionService;
 import org.netbeans.api.extexecution.ExternalProcessBuilder;
 import org.openide.util.Exceptions;
 import org.openide.util.Lookup;
+
+import de.foopara.phpcsmd.debug.Logger;
 
 /**
  *

@@ -1,15 +1,17 @@
 package de.foopara.phpcsmd.exec.pdepend;
 
+import java.io.File;
+import java.util.HashSet;
+
+import org.openide.filesystems.FileObject;
+import org.openide.util.Lookup;
+
 import de.foopara.phpcsmd.debug.Logger;
 import de.foopara.phpcsmd.generics.GenericHelper;
 import de.foopara.phpcsmd.generics.GenericOutputReader;
 import de.foopara.phpcsmd.generics.GenericProcess;
 import de.foopara.phpcsmd.option.PdependOptions;
 import de.foopara.phpcsmd.ui.reports.PdependReportTopComponent;
-import java.io.File;
-import java.util.HashSet;
-import org.openide.filesystems.FileObject;
-import org.openide.util.Lookup;
 
 public class Pdepend
 {

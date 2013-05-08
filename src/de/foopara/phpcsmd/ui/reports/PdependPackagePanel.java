@@ -1,11 +1,14 @@
 package de.foopara.phpcsmd.ui.reports;
 
-import de.foopara.phpcsmd.exec.pdepend.PdependTypes;
-import de.foopara.phpcsmd.option.PdependOptions;
 import java.util.HashSet;
+
 import javax.swing.JLabel;
 import javax.swing.JProgressBar;
+
 import org.openide.util.Lookup;
+
+import de.foopara.phpcsmd.exec.pdepend.PdependTypes;
+import de.foopara.phpcsmd.option.PdependOptions;
 
 /**
  *

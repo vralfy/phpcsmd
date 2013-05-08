@@ -1,9 +1,10 @@
 package de.foopara.phpcsmd.ui.reports;
 
-import de.foopara.phpcsmd.exec.pdepend.PdependResult;
-import de.foopara.phpcsmd.exec.pdepend.PdependTypes;
 import javax.swing.JTree;
 import javax.swing.tree.DefaultTreeModel;
+
+import de.foopara.phpcsmd.exec.pdepend.PdependResult;
+import de.foopara.phpcsmd.exec.pdepend.PdependTypes;
 
 public class PdependTree extends JTree
 {

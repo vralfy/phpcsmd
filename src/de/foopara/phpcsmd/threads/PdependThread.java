@@ -1,12 +1,13 @@
 package de.foopara.phpcsmd.threads;
 
+import org.netbeans.api.progress.ProgressHandle;
+import org.netbeans.api.progress.ProgressHandleFactory;
+import org.openide.filesystems.FileObject;
+
 import de.foopara.phpcsmd.debug.Logger;
 import de.foopara.phpcsmd.exec.pdepend.Pdepend;
 import de.foopara.phpcsmd.exec.pdepend.PdependResult;
 import de.foopara.phpcsmd.ui.reports.PdependReportTopComponent;
-import org.netbeans.api.progress.ProgressHandle;
-import org.netbeans.api.progress.ProgressHandleFactory;
-import org.openide.filesystems.FileObject;
 
 public class PdependThread extends Thread
 {

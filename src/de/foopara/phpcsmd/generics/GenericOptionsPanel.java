@@ -2,6 +2,7 @@ package de.foopara.phpcsmd.generics;
 
 import java.awt.Color;
 import java.io.File;
+
 import javax.swing.JFileChooser;
 import javax.swing.JTextField;
 import javax.swing.UIDefaults;

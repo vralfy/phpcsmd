@@ -1,18 +1,20 @@
 package de.foopara.phpcsmd;
 
-import de.foopara.phpcsmd.exec.phpcpd.PhpcpdResult;
-import de.foopara.phpcsmd.generics.GenericAnnotationBuilder;
-import de.foopara.phpcsmd.generics.GenericResult;
-import de.foopara.phpcsmd.generics.GenericViolation;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
+
 import org.netbeans.spi.tasklist.PushTaskScanner.Callback;
 import org.netbeans.spi.tasklist.Task;
 import org.openide.filesystems.FileObject;
 import org.openide.filesystems.FileUtil;
+
+import de.foopara.phpcsmd.exec.phpcpd.PhpcpdResult;
+import de.foopara.phpcsmd.generics.GenericAnnotationBuilder;
+import de.foopara.phpcsmd.generics.GenericResult;
+import de.foopara.phpcsmd.generics.GenericViolation;
 
 /**
  *

@@ -1,11 +1,13 @@
 package de.foopara.phpcsmd.generics;
 
-import de.foopara.phpcsmd.debug.Logger;
 import java.io.CharArrayReader;
 import java.io.IOException;
 import java.io.Reader;
+
 import org.netbeans.api.extexecution.ExecutionDescriptor;
 import org.netbeans.api.extexecution.input.InputProcessor;
+
+import de.foopara.phpcsmd.debug.Logger;
 
 /**
  *

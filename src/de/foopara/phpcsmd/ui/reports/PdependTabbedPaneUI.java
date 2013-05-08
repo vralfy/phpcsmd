@@ -4,9 +4,11 @@
  */
 package de.foopara.phpcsmd.ui.reports;
 
-import de.foopara.phpcsmd.option.PdependOptions;
 import javax.swing.plaf.basic.BasicTabbedPaneUI;
+
 import org.openide.util.Lookup;
+
+import de.foopara.phpcsmd.option.PdependOptions;
 
 public class PdependTabbedPaneUI extends BasicTabbedPaneUI
 {

@@ -1,13 +1,15 @@
 package de.foopara.phpcsmd.generics;
 
-import de.foopara.phpcsmd.FileListenerRegistry;
-import de.foopara.phpcsmd.ViolationRegistry;
-import de.foopara.phpcsmd.debug.Logger;
 import java.util.List;
+
 import org.openide.cookies.LineCookie;
 import org.openide.filesystems.FileObject;
 import org.openide.text.Line;
 import org.openide.util.Lookup;
+
+import de.foopara.phpcsmd.FileListenerRegistry;
+import de.foopara.phpcsmd.ViolationRegistry;
+import de.foopara.phpcsmd.debug.Logger;
 
 /**
  *

@@ -1,8 +1,9 @@
 package de.foopara.phpcsmd.exec.phpmd;
 
+import java.util.List;
+
 import de.foopara.phpcsmd.generics.GenericResult;
 import de.foopara.phpcsmd.generics.GenericViolation;
-import java.util.List;
 
 /**
  *

@@ -1,19 +1,21 @@
 package de.foopara.phpcsmd.exec.phpcpd;
 
-import de.foopara.phpcsmd.ViolationRegistry;
-import de.foopara.phpcsmd.debug.Logger;
-import de.foopara.phpcsmd.generics.GenericHelper;
-import de.foopara.phpcsmd.generics.GenericOutputReader;
-import de.foopara.phpcsmd.generics.GenericViolation;
 import java.io.File;
 import java.io.IOException;
 import java.io.Reader;
 import java.util.ArrayList;
 import java.util.List;
+
 import org.openide.filesystems.FileObject;
 import org.openide.filesystems.FileUtil;
 import org.openide.util.Exceptions;
 import org.openide.util.Lookup;
+
+import de.foopara.phpcsmd.ViolationRegistry;
+import de.foopara.phpcsmd.debug.Logger;
+import de.foopara.phpcsmd.generics.GenericHelper;
+import de.foopara.phpcsmd.generics.GenericOutputReader;
+import de.foopara.phpcsmd.generics.GenericViolation;
 
 /**
  *

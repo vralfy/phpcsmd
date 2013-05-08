@@ -1,8 +1,10 @@
 package de.foopara.phpcsmd.generics;
 
-import de.foopara.phpcsmd.ui.reports.ScanReportTopComponent;
 import java.util.HashSet;
+
 import org.openide.filesystems.FileObject;
+
+import de.foopara.phpcsmd.ui.reports.ScanReportTopComponent;
 
 public class GenericPokeRegistry
 {

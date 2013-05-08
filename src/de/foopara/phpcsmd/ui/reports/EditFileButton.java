@@ -1,14 +1,17 @@
 package de.foopara.phpcsmd.ui.reports;
 
-import de.foopara.phpcsmd.generics.GenericHelper;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+
 import javax.swing.JButton;
+
 import org.netbeans.api.actions.Openable;
 import org.openide.filesystems.FileObject;
 import org.openide.filesystems.FileUtil;
 import org.openide.util.Lookup;
+
+import de.foopara.phpcsmd.generics.GenericHelper;
 
 public class EditFileButton extends JButton
 {

@@ -4,9 +4,10 @@
  */
 package de.foopara.phpcsmd.ui.pdepend;
 
+import org.openide.util.Lookup;
+
 import de.foopara.phpcsmd.generics.GenericOptionsPanel;
 import de.foopara.phpcsmd.option.PdependOptions;
-import org.openide.util.Lookup;
 
 public class PdependPropertyPanel extends GenericOptionsPanel
 {

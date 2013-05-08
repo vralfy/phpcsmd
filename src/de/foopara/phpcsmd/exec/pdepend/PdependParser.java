@@ -1,13 +1,13 @@
 package de.foopara.phpcsmd.exec.pdepend;
 
-import de.foopara.phpcsmd.debug.Logger;
-import de.foopara.phpcsmd.generics.GenericOutputReader;
 import java.io.IOException;
 import java.lang.reflect.Field;
 import java.util.HashSet;
+
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
+
 import org.openide.util.Exceptions;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
@@ -15,6 +15,9 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
+
+import de.foopara.phpcsmd.debug.Logger;
+import de.foopara.phpcsmd.generics.GenericOutputReader;
 
 /**
  *

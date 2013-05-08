@@ -4,11 +4,13 @@
  */
 package de.foopara.phpcsmd.ui.phpcs;
 
+import javax.swing.DefaultComboBoxModel;
+
+import org.openide.util.Lookup;
+
 import de.foopara.phpcsmd.exec.phpcs.Phpcs;
 import de.foopara.phpcsmd.generics.GenericOptionsPanel;
 import de.foopara.phpcsmd.option.PhpcsOptions;
-import javax.swing.DefaultComboBoxModel;
-import org.openide.util.Lookup;
 
 public class PhpcsPropertyPanel extends GenericOptionsPanel
 {

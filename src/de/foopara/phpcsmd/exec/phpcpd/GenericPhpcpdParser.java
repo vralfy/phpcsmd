@@ -1,11 +1,13 @@
 package de.foopara.phpcsmd.exec.phpcpd;
 
-import de.foopara.phpcsmd.generics.GenericHelper;
-import de.foopara.phpcsmd.generics.GenericViolation;
 import java.io.File;
 import java.util.List;
+
 import org.openide.filesystems.FileUtil;
 import org.openide.util.Lookup;
+
+import de.foopara.phpcsmd.generics.GenericHelper;
+import de.foopara.phpcsmd.generics.GenericViolation;
 
 /**
  *

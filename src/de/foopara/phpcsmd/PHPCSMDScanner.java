@@ -1,9 +1,8 @@
 package de.foopara.phpcsmd;
 
-import de.foopara.phpcsmd.generics.GenericHelper;
-import de.foopara.phpcsmd.ui.reports.ScanReportTopComponent;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
 import org.openide.awt.ActionID;
 import org.openide.awt.ActionReference;
 import org.openide.awt.ActionReferences;
@@ -11,6 +10,9 @@ import org.openide.awt.ActionRegistration;
 import org.openide.filesystems.FileObject;
 import org.openide.loaders.DataObject;
 import org.openide.util.NbBundle.Messages;
+
+import de.foopara.phpcsmd.generics.GenericHelper;
+import de.foopara.phpcsmd.ui.reports.ScanReportTopComponent;
 
 @ActionID(id = "de.foopara.phpcsmd.PHPCSMDScanner", category = "PHP")
 @ActionRegistration(displayName = "#CTL_PHPCSMDScanner", iconBase = "de/foopara/phpcsmd/resources/icon.png")

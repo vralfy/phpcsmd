@@ -1,5 +1,14 @@
 package de.foopara.phpcsmd.threads;
 
+import java.io.IOException;
+import java.util.ArrayList;
+
+import org.netbeans.api.progress.ProgressHandle;
+import org.netbeans.api.progress.ProgressHandleFactory;
+import org.openide.filesystems.FileObject;
+import org.openide.filesystems.FileUtil;
+import org.openide.util.Lookup;
+
 import de.foopara.phpcsmd.ViolationRegistry;
 import de.foopara.phpcsmd.debug.Logger;
 import de.foopara.phpcsmd.exec.phpcpd.Phpcpd;
@@ -12,13 +21,6 @@ import de.foopara.phpcsmd.generics.GenericPokeRegistry;
 import de.foopara.phpcsmd.option.PhpcpdOptions;
 import de.foopara.phpcsmd.option.PhpcsOptions;
 import de.foopara.phpcsmd.option.PhpmdOptions;
-import java.io.IOException;
-import java.util.ArrayList;
-import org.netbeans.api.progress.ProgressHandle;
-import org.netbeans.api.progress.ProgressHandleFactory;
-import org.openide.filesystems.FileObject;
-import org.openide.filesystems.FileUtil;
-import org.openide.util.Lookup;
 
 public class QAThread extends Thread
 {

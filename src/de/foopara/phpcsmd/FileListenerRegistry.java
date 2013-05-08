@@ -1,8 +1,10 @@
 package de.foopara.phpcsmd;
 
-import de.foopara.phpcsmd.generics.GenericFileListener;
 import java.util.LinkedHashMap;
+
 import org.openide.filesystems.FileObject;
+
+import de.foopara.phpcsmd.generics.GenericFileListener;
 
 public class FileListenerRegistry
 {

@@ -1,17 +1,19 @@
 package de.foopara.phpcsmd;
 
-import de.foopara.phpcsmd.generics.GenericExecute;
-import de.foopara.phpcsmd.generics.GenericHelper;
-import de.foopara.phpcsmd.option.GeneralOptions;
 import java.io.File;
 import java.util.HashSet;
 import java.util.List;
+
 import org.netbeans.spi.tasklist.PushTaskScanner;
 import org.netbeans.spi.tasklist.Task;
 import org.netbeans.spi.tasklist.TaskScanningScope;
 import org.openide.filesystems.FileObject;
 import org.openide.filesystems.FileUtil;
 import org.openide.util.Lookup;
+
+import de.foopara.phpcsmd.generics.GenericExecute;
+import de.foopara.phpcsmd.generics.GenericHelper;
+import de.foopara.phpcsmd.option.GeneralOptions;
 
 /**
  *

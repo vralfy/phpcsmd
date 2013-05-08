@@ -1,13 +1,16 @@
 package de.foopara.phpcsmd.generics;
 
-import de.foopara.phpcsmd.PHPCSMD;
-import de.foopara.phpcsmd.ViolationRegistry;
-import de.foopara.phpcsmd.option.GeneralOptions;
 import java.net.URL;
+
 import javax.swing.ImageIcon;
+
 import org.openide.awt.Notification;
 import org.openide.awt.NotificationDisplayer;
 import org.openide.filesystems.FileObject;
+
+import de.foopara.phpcsmd.PHPCSMD;
+import de.foopara.phpcsmd.ViolationRegistry;
+import de.foopara.phpcsmd.option.GeneralOptions;
 
 public class GenericNotification
 {

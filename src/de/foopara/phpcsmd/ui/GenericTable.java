@@ -2,6 +2,7 @@ package de.foopara.phpcsmd.ui;
 
 import java.io.Serializable;
 import java.util.Comparator;
+
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;

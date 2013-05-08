@@ -1,12 +1,14 @@
 package de.foopara.phpcsmd.exec.phpmd;
 
+import java.io.File;
+
+import org.openide.filesystems.FileObject;
+import org.openide.util.Lookup;
+
 import de.foopara.phpcsmd.ViolationRegistry;
 import de.foopara.phpcsmd.debug.Logger;
 import de.foopara.phpcsmd.generics.*;
 import de.foopara.phpcsmd.option.PhpmdOptions;
-import java.io.File;
-import org.openide.filesystems.FileObject;
-import org.openide.util.Lookup;
 
 /**
  *

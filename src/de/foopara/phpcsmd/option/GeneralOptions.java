@@ -1,7 +1,8 @@
 package de.foopara.phpcsmd.option;
 
-import de.foopara.phpcsmd.debug.Logger;
 import org.openide.util.Lookup;
+
+import de.foopara.phpcsmd.debug.Logger;
 
 public class GeneralOptions
 {

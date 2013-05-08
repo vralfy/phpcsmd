@@ -1,8 +1,10 @@
 package de.foopara.phpcsmd.ui.reports;
 
-import de.foopara.phpcsmd.exec.pdepend.PdependTypes;
 import javax.swing.JProgressBar;
+
 import org.openide.util.Lookup;
+
+import de.foopara.phpcsmd.exec.pdepend.PdependTypes;
 
 /**
  *

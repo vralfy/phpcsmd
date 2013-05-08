@@ -1,15 +1,17 @@
 package de.foopara.phpcsmd.ui.reports;
 
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.io.File;
+
+import org.netbeans.api.actions.Openable;
+import org.openide.filesystems.FileObject;
+import org.openide.filesystems.FileUtil;
+
 import de.foopara.phpcsmd.ViolationRegistry;
 import de.foopara.phpcsmd.generics.GenericHelper;
 import de.foopara.phpcsmd.generics.GenericResult;
 import de.foopara.phpcsmd.ui.GenericTable;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.io.File;
-import org.netbeans.api.actions.Openable;
-import org.openide.filesystems.FileObject;
-import org.openide.filesystems.FileUtil;
 
 /**
  *

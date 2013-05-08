@@ -1,9 +1,11 @@
 package de.foopara.phpcsmd.ui;
 
+import javax.swing.ButtonGroup;
+
+import org.openide.util.Lookup;
+
 import de.foopara.phpcsmd.generics.GenericOptionsPanel;
 import de.foopara.phpcsmd.option.GeneralOptions;
-import javax.swing.ButtonGroup;
-import org.openide.util.Lookup;
 
 public class GeneralPropertyPanel extends GenericOptionsPanel
 {

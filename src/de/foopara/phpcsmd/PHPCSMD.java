@@ -1,7 +1,7 @@
 package de.foopara.phpcsmd;
 
-import de.foopara.phpcsmd.generics.GenericExecute;
 import javax.swing.JMenuItem;
+
 import org.netbeans.api.project.Project;
 import org.openide.awt.ActionID;
 import org.openide.awt.ActionReference;
@@ -14,6 +14,8 @@ import org.openide.nodes.Node;
 import org.openide.util.HelpCtx;
 import org.openide.util.NbBundle;
 import org.openide.util.actions.CookieAction;
+
+import de.foopara.phpcsmd.generics.GenericExecute;
 
 @ActionID(id = "de.foopara.phpcsmd.PHPCSMD", category = "PHP")
 @ActionRegistration(displayName = "#CTL_PHPCSMD", iconBase = "de/foopara/phpcsmd/resources/icon.png")

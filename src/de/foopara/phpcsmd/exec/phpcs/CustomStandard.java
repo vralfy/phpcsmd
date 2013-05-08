@@ -1,13 +1,15 @@
 package de.foopara.phpcsmd.exec.phpcs;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+
+import org.openide.util.Lookup;
+
 import de.foopara.phpcsmd.debug.Logger;
 import de.foopara.phpcsmd.option.PhpcsOptions;
 import de.foopara.phpcsmd.option.phpcs.GenericPhpcsSniffRegistry;
 import de.foopara.phpcsmd.option.phpcs.PhpcsSniff;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import org.openide.util.Lookup;
 
 public class CustomStandard
 {

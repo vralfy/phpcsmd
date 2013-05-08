@@ -1,5 +1,16 @@
 package de.foopara.phpcsmd.threads;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.HashMap;
+
+import org.netbeans.api.progress.ProgressHandle;
+import org.netbeans.api.progress.ProgressHandleFactory;
+import org.openide.filesystems.FileObject;
+import org.openide.filesystems.FileUtil;
+import org.openide.util.Exceptions;
+import org.openide.util.Lookup;
+
 import de.foopara.phpcsmd.debug.Logger;
 import de.foopara.phpcsmd.exec.phpcpd.Phpcpd;
 import de.foopara.phpcsmd.exec.phpcpd.PhpcpdResult;
@@ -8,15 +19,6 @@ import de.foopara.phpcsmd.option.PhpcpdOptions;
 import de.foopara.phpcsmd.option.PhpcsOptions;
 import de.foopara.phpcsmd.option.PhpmdOptions;
 import de.foopara.phpcsmd.ui.reports.ScanReportTopComponent;
-import java.io.File;
-import java.io.IOException;
-import java.util.HashMap;
-import org.netbeans.api.progress.ProgressHandle;
-import org.netbeans.api.progress.ProgressHandleFactory;
-import org.openide.filesystems.FileObject;
-import org.openide.filesystems.FileUtil;
-import org.openide.util.Exceptions;
-import org.openide.util.Lookup;
 
 public class RescanThread extends Thread
 {

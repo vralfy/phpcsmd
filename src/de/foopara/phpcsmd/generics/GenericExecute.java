@@ -1,9 +1,10 @@
 package de.foopara.phpcsmd.generics;
 
-import de.foopara.phpcsmd.option.GeneralOptions;
-import de.foopara.phpcsmd.threads.QAThread;
 import org.openide.filesystems.FileObject;
 import org.openide.util.Lookup;
+
+import de.foopara.phpcsmd.option.GeneralOptions;
+import de.foopara.phpcsmd.threads.QAThread;
 
 /**
  *

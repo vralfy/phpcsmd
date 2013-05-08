@@ -1,9 +1,11 @@
 package de.foopara.phpcsmd.generics;
 
+import java.util.ArrayList;
+
+import org.openide.text.Annotation;
+
 import de.foopara.phpcsmd.debug.Logger;
 import de.foopara.phpcsmd.option.GeneralOptions;
-import java.util.ArrayList;
-import org.openide.text.Annotation;
 
 /**
  *
