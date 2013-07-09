@@ -2,6 +2,6 @@ Manifest-Version: 1.0
 OpenIDE-Module: de.foopara.phpcsmd/0
 OpenIDE-Module-Localizing-Bundle: de/foopara/phpcsmd/Bundle.properties
 OpenIDE-Module-Requires: org.openide.windows.WindowManager
-OpenIDE-Module-Specification-Version: 0.6.1.1
+OpenIDE-Module-Specification-Version: 0.6.1.2
 OpenIDE-Module-Layer: de/foopara/phpcsmd/layer.xml
 OpenIDE-Module-Install: de/foopara/phpcsmd/Installer.class
