@@ -129,9 +129,9 @@ public class Phpcpd extends GenericExecute
         String[] excludeOption = ((String)PhpcpdOptions.load(PhpcpdOptions.Settings.EXCLUDE, lookup)).split(",|;|\\s");
         StringBuilder exclude = new StringBuilder();
         if (excludeOption.length > 0) {
-            exclude.append(excludeOption[0]);
+            exclude.append(excludeOption[0].trim());
             for (int i=1;i<excludeOption.length;i++) {
-                exclude.append(" --exclude ").append(excludeOption[i]);
+                exclude.append(" --exclude ").append(excludeOption[i].trim());
             }
         }
         this.appendArgument(cmd, "--exclude ", exclude.toString());
