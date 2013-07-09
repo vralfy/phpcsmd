@@ -69,26 +69,30 @@ public class Installer extends ModuleInstall
     }
 
     public static void onOpenTopComponent(TopComponent topComponent, boolean force) {
+        if (topComponent == null || topComponent.getLookup() == null) {
+            return;
+        }
         DataObject dObj = topComponent.getLookup().lookup(DataObject.class);
-        if (dObj != null) {
-            FileObject file = dObj.getPrimaryFile();
-            if (file != null && GenericHelper.isDesirableFile(file)) {
+        if (dObj == null) {
+            return;
+        }
+        FileObject file = dObj.getPrimaryFile();
+        if (file != null && GenericHelper.isDesirableFile(file)) {
 
-                Lookup lookup = GenericHelper.getFileLookup(file);
-                boolean performScan;
-                performScan = (Boolean)GeneralOptions.load(GeneralOptions.Settings.CHECKONOPEN, lookup);
-                if (performScan) {
-                    performScan = !ViolationRegistry.getInstance().fileWasScanned(file);
-                    performScan = performScan || force;
-                }
-
-                if (performScan) {
-                    Logger.getInstance().logPre("scanning " + file.getPath(), "onOpenTopComponent");
-                    GenericExecute.executeQATools(file);
-                }
-                GenericAnnotationBuilder.updateAnnotations(file);
-
+            Lookup lookup = GenericHelper.getFileLookup(file);
+            boolean performScan;
+            performScan = (Boolean)GeneralOptions.load(GeneralOptions.Settings.CHECKONOPEN, lookup);
+            if (performScan) {
+                performScan = !ViolationRegistry.getInstance().fileWasScanned(file);
+                performScan = performScan || force;
             }
+
+            if (performScan) {
+                Logger.getInstance().logPre("scanning " + file.getPath(), "onOpenTopComponent");
+                GenericExecute.executeQATools(file);
+            }
+            GenericAnnotationBuilder.updateAnnotations(file);
+
         }
     }
 
