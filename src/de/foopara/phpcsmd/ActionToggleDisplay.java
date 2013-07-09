@@ -6,42 +6,55 @@
 package de.foopara.phpcsmd;
 
 import de.foopara.phpcsmd.generics.GenericAnnotationBuilder;
-import de.foopara.phpcsmd.generics.GenericExecute;
-import de.foopara.phpcsmd.threads.QAThread;
+import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Set;
+import javax.swing.JToggleButton;
 import org.openide.awt.ActionID;
 import org.openide.awt.ActionReference;
 import org.openide.awt.ActionReferences;
 import org.openide.awt.ActionRegistration;
-import org.openide.cookies.EditorCookie;
+import org.openide.awt.Actions;
 import org.openide.filesystems.FileObject;
 import org.openide.loaders.DataObject;
-import org.openide.nodes.Node;
-import org.openide.util.NbBundle;
+import org.openide.util.HelpCtx;
+import org.openide.util.NbBundle.Messages;
+import org.openide.util.actions.BooleanStateAction;
 import org.openide.windows.TopComponent;
 
-/**
- *
- * @author nspecht
- */
-@ActionID(id = "de.foopara.phpcsmd.ListenerToggleDisplay", category = "PHP")
-@ActionRegistration(displayName = "#CTL_ListenerToggleDisplay", iconBase = "de/foopara/phpcsmd/resources/icon.png")
+@ActionID(
+        category = "PHP",
+        id = "de.foopara.phpcsmd.ActionToggleDisplay"
+        )
+@ActionRegistration(
+        iconBase = "de/foopara/phpcsmd/resources/inactive.png",
+        displayName = "#CTL_ActionToggleDisplay"
+        )
 @ActionReferences({
-    @ActionReference(path = "Loaders/folder/any/Actions", position = 877),
-    @ActionReference(path = "Loaders/text/x-php5/Actions", position = 877),
+    @ActionReference(path = "Loaders/folder/any/Actions", position = 878),
+    @ActionReference(path = "Loaders/text/x-php5/Actions", position = 878),
 //    @ActionReference(path = "Projects/Actions", position = 877),
-    @ActionReference(path = "UI/ToolActions/PHP", position = 877)
+    @ActionReference(path = "UI/ToolActions/PHP", position = 878)
 })
-@NbBundle.Messages("CTL_ListenerToggleDisplay=Toggle phpcsmd annotations")
-public class ListenerToggleDisplay implements ActionListener {
+@Messages("CTL_ActionToggleDisplay=Show phpcsmd annotations")
+public final class ActionToggleDisplay extends BooleanStateAction {
 
     public static boolean showAnnotations = true;
 
+    private JToggleButton jToggleButton = null;
+
+    public ActionToggleDisplay() {
+        this.setBooleanState(true);
+        this.jToggleButton = new JToggleButton();
+        Actions.connect(this.jToggleButton, this);
+    }
+
     @Override
     public void actionPerformed(ActionEvent e) {
-        ListenerToggleDisplay.showAnnotations = !ListenerToggleDisplay.showAnnotations;
+        super.actionPerformed(e);
+
+        ActionToggleDisplay.showAnnotations = this.getBooleanState();
 
         Set<TopComponent> topComponents = TopComponent.getRegistry().getOpened();
         for (TopComponent topComponent : topComponents) {
@@ -63,4 +76,26 @@ public class ListenerToggleDisplay implements ActionListener {
         }
     }
 
+    @Override
+    public String getName() {
+        return "Show phpcsmd annotations";
+    }
+
+    @Override
+    public HelpCtx getHelpCtx() {
+        return HelpCtx.DEFAULT_HELP;
+    }
+
+    @Override
+    public String iconResource() {
+//        if (this.getBooleanState()) {
+            return "de/foopara/phpcsmd/resources/active.png";
+//        }
+//        return "de/foopara/phpcsmd/resources/inactive.png";
+    }
+
+    @Override
+    public Component getToolbarPresenter() {
+        return this.jToggleButton;
+    }
 }

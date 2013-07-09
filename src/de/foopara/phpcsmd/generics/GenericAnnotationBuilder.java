@@ -8,7 +8,7 @@ import org.openide.text.Line;
 import org.openide.util.Lookup;
 
 import de.foopara.phpcsmd.FileListenerRegistry;
-import de.foopara.phpcsmd.ListenerToggleDisplay;
+import de.foopara.phpcsmd.ActionToggleDisplay;
 import de.foopara.phpcsmd.ViolationRegistry;
 import de.foopara.phpcsmd.debug.Logger;
 import java.util.HashSet;
@@ -104,7 +104,7 @@ public class GenericAnnotationBuilder
             return;
         }
 
-        if (!ListenerToggleDisplay.showAnnotations) {
+        if (!ActionToggleDisplay.showAnnotations) {
             return;
         }
 

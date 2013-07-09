@@ -31,7 +31,7 @@
             <file name="de-foopara-phpcsmd-annotation-phpcpd-violation.xml" url="nbresloc:/de/foopara/phpcsmd/resources/phpcpd/violation.xml"/>
             <file name="de-foopara-phpcsmd-annotation-phpcpd-violation-severity.xml" url="nbresloc:/de/foopara/phpcsmd/resources/phpcpd/violation-severity.xml"/>
             <!-- END GENERATED ANNOTATIONS -->
-            
+
         </folder>
     </folder>
 
