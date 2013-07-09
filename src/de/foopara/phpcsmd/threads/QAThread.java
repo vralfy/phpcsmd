@@ -193,8 +193,18 @@ public class QAThread extends Thread
 
             QAThread.instances.remove(this);
             Logger.getInstance().logPre("finished successful", QAThread.logCaption);
+
+            if (handle != null) {
+                handle.finish();
+                handle = null;
+            }
         } catch (IOException ex) {
             Logger.getInstance().log(ex);
+        } finally {
+            if (handle != null) {
+                handle.finish();
+                handle = null;
+            }
         }
 
         if (handle != null) {

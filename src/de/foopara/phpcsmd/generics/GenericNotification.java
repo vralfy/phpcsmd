@@ -11,6 +11,7 @@ import org.openide.filesystems.FileObject;
 import de.foopara.phpcsmd.PHPCSMD;
 import de.foopara.phpcsmd.ViolationRegistry;
 import de.foopara.phpcsmd.option.GeneralOptions;
+import javax.swing.JLabel;
 
 public class GenericNotification
 {
@@ -59,7 +60,19 @@ public class GenericNotification
                 icon = new ImageIcon();
             }
 
-            GenericNotification.notify = NotificationDisplayer.getDefault().notify(sum + " violations", icon, text.toString(), null);
+            GenericNotification.notify = NotificationDisplayer.getDefault().notify(
+                    sum + " violations",
+                    icon,
+                    new JLabel(text.toString()),
+                    new JLabel(text.toString()),
+                    NotificationDisplayer.Priority.NORMAL
+            );
+//            GenericNotification.notify = NotificationDisplayer.getDefault().notify(
+//                    sum + " violations",
+//                    icon,
+//                    text.toString(),
+//                    null
+//            );
         }
     }
 

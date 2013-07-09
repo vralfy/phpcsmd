@@ -8,8 +8,11 @@ import org.openide.text.Line;
 import org.openide.util.Lookup;
 
 import de.foopara.phpcsmd.FileListenerRegistry;
+import de.foopara.phpcsmd.ListenerToggleDisplay;
 import de.foopara.phpcsmd.ViolationRegistry;
 import de.foopara.phpcsmd.debug.Logger;
+import java.util.HashSet;
+import java.util.Hashtable;
 
 /**
  *
@@ -18,7 +21,17 @@ import de.foopara.phpcsmd.debug.Logger;
 public class GenericAnnotationBuilder
 {
 
+    public static class AnnotationList extends HashSet<GenericViolation> {};
+
+    public static Hashtable<FileObject, AnnotationList> annotations = new Hashtable<FileObject, AnnotationList>();
+
     public static void updateAnnotations(FileObject fo) {
+        if (!GenericAnnotationBuilder.annotations.containsKey(fo)) {
+            GenericAnnotationBuilder.annotations.put(fo, new AnnotationList());
+        }
+
+        GenericAnnotationBuilder.removeAllAnnotations(fo);
+
         GenericAnnotationBuilder.run(fo, ViolationRegistry.getInstance().getPhpcs(fo));
         GenericAnnotationBuilder.run(fo, ViolationRegistry.getInstance().getPhpmd(fo));
         GenericAnnotationBuilder.run(fo, ViolationRegistry.getInstance().getPhpcpd(fo));
@@ -42,13 +55,16 @@ public class GenericAnnotationBuilder
 
             GenericAnnotationBuilder.annotateList(
                     res.getWarnings(),
-                    cookie);
+                    cookie,
+                    fo);
             GenericAnnotationBuilder.annotateList(
                     res.getErrors(),
-                    cookie);
+                    cookie,
+                    fo);
             GenericAnnotationBuilder.annotateList(
                     res.getNoTask(),
-                    cookie);
+                    cookie,
+                    fo);
 //        } catch (DataObjectNotFoundException ex) {
 //            Logger.getInstance().log(ex);
 //        }
@@ -74,16 +90,21 @@ public class GenericAnnotationBuilder
 //        }
     }
 
-    private static void annotateList(List<GenericViolation> list, LineCookie cookie) {
+    private static void annotateList(List<GenericViolation> list, LineCookie cookie, FileObject fo) {
         for (int i = 0; i < list.size(); i++) {
             GenericAnnotationBuilder.annotateLine(
                     list.get(i),
-                    cookie);
+                    cookie,
+                    fo);
         }
     }
 
-    private static void annotateLine(GenericViolation v, LineCookie cookie) {
+    private static void annotateLine(GenericViolation v, LineCookie cookie, FileObject fo) {
         if (cookie == null || cookie.getLineSet().getLines() == null || cookie.getLineSet().getLines().size() < 1) {
+            return;
+        }
+
+        if (!ListenerToggleDisplay.showAnnotations) {
             return;
         }
 
@@ -92,11 +113,25 @@ public class GenericAnnotationBuilder
             try {
                 Line.Set lineSet = cookie.getLineSet();
                 Line line = lineSet.getOriginal(i);
-                v.getViolationForLine(i).attach(line);
+                GenericViolation violation = v.getViolationForLine(i);
+                GenericAnnotationBuilder.annotations.get(fo).add(violation);
+                violation.attach(line);
             } catch (Exception e) {
                 Logger.getInstance().log(e);
             }
         }
     }
 
+    public static void removeAllAnnotations(FileObject fo) {
+        if (!GenericAnnotationBuilder.annotations.containsKey(fo)) {
+            GenericAnnotationBuilder.annotations.put(fo, new AnnotationList());
+        }
+
+        Object[] list = GenericAnnotationBuilder.annotations.get(fo).toArray();
+        GenericAnnotationBuilder.annotations.get(fo).clear();
+
+        for (Object obj : list) {
+            ((GenericViolation)obj).detachMe();
+        }
+    }
 }

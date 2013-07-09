@@ -192,11 +192,18 @@ public class ViolationRegistry
         }
 //        clbk.started();
         clbk.clearAllTasks();
-        clbk.setTasks(fo, this.getTaskList(fo));
+
+//        if (ListenerToggleDisplay.showAnnotations) {
+            clbk.setTasks(fo, this.getTaskList(fo));
+//        }
 //        clbk.finished();
     }
 
     public ArrayList<Task> getTaskList(FileObject fo) {
+//        if (!ListenerToggleDisplay.showAnnotations) {
+//            return new ArrayList<Task>();
+//        }
+
         if (fo == null) {
             return this.getTaskListAll();
         }
