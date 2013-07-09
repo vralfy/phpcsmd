@@ -125,7 +125,16 @@ public class Phpcpd extends GenericExecute
         this.appendArgument(cmd, "--min-lines ", "" + (Integer)PhpcpdOptions.load(PhpcpdOptions.Settings.MINLINES, lookup));
         this.appendArgument(cmd, "--min-tokens ", "" + (Integer)PhpcpdOptions.load(PhpcpdOptions.Settings.MINTOKENS, lookup));
         this.appendArgument(cmd, "--suffixes ", (String)PhpcpdOptions.load(PhpcpdOptions.Settings.SUFFIXES, lookup));
-        this.appendArgument(cmd, "--exclude ", (String)PhpcpdOptions.load(PhpcpdOptions.Settings.EXCLUDE, lookup));
+
+        String[] excludeOption = ((String)PhpcpdOptions.load(PhpcpdOptions.Settings.EXCLUDE, lookup)).split(",|;|\\s");
+        StringBuilder exclude = new StringBuilder();
+        if (excludeOption.length > 0) {
+            exclude.append(excludeOption[0]);
+            for (int i=1;i<excludeOption.length;i++) {
+                exclude.append(" --exclude ").append(excludeOption[i]);
+            }
+        }
+        this.appendArgument(cmd, "--exclude ", exclude.toString());
         return cmd;
     }
 
