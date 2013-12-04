@@ -6,6 +6,8 @@ import java.io.Reader;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.JLabel;
+import org.openide.awt.NotificationDisplayer;
 import org.openide.filesystems.FileObject;
 import org.openide.filesystems.FileUtil;
 import org.openide.util.Exceptions;
@@ -36,8 +38,8 @@ public class PhpcpdParser extends GenericPhpcpdParser
             while (r.read(tmp) > 0) {
                 buf.append(tmp);
             }
-            Logger.getInstance().logPre(buf.toString(), "Phpcpd output");
-            String[] sections = buf.toString().replaceAll("\r", "").trim().split("\n\n");
+
+            String[] sections = buf.toString().replaceAll("\r", "").trim().split("\n[\\s]*\n");
 
             if (sections.length < 3) {
                 return new PhpcpdResult(null, null, null);
@@ -48,7 +50,6 @@ public class PhpcpdParser extends GenericPhpcpdParser
             for (int i = 2; i < sections.length - 2; i++) {
                 if (this.isValidPhpcpdSection(sections[i])) {
                     PhpcpdLine line = new PhpcpdLine(sections[i]);
-
                     this.add(FileUtil.toFile(fo).getPath(), lookup, cpdErrors, cpdNoTask,
                             line.file1, line.start1, line.end1, line.file2, line.start2, line.end2);
 

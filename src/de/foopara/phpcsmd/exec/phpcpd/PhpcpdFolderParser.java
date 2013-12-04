@@ -37,7 +37,8 @@ public class PhpcpdFolderParser extends GenericPhpcpdParser
                 buf.append(tmp);
             }
 
-            String[] sections = buf.toString().trim().split("\n\n");
+            String[] sections = buf.toString().replaceAll("\r", "").trim().split("\n[\\s]*\n");
+
             if (sections.length < 3) {
                 return new HashMap<String, PhpcpdResult>();
             }
@@ -50,7 +51,7 @@ public class PhpcpdFolderParser extends GenericPhpcpdParser
             for (int i = 2; i < sections.length - 2; i++) {
                 if (this.isValidPhpcpdSection(sections[i])) {
                     PhpcpdLine line = new PhpcpdLine(sections[i]);
-                    Logger.getInstance().logPre(line.toString(), "phpcpd");
+
                     if (!cpdErrors.containsKey(line.file1)) {
                         cpdErrors.put(line.file1, new ArrayList<GenericViolation>());
                     }
@@ -86,6 +87,8 @@ public class PhpcpdFolderParser extends GenericPhpcpdParser
                         }
                         ViolationRegistry.getInstance().addPhpcpdDependency(tmpf1, tmpf2);
                     }
+                } else {
+                    Logger.getInstance().logPre(sections[i], "malformed cpd violation");
                 }
             }
         } catch (IOException ex) {
