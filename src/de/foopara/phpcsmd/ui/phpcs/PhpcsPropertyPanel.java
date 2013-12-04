@@ -60,6 +60,8 @@ public class PhpcsPropertyPanel extends GenericOptionsPanel
         owTabWidth = new javax.swing.JCheckBox();
         owIniOverwrite = new javax.swing.JCheckBox();
         owWarning = new javax.swing.JCheckBox();
+        owScript = new javax.swing.JCheckBox();
+        optScript = new javax.swing.JTextField();
 
         setLayout(new java.awt.GridBagLayout());
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -78,7 +80,7 @@ public class PhpcsPropertyPanel extends GenericOptionsPanel
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridy = 2;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
         gridBagConstraints.insets = new java.awt.Insets(0, 0, 2, 2);
         add(btnStandard, gridBagConstraints);
@@ -91,7 +93,7 @@ public class PhpcsPropertyPanel extends GenericOptionsPanel
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridy = 2;
         gridBagConstraints.gridwidth = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.weightx = 1.0;
@@ -101,7 +103,7 @@ public class PhpcsPropertyPanel extends GenericOptionsPanel
         optStandard.setText(org.openide.util.NbBundle.getMessage(PhpcsPropertyPanel.class, "PhpcsPropertyPanel.optStandard.text")); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 2;
+        gridBagConstraints.gridy = 3;
         gridBagConstraints.gridwidth = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.insets = new java.awt.Insets(0, 0, 2, 2);
@@ -110,7 +112,7 @@ public class PhpcsPropertyPanel extends GenericOptionsPanel
         optSniff.setText(org.openide.util.NbBundle.getMessage(PhpcsPropertyPanel.class, "PhpcsPropertyPanel.optSniff.text")); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 3;
+        gridBagConstraints.gridy = 4;
         gridBagConstraints.gridwidth = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.insets = new java.awt.Insets(0, 0, 2, 2);
@@ -119,7 +121,7 @@ public class PhpcsPropertyPanel extends GenericOptionsPanel
         optExt.setText(org.openide.util.NbBundle.getMessage(PhpcsPropertyPanel.class, "PhpcsPropertyPanel.optExt.text")); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 5;
+        gridBagConstraints.gridy = 6;
         gridBagConstraints.gridwidth = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.weightx = 1.0;
@@ -129,7 +131,7 @@ public class PhpcsPropertyPanel extends GenericOptionsPanel
         optIgnore.setText(org.openide.util.NbBundle.getMessage(PhpcsPropertyPanel.class, "PhpcsPropertyPanel.optIgnore.text")); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 6;
+        gridBagConstraints.gridy = 7;
         gridBagConstraints.gridwidth = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.weightx = 1.0;
@@ -140,7 +142,7 @@ public class PhpcsPropertyPanel extends GenericOptionsPanel
         optTabwidth.setToolTipText(org.openide.util.NbBundle.getMessage(PhpcsPropertyPanel.class, "PhpcsPropertyPanel.optTabwidth.toolTipText")); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 7;
+        gridBagConstraints.gridy = 8;
         gridBagConstraints.gridwidth = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.insets = new java.awt.Insets(0, 0, 2, 2);
@@ -150,7 +152,7 @@ public class PhpcsPropertyPanel extends GenericOptionsPanel
         optIniOverwrite.setToolTipText(org.openide.util.NbBundle.getMessage(PhpcsPropertyPanel.class, "PhpcsPropertyPanel.optIniOverwrite.toolTipText")); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 8;
+        gridBagConstraints.gridy = 9;
         gridBagConstraints.gridwidth = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.insets = new java.awt.Insets(0, 0, 2, 2);
@@ -159,7 +161,7 @@ public class PhpcsPropertyPanel extends GenericOptionsPanel
         org.openide.awt.Mnemonics.setLocalizedText(optWarning, org.openide.util.NbBundle.getMessage(PhpcsPropertyPanel.class, "PhpcsPropertyPanel.optWarning.text")); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 9;
+        gridBagConstraints.gridy = 10;
         gridBagConstraints.gridwidth = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.insets = new java.awt.Insets(0, 0, 2, 2);
@@ -185,7 +187,7 @@ public class PhpcsPropertyPanel extends GenericOptionsPanel
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 2;
+        gridBagConstraints.gridy = 3;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.insets = new java.awt.Insets(0, 0, 2, 2);
         add(owStandard, gridBagConstraints);
@@ -201,7 +203,7 @@ public class PhpcsPropertyPanel extends GenericOptionsPanel
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 3;
+        gridBagConstraints.gridy = 4;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.insets = new java.awt.Insets(0, 0, 2, 2);
         add(owSniff, gridBagConstraints);
@@ -217,7 +219,7 @@ public class PhpcsPropertyPanel extends GenericOptionsPanel
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 5;
+        gridBagConstraints.gridy = 6;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.insets = new java.awt.Insets(0, 0, 2, 2);
         add(owExtension, gridBagConstraints);
@@ -233,7 +235,7 @@ public class PhpcsPropertyPanel extends GenericOptionsPanel
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 6;
+        gridBagConstraints.gridy = 7;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.insets = new java.awt.Insets(0, 0, 2, 2);
         add(owIgnore, gridBagConstraints);
@@ -249,7 +251,7 @@ public class PhpcsPropertyPanel extends GenericOptionsPanel
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 7;
+        gridBagConstraints.gridy = 8;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.insets = new java.awt.Insets(0, 0, 2, 2);
         add(owTabWidth, gridBagConstraints);
@@ -265,7 +267,7 @@ public class PhpcsPropertyPanel extends GenericOptionsPanel
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 8;
+        gridBagConstraints.gridy = 9;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.insets = new java.awt.Insets(0, 0, 2, 2);
         add(owIniOverwrite, gridBagConstraints);
@@ -281,10 +283,35 @@ public class PhpcsPropertyPanel extends GenericOptionsPanel
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 9;
+        gridBagConstraints.gridy = 10;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.insets = new java.awt.Insets(0, 0, 2, 2);
         add(owWarning, gridBagConstraints);
+
+        org.openide.awt.Mnemonics.setLocalizedText(owScript, org.openide.util.NbBundle.getMessage(PhpcsPropertyPanel.class, "PhpcsPropertyPanel.owScript.text")); // NOI18N
+        owScript.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        owScript.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        owScript.setName("owStandard"); // NOI18N
+        owScript.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                owScriptowActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.insets = new java.awt.Insets(0, 0, 2, 2);
+        add(owScript, gridBagConstraints);
+
+        optScript.setText(org.openide.util.NbBundle.getMessage(PhpcsPropertyPanel.class, "PhpcsPropertyPanel.optScript.text")); // NOI18N
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.insets = new java.awt.Insets(0, 0, 2, 2);
+        add(optScript, gridBagConstraints);
     }// </editor-fold>//GEN-END:initComponents
 
     private void owActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_owActionPerformed
@@ -308,6 +335,10 @@ public class PhpcsPropertyPanel extends GenericOptionsPanel
         }
     }//GEN-LAST:event_cmbStandardActionPerformed
 
+    private void owScriptowActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_owScriptowActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_owScriptowActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnStandard;
     private javax.swing.JComboBox cmbStandard;
@@ -316,6 +347,7 @@ public class PhpcsPropertyPanel extends GenericOptionsPanel
     private javax.swing.JTextField optExt;
     private javax.swing.JTextField optIgnore;
     private javax.swing.JTextField optIniOverwrite;
+    private javax.swing.JTextField optScript;
     private javax.swing.JTextField optSniff;
     private javax.swing.JTextField optStandard;
     private javax.swing.JSpinner optTabwidth;
@@ -323,6 +355,7 @@ public class PhpcsPropertyPanel extends GenericOptionsPanel
     private javax.swing.JCheckBox owExtension;
     private javax.swing.JCheckBox owIgnore;
     private javax.swing.JCheckBox owIniOverwrite;
+    private javax.swing.JCheckBox owScript;
     private javax.swing.JCheckBox owSniff;
     private javax.swing.JCheckBox owStandard;
     private javax.swing.JCheckBox owTabWidth;
@@ -331,6 +364,8 @@ public class PhpcsPropertyPanel extends GenericOptionsPanel
 
     @Override
     public void load() {
+        owScript.setSelected(PhpcsOptions.isOverwritten(PhpcsOptions.Settings.SCRIPT, this.lkp));
+        optScript.setText((String)PhpcsOptions.load(PhpcsOptions.Settings.SCRIPT, this.lkp));
         owStandard.setSelected(PhpcsOptions.isOverwritten(PhpcsOptions.Settings.STANDARD, this.lkp));
         optStandard.setText((String)PhpcsOptions.load(PhpcsOptions.Settings.STANDARD, this.lkp));
         owSniff.setSelected(PhpcsOptions.isOverwritten(PhpcsOptions.Settings.SNIFFS, this.lkp));
@@ -350,6 +385,7 @@ public class PhpcsPropertyPanel extends GenericOptionsPanel
 
     @Override
     public void save() {
+        PhpcsOptions.overwrite(PhpcsOptions.Settings.SCRIPT, owScript.isSelected() ? optScript.getText() : null, this.lkp);
         PhpcsOptions.overwrite(PhpcsOptions.Settings.STANDARD, owStandard.isSelected() ? optStandard.getText() : null, this.lkp);
         PhpcsOptions.overwrite(PhpcsOptions.Settings.SNIFFS, owSniff.isSelected() ? optSniff.getText() : null, this.lkp);
         PhpcsOptions.overwrite(PhpcsOptions.Settings.EXTENSIONS, owExtension.isSelected() ? optExt.getText() : null, this.lkp);
@@ -371,6 +407,7 @@ public class PhpcsPropertyPanel extends GenericOptionsPanel
         cmbStandard.setEnabled(enabled);
         optStandard.setEnabled(enabled);
 
+        optScript.setEnabled(owScript.isSelected());
         optSniff.setEnabled(owSniff.isSelected());
         optExt.setEnabled(owExtension.isSelected());
         optIgnore.setEnabled(owIgnore.isSelected());
