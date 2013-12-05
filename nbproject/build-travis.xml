@@ -10,4 +10,8 @@
     <target name="travis">
 
     </target>
+
+    <target name="test">
+        <echo> there are no tests yet </echo>
+    </target>
 </project>
