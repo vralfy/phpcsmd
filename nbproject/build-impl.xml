@@ -38,5 +38,6 @@
             </not>
         </condition>
     </fail>
-    <import file="${harness.dir}/build.xml"/>
+    <echo>Harness Directory: ${harness.dir}/build.xml</echo>
+    <import optional="true" file="${harness.dir}/build.xml"/>
 </project>
