@@ -1,0 +1,13 @@
+<project name="de.foopara.phpcsmd-travis" basedir="..">
+    <fail message="Please build using Ant 1.7.1 or higher.">
+        <condition>
+            <not>
+                <antversion atleast="1.7.1"/>
+            </not>
+        </condition>
+    </fail>
+
+    <target name="travis">
+
+    </target>
+</project>
