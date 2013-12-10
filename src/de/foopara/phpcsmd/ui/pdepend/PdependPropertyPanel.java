@@ -52,6 +52,8 @@ public class PdependPropertyPanel extends GenericOptionsPanel
         owJdepend = new javax.swing.JCheckBox();
         optTabs = new javax.swing.JCheckBox();
         optJdepend = new javax.swing.JCheckBox();
+        owScript = new javax.swing.JCheckBox();
+        optScript = new javax.swing.JTextField();
 
         setLayout(new java.awt.GridBagLayout());
 
@@ -71,7 +73,7 @@ public class PdependPropertyPanel extends GenericOptionsPanel
         optSuffix.setText(org.openide.util.NbBundle.getMessage(PdependPropertyPanel.class, "PdependPropertyPanel.optSuffix.text")); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridy = 2;
         gridBagConstraints.gridwidth = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.insets = new java.awt.Insets(0, 0, 2, 2);
@@ -85,7 +87,7 @@ public class PdependPropertyPanel extends GenericOptionsPanel
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridy = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.insets = new java.awt.Insets(0, 0, 2, 2);
         add(owSuffix, gridBagConstraints);
@@ -98,7 +100,7 @@ public class PdependPropertyPanel extends GenericOptionsPanel
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 2;
+        gridBagConstraints.gridy = 3;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.insets = new java.awt.Insets(0, 0, 2, 2);
         add(owExclude, gridBagConstraints);
@@ -106,7 +108,7 @@ public class PdependPropertyPanel extends GenericOptionsPanel
         optExclude.setText(org.openide.util.NbBundle.getMessage(PdependPropertyPanel.class, "PdependPropertyPanel.optExclude.text")); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 2;
+        gridBagConstraints.gridy = 3;
         gridBagConstraints.gridwidth = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.insets = new java.awt.Insets(0, 0, 2, 2);
@@ -120,7 +122,7 @@ public class PdependPropertyPanel extends GenericOptionsPanel
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 3;
+        gridBagConstraints.gridy = 4;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.insets = new java.awt.Insets(0, 0, 2, 2);
         add(owIgnore, gridBagConstraints);
@@ -128,7 +130,7 @@ public class PdependPropertyPanel extends GenericOptionsPanel
         optIgnore.setText(org.openide.util.NbBundle.getMessage(PdependPropertyPanel.class, "PdependPropertyPanel.optIgnore.text")); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 3;
+        gridBagConstraints.gridy = 4;
         gridBagConstraints.gridwidth = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.insets = new java.awt.Insets(0, 0, 2, 2);
@@ -142,7 +144,7 @@ public class PdependPropertyPanel extends GenericOptionsPanel
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 4;
+        gridBagConstraints.gridy = 5;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.insets = new java.awt.Insets(0, 0, 2, 2);
         add(owIniOverwrite, gridBagConstraints);
@@ -150,7 +152,7 @@ public class PdependPropertyPanel extends GenericOptionsPanel
         optIniOverwrite.setText(org.openide.util.NbBundle.getMessage(PdependPropertyPanel.class, "PdependPropertyPanel.optIniOverwrite.text")); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 4;
+        gridBagConstraints.gridy = 5;
         gridBagConstraints.gridwidth = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.insets = new java.awt.Insets(0, 0, 2, 2);
@@ -164,7 +166,7 @@ public class PdependPropertyPanel extends GenericOptionsPanel
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 5;
+        gridBagConstraints.gridy = 6;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.insets = new java.awt.Insets(0, 0, 2, 2);
         add(owTabs, gridBagConstraints);
@@ -177,7 +179,7 @@ public class PdependPropertyPanel extends GenericOptionsPanel
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 6;
+        gridBagConstraints.gridy = 7;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.insets = new java.awt.Insets(0, 0, 2, 2);
         add(owJdepend, gridBagConstraints);
@@ -185,7 +187,7 @@ public class PdependPropertyPanel extends GenericOptionsPanel
         org.openide.awt.Mnemonics.setLocalizedText(optTabs, org.openide.util.NbBundle.getMessage(PdependPropertyPanel.class, "PdependPropertyPanel.optTabs.text")); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 5;
+        gridBagConstraints.gridy = 6;
         gridBagConstraints.gridwidth = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.insets = new java.awt.Insets(0, 0, 2, 2);
@@ -194,16 +196,42 @@ public class PdependPropertyPanel extends GenericOptionsPanel
         org.openide.awt.Mnemonics.setLocalizedText(optJdepend, org.openide.util.NbBundle.getMessage(PdependPropertyPanel.class, "PdependPropertyPanel.optJdepend.text")); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 6;
+        gridBagConstraints.gridy = 7;
         gridBagConstraints.gridwidth = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.insets = new java.awt.Insets(0, 0, 2, 2);
         add(optJdepend, gridBagConstraints);
+
+        org.openide.awt.Mnemonics.setLocalizedText(owScript, org.openide.util.NbBundle.getMessage(PdependPropertyPanel.class, "PdependPropertyPanel.owScript.text")); // NOI18N
+        owScript.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                owScriptowActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.insets = new java.awt.Insets(0, 0, 2, 2);
+        add(owScript, gridBagConstraints);
+
+        optScript.setText(org.openide.util.NbBundle.getMessage(PdependPropertyPanel.class, "PdependPropertyPanel.optScript.text")); // NOI18N
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.insets = new java.awt.Insets(0, 0, 2, 2);
+        add(optScript, gridBagConstraints);
     }// </editor-fold>//GEN-END:initComponents
 
     private void owActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_owActionPerformed
         this.updateForm();
     }//GEN-LAST:event_owActionPerformed
+
+    private void owScriptowActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_owScriptowActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_owScriptowActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
@@ -212,18 +240,22 @@ public class PdependPropertyPanel extends GenericOptionsPanel
     private javax.swing.JTextField optIgnore;
     private javax.swing.JTextField optIniOverwrite;
     private javax.swing.JCheckBox optJdepend;
+    private javax.swing.JTextField optScript;
     private javax.swing.JTextField optSuffix;
     private javax.swing.JCheckBox optTabs;
     private javax.swing.JCheckBox owExclude;
     private javax.swing.JCheckBox owIgnore;
     private javax.swing.JCheckBox owIniOverwrite;
     private javax.swing.JCheckBox owJdepend;
+    private javax.swing.JCheckBox owScript;
     private javax.swing.JCheckBox owSuffix;
     private javax.swing.JCheckBox owTabs;
     // End of variables declaration//GEN-END:variables
 
     @Override
     public void load() {
+        owScript.setSelected(PdependOptions.isOverwritten(PdependOptions.Settings.SCRIPT, this.lkp));
+        optScript.setText((String)PdependOptions.load(PdependOptions.Settings.SCRIPT, this.lkp));
         owSuffix.setSelected(PdependOptions.isOverwritten(PdependOptions.Settings.SUFFIXES, this.lkp));
         optSuffix.setText((String)PdependOptions.load(PdependOptions.Settings.SUFFIXES, this.lkp));
         owExclude.setSelected(PdependOptions.isOverwritten(PdependOptions.Settings.EXCLUDE, this.lkp));
@@ -241,6 +273,7 @@ public class PdependPropertyPanel extends GenericOptionsPanel
 
     @Override
     public void save() {
+        PdependOptions.overwrite(PdependOptions.Settings.SCRIPT, owScript.isSelected() ? optScript.getText() : null, this.lkp);
         PdependOptions.overwrite(PdependOptions.Settings.SUFFIXES, owSuffix.isSelected() ? optSuffix.getText() : null, this.lkp);
         PdependOptions.overwrite(PdependOptions.Settings.EXCLUDE, owExclude.isSelected() ? optExclude.getText() : null, this.lkp);
         PdependOptions.overwrite(PdependOptions.Settings.IGNORES, owIgnore.isSelected() ? optIgnore.getText() : null, this.lkp);
@@ -249,12 +282,8 @@ public class PdependPropertyPanel extends GenericOptionsPanel
         PdependOptions.overwrite(PdependOptions.Settings.JDEPEND, owJdepend.isSelected() ? optJdepend.isSelected() : null, this.lkp);
     }
 
-    @Override
-    public boolean hasValidValues() {
-        return true;
-    }
-
     public void updateForm() {
+        optScript.setEnabled(owScript.isSelected());
         optSuffix.setEnabled(owSuffix.isSelected());
         optExclude.setEnabled(owExclude.isSelected());
         optIgnore.setEnabled(owIgnore.isSelected());
@@ -263,4 +292,8 @@ public class PdependPropertyPanel extends GenericOptionsPanel
         optJdepend.setEnabled(owJdepend.isSelected());
     }
 
+    @Override
+    public boolean hasValidValues() {
+        return true;
+    }
 }

@@ -48,6 +48,8 @@ public class PhpcpdPropertyPanel extends GenericOptionsPanel
         optSuffixes = new javax.swing.JTextField();
         owExclude = new javax.swing.JCheckBox();
         optExclude = new javax.swing.JTextField();
+        owScript = new javax.swing.JCheckBox();
+        optScript = new javax.swing.JTextField();
 
         setLayout(new java.awt.GridBagLayout());
 
@@ -74,7 +76,7 @@ public class PhpcpdPropertyPanel extends GenericOptionsPanel
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridy = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.insets = new java.awt.Insets(0, 0, 2, 2);
         add(owMinLines, gridBagConstraints);
@@ -82,7 +84,7 @@ public class PhpcpdPropertyPanel extends GenericOptionsPanel
         optMinLines.setModel(new javax.swing.SpinnerNumberModel(Integer.valueOf(5), Integer.valueOf(1), null, Integer.valueOf(1)));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridy = 2;
         gridBagConstraints.gridwidth = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.insets = new java.awt.Insets(0, 0, 2, 2);
@@ -96,7 +98,7 @@ public class PhpcpdPropertyPanel extends GenericOptionsPanel
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 2;
+        gridBagConstraints.gridy = 3;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.insets = new java.awt.Insets(0, 0, 2, 2);
         add(owMinTokens, gridBagConstraints);
@@ -104,7 +106,7 @@ public class PhpcpdPropertyPanel extends GenericOptionsPanel
         optMinTokens.setModel(new javax.swing.SpinnerNumberModel(Integer.valueOf(70), Integer.valueOf(1), null, Integer.valueOf(1)));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 2;
+        gridBagConstraints.gridy = 3;
         gridBagConstraints.gridwidth = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.insets = new java.awt.Insets(0, 0, 2, 2);
@@ -118,7 +120,7 @@ public class PhpcpdPropertyPanel extends GenericOptionsPanel
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 3;
+        gridBagConstraints.gridy = 4;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.insets = new java.awt.Insets(0, 0, 2, 2);
         add(owSuffix, gridBagConstraints);
@@ -126,7 +128,7 @@ public class PhpcpdPropertyPanel extends GenericOptionsPanel
         optSuffixes.setText(org.openide.util.NbBundle.getMessage(PhpcpdPropertyPanel.class, "PhpcpdPropertyPanel.optSuffixes.text")); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 3;
+        gridBagConstraints.gridy = 4;
         gridBagConstraints.gridwidth = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.insets = new java.awt.Insets(0, 0, 2, 2);
@@ -140,7 +142,7 @@ public class PhpcpdPropertyPanel extends GenericOptionsPanel
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 4;
+        gridBagConstraints.gridy = 5;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.insets = new java.awt.Insets(0, 0, 2, 2);
         add(owExclude, gridBagConstraints);
@@ -148,16 +150,42 @@ public class PhpcpdPropertyPanel extends GenericOptionsPanel
         optExclude.setText(org.openide.util.NbBundle.getMessage(PhpcpdPropertyPanel.class, "PhpcpdPropertyPanel.optExclude.text")); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 4;
+        gridBagConstraints.gridy = 5;
         gridBagConstraints.gridwidth = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.insets = new java.awt.Insets(0, 0, 2, 2);
         add(optExclude, gridBagConstraints);
+
+        org.openide.awt.Mnemonics.setLocalizedText(owScript, org.openide.util.NbBundle.getMessage(PhpcpdPropertyPanel.class, "PhpcpdPropertyPanel.owScript.text")); // NOI18N
+        owScript.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                owScriptowActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.insets = new java.awt.Insets(0, 0, 2, 2);
+        add(owScript, gridBagConstraints);
+
+        optScript.setText(org.openide.util.NbBundle.getMessage(PhpcpdPropertyPanel.class, "PhpcpdPropertyPanel.optScript.text")); // NOI18N
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.insets = new java.awt.Insets(0, 0, 2, 2);
+        add(optScript, gridBagConstraints);
     }// </editor-fold>//GEN-END:initComponents
 
     private void owActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_owActionPerformed
         this.updateForm();
     }//GEN-LAST:event_owActionPerformed
+
+    private void owScriptowActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_owScriptowActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_owScriptowActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
@@ -165,15 +193,19 @@ public class PhpcpdPropertyPanel extends GenericOptionsPanel
     private javax.swing.JTextField optExclude;
     private javax.swing.JSpinner optMinLines;
     private javax.swing.JSpinner optMinTokens;
+    private javax.swing.JTextField optScript;
     private javax.swing.JTextField optSuffixes;
     private javax.swing.JCheckBox owExclude;
     private javax.swing.JCheckBox owMinLines;
     private javax.swing.JCheckBox owMinTokens;
+    private javax.swing.JCheckBox owScript;
     private javax.swing.JCheckBox owSuffix;
     // End of variables declaration//GEN-END:variables
 
     @Override
     public void load() {
+        owScript.setSelected(PhpcpdOptions.isOverwritten(PhpcpdOptions.Settings.SCRIPT, this.lkp));
+        optScript.setText((String)PhpcpdOptions.load(PhpcpdOptions.Settings.SCRIPT, this.lkp));
         owMinLines.setSelected(PhpcpdOptions.isOverwritten(PhpcpdOptions.Settings.MINLINES, this.lkp));
         optMinLines.setValue((Integer)PhpcpdOptions.load(PhpcpdOptions.Settings.MINLINES, this.lkp));
         owMinTokens.setSelected(PhpcpdOptions.isOverwritten(PhpcpdOptions.Settings.MINTOKENS, this.lkp));
@@ -187,6 +219,7 @@ public class PhpcpdPropertyPanel extends GenericOptionsPanel
 
     @Override
     public void save() {
+        PhpcpdOptions.overwrite(PhpcpdOptions.Settings.SCRIPT, owScript.isSelected() ? optScript.getText() : null, this.lkp);
         PhpcpdOptions.overwrite(PhpcpdOptions.Settings.MINLINES, owMinLines.isSelected() ? optMinLines.getValue() : null, this.lkp);
         PhpcpdOptions.overwrite(PhpcpdOptions.Settings.MINTOKENS, owMinTokens.isSelected() ? optMinTokens.getValue() : null, this.lkp);
         PhpcpdOptions.overwrite(PhpcpdOptions.Settings.SUFFIXES, owSuffix.isSelected() ? optSuffixes.getText() : null, this.lkp);
@@ -194,6 +227,7 @@ public class PhpcpdPropertyPanel extends GenericOptionsPanel
     }
 
     public void updateForm() {
+        optScript.setEnabled(owScript.isSelected());
         optMinLines.setEnabled(owMinLines.isSelected());
         optMinTokens.setEnabled(owMinTokens.isSelected());
         optSuffixes.setEnabled(owSuffix.isSelected());
