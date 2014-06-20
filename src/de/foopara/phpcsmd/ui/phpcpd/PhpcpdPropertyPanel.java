@@ -4,6 +4,10 @@
  */
 package de.foopara.phpcsmd.ui.phpcpd;
 
+import java.io.File;
+
+import javax.swing.JFileChooser;
+
 import org.openide.util.Lookup;
 
 import de.foopara.phpcsmd.generics.GenericOptionsPanel;
@@ -50,6 +54,10 @@ public class PhpcpdPropertyPanel extends GenericOptionsPanel
         optExclude = new javax.swing.JTextField();
         owScript = new javax.swing.JCheckBox();
         optScript = new javax.swing.JTextField();
+        jButton1 = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
+        optStatic = new javax.swing.JTextField();
+        jButton2 = new javax.swing.JButton();
 
         setLayout(new java.awt.GridBagLayout());
 
@@ -61,8 +69,9 @@ public class PhpcpdPropertyPanel extends GenericOptionsPanel
         gridBagConstraints.insets = new java.awt.Insets(10, 0, 2, 2);
         add(jLabel1, gridBagConstraints);
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridwidth = 3;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.insets = new java.awt.Insets(10, 0, 2, 2);
@@ -85,8 +94,9 @@ public class PhpcpdPropertyPanel extends GenericOptionsPanel
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 2;
-        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.gridwidth = 3;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.weightx = 1.0;
         gridBagConstraints.insets = new java.awt.Insets(0, 0, 2, 2);
         add(optMinLines, gridBagConstraints);
 
@@ -107,8 +117,9 @@ public class PhpcpdPropertyPanel extends GenericOptionsPanel
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 3;
-        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.gridwidth = 3;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.weightx = 1.0;
         gridBagConstraints.insets = new java.awt.Insets(0, 0, 2, 2);
         add(optMinTokens, gridBagConstraints);
 
@@ -129,8 +140,9 @@ public class PhpcpdPropertyPanel extends GenericOptionsPanel
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 4;
-        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.gridwidth = 3;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.weightx = 1.0;
         gridBagConstraints.insets = new java.awt.Insets(0, 0, 2, 2);
         add(optSuffixes, gridBagConstraints);
 
@@ -151,8 +163,9 @@ public class PhpcpdPropertyPanel extends GenericOptionsPanel
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 5;
-        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.gridwidth = 3;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.weightx = 1.0;
         gridBagConstraints.insets = new java.awt.Insets(0, 0, 2, 2);
         add(optExclude, gridBagConstraints);
 
@@ -175,8 +188,51 @@ public class PhpcpdPropertyPanel extends GenericOptionsPanel
         gridBagConstraints.gridy = 1;
         gridBagConstraints.gridwidth = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.weightx = 1.0;
         gridBagConstraints.insets = new java.awt.Insets(0, 0, 2, 2);
         add(optScript, gridBagConstraints);
+
+        org.openide.awt.Mnemonics.setLocalizedText(jButton1, org.openide.util.NbBundle.getMessage(PhpcpdPropertyPanel.class, "PhpcpdPropertyPanel.jButton1.text")); // NOI18N
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 3;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.insets = new java.awt.Insets(0, 0, 2, 2);
+        add(jButton1, gridBagConstraints);
+
+        org.openide.awt.Mnemonics.setLocalizedText(jLabel2, org.openide.util.NbBundle.getMessage(PhpcpdPropertyPanel.class, "PhpcpdPropertyPanel.jLabel2.text")); // NOI18N
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 6;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.insets = new java.awt.Insets(0, 0, 2, 2);
+        add(jLabel2, gridBagConstraints);
+
+        optStatic.setText(org.openide.util.NbBundle.getMessage(PhpcpdPropertyPanel.class, "PhpcpdPropertyPanel.optStatic.text")); // NOI18N
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 6;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(0, 0, 2, 2);
+        add(optStatic, gridBagConstraints);
+
+        org.openide.awt.Mnemonics.setLocalizedText(jButton2, org.openide.util.NbBundle.getMessage(PhpcpdPropertyPanel.class, "PhpcpdPropertyPanel.jButton2.text")); // NOI18N
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 3;
+        gridBagConstraints.gridy = 6;
+        gridBagConstraints.insets = new java.awt.Insets(0, 0, 2, 2);
+        add(jButton2, gridBagConstraints);
     }// </editor-fold>//GEN-END:initComponents
 
     private void owActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_owActionPerformed
@@ -187,13 +243,49 @@ public class PhpcpdPropertyPanel extends GenericOptionsPanel
         // TODO add your handling code here:
     }//GEN-LAST:event_owScriptowActionPerformed
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        File script = new File(optScript.getText());
+
+        JFileChooser fc = new JFileChooser();
+        fc.setDialogTitle("PHPCPD Script Location");
+        fc.setFileSelectionMode(JFileChooser.FILES_ONLY);
+        fc.setMultiSelectionEnabled(false);
+        if (script.exists()) {
+            fc.setSelectedFile(script);
+        }
+        if (fc.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
+            optScript.setText(fc.getSelectedFile().getAbsolutePath());
+        }
+        this.hasValidValues();
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        File script = new File(optStatic.getText());
+
+        JFileChooser fc = new JFileChooser();
+        fc.setDialogTitle("Static PHPCPD report");
+        fc.setFileSelectionMode(JFileChooser.FILES_ONLY);
+        fc.setMultiSelectionEnabled(false);
+        if (script.exists()) {
+            fc.setSelectedFile(script);
+        }
+        if (fc.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
+            optStatic.setText(fc.getSelectedFile().getAbsolutePath());
+        }
+        this.hasValidValues();
+    }//GEN-LAST:event_jButton2ActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JTextField optExclude;
     private javax.swing.JSpinner optMinLines;
     private javax.swing.JSpinner optMinTokens;
     private javax.swing.JTextField optScript;
+    private javax.swing.JTextField optStatic;
     private javax.swing.JTextField optSuffixes;
     private javax.swing.JCheckBox owExclude;
     private javax.swing.JCheckBox owMinLines;
@@ -214,6 +306,7 @@ public class PhpcpdPropertyPanel extends GenericOptionsPanel
         optSuffixes.setText((String)PhpcpdOptions.load(PhpcpdOptions.Settings.SUFFIXES, this.lkp));
         owExclude.setSelected(PhpcpdOptions.isOverwritten(PhpcpdOptions.Settings.EXCLUDE, this.lkp));
         optExclude.setText((String)PhpcpdOptions.load(PhpcpdOptions.Settings.EXCLUDE, this.lkp));
+        optStatic.setText((String)PhpcpdOptions.load(PhpcpdOptions.Settings.STATIC, this.lkp));
         this.updateForm();
     }
 
@@ -224,6 +317,7 @@ public class PhpcpdPropertyPanel extends GenericOptionsPanel
         PhpcpdOptions.overwrite(PhpcpdOptions.Settings.MINTOKENS, owMinTokens.isSelected() ? optMinTokens.getValue() : null, this.lkp);
         PhpcpdOptions.overwrite(PhpcpdOptions.Settings.SUFFIXES, owSuffix.isSelected() ? optSuffixes.getText() : null, this.lkp);
         PhpcpdOptions.overwrite(PhpcpdOptions.Settings.EXCLUDE, owExclude.isSelected() ? optExclude.getText() : null, this.lkp);
+        PhpcpdOptions.overwrite(PhpcpdOptions.Settings.STATIC, optStatic.getText(), this.lkp);
     }
 
     public void updateForm() {

@@ -8,7 +8,6 @@ public class PhpcsOptions
     public static final String _PREFIX = "phpcsmd.phpcs.";
 
     public enum Settings {
-
         ACTIVATED   ("activated",    GenericOption.SettingTypes.BOOLEAN, "false"),
         SCRIPT      ("script",       GenericOption.SettingTypes.STRING,  "/usr/bin/phpcs"),
         STANDARD    ("standard",     GenericOption.SettingTypes.STRING,  "Zend"),
@@ -21,6 +20,7 @@ public class PhpcsOptions
         EXTRAS      ("extras",       GenericOption.SettingTypes.BOOLEAN, "false"),
         XSNIFF      ("sniff.",       GenericOption.SettingTypes.BOOLEAN, "false"),
         XSNIFFTASK  ("snifftask.",   GenericOption.SettingTypes.BOOLEAN, "false"),
+        STATIC      ("static",       GenericOption.SettingTypes.STRING,  ""),
         ;
 
         private final String key;

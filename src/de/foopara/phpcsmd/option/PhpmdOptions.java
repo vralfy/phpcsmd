@@ -16,6 +16,7 @@ public class PhpmdOptions
         SUFFIXES   ("suffix",      GenericOption.SettingTypes.STRING,  ""),
         MINPRIORITY("minpriority", GenericOption.SettingTypes.STRING,  ""),
         STRICT     ("strict",      GenericOption.SettingTypes.BOOLEAN, "false"),
+        STATIC     ("static",      GenericOption.SettingTypes.STRING,  ""),
         ;
 
         private final String key;

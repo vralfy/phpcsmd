@@ -16,6 +16,7 @@ public class PhpcpdOptions
         MINTOKENS      ("mintokens",       GenericOption.SettingTypes.INTEGER, "70"),
         EXCLUDE        ("exclude",         GenericOption.SettingTypes.STRING,  ""),
         SUFFIXES       ("suffix",          GenericOption.SettingTypes.STRING,  ""),
+        STATIC         ("static",          GenericOption.SettingTypes.STRING,  ""),
         ;
 
         private final String key;

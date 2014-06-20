@@ -51,41 +51,47 @@ public class PhpcpdFolderParser extends GenericPhpcpdParser
             for (int i = 2; i < sections.length - 2; i++) {
                 if (this.isValidPhpcpdSection(sections[i])) {
                     PhpcpdLine line = new PhpcpdLine(sections[i]);
+                    String f1 = line.file1.toLowerCase().replace("\\", "/").trim();
+                    String f2 = line.file2.toLowerCase().replace("\\", "/").trim();
+                    String fo = containingFolder.getPath().toLowerCase().replace("\\", "/").trim();
 
-                    if (!cpdErrors.containsKey(line.file1)) {
-                        cpdErrors.put(line.file1, new ArrayList<GenericViolation>());
-                    }
-                    if (!cpdErrors.containsKey(line.file2)) {
-                        cpdErrors.put(line.file2, new ArrayList<GenericViolation>());
-                    }
-                    if (!cpdNoTask.containsKey(line.file1)) {
-                        cpdNoTask.put(line.file1, new ArrayList<GenericViolation>());
-                    }
-                    if (!cpdNoTask.containsKey(line.file2)) {
-                        cpdNoTask.put(line.file2, new ArrayList<GenericViolation>());
-                    }
+                    if (fo.contains(f1) || fo.contains(f2) || f1.contains(fo) || f2.contains(f2)) {
 
-                    this.add(line.file1, lookup, cpdErrors.get(line.file1), cpdNoTask.get(line.file1),
-                            line.file1, line.start1, line.end1,
-                            line.file2, line.start2, line.end2);
-                    if (line.file1.compareTo(line.file2) != 0) {
-                        this.add(line.file2, lookup, cpdErrors.get(line.file2), cpdNoTask.get(line.file2),
+                        if (!cpdErrors.containsKey(line.file1)) {
+                            cpdErrors.put(line.file1, new ArrayList<GenericViolation>());
+                        }
+                        if (!cpdErrors.containsKey(line.file2)) {
+                            cpdErrors.put(line.file2, new ArrayList<GenericViolation>());
+                        }
+                        if (!cpdNoTask.containsKey(line.file1)) {
+                            cpdNoTask.put(line.file1, new ArrayList<GenericViolation>());
+                        }
+                        if (!cpdNoTask.containsKey(line.file2)) {
+                            cpdNoTask.put(line.file2, new ArrayList<GenericViolation>());
+                        }
+
+                        this.add(line.file1, lookup, cpdErrors.get(line.file1), cpdNoTask.get(line.file1),
                                 line.file1, line.start1, line.end1,
                                 line.file2, line.start2, line.end2);
-                    }
+                        if (line.file1.compareTo(line.file2) != 0) {
+                            this.add(line.file2, lookup, cpdErrors.get(line.file2), cpdNoTask.get(line.file2),
+                                    line.file1, line.start1, line.end1,
+                                    line.file2, line.start2, line.end2);
+                        }
 
-                    FileObject tmpf1 = FileUtil.toFileObject(new File(line.file1));
-                    FileObject tmpf2 = FileUtil.toFileObject(new File(line.file2));
-                    if (tmpf1 != null && tmpf2 != null && tmpf1.getPath().compareTo(tmpf2.getPath()) != 0) {
-                        if (!allreadyFlushedDependencies.contains(tmpf1)) {
-                            ViolationRegistry.getInstance().flushPhpcpdDependency(tmpf1);
-                            allreadyFlushedDependencies.add(tmpf1);
+                        FileObject tmpf1 = FileUtil.toFileObject(new File(line.file1));
+                        FileObject tmpf2 = FileUtil.toFileObject(new File(line.file2));
+                        if (tmpf1 != null && tmpf2 != null && tmpf1.getPath().compareTo(tmpf2.getPath()) != 0) {
+                            if (!allreadyFlushedDependencies.contains(tmpf1)) {
+                                ViolationRegistry.getInstance().flushPhpcpdDependency(tmpf1);
+                                allreadyFlushedDependencies.add(tmpf1);
+                            }
+                            if (!allreadyFlushedDependencies.contains(tmpf2)) {
+                                ViolationRegistry.getInstance().flushPhpcpdDependency(tmpf2);
+                                allreadyFlushedDependencies.add(tmpf2);
+                            }
+                            ViolationRegistry.getInstance().addPhpcpdDependency(tmpf1, tmpf2);
                         }
-                        if (!allreadyFlushedDependencies.contains(tmpf2)) {
-                            ViolationRegistry.getInstance().flushPhpcpdDependency(tmpf2);
-                            allreadyFlushedDependencies.add(tmpf2);
-                        }
-                        ViolationRegistry.getInstance().addPhpcpdDependency(tmpf1, tmpf2);
                     }
                 } else {
                     Logger.getInstance().logPre(sections[i], "malformed cpd violation");

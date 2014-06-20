@@ -1,14 +1,21 @@
 package de.foopara.phpcsmd.exec.phpcpd;
 
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
 import java.util.HashMap;
 
 import org.openide.filesystems.FileObject;
+import org.openide.util.Exceptions;
 import org.openide.util.Lookup;
 
 import de.foopara.phpcsmd.ViolationRegistry;
 import de.foopara.phpcsmd.debug.Logger;
-import de.foopara.phpcsmd.generics.*;
+import de.foopara.phpcsmd.generics.GenericExecute;
+import de.foopara.phpcsmd.generics.GenericHelper;
+import de.foopara.phpcsmd.generics.GenericOutputReader;
+import de.foopara.phpcsmd.generics.GenericProcess;
+import de.foopara.phpcsmd.generics.GenericResult;
 import de.foopara.phpcsmd.option.PhpcpdOptions;
 
 /**
@@ -81,6 +88,26 @@ public class Phpcpd extends GenericExecute
         if (!iAmAlive()) {
             return this.setAndReturnCurrent(file);
         }
+
+        String staticFile = (String)PhpcpdOptions.load(PhpcpdOptions.Settings.STATIC, lookup);
+        if (!staticFile.isEmpty()) {
+            File staticFile2 = new File(staticFile);
+            if (staticFile2.exists() && staticFile2.canRead()) {
+                try {
+                    Logger.getInstance().log("parsing " + staticFile + " for violoations in " + file.getPath(), "");
+                    StringBuilder content = new StringBuilder();
+                    content.append(new String(Files.readAllBytes(staticFile2.toPath())));
+                    res.addAll(parser.parse(new GenericOutputReader(content), updateDependencies, file));
+                } catch (IOException ex) {
+                    Exceptions.printStackTrace(ex);
+                }
+            }
+        }
+
+        if (!iAmAlive()) {
+            return this.setAndReturnCurrent(file);
+        }
+
         ViolationRegistry.getInstance().setPhpcpd(file, res);
         return res;
     }
@@ -116,6 +143,33 @@ public class Phpcpd extends GenericExecute
         if (!iAmAlive()) {
             return new HashMap<String, PhpcpdResult>();
         }
+
+        String staticFile = (String)PhpcpdOptions.load(PhpcpdOptions.Settings.STATIC, lookup);
+        if (!staticFile.isEmpty()) {
+            File staticFile2 = new File(staticFile);
+            if (staticFile2.exists() && staticFile2.canRead()) {
+                try {
+                    Logger.getInstance().log("parsing " + staticFile + " for violoations in " + folder.getPath(), "");
+                    StringBuilder content = new StringBuilder();
+                    content.append(new String(Files.readAllBytes(staticFile2.toPath())));
+                    HashMap<String, PhpcpdResult> res2 = parser.parse(new GenericOutputReader(content), folder);
+                    for (String key : res2.keySet()) {
+                        if (res.containsKey(key)) {
+                            res.get(key).addAll(res2.get(key));
+                        } else {
+                            res.put(key, res2.get(key));
+                        }
+                    }
+                } catch (IOException ex) {
+                    Exceptions.printStackTrace(ex);
+                }
+            }
+        }
+
+        if (!iAmAlive()) {
+            return new HashMap<String, PhpcpdResult>();
+        }
+
         ViolationRegistry.getInstance().setPhpcpdFolder(res);
         return res;
     }

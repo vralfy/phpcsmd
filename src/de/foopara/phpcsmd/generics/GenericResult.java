@@ -1,6 +1,7 @@
 package de.foopara.phpcsmd.generics;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -41,6 +42,24 @@ public class GenericResult
 
     public void addNoTask(GenericViolation noTask) {
         this.errors.add(noTask);
+    }
+
+    public void addWarnings(Collection<? extends GenericViolation> warning) {
+        this.warnings.addAll(warning);
+    }
+
+    public void addErrors(Collection<? extends GenericViolation> error) {
+        this.errors.addAll(error);
+    }
+
+    public void addNoTasks(Collection<? extends GenericViolation> noTask) {
+        this.errors.addAll(noTask);
+    }
+
+    public void addAll(GenericResult result) {
+        this.addWarnings(result.getWarnings());
+        this.addErrors(result.getErrors());
+        this.addNoTasks(result.getNoTask());
     }
 
     public List<GenericViolation> getWarnings() {
