@@ -3,6 +3,7 @@ package de.foopara.phpcsmd.generics;
 import java.io.File;
 import java.io.IOException;
 import java.util.regex.Pattern;
+import java.util.regex.Matcher;
 
 import org.netbeans.api.project.FileOwnerQuery;
 import org.netbeans.api.project.Project;
@@ -155,7 +156,11 @@ public class GenericHelper
         }
 
         if (pattern.trim().length() > 0) {
-            if (Pattern.matches(".*(" + pattern + ").*", file.getAbsolutePath().toLowerCase())) {
+            Pattern p = Pattern.compile(pattern);
+            Matcher m = p.matcher(file.getAbsolutePath());
+            boolean found = m.find();
+
+            if (found) {
                 Logger.getInstance().logPre(file.getAbsolutePath() + " matches " + pattern + " " + retMatched, "ignore", Logger.Severity.EXCEPTION);
                 return retMatched;
             }
