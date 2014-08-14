@@ -1,14 +1,21 @@
 package de.foopara.phpcsmd.exec.phpcs;
 
 import java.io.File;
+import java.io.IOException;
 import java.io.InputStream;
+import java.nio.file.Files;
 
 import org.openide.filesystems.FileObject;
+import org.openide.util.Exceptions;
 import org.openide.util.Lookup;
 
 import de.foopara.phpcsmd.ViolationRegistry;
 import de.foopara.phpcsmd.debug.Logger;
-import de.foopara.phpcsmd.generics.*;
+import de.foopara.phpcsmd.generics.GenericExecute;
+import de.foopara.phpcsmd.generics.GenericHelper;
+import de.foopara.phpcsmd.generics.GenericOutputReader;
+import de.foopara.phpcsmd.generics.GenericProcess;
+import de.foopara.phpcsmd.generics.GenericResult;
 import de.foopara.phpcsmd.option.PhpcsOptions;
 
 /**
@@ -89,9 +96,24 @@ public class Phpcs extends GenericExecute
         if (!iAmAlive()) {
             return this.setAndReturnCurrent(file);
         }
-        PhpcsResult res = parser.parse(reader[0]);
+        PhpcsResult res = parser.parse(reader[0], null);
         if (!iAmAlive()) {
             return this.setAndReturnCurrent(file);
+        }
+
+        String staticFile = (String)PhpcsOptions.load(PhpcsOptions.Settings.STATIC, lookup);
+        if (!staticFile.isEmpty()) {
+            File staticFile2 = new File(staticFile);
+            if (staticFile2.exists() && staticFile2.canRead()) {
+                try {
+                    Logger.getInstance().log("parsing " + staticFile + " for violoations in " + file.getPath(), "");
+                    StringBuilder content = new StringBuilder();
+                    content.append(new String(Files.readAllBytes(staticFile2.toPath())));
+                    res.addAll(parser.parse(new GenericOutputReader(content), file.getPath()));
+                } catch (IOException ex) {
+                    Exceptions.printStackTrace(ex);
+                }
+            }
         }
         ViolationRegistry.getInstance().setPhpcs(file, res);
 

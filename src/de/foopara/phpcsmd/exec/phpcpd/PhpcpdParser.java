@@ -6,8 +6,6 @@ import java.io.Reader;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.swing.JLabel;
-import org.openide.awt.NotificationDisplayer;
 import org.openide.filesystems.FileObject;
 import org.openide.filesystems.FileUtil;
 import org.openide.util.Exceptions;
@@ -50,11 +48,17 @@ public class PhpcpdParser extends GenericPhpcpdParser
             for (int i = 2; i < sections.length - 2; i++) {
                 if (this.isValidPhpcpdSection(sections[i])) {
                     PhpcpdLine line = new PhpcpdLine(sections[i]);
-                    this.add(FileUtil.toFile(fo).getPath(), lookup, cpdErrors, cpdNoTask,
-                            line.file1, line.start1, line.end1, line.file2, line.start2, line.end2);
+                    String f1 = line.file1.toLowerCase().replace("\\", "/").trim();
+                    String f2 = line.file2.toLowerCase().replace("\\", "/").trim();
+                    String f3 = fo.getPath().toLowerCase().replace("\\", "/").trim();
 
-                    if (updateDependencies && line.file1.compareTo(line.file2) != 0) {
-                        ViolationRegistry.getInstance().addPhpcpdDependency(FileUtil.toFileObject(new File(line.file1)), FileUtil.toFileObject(new File(line.file2)));
+                    if (f3.contains(f1) || f3.contains(f2) || f1.contains(f3) || f2.contains(f3)) {
+                        this.add(FileUtil.toFile(fo).getPath(), lookup, cpdErrors, cpdNoTask,
+                                line.file1, line.start1, line.end1, line.file2, line.start2, line.end2);
+
+                        if (updateDependencies && line.file1.compareTo(line.file2) != 0) {
+                            ViolationRegistry.getInstance().addPhpcpdDependency(FileUtil.toFileObject(new File(line.file1)), FileUtil.toFileObject(new File(line.file2)));
+                        }
                     }
                 } else {
                     Logger.getInstance().logPre(sections[i], "malformed cpd violation");

@@ -10,6 +10,7 @@ import javax.xml.parsers.ParserConfigurationException;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.NamedNodeMap;
+import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
@@ -26,7 +27,7 @@ import de.foopara.phpcsmd.option.phpmd.GenericPhpmdSniffRegistry;
 public class PhpmdXMLParser
 {
 
-    public PhpmdResult parse(GenericOutputReader reader) {
+    public PhpmdResult parse(GenericOutputReader reader, String fileFilter) {
         List<GenericViolation> violations = new ArrayList<GenericViolation>();
 
         try {
@@ -34,25 +35,24 @@ public class PhpmdXMLParser
             DocumentBuilder builder = factory.newDocumentBuilder();
             Document document;
             document = builder.parse(new InputSource(reader.getReader()));
-            NodeList ndList = document.getElementsByTagName("violation");
-
-            for (int i = 0; i < ndList.getLength(); i++) {
-                String message = ndList.item(i).getTextContent().trim();
-                NamedNodeMap nm = ndList.item(i).getAttributes();
-                int start = Integer.parseInt(nm.getNamedItem("beginline").getTextContent()) - 1;
-                int end = Integer.parseInt(nm.getNamedItem("endline").getTextContent()) - 1;
-                String sniffClass = nm.getNamedItem("rule").getTextContent();
-
-                String annotationType = "violation";
-                if (GenericPhpmdSniffRegistry.getInstance().get(sniffClass) != null
-                        && GenericPhpmdSniffRegistry.getInstance().get(sniffClass).annotationType != null) {
-                    annotationType = GenericPhpmdSniffRegistry.getInstance().get(sniffClass).annotationType;
+            if (fileFilter != null) {
+                fileFilter = fileFilter.toLowerCase().replace("\\", "/").trim();
+                NodeList files = document.getElementsByTagName("file");
+                for (int i = 0; i< files.getLength(); i++) {
+                    String file = files.item(i).getAttributes().getNamedItem("name").getTextContent().toLowerCase().replace("\\", "/").trim();
+                    if (file.contains(fileFilter) || fileFilter.contains(file)) {
+                        for(int j = 0; j < files.item(i).getChildNodes().getLength(); j++) {
+                            this.addVioloation(files.item(i).getChildNodes().item(j), violations);
+                        }
+                    }
                 }
-                violations.add(
-                        new GenericViolation(message, start, end)
-                        .setAnnotationType("phpmd-" + annotationType)
-                        .setGroup("phpmd-violation")
-                        .setMultiline(false));
+            } else {
+                NodeList ndList = document.getElementsByTagName("violation");
+
+                for (int i = 0; i < ndList.getLength(); i++) {
+                    Node node = ndList.item(i);
+                    this.addVioloation(node, violations);
+                }
             }
         } catch (SAXException ex) {
             Logger.getInstance().log(ex);
@@ -67,4 +67,28 @@ public class PhpmdXMLParser
         return new PhpmdResult(null, violations, null);
     }
 
+    protected void addVioloation(Node node, List<GenericViolation> violations) {
+        if (node == null || violations == null) {
+            return;
+        }
+        String message = node.getTextContent().trim();
+        NamedNodeMap nm = node.getAttributes();
+        if (nm == null || nm.getNamedItem("beginline") == null || nm.getNamedItem("endline") == null) {
+            return;
+        }
+        int start = Integer.parseInt(nm.getNamedItem("beginline").getTextContent()) - 1;
+        int end = Integer.parseInt(nm.getNamedItem("endline").getTextContent()) - 1;
+        String sniffClass = nm.getNamedItem("rule").getTextContent();
+
+        String annotationType = "violation";
+        if (GenericPhpmdSniffRegistry.getInstance().get(sniffClass) != null
+                && GenericPhpmdSniffRegistry.getInstance().get(sniffClass).annotationType != null) {
+            annotationType = GenericPhpmdSniffRegistry.getInstance().get(sniffClass).annotationType;
+        }
+        violations.add(
+                new GenericViolation(message, start, end)
+                .setAnnotationType("phpmd-" + annotationType)
+                .setGroup("phpmd-violation")
+                .setMultiline(false));
+    }
 }

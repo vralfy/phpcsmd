@@ -91,7 +91,11 @@ public class Installer extends ModuleInstall
                 Logger.getInstance().logPre("scanning " + file.getPath(), "onOpenTopComponent");
                 GenericExecute.executeQATools(file);
             }
-            GenericAnnotationBuilder.updateAnnotations(file);
+            try {
+                GenericAnnotationBuilder.updateAnnotations(file);
+            } catch (NoClassDefFoundError ex) {
+                
+            }
 
         }
     }
