@@ -146,7 +146,7 @@ public class GenericAnnotationBuilder
 
     private static void annotateLine(GenericViolation v, LineCookie cookie, FileObject fo) {
         Thread t = new Thread(new AnnotateLineThread(v, cookie, fo));
-        t.start();
+        t.start(); 
     }
 
     private static void annotateLine(GenericViolation v, LineCookie cookie, FileObject fo, boolean thread) {
