@@ -21,6 +21,41 @@ import java.util.Hashtable;
 public class GenericAnnotationBuilder
 {
 
+    public static class AnnotateListThread implements Runnable {
+        private List<GenericViolation> violations;
+        private LineCookie cookie;
+        private FileObject fileObject;
+
+        public AnnotateListThread(List<GenericViolation> list, LineCookie cookie, FileObject fo) {
+            this.violations = list;
+            this.cookie = cookie;
+            this.fileObject = fo;
+        }
+
+        @Override
+        public void run() {
+            GenericAnnotationBuilder.annotateList(this.violations, this.cookie, this.fileObject, false);
+        }
+
+    }
+
+    public static class AnnotateLineThread implements Runnable {
+        private final GenericViolation violation;
+        private final LineCookie cookie;
+        private final FileObject fileObject;
+
+        public AnnotateLineThread(GenericViolation v, LineCookie cookie, FileObject fo) {
+            this.violation = v;
+            this.cookie = cookie;
+            this.fileObject = fo;
+        }
+
+        @Override
+        public void run() {
+            GenericAnnotationBuilder.annotateLine(this.violation, this.cookie, this.fileObject, false);
+        }
+    }
+
     public static class AnnotationList extends HashSet<GenericViolation> {};
 
     public static Hashtable<FileObject, AnnotationList> annotations = new Hashtable<FileObject, AnnotationList>();
@@ -91,24 +126,46 @@ public class GenericAnnotationBuilder
     }
 
     private static void annotateList(List<GenericViolation> list, LineCookie cookie, FileObject fo) {
+        Thread t = new Thread(new AnnotateListThread(list, cookie, fo));
+        t.start();
+    }
+
+    private static void annotateList(List<GenericViolation> list, LineCookie cookie, FileObject fo, boolean thread) {
+        if (thread == true) {
+            GenericAnnotationBuilder.annotateList(list, cookie, fo);
+            return;
+        }
+
         for (int i = 0; i < list.size(); i++) {
             GenericAnnotationBuilder.annotateLine(
                     list.get(i),
                     cookie,
-                    fo);
+                    fo, thread);
         }
     }
 
     private static void annotateLine(GenericViolation v, LineCookie cookie, FileObject fo) {
+        Thread t = new Thread(new AnnotateLineThread(v, cookie, fo));
+        t.start();
+    }
+
+    private static void annotateLine(GenericViolation v, LineCookie cookie, FileObject fo, boolean thread) {
+        if (thread == true) {
+            GenericAnnotationBuilder.annotateLine(v, cookie, fo);
+            return;
+        }
+
         if (cookie == null || cookie.getLineSet().getLines() == null || cookie.getLineSet().getLines().size() < 1) {
             return;
         }
+
+        int size = cookie.getLineSet().getLines().size();
 
         if (!ActionToggleDisplay.showAnnotations) {
             return;
         }
 
-        Integer maxLine = Math.min(cookie.getLineSet().getLines().size() - 1, v.getEndLine());
+        Integer maxLine = Math.min(size - 1, v.getEndLine());
         for (int i = v.getBeginLine(); i <= maxLine; i++) {
             try {
                 Line.Set lineSet = cookie.getLineSet();
