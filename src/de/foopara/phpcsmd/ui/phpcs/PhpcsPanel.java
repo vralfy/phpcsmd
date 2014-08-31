@@ -11,6 +11,8 @@ import de.foopara.phpcsmd.generics.GenericOptionsPanel;
 import de.foopara.phpcsmd.option.PhpcsOptions;
 import de.foopara.phpcsmd.option.phpcs.GenericPhpcsSniffRegistry;
 import de.foopara.phpcsmd.option.phpcs.PhpcsSniff;
+import java.io.File;
+import javax.swing.JFileChooser;
 
 /**
  *
@@ -65,6 +67,7 @@ public class PhpcsPanel extends GenericOptionsPanel
         jLabel4 = new javax.swing.JLabel();
         optExt = new javax.swing.JTextField();
         optIgnore = new javax.swing.JTextField();
+        jButton3 = new javax.swing.JButton();
         optWarning = new javax.swing.JCheckBox();
         optActive = new javax.swing.JCheckBox();
         jButton2 = new javax.swing.JButton();
@@ -116,7 +119,7 @@ public class PhpcsPanel extends GenericOptionsPanel
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 101;
-        gridBagConstraints.gridwidth = 3;
+        gridBagConstraints.gridwidth = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.insets = new java.awt.Insets(0, 0, 2, 2);
@@ -157,6 +160,19 @@ public class PhpcsPanel extends GenericOptionsPanel
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.insets = new java.awt.Insets(0, 0, 2, 2);
         add(optIgnore, gridBagConstraints);
+
+        jButton3.setText(org.openide.util.NbBundle.getMessage(PhpcsPanel.class, "PhpcsPanel.jButton3.text")); // NOI18N
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 3;
+        gridBagConstraints.gridy = 101;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.insets = new java.awt.Insets(0, 0, 2, 2);
+        add(jButton3, gridBagConstraints);
 
         optWarning.setText(org.openide.util.NbBundle.getMessage(PhpcsPanel.class, "PhpcsPanel.optWarning.text")); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -307,10 +323,6 @@ public class PhpcsPanel extends GenericOptionsPanel
         }
     }//GEN-LAST:event_jComboBox1ActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        this.chooseScriptFile(this.optScript);
-    }//GEN-LAST:event_jButton1ActionPerformed
-
     private void optScriptKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_optScriptKeyReleased
         this.hasValidValues();
     }//GEN-LAST:event_optScriptKeyReleased
@@ -319,9 +331,30 @@ public class PhpcsPanel extends GenericOptionsPanel
         this.standardPanel.setVisible(this.optXtra.isSelected());
     }//GEN-LAST:event_optXtraActionPerformed
 
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        File script = new File(optStandard.getText());
+
+        JFileChooser fc = new JFileChooser();
+        fc.setDialogTitle("Custom Standard");
+        fc.setFileSelectionMode(JFileChooser.FILES_ONLY);
+        fc.setMultiSelectionEnabled(false);
+        if (script.exists()) {
+            fc.setSelectedFile(script);
+        }
+        if (fc.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
+            optStandard.setText(fc.getSelectedFile().getAbsolutePath());
+        }
+        this.hasValidValues();
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        this.chooseScriptFile(this.optScript);
+    }//GEN-LAST:event_jButton1ActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
     private javax.swing.JComboBox jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
