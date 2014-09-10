@@ -68,6 +68,7 @@ public class PhpcsPropertyPanel extends GenericOptionsPanel
         jLabel1 = new javax.swing.JLabel();
         optStatic = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
 
         setLayout(new java.awt.GridBagLayout());
@@ -112,7 +113,7 @@ public class PhpcsPropertyPanel extends GenericOptionsPanel
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 3;
-        gridBagConstraints.gridwidth = 3;
+        gridBagConstraints.gridwidth = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.insets = new java.awt.Insets(0, 0, 2, 2);
         add(optStandard, gridBagConstraints);
@@ -351,6 +352,17 @@ public class PhpcsPropertyPanel extends GenericOptionsPanel
         gridBagConstraints.insets = new java.awt.Insets(0, 0, 2, 2);
         add(jButton1, gridBagConstraints);
 
+        org.openide.awt.Mnemonics.setLocalizedText(jButton3, org.openide.util.NbBundle.getMessage(PhpcsPropertyPanel.class, "PhpcsPropertyPanel.jButton3.text")); // NOI18N
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 3;
+        gridBagConstraints.gridy = 3;
+        add(jButton3, gridBagConstraints);
+
         org.openide.awt.Mnemonics.setLocalizedText(jButton2, org.openide.util.NbBundle.getMessage(PhpcsPropertyPanel.class, "PhpcsPropertyPanel.jButton2.text")); // NOI18N
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -362,6 +374,7 @@ public class PhpcsPropertyPanel extends GenericOptionsPanel
         gridBagConstraints.gridy = 1;
         gridBagConstraints.insets = new java.awt.Insets(0, 0, 2, 2);
         add(jButton2, gridBagConstraints);
+        jButton2.getAccessibleContext().setAccessibleDescription(org.openide.util.NbBundle.getMessage(PhpcsPropertyPanel.class, "PhpcsPropertyPanel.jButton2.AccessibleContext.accessibleDescription")); // NOI18N
     }// </editor-fold>//GEN-END:initComponents
 
     private void owActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_owActionPerformed
@@ -389,21 +402,21 @@ public class PhpcsPropertyPanel extends GenericOptionsPanel
         // TODO add your handling code here:
     }//GEN-LAST:event_owScriptowActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        File script = new File(optScript.getText());
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        File script = new File(optStandard.getText());
 
         JFileChooser fc = new JFileChooser();
-        fc.setDialogTitle("PHPCS Script Location");
+        fc.setDialogTitle("Custom Standard");
         fc.setFileSelectionMode(JFileChooser.FILES_ONLY);
         fc.setMultiSelectionEnabled(false);
         if (script.exists()) {
             fc.setSelectedFile(script);
         }
         if (fc.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
-            optScript.setText(fc.getSelectedFile().getAbsolutePath());
+            optStandard.setText(fc.getSelectedFile().getAbsolutePath());
         }
         this.hasValidValues();
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         File script = new File(optStatic.getText());
@@ -421,11 +434,28 @@ public class PhpcsPropertyPanel extends GenericOptionsPanel
         this.hasValidValues();
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        File script = new File(optScript.getText());
+
+        JFileChooser fc = new JFileChooser();
+        fc.setDialogTitle("PHPCS Script Location");
+        fc.setFileSelectionMode(JFileChooser.FILES_ONLY);
+        fc.setMultiSelectionEnabled(false);
+        if (script.exists()) {
+            fc.setSelectedFile(script);
+        }
+        if (fc.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
+            optScript.setText(fc.getSelectedFile().getAbsolutePath());
+        }
+        this.hasValidValues();
+    }//GEN-LAST:event_jButton2ActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnStandard;
     private javax.swing.JComboBox cmbStandard;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JSeparator jSeparator1;
