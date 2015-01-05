@@ -312,7 +312,7 @@ public class PhpcsPanel extends GenericOptionsPanel
         String installed[] = Phpcs.getStandards(optScript.getText());
         if (installed != null && installed.length > 0) {
             for (String standard : installed) {
-                ((DefaultComboBoxModel)this.jComboBox1.getModel()).addElement(standard);
+                ((DefaultComboBoxModel)this.jComboBox1.getModel()).addElement(standard.trim());
             }
         }
     }//GEN-LAST:event_jButton2ActionPerformed
