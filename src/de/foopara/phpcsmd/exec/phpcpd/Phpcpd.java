@@ -175,7 +175,7 @@ public class Phpcpd extends GenericExecute
     }
 
     private StringBuilder getGenericCommand(Lookup lookup) {
-        StringBuilder cmd = new StringBuilder((String)PhpcpdOptions.load(PhpcpdOptions.Settings.SCRIPT, lookup));
+        StringBuilder cmd = new StringBuilder(GenericExecute.escapePath((String)PhpcpdOptions.load(PhpcpdOptions.Settings.SCRIPT, lookup)));
         this.appendArgument(cmd, "--min-lines ", "" + (Integer)PhpcpdOptions.load(PhpcpdOptions.Settings.MINLINES, lookup));
         this.appendArgument(cmd, "--min-tokens ", "" + (Integer)PhpcpdOptions.load(PhpcpdOptions.Settings.MINTOKENS, lookup));
         this.appendArgument(cmd, "--suffixes ", (String)PhpcpdOptions.load(PhpcpdOptions.Settings.SUFFIXES, lookup));

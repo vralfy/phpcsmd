@@ -7,6 +7,7 @@ import org.openide.filesystems.FileObject;
 import org.openide.util.Lookup;
 
 import de.foopara.phpcsmd.debug.Logger;
+import de.foopara.phpcsmd.generics.GenericExecute;
 import de.foopara.phpcsmd.generics.GenericHelper;
 import de.foopara.phpcsmd.generics.GenericOutputReader;
 import de.foopara.phpcsmd.generics.GenericProcess;
@@ -40,7 +41,7 @@ public class Pdepend
         HashSet<File> tmpFiles = new HashSet<File>();
 
 
-        StringBuilder cmd = new StringBuilder((String)PdependOptions.load(PdependOptions.Settings.SCRIPT, lkp));
+        StringBuilder cmd = new StringBuilder(GenericExecute.escapePath((String)PdependOptions.load(PdependOptions.Settings.SCRIPT, lkp)));
         this.appendArgument(cmd, "--suffix=", "" + (String)PdependOptions.load(PdependOptions.Settings.SUFFIXES, lkp));
         this.appendArgument(cmd, "--exclude=", "" + (String)PdependOptions.load(PdependOptions.Settings.EXCLUDE, lkp));
         this.appendArgument(cmd, "--ignore=", "" + (String)PdependOptions.load(PdependOptions.Settings.IGNORES, lkp));

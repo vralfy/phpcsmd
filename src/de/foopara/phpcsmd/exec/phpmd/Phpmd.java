@@ -51,7 +51,7 @@ public class Phpmd extends GenericExecute
             return this.setAndReturnCurrent(file);
         }
 
-        StringBuilder cmd = new StringBuilder((String)PhpmdOptions.load(PhpmdOptions.Settings.SCRIPT, lookup));
+        StringBuilder cmd = new StringBuilder(GenericExecute.escapePath((String)PhpmdOptions.load(PhpmdOptions.Settings.SCRIPT, lookup)));
         cmd.append(" ").append(GenericHelper.escapePath(file));
         cmd.append(" ").append("xml");
         cmd.append(" ").append((String)PhpmdOptions.load(PhpmdOptions.Settings.RULES, lookup));

@@ -53,7 +53,7 @@ public class Phpcs extends GenericExecute
         }
 
         CustomStandard cstandard = null;
-        StringBuilder cmd = new StringBuilder((String)PhpcsOptions.load(PhpcsOptions.Settings.SCRIPT, lookup));
+        StringBuilder cmd = new StringBuilder(GenericExecute.escapePath((String)PhpcsOptions.load(PhpcsOptions.Settings.SCRIPT, lookup)));
         if ((Boolean)PhpcsOptions.load(PhpcsOptions.Settings.EXTRAS, lookup) == true
                 || ((String)PhpcsOptions.load(PhpcsOptions.Settings.STANDARD, lookup)).trim().length() == 0) {
             cstandard = new CustomStandard(lookup);
@@ -146,7 +146,7 @@ public class Phpcs extends GenericExecute
             if (!script.exists() || !script.canExecute() || !script.isFile()) {
                 return new String[0];
             }
-            Process child = Runtime.getRuntime().exec(executable + " -i");
+            Process child = Runtime.getRuntime().exec(GenericExecute.escapePath(executable) + " -i");
             InputStream in = child.getInputStream();
             StringBuilder tmp = new StringBuilder();
             int c;
@@ -164,5 +164,4 @@ public class Phpcs extends GenericExecute
 
         return new String[0];
     }
-
 }

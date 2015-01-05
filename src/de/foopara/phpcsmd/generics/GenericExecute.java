@@ -54,4 +54,12 @@ abstract public class GenericExecute
         }
     }
 
+    public static String escapePath(String executable) {
+      String os = System.getProperty("os.name").toLowerCase();
+      if (os.indexOf("win") >= 0) {
+        return "\"" + executable + "\"";
+      }
+
+      return executable.replace(" ", "\\ ");
+    }
 }
