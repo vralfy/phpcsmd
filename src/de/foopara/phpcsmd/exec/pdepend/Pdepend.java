@@ -69,6 +69,10 @@ public class Pdepend
             outputFiles[i] = (File)tmpFilesArray[i];
         }
         GenericOutputReader[] reader = GenericProcess.run(cmd.toString(), outputFiles, this.component, lkp);
+        if (reader.length < 1) {
+            Logger.getInstance().logPre("no output from commmand line", "pdepend command");
+            return this.setAndReturnDefault();
+        }
 
         for (File f : tmpFiles) {
             if (f.exists()) {

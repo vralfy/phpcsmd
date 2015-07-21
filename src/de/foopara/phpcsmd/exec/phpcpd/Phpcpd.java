@@ -79,6 +79,10 @@ public class Phpcpd extends GenericExecute
             return this.setAndReturnCurrent(file);
         }
         GenericOutputReader[] reader = GenericProcess.run(cmd.toString(), "", null, lookup);
+        if (reader.length < 1) {
+            Logger.getInstance().logPre("no output from commmand line", "phpcpd command");
+            return this.setAndReturnCurrent(file);
+        }
         if (!iAmAlive()) {
             return this.setAndReturnCurrent(file);
         }
