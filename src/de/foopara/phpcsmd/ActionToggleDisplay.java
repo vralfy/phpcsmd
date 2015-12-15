@@ -8,7 +8,6 @@ package de.foopara.phpcsmd;
 import de.foopara.phpcsmd.generics.GenericAnnotationBuilder;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.Set;
 import javax.swing.JToggleButton;
 import org.openide.awt.ActionID;
@@ -20,7 +19,7 @@ import org.openide.filesystems.FileObject;
 import org.openide.loaders.DataObject;
 import org.openide.util.HelpCtx;
 import org.openide.util.NbBundle.Messages;
-import org.openide.util.actions.BooleanStateAction;
+import org.openide.util.actions.*;
 import org.openide.windows.TopComponent;
 
 @ActionID(
